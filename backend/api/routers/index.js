@@ -1,6 +1,16 @@
-export { healthRouter } from "./health";
-export { ordersRouter } from "./order";
-export { paymentsRouter } from "./payment";
-export { productsRouter } from "./products";
-export { usersRouter } from "./users";
-export { requiredNotSent, requireLogin } from "./utils";
+import healthRouter from "./health";
+import ordersRouter from "./order";
+import paymentsRouter from "./payment";
+import productsRouter from "./products";
+import usersRouter from "./users";
+import { requiredNotSent, requireLogin } from "./utils";
+
+export { requiredNotSent, requireLogin };
+
+module.exports = {
+  healthRouter,
+  ordersRouter,
+  paymentsRouter,
+  productsRouter,
+  usersRouter,
+};
