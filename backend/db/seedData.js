@@ -11,6 +11,14 @@ async function dropTables() {
 
     await client.query(`
     // TO DO
+
+
+
+
+
+
+
+
     `);
     console.log('Finished dropping tables!')
   }catch (error) {
@@ -25,8 +33,104 @@ async function createTables() {
     console.log("Starting to build tables...");
 
     await client.query(`
-   // TO DO
-      );
+    CREATE TABLE users (
+      id SERIAL PRIMARY KEY, 
+      username VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      first_name VARCHAR(255) NOT NULL,
+      last_name VARCHAR(255) NOT NULL,
+      telephone INTEGER NOT NULL,
+      isAdmin BOOLEAN DEFAULT false
+    );
+
+    CREATE TABLE shopping_session (
+      id SERIAL PRIMARY KEY, 
+      "user_id" INTEGER REFERENCES users(id),
+      total INTEGER NOT NULL
+    );
+
+    CREATE TABLE cart_items (
+      id SERIAL PRIMARY KEY, 
+      "session_id" INTEGER REFERENCES shopping_session(id),
+      "product_id" INTEGER REFERENCES products(id),
+      quantity INTEGER NOT NULL
+    );
+
+    CREATE TABLE user_address (
+      id SERIAL PRIMARY KEY, 
+      "user_id" INTEGER REFERENCES users(id),
+      address_line1 VARCHAR(255) NOT NULL,
+      address_line2 VARCHAR(255) NOT NULL,
+      city VARCHAR(255) NOT NULL,
+      postal_code INTEGER NOT NULL,
+      country VARCHAR(255) NOT NULL,
+      telephone INTEGER NOT NULL,
+      mobile INTEGER NOT NULL
+    );
+
+    CREATE TABLE user_payment (
+      id SERIAL PRIMARY KEY, 
+      "user_id" INTEGER REFERENCES users(id),
+      payment_type VARCHAR(255) NOT NULL,
+      provider VARCHAR(255) NOT NULL,
+      account_no INTEGER NOT NULL,
+      expiry INTEGER NOT NULL
+    );
+
+    CREAT TABLE products (
+      id SERIAL PRIMARY KEY, 
+      name VARCHAR(255) NOT NULL,
+      desc VARCHAR(255) NOT NULL,
+      SKU INTEGER NOT NULL,
+      "category_id" INTEGER REFERENCES product_category(id),
+      "inventory_id" INTEGER REFERENCES product_category(id),
+      price INTEGER NOT NULL,
+      "discount_id" INTEGER REFERENCES product_discount(id)
+    );
+
+
+    CREATE TABLE product_category (
+      id SERIAL PRIMARY KEY, 
+      name VARCHAR(255) NOT NULL,
+      desc VARCHAR(255) NOT NULL
+    );
+
+    CREATE TABLE product_inventory (
+      id SERIAL PRIMARY KEY, 
+      quantity INTEGER NOT NULL
+    );
+
+    CREATE TABLE product_discount (
+      id SERIAL PRIMARY KEY, 
+      name VARCHAR(255) NOT NULL,
+      desc VARCHAR(255) NOT NULL,
+      discount_percent INTEGER NOT NULL,
+      active BOOLEAN DEFAULT false
+    );
+
+    CREATE TABLE order_details (
+      id SERIAL PRIMARY KEY, 
+      "user_id" INTEGER REFERENCES users(id),
+      total INTEGER NOT NULL,
+      "payment_id" INTEGER REFERENCES user_payment(id)
+    );
+
+    CREATE TABLE order_items (
+      id SERIAL PRIMARY KEY, 
+      "order_id" INTEGER REFERENCES order_details(id),
+      "product_id" INTEGER REFERENCES products(id)
+      quantity INTEGER NOT NULL
+    );
+
+    CREATE TABLE payment_details (
+      id SERIAL PRIMARY KEY, 
+      "order_id"
+      amount INTEGER NOT NULL,
+      provider VARCHAR(255) NOT NULL,
+      status BOOLEAN DEFAULT false
+    );
+
+
     `);
   } catch (error) {
     console.error("Error dropping table!")
