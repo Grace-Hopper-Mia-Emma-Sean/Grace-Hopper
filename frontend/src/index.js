@@ -1,38 +1,40 @@
-require("dotenv").config();
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-const apiRouter = require("./api");
-const bodyParser = require("body-parser");
-const { client } = require("./db/client/");
-const cors = require("cors");
-const express = require("express");
-const morgan = require("morgan");
-const { PORT = 3000 } = process.env;
-const server = express();
+import //TO DO: Import child components here
+"./components";
 
-server.use(morgan("dev"));
-server.use(bodyParser.json());
-server.use(cors());
-server.use("/api", apiRouter);
+const App = () => {
+  //TO DO: Utilize useState here
 
-server.use((req, res, next) => {
-  console.log("<____Body Logger START____>");
-  console.log(req.body);
-  console.log("<_____Body Logger END_____>");
-  next();
-});
+  //SAMPLE useEffect below:
+  //     useEffect (() => {
+  //         if (localStorage.getItem("token")){
+  //             setToken(localStorage.getItem("token"))
+  //             setUsername(localStorage.getItem("username"))
+  //             setLoginSuccess(true)
+  //         }
+  //     }, [loginSuccess, username])
 
-server.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(404).send("Not Found!");
-});
+  return (
+    <div className="app">
+      <Router>
+        <div>
+          //TO DO: Component
+          <Switch>
+            <Route exact path="/">
+              //TO DO: Component
+            </Route>
 
-server.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send({ message: "Internal Server Error!" });
-});
+            <Route path="*">
+              <h1>404 Error - Page Not Found!</h1>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </div>
+  );
+};
 
-server.listen(PORT, () => {
-  console.log(`Server is up on port: ${PORT}`);
-});
-
-client.connect();
+ReactDOM.render(<App />, document.getElementById("app"));
