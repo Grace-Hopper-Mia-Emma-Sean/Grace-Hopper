@@ -150,8 +150,8 @@ const createInitialUsers = () => {
       { username: "eisha.elise", password: "january2019" },
       { username: "emma.loirratse", password: "april2020" },
       { username: "emma.elise", password: "june2020" },
-      { username: "miku.akemi", password: "september2021" },
       { username: "nia.akemi", password: "july2021" },
+      { username: "miku.akemi", password: "september2021" },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
     console.log("Users created:");
