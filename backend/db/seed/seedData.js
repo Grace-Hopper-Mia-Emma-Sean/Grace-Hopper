@@ -4,7 +4,7 @@ const {
   //TO DO: call db components as they get created
 } = require("../index");
 
-async function dropTables() {
+const dropTables = async () => {
   try {
     console.log("Dropping All Tables...");
 
@@ -27,9 +27,9 @@ async function dropTables() {
     console.error("Error dropping table!");
     throw error;
   }
-}
+};
 
-async function createTables() {
+const createTables = async () => {
   try {
     console.log("Starting to build tables...");
 
@@ -136,16 +136,24 @@ async function createTables() {
     console.error("Error dropping table!");
     throw error;
   }
-}
+};
 
-async function createInitialUsers() {
+const createInitialUsers = () => {
   console.log("Starting to create users...");
   try {
     const usersToCreate = [
-      // TO DO
+      // ! When you suck at creating fake user names, so you just pick some names you used in the past in an MMO...
+      { username: "haru.aoi", password: "august2016" },
+      { username: "haru.estarriol", password: "september2016" },
+      { username: "erin.loirratse", password: "april2018" },
+      { username: "ember.elise", password: "november2018" },
+      { username: "eisha.elise", password: "january2019" },
+      { username: "emma.loirratse", password: "april2020" },
+      { username: "emma.elise", password: "june2020" },
+      { username: "miku.akemi", password: "september2021" },
+      { username: "nia.akemi", password: "july2021" },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
-
     console.log("Users created:");
     console.log(users);
     console.log("Finished creating users!");
@@ -153,9 +161,9 @@ async function createInitialUsers() {
     console.error("Error creating users!");
     throw error;
   }
-}
+};
 //SAMPLE BELOW:
-// async function createInitialProducts() {
+// const createInitialProducts = async () => {
 //   try {
 //     console.log('Starting to create products...');
 
@@ -175,7 +183,7 @@ async function createInitialUsers() {
 // }
 
 //SAMPLE BELOW
-// async function createInitialUsers() {
+// const createInitialUsers = async () => {
 //   try {
 //     console.log('starting to create users...');
 
@@ -193,7 +201,7 @@ async function createInitialUsers() {
 // ADD MORE CREATION FOR ALL TABLES
 
 //SAMPLE rebuildDB() below:
-// async function rebuildDB() {
+// const rebuildDB = async () => {
 //   try {
 //     client.connect();
 //     await functions from above
