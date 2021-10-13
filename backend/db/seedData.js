@@ -196,19 +196,19 @@ async function createInitialUsers() {
 //   }
 // }
 
-// ADD MORE CREATION AS NEEDED
+// ADD MORE CREATION FOR ALL TABLES
 
 
 //SAMPLE rebuildDB() below:
 // async function rebuildDB() {
 //   try {
 //     client.connect();
-//     await dropTables();
-//     await createTables();
-//     await createInitialUsers();
-//     await createInitialActivities();
-//     await createInitialRoutines();
-//     await createInitialRoutineActivities();
+//     await functions from above
+//     await 
+//     await 
+//     await 
+//     await 
+//     await 
 
 //   } catch (error) {
 //     console.log('Error during rebuildDB')
