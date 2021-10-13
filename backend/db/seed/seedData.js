@@ -1,14 +1,12 @@
-const client = require('./client');
+const client = require("../client");
 
 const {
-  //TO DO: call db components as they get created 
-
-} = require('./index')
+  //TO DO: call db components as they get created
+} = require("../index");
 
 async function dropTables() {
-  
   try {
-    console.log('Dropping All Tables...');
+    console.log("Dropping All Tables...");
 
     await client.query(`
     DROP TABLE IF EXISTS payment_details;
@@ -24,15 +22,14 @@ async function dropTables() {
     DROP TABLE IF EXISTS shopping_session;
     DROP TABLE IF EXISTS users;
     `);
-    console.log('Finished dropping tables!')
-  }catch (error) {
-    console.error("Error dropping table!")
+    console.log("Finished dropping tables!");
+  } catch (error) {
+    console.error("Error dropping table!");
     throw error;
   }
 }
 
 async function createTables() {
-
   try {
     console.log("Starting to build tables...");
 
@@ -136,27 +133,24 @@ async function createTables() {
 
     `);
   } catch (error) {
-    console.error("Error dropping table!")
+    console.error("Error dropping table!");
     throw error;
   }
 }
 
-
-
 async function createInitialUsers() {
-  console.log('Starting to create users...');
+  console.log("Starting to create users...");
   try {
-
     const usersToCreate = [
       // TO DO
-    ]
+    ];
     const users = await Promise.all(usersToCreate.map(createUser));
 
-    console.log('Users created:');
+    console.log("Users created:");
     console.log(users);
-    console.log('Finished creating users!');
+    console.log("Finished creating users!");
   } catch (error) {
-    console.error('Error creating users!');
+    console.error("Error creating users!");
     throw error;
   }
 }
@@ -198,28 +192,26 @@ async function createInitialUsers() {
 
 // ADD MORE CREATION FOR ALL TABLES
 
-
 //SAMPLE rebuildDB() below:
 // async function rebuildDB() {
 //   try {
 //     client.connect();
 //     await functions from above
-//     await 
-//     await 
-//     await 
-//     await 
-//     await 
+//     await
+//     await
+//     await
+//     await
+//     await
 
 //   } catch (error) {
 //     console.log('Error during rebuildDB')
 //     throw error;
-//   } 
-  // finally {
-  //   client.end()
-  // }
+//   }
+// finally {
+//   client.end()
+// }
 // }
 
-module.exports = { 
-  rebuildDB 
+module.exports = {
+  rebuildDB,
 };
-

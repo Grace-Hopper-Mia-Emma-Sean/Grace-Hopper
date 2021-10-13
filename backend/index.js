@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+require("dotenv").config();
 
-import //TO DO: Import child components here
-"./components";
+const apiRouter = require("./api");
+const bodyParser = require("body-parser");
+const { client } = require("./db/client/");
+const cors = require("cors");
+const express = require("express");
+const morgan = require("morgan");
+const { PORT = 3000 } = process.env;
+const server = express();
 
-const App = () => {
-  //TO DO: Utilize useState here
+server.use(morgan("dev"));
+server.use(bodyParser.json());
+server.use(cors());
+// TODO: Change api route as necessary
+server.use("/api", apiRouter);
 
-  //SAMPLE useEffect below:
-  //     useEffect (() => {
-  //         if (localStorage.getItem("token")){
-  //             setToken(localStorage.getItem("token"))
-  //             setUsername(localStorage.getItem("username"))
-  //             setLoginSuccess(true)
-  //         }
-  //     }, [loginSuccess, username])
+// TODO: If we want server logging in testing
+// server.use((req, res, next) => {
+//   console.log("<____Body Logger START____>");
+//   console.log(req.body);
+//   console.log("<_____Body Logger END_____>");
+//   next();
+// });
 
-  return (
-    <div className="app">
-      <Router>
-        <div>
-          //TO DO: Component
-          <Switch>
-            <Route exact path="/">
-              //TO DO: Component
-            </Route>
+server.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(404).send("Not Found!");
+});
 
-            <Route path="*">
-              <h1>404 Error - Page Not Found!</h1>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </div>
-  );
-};
+server.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send({ message: "Internal Server Error!" });
+});
 
-ReactDOM.render(<App />, document.getElementById("app"));
+server.listen(PORT, () => {
+  console.log(`Server is up on port: ${PORT}`);
+});
+
+client.connect();
