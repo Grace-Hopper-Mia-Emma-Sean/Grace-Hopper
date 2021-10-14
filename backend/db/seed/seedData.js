@@ -1,6 +1,32 @@
 const { client } = require("../client");
 
-const { createUser } = require("..");
+// users seed
+const {
+  createInitialUsers,
+  createInitialUserAddresses,
+  createInitialShoppingSession,
+  createInitialCartItems,
+} = require("./users");
+
+// products seed
+const {
+  createInitialProducts,
+  createInitialProductCategories,
+  createInitialProductInventory,
+  createInitialProductDiscounts,
+} = require("./products");
+
+// orders seed
+const {
+  createInitialOrderDetails,
+  createInitialOrderItems,
+} = require("./orders");
+
+// payment seed
+const {
+  createInitialUserPayment,
+  createInitialPaymentDetails,
+} = require("./payments");
 
 const dropTables = async () => {
   try {
@@ -14,9 +40,9 @@ const dropTables = async () => {
       DROP TABLE IF EXISTS product_discount;
       DROP TABLE IF EXISTS product_inventory;
       DROP TABLE IF EXISTS product_category;
+      DROP TABLE IF EXISTS shopping_session;
       DROP TABLE IF EXISTS user_payment;
       DROP TABLE IF EXISTS user_address;
-      DROP TABLE IF EXISTS shopping_session;
       DROP TABLE IF EXISTS users;
     `);
     console.log("Finished dropping tables!");
@@ -43,17 +69,8 @@ const createTables = async () => {
         );
       `);
       try {
-        console.log("creating shopping_session");
+        console.log("creating user_address");
         await client.query(`
-          CREATE TABLE shopping_session (
-            id SERIAL PRIMARY KEY, 
-            user_id INTEGER REFERENCES users(id),
-            total INTEGER NOT NULL
-          ); 
-        `);
-        try {
-          console.log("creating user_address");
-          await client.query(`
               CREATE TABLE user_address (
                 id SERIAL PRIMARY KEY, 
                 user_id INTEGER REFERENCES users(id),
@@ -67,18 +84,27 @@ const createTables = async () => {
                 mobile VARCHAR(15) NOT NULL
               );
             `);
+        try {
+          console.log("creating user_payment");
+          await client.query(`
+            CREATE TABLE user_payment (
+              id SERIAL PRIMARY KEY, 
+              user_id INTEGER REFERENCES users(id),
+              payment_type VARCHAR(255) NOT NULL,
+              provider VARCHAR(255) NOT NULL,
+              account_no INTEGER NOT NULL,
+              expiry INTEGER NOT NULL
+            );
+          `);
           try {
-            console.log("creating user_payment");
+            console.log("creating shopping_session");
             await client.query(`
-                CREATE TABLE user_payment (
-                  id SERIAL PRIMARY KEY, 
-                  user_id INTEGER REFERENCES users(id),
-                  payment_type VARCHAR(255) NOT NULL,
-                  provider VARCHAR(255) NOT NULL,
-                  account_no INTEGER NOT NULL,
-                  expiry INTEGER NOT NULL
-                );
-              `);
+              CREATE TABLE shopping_session (
+                id SERIAL PRIMARY KEY, 
+                user_id INTEGER REFERENCES users(id),
+                total INTEGER NOT NULL
+              ); 
+            `);
             try {
               console.log("creating product_category");
               await client.query(`
@@ -188,13 +214,13 @@ const createTables = async () => {
               console.error("error creating product_category table");
             }
           } catch (error) {
-            console.error("error creating user_payment table");
+            console.error("error creating shopping_session table");
           }
         } catch (error) {
-          console.error("error creating user_address table");
+          console.error("error creating user_payment table");
         }
       } catch (error) {
-        console.error("error creating shopping_session table");
+        console.error("error creating user_address table");
       }
     } catch (error) {
       console.error("error creating users table");
@@ -205,607 +231,22 @@ const createTables = async () => {
   }
 };
 
-const createInitialUsers = async () => {
-  console.log("Starting to create users...");
-  try {
-    const usersToCreate = [
-      // ! When you suck at creating fake user names, so you just pick some names you used in the past in an MMO...
-      {
-        username: "haru.aoi",
-        password: "august2016",
-        first_name: "Haru",
-        last_name: "Aoi",
-        telephone: "1234567890",
-        isAdmin: false,
-      },
-      {
-        username: "haru.estarriol",
-        password: "september2016",
-        first_name: "Haru",
-        last_name: "Estarriol",
-        telephone: "2345678901",
-        isAdmin: false,
-      },
-      {
-        username: "erin.loirratse",
-        password: "april2018",
-        first_name: "Erin",
-        last_name: "Loirratse",
-        telephone: "3456789012",
-        isAdmin: false,
-      },
-      {
-        username: "ember.elise",
-        password: "november2018",
-        first_name: "Ember",
-        last_name: "Elise",
-        telephone: "4567890123",
-        isAdmin: false,
-      },
-      {
-        username: "eisha.elise",
-        password: "january2019",
-        first_name: "Eisha",
-        last_name: "Elise",
-        telephone: "5678901234",
-        isAdmin: false,
-      },
-      {
-        username: "emma.loirratse",
-        password: "april2020",
-        first_name: "Emma",
-        last_name: "Loirratse",
-        telephone: "6789012345",
-        isAdmin: false,
-      },
-      {
-        username: "nia.akemi",
-        password: "july2021",
-        first_name: "Nia",
-        last_name: "Akemi",
-        telephone: "8901234567",
-        isAdmin: false,
-      },
-      {
-        username: "miku.akemi",
-        password: "september2021",
-        first_name: "Miku",
-        last_name: "Akemi",
-        telephone: "9012345678",
-        isAdmin: false,
-      },
-      {
-        username: "emmaelise",
-        password: "password",
-        first_name: "Emma",
-        last_name: "Elise",
-        telephone: "9876543210",
-        isAdmin: true,
-      },
-      {
-        username: "miadao",
-        password: "password",
-        first_name: "Mia",
-        last_name: "Dao",
-        telephone: "8765432109",
-        isAdmin: true,
-      },
-      {
-        username: "seanconte",
-        password: "password",
-        first_name: "Sean",
-        last_name: "Conte",
-        telephone: "7654321098",
-        isAdmin: true,
-      },
-    ];
-    const users = await Promise.all(usersToCreate.map(createUser));
-    console.log("Users created:");
-    console.log(users);
-    console.log("Finished creating users!");
-  } catch (error) {
-    console.error("Error creating users!");
-    throw error;
-  }
-};
-
-const createInitialShoppingSession = async () => {
-  console.log("Starting to create shopping sessions...");
-  try {
-    const shoppingSessionsToCreate = [
-      { user_id: 4, total: 42.21 },
-      { user_id: 2, total: 123.54 },
-      { user_id: 4, total: 80.74 },
-      { user_id: 3, total: 3.64 },
-      { user_id: 6, total: 45.34 },
-      { user_id: 4, total: 92.33 },
-      { user_id: 5, total: 50.33 },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating shopping sessions!");
-    throw error;
-  }
-};
-
-const createInitialCartItems = async () => {
-  console.log("Starting to create cart items...");
-  try {
-    const cartItemsToCreate = [
-      { session_id: 3, product_id: 23, quantity: 2 },
-      { session_id: 4, product_id: 43, quantity: 1 },
-      { session_id: 5, product_id: 52, quantity: 3 },
-      { session_id: 2, product_id: 9, quantity: 2 },
-      { session_id: 10, product_id: 17, quantity: 2 },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating cart items!");
-    throw error;
-  }
-};
-
-const createInitialUserAddresses = async () => {
-  console.log("Starting to create user addresses...");
-  try {
-    const userAddressesToCreate = [
-      {
-        user_id: 1,
-        address_line1: "10 Main St",
-        address_line2: "",
-        city: "Portland",
-        state: "OR",
-        postal_code: 12345,
-        country: "United States",
-        telephone: "1234567890",
-        mobile: "1234567890",
-      },
-      {
-        user_id: 2,
-        address_line1: "20 First Ave",
-        address_line2: "",
-        city: "San Diego",
-        state: "CA",
-        postal_code: 23456,
-        country: "United States",
-        telephone: "2345678901",
-        mobile: "2345678901",
-      },
-      {
-        user_id: 3,
-        address_line1: "30 Second Blvd",
-        address_line2: "",
-        city: "New York City",
-        state: "NY",
-        postal_code: 34567,
-        country: "United States",
-        telephone: "3456789012",
-        mobile: "3456789012",
-      },
-      {
-        user_id: 4,
-        address_line1: "40 Random Rd",
-        address_line2: "",
-        city: "San Francisco",
-        state: "CA",
-        postal_code: 45678,
-        country: "United States",
-        telephone: "4567890123",
-        mobile: "4567890123",
-      },
-      {
-        user_id: 5,
-        address_line1: "50 Sassy St",
-        address_line2: "",
-        city: "Sacramento",
-        state: "CA",
-        postal_code: 56789,
-        country: "United States",
-        telephone: "5678901234",
-        mobile: "5678901234",
-      },
-      {
-        user_id: 6,
-        address_line1: "60 Annoyed Ave",
-        address_line2: "",
-        city: "Boston",
-        state: "MA",
-        postal_code: 67890,
-        country: "United States",
-        telephone: "6789012345",
-        mobile: "6789012345",
-      },
-      {
-        user_id: 7,
-        address_line1: "70 Bored Blvd",
-        address_line2: "",
-        city: "Portland",
-        state: "ME",
-        postal_code: 78901,
-        country: "United States",
-        telephone: "8901234567",
-        mobile: "8901234567",
-      },
-      {
-        user_id: 8,
-        address_line1: "80 Ridiculous Rd",
-        address_line2: "",
-        city: "Richmond",
-        state: "VA",
-        postal_code: 89012,
-        country: "United States",
-        telephone: "9012345678",
-        mobile: "9012345678",
-      },
-      {
-        user_id: 9,
-        address_line1: "90 Satirical St",
-        address_line2: "",
-        city: "Los Alamos",
-        state: "NM",
-        postal_code: 90123,
-        country: "United States",
-        telephone: "9876543210",
-        mobile: "9876543210",
-      },
-      {
-        user_id: 10,
-        address_line1: "100 Abstract Ave",
-        address_line2: "",
-        city: "Seattle",
-        state: "WA",
-        postal_code: 98765,
-        country: "United States",
-        telephone: "8765432109",
-        mobile: "8765432109",
-      },
-      {
-        user_id: 11,
-        address_line1: "110 Booty Blvd",
-        address_line2: "",
-        city: "Tacoma",
-        state: "WA",
-        postal_code: 87654,
-        country: "United States",
-        telephone: "7654321098",
-        mobile: "7654321098",
-      },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating user addresses!");
-    throw error;
-  }
-};
-
-const createInitialUserPayment = async () => {
-  console.log("Starting to create user payment...");
-  try {
-    const userPaymentsToCreate = [
-      {
-        user_id: 1,
-        payment_type: "credit",
-        provider: "Visa",
-        account_no: 1234567890123456,
-        expiry: 0122,
-      },
-      {
-        user_id: 2,
-        payment_type: "credit",
-        provider: "MasterCard",
-        account_no: 2345678901234567,
-        expiry: 0222,
-      },
-      {
-        user_id: 3,
-        payment_type: "credit",
-        provider: "Visa",
-        account_no: 3456789012345678,
-        expiry: 0322,
-      },
-      {
-        user_id: 4,
-        payment_type: "debit",
-        provider: "Visa",
-        account_no: 4567890123456789,
-        expiry: 0422,
-      },
-      {
-        user_id: 5,
-        payment_type: "debit",
-        provider: "Visa",
-        account_no: 5678901234567890,
-        expiry: 0523,
-      },
-      {
-        user_id: 6,
-        payment_type: "credit",
-        provider: "Visa",
-        account_no: 6789012345678901,
-        expiry: 0623,
-      },
-      {
-        user_id: 7,
-        payment_type: "debit",
-        provider: "Visa",
-        account_no: 7890123456789012,
-        expiry: 0723,
-      },
-      {
-        user_id: 8,
-        payment_type: "debit",
-        provider: "MasterCard",
-        account_no: 8901234567890123,
-        expiry: 0823,
-      },
-      {
-        user_id: 9,
-        payment_type: "credit",
-        provider: "Visa",
-        account_no: 9012345678901234,
-        expiry: 0924,
-      },
-      {
-        user_id: 10,
-        payment_type: "debit",
-        provider: "Visa",
-        account_no: 9876543210987654,
-        expiry: 1024,
-      },
-      {
-        user_id: 11,
-        payment_type: "credit",
-        provider: "Visa",
-        account_no: 8765432109876543,
-        expiry: 1124,
-      },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating user payment!");
-    throw error;
-  }
-};
-
-const createInitialProducts = async () => {
-  try {
-    console.log("creating initial products...");
-    const productsToCreate = [
-      {
-        name: "Tree Ripper 3000",
-        description: "Powered by diesel gas",
-        SKU: "11111111",
-        category_id: "1",
-        inventory_id: "1",
-        price: "$200",
-        discount_id: "1",
-      },
-      {
-        name: "The Earth Destroyer 5.0",
-        description: "Cuts even ancient growth",
-        SKU: "22222222",
-        category_id: "1",
-        inventory_id: "2",
-        price: "$100",
-        discount_id: "1",
-      },
-      {
-        name: "The Hedge Trimmer",
-        description: "For small jobs",
-        SKU: "33333333",
-        category_id: "2",
-        inventory_id: "3",
-        price: "$50",
-        discount_id: "2",
-      },
-      {
-        name: "The Simple Garden Shears",
-        description: "For really small jobs",
-        SKU: "44444444",
-        category_id: "2",
-        inventory_id: "4",
-        price: "$20",
-        discount_id: "2",
-      },
-      {
-        name: "The Branch Mangler",
-        description: "I pity the branch",
-        SKU: "55555555",
-        category_id: "1",
-        inventory_id: "5",
-        price: "$500",
-        discount_id: "1",
-      },
-      {
-        name: "The Wood Pulverizer Mark II",
-        description: "Trees cower at his gaze",
-        SKU: "66666666",
-        category_id: "1",
-        inventory_id: "6",
-        price: "$750",
-        discount_id: "1",
-      },
-      {
-        name: "The Psycho Woodchuck Woodchipper",
-        description: "Now you see a tree, now you do not...",
-        SKU: "7777777",
-        category_id: "3",
-        inventory_id: "7",
-        price: "$999",
-        discount_id: "3",
-      },
-      {
-        name: "The Lawn Shredder (bluetooth enabled)",
-        description: "Grass doesnt even stand a chance",
-        SKU: "88888888",
-        category_id: "4",
-        inventory_id: "8",
-        price: "$299",
-        discount_id: "4",
-      },
-      {
-        name: "The Weed Eviscerator",
-        description: "Kiss those pesky weeds goodbye...or dont",
-        SKU: "99999999",
-        category_id: "2",
-        inventory_id: "9",
-        price: "$100",
-        discount_id: "2",
-      },
-      {
-        name: "The Vine Massacre-Maker",
-        description: "This could get ugly...for vines",
-        SKU: "10000000",
-        category_id: "2",
-        inventory_id: "10",
-        price: "$3200",
-        discount_id: "2",
-      },
-    ];
-    const products = await Promise.all(productsToCreate.map(createProduct));
-    console.log("Products Created: ", products);
-    console.log("Finished Creating Products!");
-  } catch (error) {
-    throw error;
-  }
-};
-
-const createInitialProductCategories = async () => {
-  try {
-    console.log("creating initial categories...");
-    const categoriesToCreate = [
-      {
-        name: "Chainsaws",
-        description:
-          "Everything you need to destroy a tree...what did it ever do for you?",
-      },
-      {
-        name: "Hand Tools",
-        description: "For those too afraid of a motorized blade",
-      },
-      {
-        name: "Powered Lawn Tools",
-        description:
-          "These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined",
-      },
-    ];
-    const categories = await Promise.all(
-      categoriesToCreate.map(createProductCategory)
-    );
-    console.log("Categories Created: ", categories);
-    console.log("Finished Creating Categories!");
-  } catch {}
-};
-
-const createInitialProductInventory = async () => {
-  console.log("Starting to create product inventory...");
-  try {
-    const inventoryToCreate = [
-      { quantity: 1 },
-      { quantity: 3 },
-      { quantity: 7 },
-      { quantity: 21 },
-      { quantity: 4 },
-      { quantity: 9 },
-      { quantity: 987 },
-      { quantity: 4 },
-      { quantity: 3 },
-      { quantity: 55 },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating product inventory!");
-    throw error;
-  }
-};
-
-const createInitialProductDiscounts = async () => {
-  console.log("Starting to create product discount...");
-  try {
-    const discountsToCreate = [
-      {
-        name: "example name 1",
-        desc: "description 1",
-        discount_percent: 5,
-        active: false,
-      },
-      {
-        name: "example name 2",
-        desc: "description 2",
-        discount_percent: 15,
-        active: false,
-      },
-      {
-        name: "example name 3",
-        desc: "description 3",
-        discount_percent: 99,
-        active: true,
-      },
-      {
-        name: "example name 4",
-        desc: "description 4",
-        discount_percent: 1,
-        active: true,
-      },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating product discount!");
-    throw error;
-  }
-};
-
-const createInitialOrderDetails = async () => {
-  console.log("Starting to create order details...");
-  try {
-    const orderDetailsToCreate = [
-      { user_id: 1, total: 123.2, payment_id: 1 },
-      { user_id: 4, total: 69.69, payment_id: 2 },
-      { user_id: 6, total: 98.76, payment_id: 3 },
-      { user_id: 8, total: 50.0, payment_id: 4 },
-      { user_id: 7, total: 33.33, payment_id: 5 },
-      { user_id: 4, total: 87.65, payment_id: 6 },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating order details!");
-    throw error;
-  }
-};
-
-const createInitialOrderItems = async () => {
-  console.log("Starting to create order items...");
-  try {
-    const orderItemsToCreate = [
-      { order_id: 5, product_id: 2, quantity: 4 },
-      { order_id: 4, product_id: 2, quantity: 3 },
-      { order_id: 9, product_id: 3, quantity: 1 },
-      { order_id: 10, product_id: 8, quantity: 1 },
-      { order_id: 11, product_id: 10, quantity: 2 },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating order items!");
-    throw error;
-  }
-};
-
-const createInitialPaymentDetails = async () => {
-  console.log("Starting to create payment details...");
-  try {
-    const paymentDetailsToCreate = [
-      { order_id: 2, amount: 34.2, provider: "Visa", status: true },
-      { order_id: 4, amount: 80.0, provider: "MasterCard", status: true },
-      { order_id: 3, amount: 100.21, provider: "MasterCard", status: false },
-      { order_id: 6, amount: 98.22, provider: "Visa", status: true },
-      { order_id: 12, amount: 11.16, provider: "Visa", status: true },
-    ];
-    // TODO: complete try block . . .
-  } catch (error) {
-    console.error("Error creating payment items!");
-    throw error;
-  }
-};
+/**
+ * ! Done: Users table works
+ *
+ * TODO: user_address => requires user table
+ * TODO: user_payment => requires user table
+ * TODO: shopping_session => requires users table
+ * TODO: product_category
+ * TODO: product_inventory
+ * TODO: product_discount
+ * TODO: order_details => requires users table && user_payment table
+ * TODO: products => requires product_category table && product_discount table
+ * TODO: payment_details => requires products table
+ * TODO: cart_items => requires shopping_session table && products table
+ * TODO: order_items => requires order_details table && products table
+ *
+ */
 
 const rebuildDB = async () => {
   try {
@@ -813,17 +254,17 @@ const rebuildDB = async () => {
     await dropTables();
     await createTables();
     await createInitialUsers();
-    // await createInitialShoppingSession();
-    // await createInitialCartItems();
-    // await createInitialUserAddresses();
+    await createInitialUserAddresses();
     // await createInitialUserPayment();
-    // await createInitialProducts();
+    // await createInitialShoppingSession();
     // await createInitialProductCategories();
     // await createInitialProductInventory();
     // await createInitialProductDiscounts();
     // await createInitialOrderDetails();
-    // await createInitialOrderItems();
+    // await createInitialProducts();
     // await createInitialPaymentDetails();
+    // await createInitialCartItems();
+    // await createInitialOrderItems();
   } catch (error) {
     console.error("Error during rebuildDB... sad face");
     throw error;
