@@ -92,7 +92,7 @@ const createTables = async () => {
               user_id INTEGER REFERENCES users(id),
               payment_type VARCHAR(255) NOT NULL,
               provider VARCHAR(255) NOT NULL,
-              account_no INTEGER NOT NULL,
+              account_no VARCHAR(16) NOT NULL,
               expiry INTEGER NOT NULL
             );
           `);
@@ -232,8 +232,8 @@ const createTables = async () => {
 };
 
 /**
- * ! Done: Users table works
- *
+ * ! Done: users table works
+ * ! Done: user_address table works
  * TODO: user_address => requires user table
  * TODO: user_payment => requires user table
  * TODO: shopping_session => requires users table
@@ -256,7 +256,7 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialUserAddresses();
     // await createInitialUserPayment();
-    // await createInitialShoppingSession();
+    await createInitialShoppingSession();
     // await createInitialProductCategories();
     // await createInitialProductInventory();
     // await createInitialProductDiscounts();

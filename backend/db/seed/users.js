@@ -1,4 +1,8 @@
-const { createUser, createUserAddress } = require("..");
+const {
+  createUser,
+  createUserAddress,
+  createUserShoppingSession,
+} = require("..");
 
 const createInitialUsers = async () => {
   console.log("Starting to create users...");
@@ -230,7 +234,6 @@ const createInitialUserAddresses = async () => {
         mobile: "7654321098",
       },
     ];
-    // TODO: complete try block . . .
     const addresses = await Promise.all(
       addressesToCreate.map(createUserAddress)
     );
@@ -246,7 +249,7 @@ const createInitialUserAddresses = async () => {
 const createInitialShoppingSession = async () => {
   console.log("Starting to create shopping sessions...");
   try {
-    const shoppingSessionsToCreate = [
+    const shoppingSessionToCreate = [
       { user_id: 4, total: 42.21 },
       { user_id: 2, total: 123.54 },
       { user_id: 4, total: 80.74 },
@@ -256,6 +259,12 @@ const createInitialShoppingSession = async () => {
       { user_id: 5, total: 50.33 },
     ];
     // TODO: complete try block . . .
+    const shoppingSession = await Promise.all(
+      shoppingSessionToCreate.map(createUserShoppingSession)
+    );
+    console.log("Shopping sessions created: ");
+    console.log(shoppingSession);
+    console.log("Finished creating shopping sessions!");
   } catch (error) {
     console.error("Error creating shopping sessions!");
     throw error;
