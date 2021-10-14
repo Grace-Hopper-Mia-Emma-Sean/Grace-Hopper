@@ -1,6 +1,18 @@
 // user adapters
-const { createUser } = require("./adapters/users");
-const { createUserAddress } = require("./adapters/user_address");
+const {
+  createUser,
+  getAllUsers,
+  getUserById,
+  getUserByUsername,
+  updateUser,
+} = require("./adapters/users");
+
+const {
+  createUserAddress,
+  getUserAddressById,
+  updateUserAddress,
+} = require("./adapters/user_address");
+
 const { createUserCartItems } = require("./adapters/cart_items");
 const { createUserShoppingSession } = require("./adapters/shopping_session");
 
@@ -26,7 +38,13 @@ const { createInitialPaymentDetails } = require("./adapters/payment_details");
 
 module.exports = {
   createUser,
+  getAllUsers,
+  getUserById,
+  getUserByUsername,
+  updateUser,
   createUserAddress,
+  getUserAddressById,
+  updateUserAddress,
   createUserShoppingSession,
   createUserCartItems,
   createInitialProducts,
