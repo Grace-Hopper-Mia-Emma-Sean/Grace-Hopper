@@ -31,17 +31,24 @@ const createUser = async ({
   }
 };
 
-const getUser = async ({ username, password }) => {
+const getAllUsers = async ({
+  username,
+  first_name,
+  last_name,
+  telephone,
+  isAdmin,
+}) => {
   try {
-    const user = await getUserByUsername(username);
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-    if (passwordsMatch) {
-      delete user.password;
-      return user;
-    } else {
-      return;
-    }
+    const {
+      rows: [users],
+    } = await client.query(
+      `
+      SELECT username, first_name, last_name, telephone, isAdmin
+      FROM users
+    `,
+      [username, first_name, last_name, telephone, isAdmin]
+    );
+    return users;
   } catch (error) {
     throw error;
   }
@@ -55,19 +62,48 @@ const getUserById = async (id) => {
       SELECT *
       FROM USERS
       WHERE id=${id}`);
+    if (!user) return null;
     return user;
   } catch (error) {
     throw error;
   }
 };
 
-const getUsers = async () => {
+const getUserByUsername = async (username) => {
   try {
-    const { rows } = await client.query(`
+    const {
+      rows: [user],
+    } = await client.query(
+      `
       SELECT *
       FROM users
-    `);
-    return rows;
+      WHERE username=$1
+    `,
+      [username]
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateUser = async (id, fields = {}) => {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+  if (setString.toString.length === 0) return;
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      UPDATE users
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+    `,
+      Object.values(fields)
+    );
+    return user;
   } catch (error) {
     throw error;
   }
@@ -81,9 +117,8 @@ const getUserOrders = async () => {};
 
 module.exports = {
   createUser,
-  getUser,
+  getAllUsers,
   getUserById,
-  getUsers,
-  getUserAcct,
-  getUserOrders,
+  getUserByUsername,
+  updateUser,
 };
