@@ -1,4 +1,4 @@
-const { createUser } = require("..");
+const { createUser, createUserAddress } = require("..");
 
 const createInitialUsers = async () => {
   console.log("Starting to create users...");
@@ -107,7 +107,7 @@ const createInitialUsers = async () => {
 const createInitialUserAddresses = async () => {
   console.log("Starting to create user addresses...");
   try {
-    const userAddressesToCreate = [
+    const addressesToCreate = [
       {
         user_id: 1,
         address_line1: "10 Main St",
@@ -231,6 +231,12 @@ const createInitialUserAddresses = async () => {
       },
     ];
     // TODO: complete try block . . .
+    const addresses = await Promise.all(
+      addressesToCreate.map(createUserAddress)
+    );
+    console.log("Addresses created: ");
+    console.log(addresses);
+    console.log("Finished creating addresses!");
   } catch (error) {
     console.error("Error creating user addresses!");
     throw error;
