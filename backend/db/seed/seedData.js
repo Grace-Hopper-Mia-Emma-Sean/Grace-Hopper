@@ -282,7 +282,7 @@ const createInitialCartItems = () => {
 const createInitialUserAddresses = () => {
   console.log("Starting to create user addresses...");
   try {
-    const cartItemsToCreate = [
+    const userAddressesToCreate = [
       {
         user_id: 1,
         address_line1: "10 Main St",
@@ -415,7 +415,7 @@ const createInitialUserAddresses = () => {
 const createUserPayment = () => {
   console.log("Starting to create user payment...");
   try {
-    const cartItemsToCreate = [
+    const userPaymentsToCreate = [
       {
         user_id: 1,
         payment_type: "credit",
