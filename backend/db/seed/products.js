@@ -1,3 +1,9 @@
+const {
+  createProduct,
+  createDiscount,
+  createProductCategory
+} = require('../adapters/products')
+
 const createInitialProducts = async () => {
   try {
     console.log("creating initial products...");
@@ -27,7 +33,7 @@ const createInitialProducts = async () => {
         category_id: "2",
         inventory_id: "3",
         price: "$50",
-        discount_id: "2",
+        discount_id: "3",
       },
       {
         name: "The Simple Garden Shears",
@@ -63,7 +69,7 @@ const createInitialProducts = async () => {
         category_id: "3",
         inventory_id: "7",
         price: "$999",
-        discount_id: "3",
+        discount_id: "4",
       },
       {
         name: "The Lawn Shredder (bluetooth enabled)",
@@ -72,7 +78,7 @@ const createInitialProducts = async () => {
         category_id: "4",
         inventory_id: "8",
         price: "$299",
-        discount_id: "4",
+        discount_id: "3",
       },
       {
         name: "The Weed Eviscerator",
@@ -81,7 +87,7 @@ const createInitialProducts = async () => {
         category_id: "2",
         inventory_id: "9",
         price: "$100",
-        discount_id: "2",
+        discount_id: "3",
       },
       {
         name: "The Vine Massacre-Maker",
@@ -90,7 +96,7 @@ const createInitialProducts = async () => {
         category_id: "2",
         inventory_id: "10",
         price: "$3200",
-        discount_id: "2",
+        discount_id: "3",
       },
     ];
     const products = await Promise.all(productsToCreate.map(createProduct));
@@ -125,7 +131,9 @@ const createInitialProductCategories = async () => {
     );
     console.log("Categories Created: ", categories);
     console.log("Finished Creating Categories!");
-  } catch {}
+  } catch (error){
+    throw error
+  }
 };
 
 const createInitialProductInventory = async () => {
@@ -144,6 +152,7 @@ const createInitialProductInventory = async () => {
       { quantity: 55 },
     ];
     // TODO: complete try block . . .
+    
   } catch (error) {
     console.error("Error creating product inventory!");
     throw error;
@@ -155,31 +164,34 @@ const createInitialProductDiscounts = async () => {
   try {
     const discountsToCreate = [
       {
-        name: "example name 1",
+        name: "Chainsaw Discount",
         desc: "description 1",
         discount_percent: 5,
         active: false,
       },
       {
-        name: "example name 2",
+        name: "Hand Tool Discount",
         desc: "description 2",
         discount_percent: 15,
         active: false,
       },
       {
-        name: "example name 3",
+        name: "Powered Lawn Tool Discount",
         desc: "description 3",
         discount_percent: 99,
         active: true,
       },
       {
-        name: "example name 4",
+        name: "Large Machine Discount",
         desc: "description 4",
         discount_percent: 1,
         active: true,
       },
     ];
     // TODO: complete try block . . .
+    const discounts = await Promise.all(discountsToCreate.map(createDiscount));
+    console.log('Discounts Created: ', discounts)
+    console.log('Finished creating discounts!')
   } catch (error) {
     console.error("Error creating product discount!");
     throw error;
