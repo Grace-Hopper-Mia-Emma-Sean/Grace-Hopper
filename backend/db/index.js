@@ -1,7 +1,7 @@
+const { createUser } = require("./adapters/users");
+
 module.exports = {
-    ...require('./TBD'), 
-   
-  }
+  createUser,
+};
 
 //TO DO: export all db components here
-

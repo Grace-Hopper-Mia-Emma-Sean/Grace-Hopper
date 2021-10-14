@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "seed:dev": "node ./db/seed/seed.js",
     "start:server": "nodemon index.js",
     "start:server:mac": "react-scripts start"
   },

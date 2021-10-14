@@ -1,26 +1,23 @@
-const client = require("../client");
+const { client } = require("../client");
 
-const {
-  //TO DO: call db components as they get created
-} = require("../index");
+const { createUser } = require("..");
 
 const dropTables = async () => {
   try {
     console.log("Dropping All Tables...");
-
     await client.query(`
-    DROP TABLE IF EXISTS payment_details;
-    DROP TABLE IF EXISTS order_items;
-    DROP TABLE IF EXISTS order_details;
-    DROP TABLE IF EXISTS product_discount;
-    DROP TABLE IF EXISTS product_inventory;
-    DROP TABLE IF EXISTS product_category;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS user_payment;
-    DROP TABLE IF EXISTS user_address;
-    DROP TABLE IF EXISTS cart_items;
-    DROP TABLE IF EXISTS shopping_session;
-    DROP TABLE IF EXISTS users;
+      DROP TABLE IF EXISTS order_items;
+      DROP TABLE IF EXISTS cart_items;
+      DROP TABLE IF EXISTS payment_details;
+      DROP TABLE IF EXISTS products;
+      DROP TABLE IF EXISTS order_details;
+      DROP TABLE IF EXISTS product_discount;
+      DROP TABLE IF EXISTS product_inventory;
+      DROP TABLE IF EXISTS product_category;
+      DROP TABLE IF EXISTS user_payment;
+      DROP TABLE IF EXISTS user_address;
+      DROP TABLE IF EXISTS shopping_session;
+      DROP TABLE IF EXISTS users;
     `);
     console.log("Finished dropping tables!");
   } catch (error) {
@@ -32,114 +29,183 @@ const dropTables = async () => {
 const createTables = async () => {
   try {
     console.log("Starting to build tables...");
+    try {
+      console.log("creating users");
+      await client.query(`
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY, 
+          username VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          first_name VARCHAR(255) NOT NULL,
+          last_name VARCHAR(255) NOT NULL,
+          telephone VARCHAR(15) NOT NULL,
+          "isAdmin" BOOLEAN DEFAULT false
+        );
+      `);
+      try {
+        console.log("creating shopping_session");
+        await client.query(`
+          CREATE TABLE shopping_session (
+            id SERIAL PRIMARY KEY, 
+            user_id INTEGER REFERENCES users(id),
+            total INTEGER NOT NULL
+          ); 
+        `);
+        try {
+          console.log("creating user_address");
+          await client.query(`
+              CREATE TABLE user_address (
+                id SERIAL PRIMARY KEY, 
+                user_id INTEGER REFERENCES users(id),
+                address_line1 VARCHAR(255) NOT NULL,
+                address_line2 VARCHAR(255) NOT NULL,
+                city VARCHAR(255) NOT NULL,
+                state VARCHAR(255) NOT NULL, 
+                postal_code INTEGER NOT NULL,
+                country VARCHAR(255) NOT NULL,
+                telephone VARCHAR(15) NOT NULL,
+                mobile VARCHAR(15) NOT NULL
+              );
+            `);
+          try {
+            console.log("creating user_payment");
+            await client.query(`
+                CREATE TABLE user_payment (
+                  id SERIAL PRIMARY KEY, 
+                  user_id INTEGER REFERENCES users(id),
+                  payment_type VARCHAR(255) NOT NULL,
+                  provider VARCHAR(255) NOT NULL,
+                  account_no INTEGER NOT NULL,
+                  expiry INTEGER NOT NULL
+                );
+              `);
+            try {
+              console.log("creating product_category");
+              await client.query(`
+                CREATE TABLE product_category (
+                  id SERIAL PRIMARY KEY, 
+                  name VARCHAR(255) NOT NULL,
+                  description VARCHAR(255) NOT NULL
+                );
+              `);
+              try {
+                console.log("creating product_inventory");
+                await client.query(`
+                  CREATE TABLE product_inventory (
+                    id SERIAL PRIMARY KEY, 
+                    quantity INTEGER NOT NULL
+                  );
+                `);
+                try {
+                  console.log("creating product_discount");
+                  await client.query(`
+                    CREATE TABLE product_discount (
+                      id SERIAL PRIMARY KEY, 
+                      name VARCHAR(255) NOT NULL,
+                      description VARCHAR(255) NOT NULL,
+                      discount_percent INTEGER NOT NULL,
+                      active BOOLEAN DEFAULT false
+                    );
+                  `);
+                  try {
+                    console.log("creating order_details");
+                    await client.query(`
+                      CREATE TABLE order_details (
+                        id SERIAL PRIMARY KEY, 
+                        "user_id" INTEGER REFERENCES users(id),
+                        total INTEGER NOT NULL,
+                        "payment_id" INTEGER REFERENCES user_payment(id)
+                        );
+                    `);
+                    try {
+                      console.log("creating products");
+                      await client.query(`
+                         CREATE TABLE products (
+                            id SERIAL PRIMARY KEY,
+                            name VARCHAR(255) NOT NULL,
+                            description VARCHAR(255) NOT NULL,
+                            SKU INTEGER NOT NULL,
+                            category_id INTEGER REFERENCES product_category(id),
+                            inventory_id INTEGER REFERENCES product_category(id),
+                            price INTEGER NOT NULL,
+                            discount_id INTEGER REFERENCES product_discount(id)
+                          );
+                      `);
 
-    await client.query(`
-    CREATE TABLE users (
-      id SERIAL PRIMARY KEY, 
-      username VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      first_name VARCHAR(255) NOT NULL,
-      last_name VARCHAR(255) NOT NULL,
-      telephone INTEGER NOT NULL,
-      isAdmin BOOLEAN DEFAULT false
-    );
-
-    CREATE TABLE shopping_session (
-      id SERIAL PRIMARY KEY, 
-      "user_id" INTEGER REFERENCES users(id),
-      total INTEGER NOT NULL
-    );
-
-    CREATE TABLE cart_items (
-      id SERIAL PRIMARY KEY, 
-      "session_id" INTEGER REFERENCES shopping_session(id),
-      "product_id" INTEGER REFERENCES products(id),
-      quantity INTEGER NOT NULL
-    );
-
-    CREATE TABLE user_address (
-      id SERIAL PRIMARY KEY, 
-      "user_id" INTEGER REFERENCES users(id),
-      address_line1 VARCHAR(255) NOT NULL,
-      address_line2 VARCHAR(255) NOT NULL,
-      city VARCHAR(255) NOT NULL,
-      state VARCHAR(255) NOT NULL, 
-      postal_code INTEGER NOT NULL,
-      country VARCHAR(255) NOT NULL,
-      telephone INTEGER NOT NULL,
-      mobile INTEGER NOT NULL
-    );
-
-    CREATE TABLE user_payment (
-      id SERIAL PRIMARY KEY, 
-      "user_id" INTEGER REFERENCES users(id),
-      payment_type VARCHAR(255) NOT NULL,
-      provider VARCHAR(255) NOT NULL,
-      account_no INTEGER NOT NULL,
-      expiry INTEGER NOT NULL
-    );
-
-    CREAT TABLE products (
-      id SERIAL PRIMARY KEY, 
-      name VARCHAR(255) NOT NULL,
-      desc VARCHAR(255) NOT NULL,
-      SKU INTEGER NOT NULL,
-      "category_id" INTEGER REFERENCES product_category(id),
-      "inventory_id" INTEGER REFERENCES product_category(id),
-      price INTEGER NOT NULL,
-      "discount_id" INTEGER REFERENCES product_discount(id)
-    );
-
-
-    CREATE TABLE product_category (
-      id SERIAL PRIMARY KEY, 
-      name VARCHAR(255) NOT NULL,
-      desc VARCHAR(255) NOT NULL
-    );
-
-    CREATE TABLE product_inventory (
-      id SERIAL PRIMARY KEY, 
-      quantity INTEGER NOT NULL
-    );
-
-    CREATE TABLE product_discount (
-      id SERIAL PRIMARY KEY, 
-      name VARCHAR(255) NOT NULL,
-      desc VARCHAR(255) NOT NULL,
-      discount_percent INTEGER NOT NULL,
-      active BOOLEAN DEFAULT false
-    );
-
-    CREATE TABLE order_details (
-      id SERIAL PRIMARY KEY, 
-      "user_id" INTEGER REFERENCES users(id),
-      total INTEGER NOT NULL,
-      "payment_id" INTEGER REFERENCES user_payment(id)
-    );
-
-    CREATE TABLE order_items (
-      id SERIAL PRIMARY KEY, 
-      "order_id" INTEGER REFERENCES order_details(id),
-      "product_id" INTEGER REFERENCES products(id)
-      quantity INTEGER NOT NULL
-    );
-
-    CREATE TABLE payment_details (
-      id SERIAL PRIMARY KEY, 
-      "order_id" INTEGER REFERENCES order_details(id),
-      amount INTEGER NOT NULL,
-      provider VARCHAR(255) NOT NULL,
-      status BOOLEAN DEFAULT false
-    );
-
-    `);
+                      try {
+                        console.log("creating payment_details");
+                        await client.query(`
+                          CREATE TABLE payment_details (
+                            id SERIAL PRIMARY KEY, 
+                            "order_id" INTEGER REFERENCES order_details(id),
+                            amount INTEGER NOT NULL,
+                            provider VARCHAR(255) NOT NULL,
+                            status BOOLEAN DEFAULT false
+                          );
+                        `);
+                        try {
+                          console.log("creating cart_items");
+                          await client.query(`
+                            CREATE TABLE cart_items (
+                              id SERIAL PRIMARY KEY,
+                              session_id INTEGER REFERENCES shopping_session(id),
+                              product_id INTEGER REFERENCES products(id),
+                              quantity INTEGER NOT NULL
+                            );
+                          `);
+                          try {
+                            console.log("creating order_items");
+                            await client.query(`
+                              CREATE TABLE order_items (
+                                id SERIAL PRIMARY KEY, 
+                                order_id INTEGER REFERENCES order_details(id),
+                                product_id INTEGER REFERENCES products(id),
+                                quantity INTEGER NOT NULL
+                             );
+                           `);
+                          } catch (error) {
+                            console.error("error creating order_items table");
+                          }
+                        } catch (error) {
+                          console.error("error creating cart_items table");
+                        }
+                      } catch (error) {
+                        console.error("error creating payment_details table");
+                      }
+                    } catch (error) {
+                      console.error("error creating products table");
+                    }
+                  } catch (error) {
+                    console.error("error creating order_details table");
+                  }
+                } catch (error) {
+                  console.error("error creating product_discount table");
+                }
+              } catch (error) {
+                console.error("error creating product_inventory table");
+              }
+            } catch (error) {
+              console.error("error creating product_category table");
+            }
+          } catch (error) {
+            console.error("error creating user_payment table");
+          }
+        } catch (error) {
+          console.error("error creating user_address table");
+        }
+      } catch (error) {
+        console.error("error creating shopping_session table");
+      }
+    } catch (error) {
+      console.error("error creating users table");
+    }
   } catch (error) {
-    console.error("Error dropping table!");
+    console.error("Error building tables!");
     throw error;
   }
 };
 
-const createInitialUsers = () => {
+const createInitialUsers = async () => {
   console.log("Starting to create users...");
   try {
     const usersToCreate = [
@@ -149,7 +215,7 @@ const createInitialUsers = () => {
         password: "august2016",
         first_name: "Haru",
         last_name: "Aoi",
-        phone: 1234567890,
+        telephone: "1234567890",
         isAdmin: false,
       },
       {
@@ -157,7 +223,7 @@ const createInitialUsers = () => {
         password: "september2016",
         first_name: "Haru",
         last_name: "Estarriol",
-        phone: 2345678901,
+        telephone: "2345678901",
         isAdmin: false,
       },
       {
@@ -165,7 +231,7 @@ const createInitialUsers = () => {
         password: "april2018",
         first_name: "Erin",
         last_name: "Loirratse",
-        phone: 3456789012,
+        telephone: "3456789012",
         isAdmin: false,
       },
       {
@@ -173,7 +239,7 @@ const createInitialUsers = () => {
         password: "november2018",
         first_name: "Ember",
         last_name: "Elise",
-        phone: 4567890123,
+        telephone: "4567890123",
         isAdmin: false,
       },
       {
@@ -181,7 +247,7 @@ const createInitialUsers = () => {
         password: "january2019",
         first_name: "Eisha",
         last_name: "Elise",
-        phone: 5678901234,
+        telephone: "5678901234",
         isAdmin: false,
       },
       {
@@ -189,7 +255,7 @@ const createInitialUsers = () => {
         password: "april2020",
         first_name: "Emma",
         last_name: "Loirratse",
-        phone: 6789012345,
+        telephone: "6789012345",
         isAdmin: false,
       },
       {
@@ -197,7 +263,7 @@ const createInitialUsers = () => {
         password: "july2021",
         first_name: "Nia",
         last_name: "Akemi",
-        phone: 8901234567,
+        telephone: "8901234567",
         isAdmin: false,
       },
       {
@@ -205,7 +271,7 @@ const createInitialUsers = () => {
         password: "september2021",
         first_name: "Miku",
         last_name: "Akemi",
-        phone: 9012345678,
+        telephone: "9012345678",
         isAdmin: false,
       },
       {
@@ -213,7 +279,7 @@ const createInitialUsers = () => {
         password: "password",
         first_name: "Emma",
         last_name: "Elise",
-        phone: 9876543210,
+        telephone: "9876543210",
         isAdmin: true,
       },
       {
@@ -221,7 +287,7 @@ const createInitialUsers = () => {
         password: "password",
         first_name: "Mia",
         last_name: "Dao",
-        phone: 8765432109,
+        telephone: "8765432109",
         isAdmin: true,
       },
       {
@@ -229,7 +295,7 @@ const createInitialUsers = () => {
         password: "password",
         first_name: "Sean",
         last_name: "Conte",
-        phone: 7654321098,
+        telephone: "7654321098",
         isAdmin: true,
       },
     ];
@@ -243,7 +309,7 @@ const createInitialUsers = () => {
   }
 };
 
-const createInitialShoppingSession = () => {
+const createInitialShoppingSession = async () => {
   console.log("Starting to create shopping sessions...");
   try {
     const shoppingSessionsToCreate = [
@@ -262,7 +328,7 @@ const createInitialShoppingSession = () => {
   }
 };
 
-const createInitialCartItems = () => {
+const createInitialCartItems = async () => {
   console.log("Starting to create cart items...");
   try {
     const cartItemsToCreate = [
@@ -279,7 +345,7 @@ const createInitialCartItems = () => {
   }
 };
 
-const createInitialUserAddresses = () => {
+const createInitialUserAddresses = async () => {
   console.log("Starting to create user addresses...");
   try {
     const userAddressesToCreate = [
@@ -291,8 +357,8 @@ const createInitialUserAddresses = () => {
         state: "OR",
         postal_code: 12345,
         country: "United States",
-        telephone: 1234567890,
-        mobile: 1234567890,
+        telephone: "1234567890",
+        mobile: "1234567890",
       },
       {
         user_id: 2,
@@ -302,8 +368,8 @@ const createInitialUserAddresses = () => {
         state: "CA",
         postal_code: 23456,
         country: "United States",
-        telephone: 2345678901,
-        mobile: 2345678901,
+        telephone: "2345678901",
+        mobile: "2345678901",
       },
       {
         user_id: 3,
@@ -313,8 +379,8 @@ const createInitialUserAddresses = () => {
         state: "NY",
         postal_code: 34567,
         country: "United States",
-        telephone: 3456789012,
-        mobile: 3456789012,
+        telephone: "3456789012",
+        mobile: "3456789012",
       },
       {
         user_id: 4,
@@ -324,8 +390,8 @@ const createInitialUserAddresses = () => {
         state: "CA",
         postal_code: 45678,
         country: "United States",
-        telephone: 4567890123,
-        mobile: 4567890123,
+        telephone: "4567890123",
+        mobile: "4567890123",
       },
       {
         user_id: 5,
@@ -335,8 +401,8 @@ const createInitialUserAddresses = () => {
         state: "CA",
         postal_code: 56789,
         country: "United States",
-        telephone: 5678901234,
-        mobile: 5678901234,
+        telephone: "5678901234",
+        mobile: "5678901234",
       },
       {
         user_id: 6,
@@ -346,8 +412,8 @@ const createInitialUserAddresses = () => {
         state: "MA",
         postal_code: 67890,
         country: "United States",
-        telephone: 6789012345,
-        mobile: 6789012345,
+        telephone: "6789012345",
+        mobile: "6789012345",
       },
       {
         user_id: 7,
@@ -357,8 +423,8 @@ const createInitialUserAddresses = () => {
         state: "ME",
         postal_code: 78901,
         country: "United States",
-        telephone: 8901234567,
-        mobile: 8901234567,
+        telephone: "8901234567",
+        mobile: "8901234567",
       },
       {
         user_id: 8,
@@ -368,8 +434,8 @@ const createInitialUserAddresses = () => {
         state: "VA",
         postal_code: 89012,
         country: "United States",
-        telephone: 9012345678,
-        mobile: 9012345678,
+        telephone: "9012345678",
+        mobile: "9012345678",
       },
       {
         user_id: 9,
@@ -379,8 +445,8 @@ const createInitialUserAddresses = () => {
         state: "NM",
         postal_code: 90123,
         country: "United States",
-        telephone: 9876543210,
-        mobile: 9876543210,
+        telephone: "9876543210",
+        mobile: "9876543210",
       },
       {
         user_id: 10,
@@ -390,8 +456,8 @@ const createInitialUserAddresses = () => {
         state: "WA",
         postal_code: 98765,
         country: "United States",
-        telephone: 8765432109,
-        mobile: 8765432109,
+        telephone: "8765432109",
+        mobile: "8765432109",
       },
       {
         user_id: 11,
@@ -401,8 +467,8 @@ const createInitialUserAddresses = () => {
         state: "WA",
         postal_code: 87654,
         country: "United States",
-        telephone: 7654321098,
-        mobile: 7654321098,
+        telephone: "7654321098",
+        mobile: "7654321098",
       },
     ];
     // TODO: complete try block . . .
@@ -412,7 +478,7 @@ const createInitialUserAddresses = () => {
   }
 };
 
-const createUserPayment = () => {
+const createInitialUserPayment = async () => {
   console.log("Starting to create user payment...");
   try {
     const userPaymentsToCreate = [
@@ -500,26 +566,6 @@ const createUserPayment = () => {
     throw error;
   }
 };
-
-//SAMPLE BELOW:
-// const createInitialProducts = async () => {
-//   try {
-//     console.log('Starting to create products...');
-
-//     const productsToCreate = [
-//       //TO DO
-//     ]
-//     const activities = await Promise.all(productsToCreate.map(createProducts));
-z;
-//     console.log('Products created:');
-//     console.log(products);
-
-//     console.log('Finished creating products!');
-//   } catch (error) {
-//     console.error('Error creating products!');
-//     throw error;
-//   }
-// }
 
 const createInitialProducts = async () => {
   try {
@@ -651,7 +697,7 @@ const createInitialProductCategories = async () => {
   } catch {}
 };
 
-const createInitialProductInventory = () => {
+const createInitialProductInventory = async () => {
   console.log("Starting to create product inventory...");
   try {
     const inventoryToCreate = [
@@ -673,7 +719,7 @@ const createInitialProductInventory = () => {
   }
 };
 
-const createInitialProductDiscounts = () => {
+const createInitialProductDiscounts = async () => {
   console.log("Starting to create product discount...");
   try {
     const discountsToCreate = [
@@ -709,7 +755,7 @@ const createInitialProductDiscounts = () => {
   }
 };
 
-const createInitialOrderDetails = () => {
+const createInitialOrderDetails = async () => {
   console.log("Starting to create order details...");
   try {
     const orderDetailsToCreate = [
@@ -727,7 +773,7 @@ const createInitialOrderDetails = () => {
   }
 };
 
-const createInitialOrderItems = () => {
+const createInitialOrderItems = async () => {
   console.log("Starting to create order items...");
   try {
     const orderItemsToCreate = [
@@ -744,7 +790,7 @@ const createInitialOrderItems = () => {
   }
 };
 
-const createInitialPaymentDetails = () => {
+const createInitialPaymentDetails = async () => {
   console.log("Starting to create payment details...");
   try {
     const paymentDetailsToCreate = [
@@ -761,44 +807,27 @@ const createInitialPaymentDetails = () => {
   }
 };
 
-//SAMPLE BELOW
-// const createInitialUsers = async () => {
-//   try {
-//     console.log('starting to create users...');
-
-//     const usersToCreate = [
-//       //TO DO
-//     ]
-//     const routines = await Promise.all(usersToCreate.map(routine => createUser(users)));
-//     console.log('Users Created: ', users)
-//     console.log('Finished creating users.')
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
-// ADD MORE CREATION FOR ALL TABLES
-
-//SAMPLE rebuildDB() below:
-// const rebuildDB = async () => {
-//   try {
-//     client.connect();
-//     await functions from above
-//     await
-//     await
-//     await
-//     await
-//     await
-
-//   } catch (error) {
-//     console.log('Error during rebuildDB')
-//     throw error;
-//   }
-// finally {
-//   client.end()
-// }
-// }
-
-module.exports = {
-  rebuildDB,
+const rebuildDB = async () => {
+  try {
+    client.connect();
+    await dropTables();
+    await createTables();
+    await createInitialUsers();
+    // await createInitialShoppingSession();
+    // await createInitialCartItems();
+    // await createInitialUserAddresses();
+    // await createInitialUserPayment();
+    // await createInitialProducts();
+    // await createInitialProductCategories();
+    // await createInitialProductInventory();
+    // await createInitialProductDiscounts();
+    // await createInitialOrderDetails();
+    // await createInitialOrderItems();
+    // await createInitialPaymentDetails();
+  } catch (error) {
+    console.error("Error during rebuildDB... sad face");
+    throw error;
+  }
 };
+
+module.exports = { rebuildDB };
