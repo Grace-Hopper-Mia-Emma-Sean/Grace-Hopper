@@ -1,9 +1,7 @@
-const {
-  createUser,
-  createUserAddress,
-  createUserShoppingSession,
-  createUserCartItems,
-} = require("./adapters/users");
+const { createUser } = require("./adapters/users");
+const { createUserAddress } = require("./adapters/user_address");
+const { createUserCartItems } = require("./adapters/cart_items");
+const { createUserShoppingSession } = require("./adapters/shopping_session");
 
 module.exports = {
   createUser,

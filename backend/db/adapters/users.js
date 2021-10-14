@@ -31,80 +31,6 @@ const createUser = async ({
   }
 };
 
-const createUserAddress = async ({
-  user_id,
-  address_line1,
-  address_line2,
-  city,
-  state,
-  postal_code,
-  country,
-  telephone,
-  mobile,
-}) => {
-  try {
-    const {
-      rows: [address],
-    } = await client.query(
-      `
-      INSERT INTO user_address(user_id, address_line1, address_line2, city, state, postal_code, country, telephone, mobile)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-      RETURNING *
-    `,
-      [
-        user_id,
-        address_line1,
-        address_line2,
-        city,
-        state,
-        postal_code,
-        country,
-        telephone,
-        mobile,
-      ]
-    );
-    return address;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const createUserShoppingSession = async ({ user_id, total }) => {
-  try {
-    const {
-      rows: [shoppingSession],
-    } = await client.query(
-      `
-      INSERT INTO shopping_session(user_id, total)
-      VALUES ($1, $2)
-      RETURNING *
-    `,
-      [user_id, total]
-    );
-    return shoppingSession;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const createUserCartItems = async ({ session_id, product_id, quantity }) => {
-  try {
-    const {
-      rows: [cart],
-    } = await client.query(
-      `
-      INSERT INTO cart_items(session_id, product_id, quantity)
-      VALUES ($1, $2, $3)
-      RETURNING *
-    `,
-      [session_id, product_id, quantity]
-    );
-    return cart;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const getUser = async ({ username, password }) => {
   try {
     const user = await getUserByUsername(username);
@@ -155,9 +81,6 @@ const getUserOrders = async () => {};
 
 module.exports = {
   createUser,
-  createUserAddress,
-  createUserShoppingSession,
-  createUserCartItems,
   getUser,
   getUserById,
   getUsers,
