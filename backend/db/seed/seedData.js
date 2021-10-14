@@ -125,7 +125,7 @@ const createTables = async () => {
 
     CREATE TABLE payment_details (
       id SERIAL PRIMARY KEY, 
-      "order_id"
+      "order_id" INTEGER REFERENCES order_details(id),
       amount INTEGER NOT NULL,
       provider VARCHAR(255) NOT NULL,
       status BOOLEAN DEFAULT false
