@@ -81,6 +81,7 @@ const getUserByUsername = async (username) => {
     `,
       [username]
     );
+    return user;
   } catch (error) {
     throw error;
   }

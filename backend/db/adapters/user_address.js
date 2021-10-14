@@ -38,4 +38,42 @@ const createUserAddress = async ({
   }
 };
 
-module.exports = { createUserAddress };
+const getUserAddressById = async (id) => {
+  try {
+    const {
+      rows: [address],
+    } = await client.query(`
+      SELECT *
+      FROM USERS
+      WHERE id=${id}`);
+    if (!address) return null;
+    return address;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateUserAddress = async ({ id, fields = {} }) => {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+  if (setString.toString.length === 0) return;
+  try {
+    const {
+      rows: [address],
+    } = await client.query(
+      `
+      UPDATE users
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+    `,
+      Object.values(fields)
+    );
+    return address;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { createUserAddress, getUserAddressById, updateUserAddress };
