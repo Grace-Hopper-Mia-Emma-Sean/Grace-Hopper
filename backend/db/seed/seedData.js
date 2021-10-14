@@ -419,7 +419,7 @@ const createUserPayment = () => {
       {
         user_id: 1,
         payment_type: "credit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 1234567890123456,
         expiry: 0122,
       },
@@ -433,35 +433,35 @@ const createUserPayment = () => {
       {
         user_id: 3,
         payment_type: "credit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 3456789012345678,
         expiry: 0322,
       },
       {
         user_id: 4,
         payment_type: "debit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 4567890123456789,
         expiry: 0422,
       },
       {
         user_id: 5,
         payment_type: "debit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 5678901234567890,
         expiry: 0523,
       },
       {
         user_id: 6,
         payment_type: "credit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 6789012345678901,
         expiry: 0623,
       },
       {
         user_id: 7,
         payment_type: "debit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 7890123456789012,
         expiry: 0723,
       },
@@ -475,21 +475,21 @@ const createUserPayment = () => {
       {
         user_id: 9,
         payment_type: "credit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 9012345678901234,
         expiry: 0924,
       },
       {
         user_id: 10,
         payment_type: "debit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 9876543210987654,
         expiry: 1024,
       },
       {
         user_id: 11,
         payment_type: "credit",
-        provider: "VISA",
+        provider: "Visa",
         account_no: 8765432109876543,
         expiry: 1124,
       },
@@ -523,43 +523,243 @@ z;
 
 const createInitialProducts = async () => {
   try {
-    console.log('creating initial products...')
+    console.log("creating initial products...");
     const productsToCreate = [
-      {name: 'Tree Ripper 3000', description: 'Powered by diesel gas', SKU: '11111111', category_id: '1', inventory_id: '1', price: '$200', discount_id: '1'},
-      {name: 'The Earth Destroyer 5.0', description: 'Cuts even ancient growth', SKU: '22222222', category_id: '1', inventory_id: '2', price: '$100', discount_id: '1'},
-      {name: 'The Hedge Trimmer', description: 'For small jobs', SKU: '33333333', category_id: '2', inventory_id: '3', price: '$50', discount_id: '2'},
-      {name: 'The Simple Garden Shears', description: 'For really small jobs', SKU: '44444444', category_id: '2', inventory_id: '4', price: '$20', discount_id: '2'},
-      {name: 'The Branch Mangler', description: 'I pity the branch', SKU: '55555555', category_id: '1', inventory_id: '5', price: '$500', discount_id: '1'},
-      {name: 'The Wood Pulverizer Mark II', description: 'Trees cower at his gaze', SKU: '66666666', category_id: '1', inventory_id: '6', price: '$750', discount_id: '1'},
-      {name: 'The Psycho Woodchuck Woodchipper', description: 'Now you see a tree, now you do not...', SKU: '7777777', category_id: '3', inventory_id: '7', price: '$999', discount_id: '3'},
-      {name: 'The Lawn Shredder (bluetooth enabled)', description: 'Grass doesnt even stand a chance', SKU: '88888888', category_id: '4', inventory_id: '8', price: '$299', discount_id: '4'},
-      {name: 'The Weed Eviscerator', description: 'Kiss those pesky weeds goodbye...or dont', SKU: '99999999', category_id: '2', inventory_id: '9', price: '$100', discount_id: '2'},
-      {name: 'The Vine Massacre-Maker', description: 'This could get ugly...for vines', SKU: '10000000', category_id: '2', inventory_id: '10', price: '$3200', discount_id: '2'}
-    ]
-    const products = await Promise.all(productsToCreate.map(createProduct))
-    console.log('Products Created: ', products)
-    console.log('Finished Creating Products!')
+      {
+        name: "Tree Ripper 3000",
+        description: "Powered by diesel gas",
+        SKU: "11111111",
+        category_id: "1",
+        inventory_id: "1",
+        price: "$200",
+        discount_id: "1",
+      },
+      {
+        name: "The Earth Destroyer 5.0",
+        description: "Cuts even ancient growth",
+        SKU: "22222222",
+        category_id: "1",
+        inventory_id: "2",
+        price: "$100",
+        discount_id: "1",
+      },
+      {
+        name: "The Hedge Trimmer",
+        description: "For small jobs",
+        SKU: "33333333",
+        category_id: "2",
+        inventory_id: "3",
+        price: "$50",
+        discount_id: "2",
+      },
+      {
+        name: "The Simple Garden Shears",
+        description: "For really small jobs",
+        SKU: "44444444",
+        category_id: "2",
+        inventory_id: "4",
+        price: "$20",
+        discount_id: "2",
+      },
+      {
+        name: "The Branch Mangler",
+        description: "I pity the branch",
+        SKU: "55555555",
+        category_id: "1",
+        inventory_id: "5",
+        price: "$500",
+        discount_id: "1",
+      },
+      {
+        name: "The Wood Pulverizer Mark II",
+        description: "Trees cower at his gaze",
+        SKU: "66666666",
+        category_id: "1",
+        inventory_id: "6",
+        price: "$750",
+        discount_id: "1",
+      },
+      {
+        name: "The Psycho Woodchuck Woodchipper",
+        description: "Now you see a tree, now you do not...",
+        SKU: "7777777",
+        category_id: "3",
+        inventory_id: "7",
+        price: "$999",
+        discount_id: "3",
+      },
+      {
+        name: "The Lawn Shredder (bluetooth enabled)",
+        description: "Grass doesnt even stand a chance",
+        SKU: "88888888",
+        category_id: "4",
+        inventory_id: "8",
+        price: "$299",
+        discount_id: "4",
+      },
+      {
+        name: "The Weed Eviscerator",
+        description: "Kiss those pesky weeds goodbye...or dont",
+        SKU: "99999999",
+        category_id: "2",
+        inventory_id: "9",
+        price: "$100",
+        discount_id: "2",
+      },
+      {
+        name: "The Vine Massacre-Maker",
+        description: "This could get ugly...for vines",
+        SKU: "10000000",
+        category_id: "2",
+        inventory_id: "10",
+        price: "$3200",
+        discount_id: "2",
+      },
+    ];
+    const products = await Promise.all(productsToCreate.map(createProduct));
+    console.log("Products Created: ", products);
+    console.log("Finished Creating Products!");
   } catch (error) {
-    throw (error);
+    throw error;
   }
-}
+};
 
 const createInitialProductCategories = async () => {
-  
   try {
-    console.log('creating initial categories...')
+    console.log("creating initial categories...");
     const categoriesToCreate = [
-      {name: 'Chainsaws', description: 'Everything you need to destroy a tree...what did it ever do for you?'},
-      {name: 'Hand Tools', description: 'For those too afraid of a motorized blade'},
-      {name: 'Powered Lawn Tools', description: 'These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined'}
-  ]
-  const categories = await Promise.all(categoriesToCreate.map(createProductCategory))
-  console.log('Categories Created: ', categories)
-  console.log('Finished Creating Categories!')
-  } catch {
+      {
+        name: "Chainsaws",
+        description:
+          "Everything you need to destroy a tree...what did it ever do for you?",
+      },
+      {
+        name: "Hand Tools",
+        description: "For those too afraid of a motorized blade",
+      },
+      {
+        name: "Powered Lawn Tools",
+        description:
+          "These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined",
+      },
+    ];
+    const categories = await Promise.all(
+      categoriesToCreate.map(createProductCategory)
+    );
+    console.log("Categories Created: ", categories);
+    console.log("Finished Creating Categories!");
+  } catch {}
+};
 
+const createInitialProductInventory = () => {
+  console.log("Starting to create product inventory...");
+  try {
+    const inventoryToCreate = [
+      { quantity: 1 },
+      { quantity: 3 },
+      { quantity: 7 },
+      { quantity: 21 },
+      { quantity: 4 },
+      { quantity: 9 },
+      { quantity: 987 },
+      { quantity: 4 },
+      { quantity: 3 },
+      { quantity: 55 },
+    ];
+    // TODO: complete try block . . .
+  } catch (error) {
+    console.error("Error creating product inventory!");
+    throw error;
   }
-}
+};
+
+const createInitialProductDiscounts = () => {
+  console.log("Starting to create product discount...");
+  try {
+    const discountsToCreate = [
+      {
+        name: "example name 1",
+        desc: "description 1",
+        discount_percent: 5,
+        active: false,
+      },
+      {
+        name: "example name 2",
+        desc: "description 2",
+        discount_percent: 15,
+        active: false,
+      },
+      {
+        name: "example name 3",
+        desc: "description 3",
+        discount_percent: 99,
+        active: true,
+      },
+      {
+        name: "example name 4",
+        desc: "description 4",
+        discount_percent: 1,
+        active: true,
+      },
+    ];
+    // TODO: complete try block . . .
+  } catch (error) {
+    console.error("Error creating product discount!");
+    throw error;
+  }
+};
+
+const createInitialOrderDetails = () => {
+  console.log("Starting to create order details...");
+  try {
+    const orderDetailsToCreate = [
+      { user_id: 1, total: 123.2, payment_id: 1 },
+      { user_id: 4, total: 69.69, payment_id: 2 },
+      { user_id: 6, total: 98.76, payment_id: 3 },
+      { user_id: 8, total: 50.0, payment_id: 4 },
+      { user_id: 7, total: 33.33, payment_id: 5 },
+      { user_id: 4, total: 87.65, payment_id: 6 },
+    ];
+    // TODO: complete try block . . .
+  } catch (error) {
+    console.error("Error creating order details!");
+    throw error;
+  }
+};
+
+const createInitialOrderItems = () => {
+  console.log("Starting to create order items...");
+  try {
+    const orderItemsToCreate = [
+      { order_id: 5, product_id: 2, quantity: 4 },
+      { order_id: 4, product_id: 2, quantity: 3 },
+      { order_id: 9, product_id: 3, quantity: 1 },
+      { order_id: 10, product_id: 8, quantity: 1 },
+      { order_id: 11, product_id: 10, quantity: 2 },
+    ];
+    // TODO: complete try block . . .
+  } catch (error) {
+    console.error("Error creating order items!");
+    throw error;
+  }
+};
+
+const createInitialPaymentDetails = () => {
+  console.log("Starting to create payment details...");
+  try {
+    const paymentDetailsToCreate = [
+      { order_id: 2, amount: 34.2, provider: "Visa", status: true },
+      { order_id: 4, amount: 80.0, provider: "MasterCard", status: true },
+      { order_id: 3, amount: 100.21, provider: "MasterCard", status: false },
+      { order_id: 6, amount: 98.22, provider: "Visa", status: true },
+      { order_id: 12, amount: 11.16, provider: "Visa", status: true },
+    ];
+    // TODO: complete try block . . .
+  } catch (error) {
+    console.error("Error creating payment items!");
+    throw error;
+  }
+};
 
 //SAMPLE BELOW
 // const createInitialUsers = async () => {
