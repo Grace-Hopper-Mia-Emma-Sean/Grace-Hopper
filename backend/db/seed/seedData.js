@@ -232,10 +232,11 @@ const createTables = async () => {
 };
 
 /**
+ *
  * ! Done: users table works
  * ! Done: user_address table works
- * TODO: user_address => requires user table
- * TODO: user_payment => requires user table
+ * ! Done: user_payment table works
+ *
  * TODO: shopping_session => requires users table
  * TODO: product_category
  * TODO: product_inventory
