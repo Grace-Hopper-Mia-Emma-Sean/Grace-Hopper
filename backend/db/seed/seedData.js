@@ -94,14 +94,6 @@ const createTables = async () => {
               ); 
             `);
           try {
-            console.log("creating shopping_session");
-            await client.query(`
-              CREATE TABLE shopping_session (
-                id SERIAL PRIMARY KEY, 
-                user_id INTEGER REFERENCES users(id),
-                total DECIMAL(19,4) NOT NULL
-              ); 
-            `);
             console.log("creating user_payment");
             await client.query(`
             CREATE TABLE user_payment (
@@ -262,9 +254,9 @@ const rebuildDB = async () => {
     client.connect();
     await dropTables();
     await createTables();
-    await createInitialUsers();
-    await createInitialUserAddresses();
-    await createInitialShoppingSession();
+    // await createInitialUsers();
+    // await createInitialUserAddresses();
+    // await createInitialShoppingSession();
     // await createInitialUserPayment();
     // await createInitialProductCategories();
     // await createInitialProductInventory();
