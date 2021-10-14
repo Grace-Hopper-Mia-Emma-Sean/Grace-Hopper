@@ -87,6 +87,24 @@ const createUserShoppingSession = async ({ user_id, total }) => {
   }
 };
 
+const createUserCartItems = async ({ session_id, product_id, quantity }) => {
+  try {
+    const {
+      rows: [cart],
+    } = await client.query(
+      `
+      INSERT INTO cart_items(session_id, product_id, quantity)
+      VALUES ($1, $2, $3)
+      RETURNING *
+    `,
+      [session_id, product_id, quantity]
+    );
+    return cart;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getUser = async ({ username, password }) => {
   try {
     const user = await getUserByUsername(username);
@@ -139,6 +157,7 @@ module.exports = {
   createUser,
   createUserAddress,
   createUserShoppingSession,
+  createUserCartItems,
   getUser,
   getUserById,
   getUsers,

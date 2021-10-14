@@ -2,6 +2,7 @@ const {
   createUser,
   createUserAddress,
   createUserShoppingSession,
+  createUserCartItems,
 } = require("..");
 
 const createInitialUsers = async () => {
@@ -258,7 +259,6 @@ const createInitialShoppingSession = async () => {
       { user_id: 4, total: 92.33 },
       { user_id: 5, total: 50.33 },
     ];
-    // TODO: complete try block . . .
     const shoppingSession = await Promise.all(
       shoppingSessionToCreate.map(createUserShoppingSession)
     );
@@ -282,6 +282,12 @@ const createInitialCartItems = async () => {
       { session_id: 10, product_id: 17, quantity: 2 },
     ];
     // TODO: complete try block . . .
+    const cartItems = await Promise.all(
+      cartItemsToCreate.map(createUserCartItems)
+    );
+    console.log("Cart items created: ");
+    console.log(cartItems);
+    console.log("Finished creating cart items");
   } catch (error) {
     console.error("Error creating cart items!");
     throw error;

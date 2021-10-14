@@ -85,17 +85,14 @@ const createTables = async () => {
               );
             `);
         try {
-          console.log("creating user_payment");
+          console.log("creating shopping_session");
           await client.query(`
-            CREATE TABLE user_payment (
-              id SERIAL PRIMARY KEY, 
-              user_id INTEGER REFERENCES users(id),
-              payment_type VARCHAR(255) NOT NULL,
-              provider VARCHAR(255) NOT NULL,
-              account_no VARCHAR(16) NOT NULL,
-              expiry INTEGER NOT NULL
-            );
-          `);
+              CREATE TABLE shopping_session (
+                id SERIAL PRIMARY KEY, 
+                user_id INTEGER REFERENCES users(id),
+                total DECIMAL(19,4) NOT NULL
+              ); 
+            `);
           try {
             console.log("creating shopping_session");
             await client.query(`
@@ -105,6 +102,17 @@ const createTables = async () => {
                 total DECIMAL(19,4) NOT NULL
               ); 
             `);
+            console.log("creating user_payment");
+            await client.query(`
+            CREATE TABLE user_payment (
+              id SERIAL PRIMARY KEY, 
+              user_id INTEGER REFERENCES users(id),
+              payment_type VARCHAR(255) NOT NULL,
+              provider VARCHAR(255) NOT NULL,
+              account_no VARCHAR(16) NOT NULL,
+              expiry INTEGER NOT NULL
+            );
+          `);
             try {
               console.log("creating product_category");
               await client.query(`
@@ -214,10 +222,10 @@ const createTables = async () => {
               console.error("error creating product_category table");
             }
           } catch (error) {
-            console.error("error creating shopping_session table");
+            console.error("error creating user_payment table");
           }
         } catch (error) {
-          console.error("error creating user_payment table");
+          console.error("error creating shopping_session table");
         }
       } catch (error) {
         console.error("error creating user_address table");
@@ -233,11 +241,11 @@ const createTables = async () => {
 
 /**
  *
- * ! Done: users table works
- * ! Done: user_address table works
- * ! Done: user_payment table works
+ * * Done: users table works
+ * * Done: user_address table works
+ * * Done: shopping_session table works
  *
- * TODO: shopping_session => requires users table
+ * TODO: user_payment => requires users table
  * TODO: product_category
  * TODO: product_inventory
  * TODO: product_discount
@@ -256,8 +264,8 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     await createInitialUserAddresses();
-    // await createInitialUserPayment();
     await createInitialShoppingSession();
+    // await createInitialUserPayment();
     // await createInitialProductCategories();
     // await createInitialProductInventory();
     // await createInitialProductDiscounts();
