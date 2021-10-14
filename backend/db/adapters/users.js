@@ -48,6 +48,19 @@ const getUserById = async (id) => {
       SELECT *
       FROM USERS
       WHERE id=${id}`);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUsers = async () => {
+  try {
+    const { rows } = await client.query(`
+      SELECT *
+      FROM users
+    `);
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -63,6 +76,7 @@ module.exports = {
   createUser,
   getUser,
   getUserById,
+  getUsers,
   getUserAcct,
   getUserOrders,
 };
