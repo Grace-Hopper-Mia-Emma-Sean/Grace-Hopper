@@ -102,7 +102,7 @@ const createTables = async () => {
               CREATE TABLE shopping_session (
                 id SERIAL PRIMARY KEY, 
                 user_id INTEGER REFERENCES users(id),
-                total INTEGER NOT NULL
+                total DECIMAL(19,4) NOT NULL
               ); 
             `);
             try {
@@ -139,7 +139,7 @@ const createTables = async () => {
                       CREATE TABLE order_details (
                         id SERIAL PRIMARY KEY, 
                         "user_id" INTEGER REFERENCES users(id),
-                        total INTEGER NOT NULL,
+                        total DECIMAL(19,4) NOT NULL,
                         "payment_id" INTEGER REFERENCES user_payment(id)
                         );
                     `);
@@ -164,7 +164,7 @@ const createTables = async () => {
                           CREATE TABLE payment_details (
                             id SERIAL PRIMARY KEY, 
                             "order_id" INTEGER REFERENCES order_details(id),
-                            amount INTEGER NOT NULL,
+                            amount DECIMAL(19,4) NOT NULL,
                             provider VARCHAR(255) NOT NULL,
                             status BOOLEAN DEFAULT false
                           );
