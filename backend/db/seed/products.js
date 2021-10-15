@@ -1,8 +1,15 @@
 const {
-  createProduct,
-  createDiscount,
-  createProductCategory
+  createProduct
 } = require('../adapters/products')
+
+const {
+  createProductCategory
+} = require('../adapters/product_category')
+
+const {
+  createDiscount
+} = require('../adapters/product_discount')
+
 
 const createInitialProducts = async () => {
   try {
@@ -13,90 +20,100 @@ const createInitialProducts = async () => {
         description: "Powered by diesel gas",
         SKU: "11111111",
         category_id: "1",
-        inventory_id: "1",
-        price: "$200",
+        // inventory_id: "1",
+        price: "200",
         discount_id: "1",
+        quantity: "24"
       },
       {
         name: "The Earth Destroyer 5.0",
         description: "Cuts even ancient growth",
         SKU: "22222222",
         category_id: "1",
-        inventory_id: "2",
-        price: "$100",
+        // inventory_id: "2",
+        price: "100",
         discount_id: "1",
+        quantity: "10"
       },
       {
         name: "The Hedge Trimmer",
         description: "For small jobs",
         SKU: "33333333",
         category_id: "2",
-        inventory_id: "3",
-        price: "$50",
+        // inventory_id: "3",
+        price: "50",
         discount_id: "3",
+        quantity: "3"
       },
       {
         name: "The Simple Garden Shears",
         description: "For really small jobs",
         SKU: "44444444",
         category_id: "2",
-        inventory_id: "4",
-        price: "$20",
+        // inventory_id: "4",
+        price: "20",
         discount_id: "2",
+        quantity: "20"
       },
       {
         name: "The Branch Mangler",
         description: "I pity the branch",
         SKU: "55555555",
         category_id: "1",
-        inventory_id: "5",
-        price: "$500",
+        // inventory_id: "5",
+        price: "500",
         discount_id: "1",
+        quantity: "20"
       },
       {
         name: "The Wood Pulverizer Mark II",
         description: "Trees cower at his gaze",
         SKU: "66666666",
         category_id: "1",
-        inventory_id: "6",
-        price: "$750",
+        // inventory_id: "6",
+        price: "750",
         discount_id: "1",
+        quantity: "10"
       },
       {
         name: "The Psycho Woodchuck Woodchipper",
         description: "Now you see a tree, now you do not...",
         SKU: "7777777",
         category_id: "3",
-        inventory_id: "7",
-        price: "$999",
+        // inventory_id: "7",
+        price: "999",
         discount_id: "4",
+        quantity: "1"
       },
       {
         name: "The Lawn Shredder (bluetooth enabled)",
         description: "Grass doesnt even stand a chance",
         SKU: "88888888",
-        category_id: "4",
-        inventory_id: "8",
-        price: "$299",
+        category_id: "2",
+        // inventory_id: "8",
+        price: "299",
         discount_id: "3",
+        quantity: "9"
       },
       {
         name: "The Weed Eviscerator",
         description: "Kiss those pesky weeds goodbye...or dont",
         SKU: "99999999",
         category_id: "2",
-        inventory_id: "9",
-        price: "$100",
+        // inventory_id: "9",
+        price: "100",
         discount_id: "3",
+        quantity: "5"
       },
       {
         name: "The Vine Massacre-Maker",
         description: "This could get ugly...for vines",
         SKU: "10000000",
         category_id: "2",
-        inventory_id: "10",
-        price: "$3200",
+        // inventory_id: "10",
+        price: "300",
         discount_id: "3",
+        quantity: "30"
       },
     ];
     const products = await Promise.all(productsToCreate.map(createProduct));
@@ -112,18 +129,17 @@ const createInitialProductCategories = async () => {
     console.log("creating initial categories...");
     const categoriesToCreate = [
       {
-        name: "Chainsaws",
-        description:
-          "Everything you need to destroy a tree...what did it ever do for you?",
+        name: 'Chainsaws',
+        description: "Everything you need to destroy a tree...what did it ever do for you?"
       },
       {
         name: "Hand Tools",
-        description: "For those too afraid of a motorized blade",
+        description: "For those too afraid of a motorized blade"
       },
       {
         name: "Powered Lawn Tools",
         description:
-          "These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined",
+          "These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined"
       },
     ];
     const categories = await Promise.all(
@@ -165,25 +181,25 @@ const createInitialProductDiscounts = async () => {
     const discountsToCreate = [
       {
         name: "Chainsaw Discount",
-        desc: "description 1",
+        description: "description 1",
         discount_percent: 5,
         active: false,
       },
       {
         name: "Hand Tool Discount",
-        desc: "description 2",
+        description: "description 2",
         discount_percent: 15,
         active: false,
       },
       {
         name: "Powered Lawn Tool Discount",
-        desc: "description 3",
+        description: "description 3",
         discount_percent: 99,
         active: true,
       },
       {
         name: "Large Machine Discount",
-        desc: "description 4",
+        description: "description 4",
         discount_percent: 1,
         active: true,
       },

@@ -1,57 +1,18 @@
 const { client } = require('../client')
 
 
-const createProduct = async({name, description, SKU, category_id, inventory_id, price, discount_id, quantity}) => {
+const createProduct = async({name, description, SKU, category_id, price, discount_id}) => {
     try {
         const {rows: [product]} = await client.query(`
-            INSERT INTO products(name, description, SKU, category_id, inventory_id, price, discount_id)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            INSERT INTO products( name, description, SKU, "category_id", price, discount_id)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *;
-        `, [name, description, SKU, category_id, inventory_id, price, discount_id] )
-        await client.query(`
-            INSERT INTO product_inventory
-            VALUES($8);
-        `, [quantity])
+        `, [name, description, SKU, category_id, price, discount_id])
+        // await client.query(`
+        //     INSERT INTO product_inventory(id, quantity)
+        //     VALUES($7, $8);
+        // `, [quantity])
         return product;
-    } catch (error){
-        throw (error)
-    }
-}
-
-const createDiscount = async ({name, description, discount_percent, active}) => {
-    try {
-        const {rows: [discount]} = await client.query(`
-            INSERT INTO product_discount
-            VALUES($1, $2, $3, $4)
-            RETURNING *;
-        `, [name, description, discount_percent, active])
-        return discount;
-    } catch (error) {
-        throw (error)
-    }
-}
-
-const updateProductInventory = async(id, quantity) => {
-    try {
-        const {rows: [updatedInventory]} = await client.query(`
-            UPDATE product_inventory
-            SET quantity=${quantity}
-            WHERE id=${id}
-        `)
-        return updatedInventory;
-    } catch (error) {
-        throw (error)
-    }
-}
-
-const createProductCategory = async({name, description}) => {
-    try {
-        const {rows: [category]} = await client.query(`
-            INSERT INTO product_category
-            VALUES($1, $2)
-            RETURNING *;
-        `, [name, description])
-        return category;
     } catch (error){
         throw (error)
     }
@@ -143,9 +104,6 @@ const deleteProduct = async (id) => {
 
 module.exports = {
     createProduct,
-    createDiscount,
-    updateProductInventory,
-    createProductCategory,
     getAllProductCategories,
     getProductById,
     getAllProducts,

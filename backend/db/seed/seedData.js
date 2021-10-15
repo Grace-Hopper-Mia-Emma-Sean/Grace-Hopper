@@ -14,7 +14,8 @@ const {
   createInitialProductCategories,
   createInitialProductInventory,
   createInitialProductDiscounts,
-} = require("./products");
+} = require('./products')
+
 
 // orders seed
 const {
@@ -258,11 +259,11 @@ const rebuildDB = async () => {
     // await createInitialUserAddresses();
     // await createInitialShoppingSession();
     // await createInitialUserPayment();
-    // await createInitialProductCategories();
+    await createInitialProductCategories();
     // await createInitialProductInventory();
-    // await createInitialProductDiscounts();
+    await createInitialProductDiscounts();
     // await createInitialOrderDetails();
-    // await createInitialProducts();
+    await createInitialProducts();
     // await createInitialPaymentDetails();
     // await createInitialCartItems();
     // await createInitialOrderItems();
