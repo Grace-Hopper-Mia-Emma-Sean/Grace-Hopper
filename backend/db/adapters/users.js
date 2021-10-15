@@ -110,6 +110,27 @@ const updateUser = async (id, fields = {}) => {
   }
 };
 
+const deleteUser = async (id) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      DELETE FROM users
+      WHERE id=$1
+      RETURNING *;
+    `,
+      [id]
+    );
+    // delete refs addresses
+    // delete refs shopping_session
+    // delete refs user_payment
+    // delete refs order_details
+  } catch (error) {
+    throw error;
+  }
+};
+
 // TODO: Differentiate getUserAcct from getUserOrders or merge?
 
 const getUserAcct = async () => {};
@@ -122,4 +143,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   updateUser,
+  deleteUser,
 };

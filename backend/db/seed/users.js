@@ -2,7 +2,7 @@ const {
   createUser,
   createUserAddress,
   createUserShoppingSession,
-  createUserCartItems,
+  createUserCartItem,
 } = require("..");
 
 const createInitialUsers = async () => {
@@ -275,15 +275,15 @@ const createInitialCartItems = async () => {
   console.log("Starting to create cart items...");
   try {
     const cartItemsToCreate = [
-      { session_id: 3, product_id: 23, quantity: 2 },
-      { session_id: 4, product_id: 43, quantity: 1 },
-      { session_id: 5, product_id: 52, quantity: 3 },
-      { session_id: 2, product_id: 9, quantity: 2 },
-      { session_id: 10, product_id: 17, quantity: 2 },
+      { session_id: 3, product_id: 5, quantity: 2 },
+      { session_id: 4, product_id: 6, quantity: 1 },
+      { session_id: 5, product_id: 2, quantity: 3 },
+      { session_id: 2, product_id: 1, quantity: 2 },
+      { session_id: 7, product_id: 10, quantity: 2 },
     ];
     // TODO: complete try block . . .
     const cartItems = await Promise.all(
-      cartItemsToCreate.map(createUserCartItems)
+      cartItemsToCreate.map(createUserCartItem)
     );
     console.log("Cart items created: ");
     console.log(cartItems);
