@@ -5,6 +5,7 @@ const {
   getUserById,
   getUserByUsername,
   updateUser,
+  deleteUser,
 } = require("./adapters/users");
 
 const {
@@ -42,6 +43,7 @@ module.exports = {
   getUserById,
   getUserByUsername,
   updateUser,
+  deleteUser,
   createUserAddress,
   getUserAddressById,
   updateUserAddress,
