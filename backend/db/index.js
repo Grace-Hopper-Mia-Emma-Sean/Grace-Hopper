@@ -12,10 +12,22 @@ const {
   createUserAddress,
   getUserAddressById,
   updateUserAddress,
+  deleteUserAddress,
 } = require("./adapters/user_address");
 
-const { createUserCartItems } = require("./adapters/cart_items");
-const { createUserShoppingSession } = require("./adapters/shopping_session");
+const {
+  createUserCartItems,
+  getCartItemById,
+  updateCartItems,
+  deleteCartItems,
+} = require("./adapters/cart_items");
+
+const {
+  createUserShoppingSession,
+  getShoppingSessionById,
+  updateShoppingSession,
+  deleteShoppingSession,
+} = require("./adapters/shopping_session");
 
 // products adapters
 const { createInitialProducts } = require("./adapters/products");
@@ -47,8 +59,15 @@ module.exports = {
   createUserAddress,
   getUserAddressById,
   updateUserAddress,
+  deleteUserAddress,
   createUserShoppingSession,
+  getShoppingSessionById,
+  updateShoppingSession,
+  deleteShoppingSession,
   createUserCartItems,
+  getCartItemById,
+  updateCartItems,
+  deleteCartItems,
   createInitialProducts,
   createInitialProductCategories,
   createInitialProductInventories,

@@ -44,7 +44,7 @@ const getUserAddressById = async (id) => {
       rows: [address],
     } = await client.query(`
       SELECT *
-      FROM USERS
+      FROM user_address
       WHERE id=${id}`);
     if (!address) return null;
     return address;
@@ -63,7 +63,7 @@ const updateUserAddress = async ({ id, fields = {} }) => {
       rows: [address],
     } = await client.query(
       `
-      UPDATE users
+      UPDATE user_address
       SET ${setString}
       WHERE id=${id}
       RETURNING *;
@@ -76,4 +76,24 @@ const updateUserAddress = async ({ id, fields = {} }) => {
   }
 };
 
-module.exports = { createUserAddress, getUserAddressById, updateUserAddress };
+const deleteUserAddress = async (id) => {
+  try {
+    const {
+      rows: [address],
+    } = await client.query(`
+      DELETE FROM user_address
+      WHERE id=${id}
+      RETURNING *;
+    `);
+    return address;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = {
+  createUserAddress,
+  getUserAddressById,
+  updateUserAddress,
+  deleteUserAddress,
+};
