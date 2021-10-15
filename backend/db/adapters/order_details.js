@@ -1,6 +1,6 @@
-const client = require ('../client');
+const { client } = require('../client')
 
-async function getAllOrderDetails () {
+const getAllOrderDetails = async () =>{
     try {
         const { rows } = await client.query(`
             SELECT*
@@ -12,7 +12,7 @@ async function getAllOrderDetails () {
     }
 }
 
-async function getAllOrderDetailsById({id}) {
+const getAllOrderDetailsById = async ({id}) => {
     try {
         const { rows: [orders] } = await client.query(`
             SELECT*
@@ -31,7 +31,7 @@ async function createOrderDetails({user_id, payment_id, total}) {
             INSERT INTO order_details("user_id", "payment_id", total)
             VALUES ($1, $2, $3)
             RETURNING *;
-        `[user_id, payment_id, total])
+        `,[user_id, payment_id, total])
         return orders;
     }catch (error) {
         throw error;
@@ -70,7 +70,7 @@ async function destroyOrderDetails(id) {
     }
 }
 
-module.export = {
+module.exports = {
     getAllOrderDetails, 
     getAllOrderDetailsById,
     createOrderDetails,
