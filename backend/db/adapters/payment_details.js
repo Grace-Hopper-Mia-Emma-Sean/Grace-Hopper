@@ -48,7 +48,7 @@ async function getAllPaymentById({ id }) {
   }
 }
 
-async function updatePaymentDetails(fields) {
+async function updatePaymentDetails(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=${index + 1}"`)
     .join(",");

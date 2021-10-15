@@ -6,7 +6,7 @@ const createInitialOrderDetails = async () => {
   console.log("Starting to create order details...");
   try {
     const orderDetailsToCreate = [
-      { user_id: 1, total: 123, payment_id: 1 },
+      { user_id: 1, total: 123.2, payment_id: 1 },
       { user_id: 1, total: 69.69, payment_id: 1 },
       { user_id: 1, total: 98.76, payment_id: 1 },
       { user_id: 5, total: 50.00, payment_id: 5 },
