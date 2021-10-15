@@ -14,7 +14,8 @@ const {
   createInitialProductCategories,
   createInitialProductInventory,
   createInitialProductDiscounts,
-} = require("./products");
+} = require('./products')
+
 
 // orders seed
 const {
@@ -258,6 +259,7 @@ const rebuildDB = async () => {
     await createInitialUserAddresses();
     await createInitialShoppingSession();
     // await createInitialUserPayment();
+<<<<<<< HEAD
 
     await createInitialOrderDetails();
     await createInitialPaymentDetails();
@@ -271,6 +273,16 @@ const rebuildDB = async () => {
     
     await createInitialCartItems();
     
+=======
+    await createInitialProductCategories();
+    // await createInitialProductInventory();
+    await createInitialProductDiscounts();
+    // await createInitialOrderDetails();
+    await createInitialProducts();
+    // await createInitialPaymentDetails();
+    // await createInitialCartItems();
+    // await createInitialOrderItems();
+>>>>>>> fd153300cd0b8b285e35a033986db2a5c5fbdb2f
   } catch (error) {
     console.error("Error during rebuildDB... sad face");
     throw error;
