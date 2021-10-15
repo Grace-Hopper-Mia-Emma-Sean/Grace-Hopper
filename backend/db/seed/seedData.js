@@ -254,18 +254,23 @@ const rebuildDB = async () => {
     client.connect();
     await dropTables();
     await createTables();
-    // await createInitialUsers();
-    // await createInitialUserAddresses();
-    // await createInitialShoppingSession();
+    await createInitialUsers();
+    await createInitialUserAddresses();
+    await createInitialShoppingSession();
     // await createInitialUserPayment();
-    // await createInitialProductCategories();
-    // await createInitialProductInventory();
-    // await createInitialProductDiscounts();
-    // await createInitialOrderDetails();
-    // await createInitialProducts();
-    // await createInitialPaymentDetails();
-    // await createInitialCartItems();
-    // await createInitialOrderItems();
+
+    await createInitialOrderDetails();
+    await createInitialPaymentDetails();
+    await createInitialOrderItems();
+
+    await createInitialProductCategories();
+    await createInitialProductInventory();
+    await createInitialProductDiscounts();
+    
+    await createInitialProducts();
+    
+    await createInitialCartItems();
+    
   } catch (error) {
     console.error("Error during rebuildDB... sad face");
     throw error;
