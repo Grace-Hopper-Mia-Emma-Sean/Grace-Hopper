@@ -242,10 +242,10 @@ const createTables = async () => {
  * DONE: products table works
  * DONE: user_payment table works
  * DONE: cart_items table works
+ * DONE: product_inventory table works
+ * DONE: payment_details table works
  *
- * TODO: product_inventory
  * TODO: order_details => requires users table && user_payment table
- * TODO: payment_details => requires products table
  * TODO: order_items => requires order_details table && products table
  *
  */
@@ -260,13 +260,13 @@ const rebuildDB = async () => {
     await createInitialShoppingSession();
     await createInitialUserPayment();
     await createInitialProductCategories();
-    await createInitialProductInventoy();
+    await createInitialProductInventory();
     await createInitialProductDiscounts();
-    // await createInitialPaymentDetails();
+    await createInitialPaymentDetails();
     await createInitialProducts();
-    // await createInitialOrderDetails();
+    await createInitialOrderDetails();
     await createInitialCartItems();
-    // await createInitialOrderItems();
+    await createInitialOrderItems();
   } catch (error) {
     console.error("Error during rebuildDB... sad face");
     throw error;
