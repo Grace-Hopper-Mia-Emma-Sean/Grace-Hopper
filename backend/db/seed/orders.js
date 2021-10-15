@@ -1,7 +1,11 @@
 const {
-  createOrderDetails,
+  createOrderDetails
+} = require('../adapters/order_details')
 
-} = require("..")
+const {
+  createOrderItems
+} = require('../adapters/order_items')
+
 
 const createInitialOrderDetails = async () => {
   console.log("Starting to create order details...");
@@ -34,7 +38,10 @@ const createInitialOrderItems = async () => {
       { order_id: 10, product_id: 8, quantity: 1 },
       { order_id: 11, product_id: 10, quantity: 2 },
     ];
-    // TODO: complete try block . . .
+    const orderItems = await Promise.all(orderItemsToCreate.map(createOrderItems));
+    console.log('Order itmes created:')
+    console.log(orderItems)
+    console.log('Finished creating order items!')
   } catch (error) {
     console.error("Error creating order items!");
     throw error;

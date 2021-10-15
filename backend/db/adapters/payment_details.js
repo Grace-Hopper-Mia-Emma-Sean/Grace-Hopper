@@ -1,4 +1,4 @@
-const client = require ('../client');
+const client = require ('../client/index');
 
 async function getAllPaymentDetails () {
     try {
@@ -28,7 +28,7 @@ async function getAllPaymentById({id}) {
 async function createPaymentDetails({order_id, amount, provider, status}) {
     try {
         const { rows: [payment] } = await client.query(`
-            INSERT INTO payment_details("order_id", amount, provider, status)
+            INSERT INTO payment_details(order_id, amount, provider, status)
             VALUES ($1, $2, $3, $4)
             RETURNING *;
         `[order_id, amount, provider, status])
@@ -38,12 +38,12 @@ async function createPaymentDetails({order_id, amount, provider, status}) {
     }
 }
 
-async function updatePaymentDetails(fields) {
+async function updatePaymentDetails(id,fields={}) {
     const setString = Object.keys(fields).map((key, index) => `"${key}"=${index + 1}"`).join(',');
     if (setString.length ===0){
         return ;
     }
-    const {id, amount, provider, status} = fields;
+    
     try {
         const { rows: [payment] } = await client.query(`
             UPDATE payment_details
@@ -70,7 +70,7 @@ async function destroyPaymentDetails(id) {
     }
 }
 
-module.export = {
+module.exports = {
     getAllPaymentById, 
     getAllPaymentDetails,
     createPaymentDetails,

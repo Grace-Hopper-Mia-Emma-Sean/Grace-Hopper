@@ -14,8 +14,7 @@ const {
   createInitialProductCategories,
   createInitialProductInventory,
   createInitialProductDiscounts,
-} = require('./products')
-
+} = require("./products");
 
 // orders seed
 const {
@@ -97,13 +96,13 @@ const createTables = async () => {
           try {
             console.log("creating user_payment");
             await client.query(`
-            CREATE TABLE user_payment (
+              CREATE TABLE user_payment (
               id SERIAL PRIMARY KEY, 
-              user_id INTEGER REFERENCES users(id),
+              "user_id" INTEGER REFERENCES users(id),
               payment_type VARCHAR(255) NOT NULL,
               provider VARCHAR(255) NOT NULL,
               account_no VARCHAR(16) NOT NULL,
-              expiry INTEGER NOT NULL
+              expiry MONTH-YEAR NOT NULL
             );
           `);
             try {
@@ -138,10 +137,10 @@ const createTables = async () => {
                     console.log("creating order_details");
                     await client.query(`
                       CREATE TABLE order_details (
-                        id SERIAL PRIMARY KEY, 
+                        id SERIAL PRIMARY KEY,
                         "user_id" INTEGER REFERENCES users(id),
                         total DECIMAL(19,4) NOT NULL,
-                        "payment_id" INTEGER REFERENCES user_payment(id)
+                        "payment_id" INTEGER REFERENCES payment_details(id)
                         );
                     `);
                     try {
@@ -185,8 +184,8 @@ const createTables = async () => {
                             await client.query(`
                               CREATE TABLE order_items (
                                 id SERIAL PRIMARY KEY, 
-                                order_id INTEGER REFERENCES order_details(id),
-                                product_id INTEGER REFERENCES products(id),
+                                "order_id" INTEGER REFERENCES order_details(id),
+                                "product_id" INTEGER REFERENCES products(id),
                                 quantity INTEGER NOT NULL
                              );
                            `);
@@ -259,30 +258,17 @@ const rebuildDB = async () => {
     await createInitialUserAddresses();
     await createInitialShoppingSession();
     // await createInitialUserPayment();
-<<<<<<< HEAD
-
-    await createInitialOrderDetails();
-    await createInitialPaymentDetails();
-    await createInitialOrderItems();
-
-    await createInitialProductCategories();
-    await createInitialProductInventory();
-    await createInitialProductDiscounts();
-    
-    await createInitialProducts();
-    
-    await createInitialCartItems();
-    
-=======
-    await createInitialProductCategories();
-    // await createInitialProductInventory();
-    await createInitialProductDiscounts();
-    // await createInitialOrderDetails();
-    await createInitialProducts();
-    // await createInitialPaymentDetails();
     // await createInitialCartItems();
+
+    // await createInitialProducts();
+    // await createInitialProductCategories();
+    // await createInitialProductInventory();
+    // await createInitialProductDiscounts();
+
+    // await createInitialOrderDetails();
     // await createInitialOrderItems();
->>>>>>> fd153300cd0b8b285e35a033986db2a5c5fbdb2f
+    // await createInitialPaymentDetails();
+   
   } catch (error) {
     console.error("Error during rebuildDB... sad face");
     throw error;
