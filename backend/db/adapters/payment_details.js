@@ -1,6 +1,6 @@
-const client = require ('../client/index');
+const { client } = require('../client')
 
-async function getAllPaymentDetails () {
+const getAllPaymentDetails = async () => {
     try {
         const { rows } = await client.query(`
             SELECT*
@@ -12,7 +12,7 @@ async function getAllPaymentDetails () {
     }
 }
 
-async function getAllPaymentById({id}) {
+const getAllPaymentById = async ({id}) => {
     try {
         const { rows: [payment] } = await client.query(`
             SELECT*
@@ -25,20 +25,20 @@ async function getAllPaymentById({id}) {
     }
 }
 
-async function createPaymentDetails({order_id, amount, provider, status}) {
+const createPaymentDetails = async ({order_id, amount, provider, status}) => {
     try {
         const { rows: [payment] } = await client.query(`
-            INSERT INTO payment_details(order_id, amount, provider, status)
+            INSERT INTO payment_details("order_id", amount, provider, status)
             VALUES ($1, $2, $3, $4)
             RETURNING *;
-        `[order_id, amount, provider, status])
+        `,[order_id, amount, provider, status])
         return payment;
     }catch (error) {
         throw error;
     }
 }
 
-async function updatePaymentDetails(id,fields={}) {
+const updatePaymentDetails = async (id,fields={}) =>{
     const setString = Object.keys(fields).map((key, index) => `"${key}"=${index + 1}"`).join(',');
     if (setString.length ===0){
         return ;
@@ -57,7 +57,7 @@ async function updatePaymentDetails(id,fields={}) {
     }
 }
 
-async function destroyPaymentDetails(id) {
+const destroyPaymentDetails = async (id) => {
     try{
         const { rows: [deletePaymentDetails] } = await client.query(`
             DELETE FROM payment_details

@@ -25,7 +25,7 @@ const getAllOrderDetailsById = async ({id}) => {
     }
 }
 
-async function createOrderDetails({user_id, payment_id, total}) {
+const createOrderDetails = async ({user_id, payment_id, total}) => {
     try {
         const { rows: [orders] } = await client.query(`
             INSERT INTO order_details("user_id", "payment_id", total)
@@ -38,7 +38,7 @@ async function createOrderDetails({user_id, payment_id, total}) {
     }
 }
 
-async function updateOrderDetails(fields) {
+const updateOrderDetails= async (fields) => {
     const setString = Object.keys(fields).map((key, index) => `"${key}"=${index + 1}"`).join(',');
     if (setString.length ===0){
         return ;
@@ -57,7 +57,7 @@ async function updateOrderDetails(fields) {
     }
 }
 
-async function destroyOrderDetails(id) {
+const destroyOrderDetails = async (id) => {
     try{
         const { rows: [deleteOrderDetails] } = await client.query(`
             DELETE FROM order_details

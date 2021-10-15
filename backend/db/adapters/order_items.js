@@ -1,6 +1,6 @@
-const client = require ('../client/index');
+const { client } = require('../client')
 
-async function getAllOrderItems () {
+const getAllOrderItems = async () => {
     try {
         const { rows } = await client.query(`
             SELECT*
@@ -12,7 +12,7 @@ async function getAllOrderItems () {
     }
 }
 
-async function getAllOrderItemsById(id) {
+const getAllOrderItemsById = async (id) => {
     try {
         const { rows: [orders] } = await client.query(`
             SELECT*
@@ -25,20 +25,20 @@ async function getAllOrderItemsById(id) {
     }
 }
 
-async function createOrderItems({order_id, product_id, quantity}) {
+const createOrderItems = async ({order_id, product_id, quantity}) => {
     try {
         const { rows: [orders] } = await client.query(`
-            INSERT INTO order_items(order_id, product_id, quantity)
+            INSERT INTO order_items("order_id", "product_id", quantity)
             VALUES ($1, $2, $3)
             RETURNING *;
-        `[order_id, product_id, quantity])
+        `,[order_id, product_id, quantity])
         return orders;
     }catch (error) {
         throw error;
     }
 }
 
-async function updateOrderItems(fields) {
+const updateOrderItems = async (fields) => {
     const setString = Object.keys(fields).map((key, index) => `"${key}"=${index + 1}"`).join(',');
     if (setString.length ===0){
         return ;
@@ -57,7 +57,7 @@ async function updateOrderItems(fields) {
     }
 }
 
-async function destroyOrderItems(id) {
+const destroyOrderItems = async (id) => {
     try{
         const { rows: [deleteOrderItems] } = await client.query(`
             DELETE FROM order_items
