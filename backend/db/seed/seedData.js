@@ -40,8 +40,8 @@ const dropTables = async () => {
       DROP TABLE IF EXISTS product_discount;
       DROP TABLE IF EXISTS product_inventory;
       DROP TABLE IF EXISTS product_category;
-      DROP TABLE IF EXISTS shopping_session;
       DROP TABLE IF EXISTS user_payment;
+      DROP TABLE IF EXISTS shopping_session;
       DROP TABLE IF EXISTS user_address;
       DROP TABLE IF EXISTS users;
     `);
@@ -163,13 +163,13 @@ const createTables = async () => {
                       try {
                         console.log("creating order_details");
                         await client.query(`
-                      CREATE TABLE order_details (
-                        id SERIAL PRIMARY KEY,
-                        "user_id" INTEGER REFERENCES users(id),
-                        total DECIMAL(19,4) NOT NULL,
-                        "payment_id" INTEGER REFERENCES payment_details(id)
-                        );
-                    `);
+                          CREATE TABLE order_details (
+                            id SERIAL PRIMARY KEY,
+                            "user_id" INTEGER REFERENCES users(id),
+                            total DECIMAL(19,4) NOT NULL,
+                            "payment_id" INTEGER REFERENCES payment_details(id)
+                            );
+                        `);
                         try {
                           console.log("creating cart_items");
                           await client.query(`
@@ -234,12 +234,12 @@ const createTables = async () => {
 
 /**
  *
- * * Done: users table works
- * * Done: user_address table works
- * * Done: shopping_session table works
- * * Done: product_category table works
- * * Done: product_discount table works
- * * Done: products table works
+ * DONE: users table works
+ * DONE: user_address table works
+ * DONE: shopping_session table works
+ * DONE: product_category table works
+ * DONE: product_discount table works
+ * DONE: products table works
  *
  * TODO: user_payment => requires users table
  * TODO: product_inventory
@@ -259,16 +259,14 @@ const rebuildDB = async () => {
     await createInitialUserAddresses();
     await createInitialShoppingSession();
     // await createInitialUserPayment();
-    // await createInitialCartItems();
-
     await createInitialProductCategories();
     // await createInitialProductInventory();
     await createInitialProductDiscounts();
-    await createInitialProducts();
-
-    // await createInitialOrderDetails();
-    // await createInitialOrderItems();
     // await createInitialPaymentDetails();
+    await createInitialProducts();
+    // await createInitialOrderDetails();
+    await createInitialCartItems();
+    // await createInitialOrderItems();
   } catch (error) {
     console.error("Error during rebuildDB... sad face");
     throw error;
