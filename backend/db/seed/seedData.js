@@ -260,7 +260,7 @@ const rebuildDB = async () => {
     await createInitialShoppingSession();
     await createInitialUserPayment();
     await createInitialProductCategories();
-    await createInitialProductInventory();
+    await createInitialProductInventoy();
     await createInitialProductDiscounts();
     // await createInitialPaymentDetails();
     await createInitialProducts();
