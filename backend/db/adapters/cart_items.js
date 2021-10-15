@@ -1,6 +1,6 @@
 const { client } = require("../client");
 
-const createUserCartItems = async ({ session_id, product_id, quantity }) => {
+const createUserCartItem = async ({ session_id, product_id, quantity }) => {
   try {
     const {
       rows: [cartItem],
@@ -72,7 +72,7 @@ const deleteCartItems = async (id) => {
 };
 
 module.exports = {
-  createUserCartItems,
+  createUserCartItem,
   getCartItemById,
   updateCartItems,
   deleteCartItems,

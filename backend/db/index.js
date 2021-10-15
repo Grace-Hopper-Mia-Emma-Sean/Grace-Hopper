@@ -16,7 +16,7 @@ const {
 } = require("./adapters/user_address");
 
 const {
-  createUserCartItems,
+  createUserCartItem,
   getCartItemById,
   updateCartItems,
   deleteCartItems,
@@ -30,24 +30,18 @@ const {
 } = require("./adapters/shopping_session");
 
 // products adapters
-const { createInitialProducts } = require("./adapters/products");
-const {
-  createInitialProductCategories,
-} = require("./adapters/product_category");
-const {
-  createInitialProductInventories,
-} = require("./adapters/product_inventory");
-const {
-  createInitialProductDiscounts,
-} = require("./adapters/product_discount");
+const { createProduct } = require("./adapters/products");
+const { createProductCategory } = require("./adapters/product_category");
+const { createProductInventory } = require("./adapters/product_inventory");
+const { createProductDiscount } = require("./adapters/product_discount");
 
 // orders adapters
-const { createInitialOrderDetails } = require("./adapters/order_details");
-const { createInitialOrderItems } = require("./adapters/order_items");
+const { createOrderDetails } = require("./adapters/order_details");
+const { createOrderItems } = require("./adapters/order_items");
 
 // payment adapters
-const { createInitialUserPayment } = require("./adapters/user_payment");
-const { createInitialPaymentDetails } = require("./adapters/payment_details");
+const { createUserPayment } = require("./adapters/user_payment");
+const { createPaymentDetails } = require("./adapters/payment_details");
 
 module.exports = {
   createUser,
@@ -64,18 +58,18 @@ module.exports = {
   getShoppingSessionById,
   updateShoppingSession,
   deleteShoppingSession,
-  createUserCartItems,
+  createUserCartItem,
   getCartItemById,
   updateCartItems,
   deleteCartItems,
-  createInitialProducts,
-  createInitialProductCategories,
-  createInitialProductInventories,
-  createInitialProductDiscounts,
-  createInitialOrderDetails,
-  createInitialOrderItems,
-  createInitialUserPayment,
-  createInitialPaymentDetails,
+  createProduct,
+  createProductCategory,
+  createProductInventory,
+  createProductDiscount,
+  createOrderDetails,
+  createOrderItems,
+  createUserPayment,
+  createPaymentDetails,
 };
 
 //TO DO: export all db components here

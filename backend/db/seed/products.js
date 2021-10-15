@@ -1,15 +1,9 @@
 const {
-  createProduct
-} = require('../adapters/products')
-
-const {
-  createProductCategory
-} = require('../adapters/product_category')
-
-const {
-  createDiscount
-} = require('../adapters/product_discount')
-
+  createProduct,
+  createProductCategory,
+  createProductDiscount,
+  createProductInventory,
+} = require("..");
 
 const createInitialProducts = async () => {
   try {
@@ -23,7 +17,7 @@ const createInitialProducts = async () => {
         // inventory_id: "1",
         price: "200",
         discount_id: "1",
-        quantity: "24"
+        quantity: "24",
       },
       {
         name: "The Earth Destroyer 5.0",
@@ -33,7 +27,7 @@ const createInitialProducts = async () => {
         // inventory_id: "2",
         price: "100",
         discount_id: "1",
-        quantity: "10"
+        quantity: "10",
       },
       {
         name: "The Hedge Trimmer",
@@ -43,7 +37,7 @@ const createInitialProducts = async () => {
         // inventory_id: "3",
         price: "50",
         discount_id: "3",
-        quantity: "3"
+        quantity: "3",
       },
       {
         name: "The Simple Garden Shears",
@@ -53,7 +47,7 @@ const createInitialProducts = async () => {
         // inventory_id: "4",
         price: "20",
         discount_id: "2",
-        quantity: "20"
+        quantity: "20",
       },
       {
         name: "The Branch Mangler",
@@ -63,7 +57,7 @@ const createInitialProducts = async () => {
         // inventory_id: "5",
         price: "500",
         discount_id: "1",
-        quantity: "20"
+        quantity: "20",
       },
       {
         name: "The Wood Pulverizer Mark II",
@@ -73,7 +67,7 @@ const createInitialProducts = async () => {
         // inventory_id: "6",
         price: "750",
         discount_id: "1",
-        quantity: "10"
+        quantity: "10",
       },
       {
         name: "The Psycho Woodchuck Woodchipper",
@@ -83,7 +77,7 @@ const createInitialProducts = async () => {
         // inventory_id: "7",
         price: "999",
         discount_id: "4",
-        quantity: "1"
+        quantity: "1",
       },
       {
         name: "The Lawn Shredder (bluetooth enabled)",
@@ -93,7 +87,7 @@ const createInitialProducts = async () => {
         // inventory_id: "8",
         price: "299",
         discount_id: "3",
-        quantity: "9"
+        quantity: "9",
       },
       {
         name: "The Weed Eviscerator",
@@ -103,7 +97,7 @@ const createInitialProducts = async () => {
         // inventory_id: "9",
         price: "100",
         discount_id: "3",
-        quantity: "5"
+        quantity: "5",
       },
       {
         name: "The Vine Massacre-Maker",
@@ -113,7 +107,7 @@ const createInitialProducts = async () => {
         // inventory_id: "10",
         price: "300",
         discount_id: "3",
-        quantity: "30"
+        quantity: "30",
       },
     ];
     const products = await Promise.all(productsToCreate.map(createProduct));
@@ -129,17 +123,18 @@ const createInitialProductCategories = async () => {
     console.log("creating initial categories...");
     const categoriesToCreate = [
       {
-        name: 'Chainsaws',
-        description: "Everything you need to destroy a tree...what did it ever do for you?"
+        name: "Chainsaws",
+        description:
+          "Everything you need to destroy a tree...what did it ever do for you?",
       },
       {
         name: "Hand Tools",
-        description: "For those too afraid of a motorized blade"
+        description: "For those too afraid of a motorized blade",
       },
       {
         name: "Powered Lawn Tools",
         description:
-          "These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined"
+          "These powered lawn tools will keep your property mowed, hedged, de-weeded, and de-vined",
       },
     ];
     const categories = await Promise.all(
@@ -147,8 +142,8 @@ const createInitialProductCategories = async () => {
     );
     console.log("Categories Created: ", categories);
     console.log("Finished Creating Categories!");
-  } catch (error){
-    throw error
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -168,7 +163,11 @@ const createInitialProductInventory = async () => {
       { quantity: 55 },
     ];
     // TODO: complete try block . . .
-    
+    const inventory = await Promise.all(
+      inventoryToCreate.map(createProductInventory)
+    );
+    console.log("Inventory Created: ", inventory);
+    console.log("Finished Creating Product Inventory");
   } catch (error) {
     console.error("Error creating product inventory!");
     throw error;
@@ -205,9 +204,11 @@ const createInitialProductDiscounts = async () => {
       },
     ];
     // TODO: complete try block . . .
-    const discounts = await Promise.all(discountsToCreate.map(createDiscount));
-    console.log('Discounts Created: ', discounts)
-    console.log('Finished creating discounts!')
+    const discounts = await Promise.all(
+      discountsToCreate.map(createProductDiscount)
+    );
+    console.log("Discounts Created: ", discounts);
+    console.log("Finished creating discounts!");
   } catch (error) {
     console.error("Error creating product discount!");
     throw error;
