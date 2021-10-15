@@ -1,6 +1,6 @@
-const { createPaymentDetails } = require ('../adapters/payment_details')
+const { createPaymentDetails } = require("../adapters/payment_details");
 
-const { createUserPayment } = require ('../adapters/user_payment')
+const { createUserPayment } = require("../adapters/user_payment");
 
 const createInitialUserPayment = async () => {
   console.log("Starting to create user payment...");
@@ -11,83 +11,84 @@ const createInitialUserPayment = async () => {
         payment_type: "credit",
         provider: "Visa",
         account_no: 1234567890123456,
-        expiry: 01-2022,
+        expiry: "2022-01-31",
       },
       {
         user_id: "2",
         payment_type: "credit",
         provider: "MasterCard",
         account_no: 2345678901234567,
-        expiry: 02-2022,
+        expiry: "2022-02-28",
       },
       {
         user_id: "3",
         payment_type: "credit",
         provider: "Visa",
         account_no: 3456789012345678,
-        expiry: 03-2022,
+        expiry: "2022-03-31",
       },
       {
         user_id: "4",
         payment_type: "debit",
         provider: "Visa",
         account_no: 4567890123456789,
-        expiry: 04-2022,
+        expiry: "2022-04-30",
       },
       {
         user_id: "5",
         payment_type: "debit",
         provider: "Visa",
         account_no: 5678901234567890,
-        expiry: 05-2022,
+        expiry: "2022-05-31",
       },
       {
         user_id: "6",
         payment_type: "credit",
         provider: "Visa",
         account_no: 6789012345678901,
-        expiry: 06-2022,
+        expiry: "2023-06-30",
       },
       {
         user_id: "7",
         payment_type: "debit",
         provider: "Visa",
         account_no: 7890123456789012,
-        expiry: 07-2022,
+        expiry: "2023-07-31",
       },
       {
         user_id: "8",
         payment_type: "debit",
         provider: "MasterCard",
         account_no: 8901234567890123,
-        expiry: 08-2022,
+        expiry: "2023-08-31",
       },
       {
         user_id: "9",
         payment_type: "credit",
         provider: "Visa",
         account_no: 902345678901234,
-        expiry: 09-2022,
+        expiry: "2023-09-30",
       },
       {
         user_id: "10",
         payment_type: "debit",
         provider: "Visa",
         account_no: 986543210987654,
-        expiry: 10-2022,
+        expiry: "2023-10-31",
       },
       {
         user_id: "11",
         payment_type: "credit",
         provider: "Visa",
         account_no: 8765432109876543,
-        expiry: 11-2022,
+        expiry: "2023-11-30",
       },
     ];
-    const userPayment = await Promise.all(userPaymentsToCreate.map(createUserPayment));
-    console.log('User Payment created:', userPayment)
-    console.log('Finished creating user payment!')
-
+    const userPayment = await Promise.all(
+      userPaymentsToCreate.map(createUserPayment)
+    );
+    console.log("User Payment created:", userPayment);
+    console.log("Finished creating user payment!");
   } catch (error) {
     console.error("Error creating user payment!");
     throw error;
@@ -104,11 +105,12 @@ const createInitialPaymentDetails = async () => {
       { order_id: "6", amount: 98.22, provider: "Visa", status: true },
       { order_id: "12", amount: 11.16, provider: "Visa", status: true },
     ];
-    
-    const paymentDetails = await Promise.all(paymentDetailsToCreate.map(createPaymentDetails));
-    console.log('User Payment details:', paymentDetails)
-    console.log('Finished creating payment details!')
 
+    const paymentDetails = await Promise.all(
+      paymentDetailsToCreate.map(createPaymentDetails)
+    );
+    console.log("User Payment details:", paymentDetails);
+    console.log("Finished creating payment details!");
   } catch (error) {
     console.error("Error creating payment items!");
     throw error;
