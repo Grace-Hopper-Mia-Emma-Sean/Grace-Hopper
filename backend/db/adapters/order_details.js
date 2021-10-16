@@ -55,7 +55,7 @@ async function updateOrderDetails(fields) {
   if (setString.length === 0) {
     return;
   }
-  const { total } = fields;
+  const {id, user_id, total, payment_id} = fields;
   try {
     const {
       rows: [orders],
@@ -63,10 +63,10 @@ async function updateOrderDetails(fields) {
       `
             UPDATE order_details
             SET ${setString}
-            WHERE total=${total}
+            WHERE id=${id}
             RETURNING *;
         `,
-      Object.values(fields)
+      [id, user_id, total, payment_id]
     );
     return orders;
   } catch (error) {

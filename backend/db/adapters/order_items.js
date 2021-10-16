@@ -48,13 +48,15 @@ async function getAllOrderItemsById(id) {
   }
 }
 
-async function updateOrderItems(id, fields ={}) {
+async function updateOrderItems(fields) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=${index + 1}"`)
     .join(",");
   if (setString.length === 0) {
     return;
   }
+  
+  const { id, order_id, product_id, quantity} = fields;
   
   try {
     const {
@@ -66,7 +68,7 @@ async function updateOrderItems(id, fields ={}) {
             WHERE id=${id}
             RETURNING *;
         `,
-      Object.values(fields)
+        [id, order_id, product_id, quantity]
     );
     return orders;
   } catch (error) {

@@ -68,7 +68,7 @@ async function updatePaymentDetails(fields) {
             WHERE id=${id}
             RETURNING *;
         `,
-        id, order_id, amount, provider, status
+        [id, order_id, amount, provider, status]
     );
     return payment;
   } catch (error) {
