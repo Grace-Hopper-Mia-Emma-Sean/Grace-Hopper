@@ -38,12 +38,20 @@ const { createProductDiscount } = require("./adapters/product_discount");
 // orders adapters
 const { createOrderDetails } = require("./adapters/order_details");
 const { createOrderItems } = require("./adapters/order_items");
+const {getAllOrderDetails} = require ("./adapters/order_details.js")
+const { getAllOrderDetailsById } = require ("./adapters/order_details.js")
+const { destroyOrderDetails } = require ("./adapters/order_details.js")
+const {updateOrderDetails} = require ("./adapters/order_details.js")
 
 // payment adapters
 const { createUserPayment } = require("./adapters/user_payment");
 const { createPaymentDetails } = require("./adapters/payment_details");
 
 module.exports = {
+  destroyOrderDetails,
+  getAllOrderDetails,
+  getAllOrderDetailsById,
+  updateOrderDetails,
   createUser,
   getAllUsers,
   getUserById,

@@ -43,14 +43,14 @@ const updateUserPayment = async (fields) => {
     if (setString.length ===0){
         return ;
     }
-    const {payment_type, provider, account_no, expiry} = fields;
+    const {id, user_id, payment_type, provider, account_no, expiry } = fields;
     try {
         const { rows: [userPayment] } = await client.query(`
             UPDATE user_payment
             SET ${setString}
-            WHERE payment_type=${payment_type}, provider=${provider}, account_no=${account_no}, expiry=${expiry}
+            WHERE id=${id}
             RETURNING *;
-        `, Object.values(fields))
+        `, [id, user_id, payment_type, provider, account_no, expiry])
         return userPayment;
     }catch (error) {
         throw error;
