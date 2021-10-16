@@ -36,11 +36,19 @@ const { JWT_SECRET } = process.env;
 // });
 
 // TODO: Change routes once we're ready
-apiRouter.use("/health", require("./routers/health"));
+apiRouter.use("/health", require("./utils/health"));
 // ! Commented out until there's routers for the following modules:
-// apiRouter.use("/orders", require("./routers/orders"));
-// apiRouter.use("/payments", require("./routers/payments"));
+// apiRouter.use("/cart-items", require("./routers/cart_items"));
+// apiRouter.use("/order-details", require("./routers/order_details"));
+// apiRouter.use("/order-items", require("./routers/order_items"));
+// apiRouter.use("/payment-details", require("./routers/payment_details"));
+// apiRouter.use("/product-category-", require("./routers/product_category"));
+// apiRouter.use("/product-discount", require("./routers/product_discount"));
+// apiRouter.use("/product-inventory", require("./routers/product_inventory"));
 // apiRouter.use("/products", require("./routers/products"));
-apiRouter.use("/users", require("./routers/users"));
+// apiRouter.use("/shopping-session", require("./routers/shopping_session"));
+// apiRouter.use("/user-address", require("./routers/user_address"));
+// apiRouter.use("/user-payment", require("./routers/user_payment"));
+// apiRouter.use("/users", require("./routers/users"));
 
 module.exports = apiRouter;
