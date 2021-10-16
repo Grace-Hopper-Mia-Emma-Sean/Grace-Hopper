@@ -94,10 +94,22 @@ async function destroyOrderItems(id) {
   }
 }
 
+
+async function canEditOrderItems(order_id, product_id) {
+  const {rows: [canEditOrderItems] } = await client.query(`
+    SELECT* FROM order_items
+    JOIN order_details ON order_items."order_id"=order_details.id
+    JOIN products ON order_items."product_id"=products.id
+    AND order_items.order_id = $1, order_items.product_id =$2
+  `,[order_id, product_id]);
+  return canEditOrderItems;
+}
+
 module.exports = {
   getAllOrderItems,
   getAllOrderItemsById,
   createOrderItems,
   updateOrderItems,
   destroyOrderItems,
+  canEditOrderItems
 };

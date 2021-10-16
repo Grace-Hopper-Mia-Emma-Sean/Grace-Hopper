@@ -1,23 +1,26 @@
 const express = require("express");
 const orderDetailsRouter = express.Router();
 
-const {
-    getAllOrderDetails,
+const {   
     getAllOrderDetailsById,
-    createOrderDetails,
+    destroyOrderDetails,
     updateOrderDetails,
-    destroyOrderDetails
+    getAllOrderDetails,
+    createOrderDetails
+
 } = require ('../../db')
 
-const {userLoggedIn} = require('./utils')
+const {userLoggedIn, requiredNotSent} = require('./utils')
 
-orderDetailsRouter.post("/", userLoggedIn, async (req, res, next) => {
-    const {total} = req.body
+orderDetailsRouter.post("/", async (req, res, next) => {
+    const userId= req.user.id;
+    const paymentId = req.payment_details.id
+    const { total } = req.body
     try{
-        const createdOrderDetails = await createOrderDetails ({user_id, total, payment_id })
-            res.send(createdOrderDetails)
+        const createOrderDetails = await createOrderDetails({user_id: userId, payment_id:paymentId, total})
+            res.send(createOrderDetails)
     }catch (error) {
-        throw (error )
+        next (error )
     }
 })
 
@@ -26,33 +29,49 @@ orderDetailsRouter.get("/", async (req, res, next) => {
         const allOrderDetails =  await getAllOrderDetails();
         res.send(allOrderDetails)
     } catch (error) {
-        throw (error)
-    }
-})
-
-orderDetailsRouter.patch('/:orderId', userLoggedIn, async (req, res, next) => {
-    const { total } = req.body;
-    const { order_id } = req.params;
-    try {
-        const originalOrder = await getAllOrderDetailsById(order_id)
-        if (originalOrder) {
-            const updatedOrder= await updateOrderDetails ({id, user_id, total, payment_id})
-            res.send(updatedOrder)
-        }
-    } catch (error) {
-        throw (error)
-    }
-})
-
-orderDetailsRouter.delete('/:orderId/', userLoggedIn, async (req, res, next) => {
-    const { order_id } = req.params;
-    try {
-        const allOrders = await destroyOrderDetails(order_id)
-        res.send(allOrders)
-    } catch (error){
         next (error)
     }
 })
+orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requiredParams: ["id", "user_id", "total", "payment_id"], atLeastOne: true}), async (req, res, next) => {
+    const { total } = req.body;
+    const { orderDetailsId } = req.params;
+    const userId = req.user.id;
+    const paymentId = req.payment_details.id;
 
+    const updateFields = {id: orderDetailsId, user_id: userId, total, payment_id:paymentId}
+    
+    try {
+        const getOrderDetails =  await getAllOrderDetailsById(orderDetailsId)
+        if (!getOrderDetails) {
+            res.status(401)
+            next({
+                name: "NoOrderItemsError",
+                message: "No oder details exist to update"
+            })
+        } else {
+                console.log("Get Order Details to Update:", getOrderDetails)
+
+                const updateOrderDetails= await updateOrderDetails(updateFields)
+
+                console.log("Updated Order Details:", updateOrderDetails)
+                
+                res.send(updateOrderDetails)
+            }
+        } catch (error){
+            next (error)
+        }
+})
+
+orderDetailsRouter.delete('/:orderDetailsId', userLoggedIn, async (req, res, next) => {
+    const { orderDetailsId } = req.params;
+    
+    try {
+        const deleteOrderDetails = await destroyOrderDetails(orderDetailsId)
+        res.send(deleteOrderDetails)
+            
+        } catch ({name, message}){
+            next ({name, message})
+        }
+})
 
 module.exports = orderDetailsRouter;
