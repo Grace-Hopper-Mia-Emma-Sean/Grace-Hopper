@@ -232,24 +232,6 @@ const createTables = async () => {
   }
 };
 
-/**
- *
- * DONE: users table works
- * DONE: user_address table works
- * DONE: shopping_session table works
- * DONE: product_category table works
- * DONE: product_discount table works
- * DONE: products table works
- * DONE: user_payment table works
- * DONE: cart_items table works
- * DONE: product_inventory table works
- * DONE: payment_details table works
- *
- * TODO: order_details => requires users table && user_payment table
- * TODO: order_items => requires order_details table && products table
- *
- */
-
 const rebuildDB = async () => {
   try {
     client.connect();
