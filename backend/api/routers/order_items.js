@@ -19,7 +19,7 @@ orderItemsRouter.post("/", async (req, res, next) => {
         const createOrderItems = await createOrderItems({order_id:orderId, product_id:productId, quantity})
             res.send(createOrderItems)
     }catch (error) {
-        throw (error )
+        next (error )
     }
 })
 
@@ -28,7 +28,7 @@ orderItemsRouter.get("/", async (req, res, next) => {
         const allOrderItems =  await getAllOrderItems();
         res.send(allOrderItems)
     } catch (error) {
-        throw (error)
+        next (error)
     }
 })
 

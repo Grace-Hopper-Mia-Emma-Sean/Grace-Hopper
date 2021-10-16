@@ -1,14 +1,13 @@
-const userLoggedIn = ({req, res, next}) => {
-  if (!req.user){
-    res.status(401)
+const userLoggedIn = ({ req, res, next }) => {
+  if (!req.user) {
+    res.status(401);
     next({
       name: "MissingUserError",
-      message: "You must be logged in to perform this action."
+      message: "You must be logged in to perform this action.",
     });
   }
-  next ();
-}
-
+  next();
+};
 
 const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   return (req, res, next) => {

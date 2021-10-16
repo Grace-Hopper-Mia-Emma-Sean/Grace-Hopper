@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { requireLogin } = require("../utils");
+const { userLogin } = require("../utils");
 const usersRouter = express.Router();
 
 /**
@@ -14,7 +14,7 @@ const usersRouter = express.Router();
  *
  */
 
-usersRouter.get("/account", requireLogin, async (req, res, next) => {
+usersRouter.get("/account", userLogin, async (req, res, next) => {
   const { id } = req.user;
   try {
     const user = await getAccountById(id);
@@ -26,7 +26,7 @@ usersRouter.get("/account", requireLogin, async (req, res, next) => {
 
 usersRouter.get(
   "/account/orders/:orderNumber",
-  requireLogin, // ! and require owner of that order
+  userLogin, // ! and require owner of that order
   async (req, res, next) => {
     try {
       const { orderNumber } = req.params;
@@ -40,7 +40,7 @@ usersRouter.get(
 
 usersRouter.get(
   "/account/orders",
-  requireLogin, // ! and require ownder of that order
+  userLogin, // ! and require ownder of that order
   async (req, res, next) => {
     try {
       const { username } = req.params;

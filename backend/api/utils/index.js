@@ -36,7 +36,7 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   };
 };
 
-const requireLogin = (req, res, next) => {
+const userLogin = (req, res, next) => {
   if (!req.user) {
     res.status(401);
     next({
@@ -49,5 +49,5 @@ const requireLogin = (req, res, next) => {
 
 module.exports = {
   requiredNotSent,
-  requireLogin,
+  userLogin,
 };
