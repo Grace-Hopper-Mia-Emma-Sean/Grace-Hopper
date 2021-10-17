@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { userLogin } = require("../utils");
+const { userLogin, dbFields, requiredNotSent } = require("../utils");
 const {
   createUser,
   getAllUsers,
@@ -19,9 +19,9 @@ const usersRouter = express.Router();
  * DONE: getUserById
  * DONE: deleteUser => if a user deletes their acct, someone else can register with that retired name - do we want to keep this functionality?
  *
- * TODO: createUser (login) => 401
- * TODO: updateUser
- * TODO: getUserByUsername => 401 but works during register
+ * TODO: createUser (login) => 404
+ * TODO: updateUser => 404
+ * TODO: getUserByUsername => 404 but works during register
  *
  */
 
@@ -149,6 +149,67 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
+// usersRouter.patch("/:userId", async (req, res, next) => {
+//   const { id, username, first_name, last_name, telephone, isAdmin } = req.body;
+//   const { userId } = req.params;
+//   const updateFields = {
+//     id: userId,
+//     username,
+//     first_name,
+//     last_name,
+//     telephone,
+//     isAdmin,
+//   };
+//   const user = await updateUser(userId);
+//   if (!user) {
+//     res.status(401);
+//     next({
+//       name: "NoUserError",
+//       message: "No user exists with that id to delete",
+//     });
+//   } else {
+//     console.log("Get user to update: ", user);
+//     const
+//   }
+// });
+
+usersRouter.patch(
+  "/:routineId",
+  requiredNotSent({
+    requiredParams: ["username, first_name, last_name, telephone, isAdmin"],
+    atLeastOne: true,
+  }),
+  async (req, res, next) => {
+    const { userId } = req.params;
+    const { username, first_name, last_name, telephone, isAdmin } = req.body;
+    // const { id: userId } = req.user;
+    try {
+      const originalUser = await getUserById(userId);
+      if (!originalUser) {
+        next({
+          name: "NotFound",
+          message: `No user found by ID ${userId}`,
+        });
+        // } else if(userId !== originalUser.id) {
+        //   res.status(403);
+        //   next({name: "Unauthorized", message: "You cannot edit this routine!"});
+        // } else {
+        const newUser = await updateUser({
+          id: userId,
+          username,
+          first_name,
+          last_name,
+          telephone,
+          isAdmin,
+        });
+        res.send(newUser);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 usersRouter.delete("/:userId", async (req, res, next) => {
   const { userId } = req.params;
   try {
@@ -161,6 +222,7 @@ usersRouter.delete("/:userId", async (req, res, next) => {
       });
     }
     res.send(user);
+    next({ name: "UserDeleted", message: "User successfully deleted" });
   } catch ({ name, message }) {
     next({ name, message });
   }
