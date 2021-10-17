@@ -98,11 +98,11 @@ const createTables = async () => {
             await client.query(`
               CREATE TABLE user_payment (
               id SERIAL PRIMARY KEY, 
-              "user_id" INTEGER REFERENCES users(id),
-              payment_type VARCHAR(255) NOT NULL,
-              provider VARCHAR(255) NOT NULL,
-              account_no VARCHAR(16) NOT NULL,
-              expiry DATE NOT NULL
+              user_id INTEGER REFERENCES users(id),
+              payment_type VARCHAR(255),
+              provider VARCHAR(255),
+              account_no VARCHAR(16),
+              expiry DATE
             );
           `);
             try {
@@ -138,9 +138,9 @@ const createTables = async () => {
                     await client.query(`
                           CREATE TABLE payment_details (
                             id SERIAL PRIMARY KEY, 
-                            order_id INTEGER NOT NULL,
-                            amount DECIMAL(19,4) NOT NULL,
-                            provider VARCHAR(255) NOT NULL,
+                            order_id INTEGER CHECK (order_id>0),
+                            amount DECIMAL(19,4) CHECK (amount>0),
+                            provider VARCHAR(255),
                             status BOOLEAN DEFAULT false
                           );
                         `);
@@ -166,7 +166,7 @@ const createTables = async () => {
                           CREATE TABLE order_details (
                             id SERIAL PRIMARY KEY,
                             "user_id" INTEGER REFERENCES users(id),
-                            total DECIMAL(19,4) NOT NULL,
+                            total DECIMAL(19,4) CHECK (total>0),
                             "payment_id" INTEGER REFERENCES payment_details(id)
                             );
                         `);
@@ -187,7 +187,7 @@ const createTables = async () => {
                                 id SERIAL PRIMARY KEY, 
                                 "order_id" INTEGER REFERENCES order_details(id),
                                 "product_id" INTEGER REFERENCES products(id),
-                                quantity INTEGER NOT NULL
+                                quantity INTEGER CHECK (quantity>0)
                              );
                            `);
                           } catch (error) {

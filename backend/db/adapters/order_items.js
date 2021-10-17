@@ -1,9 +1,10 @@
 const { client } = require("../client");
 
+
 const createOrderItems = async ({ order_id, product_id, quantity }) => {
   try {
     const {
-      rows: [orders],
+      rows: orders,
     } = await client.query(
       `
         INSERT INTO order_items(order_id, product_id, quantity)
@@ -50,26 +51,21 @@ async function getAllOrderItemsById(id) {
 
 async function updateOrderItems(fields) {
   const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=${index + 1}"`)
-    .join(",");
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(',');
   if (setString.length === 0) {
     return;
   }
   
   const { id, order_id, product_id, quantity} = fields;
-  
   try {
     const {
-      rows: [orders],
-    } = await client.query(
-      `
+      rows: [orders]} = await client.query(`
             UPDATE order_items
             SET ${setString}
             WHERE id=${id}
             RETURNING *;
-        `,
-        [id, order_id, product_id, quantity]
-    );
+        `,[id, order_id, product_id, quantity]);
     return orders;
   } catch (error) {
     throw error;
