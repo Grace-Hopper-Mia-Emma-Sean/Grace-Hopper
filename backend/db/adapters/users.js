@@ -114,20 +114,11 @@ const deleteUser = async (id) => {
     `,
       [id]
     );
-    // delete refs addresses
-    // delete refs shopping_session
-    // delete refs user_payment
-    // delete refs order_details
+    return user;
   } catch (error) {
     throw error;
   }
 };
-
-// TODO: Differentiate getUserAcct from getUserOrders or merge?
-
-const getUserAcct = async () => {};
-
-const getUserOrders = async () => {};
 
 module.exports = {
   createUser,

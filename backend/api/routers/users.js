@@ -14,9 +14,14 @@ const usersRouter = express.Router();
 
 /**
  *
- * DONE: createUser (register), getAllUsers, getUserById
+ * DONE: createUser (register)
+ * DONE: getAllUsers
+ * DONE: getUserById
+ * DONE: deleteUser => if a user deletes their acct, someone else can register with that retired name - do we want to keep this functionality?
  *
- * TODO: createUser (login), getUserByUsername (works when used in register...?)
+ * TODO: createUser (login) => 401
+ * TODO: updateUser
+ * TODO: getUserByUsername => 401 but works during register
  *
  */
 
@@ -112,7 +117,6 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
-// DONE
 usersRouter.get("/:userId", async (req, res, next) => {
   try {
     const user = await getUserById(req.params.userId);
@@ -129,7 +133,6 @@ usersRouter.get("/:userId", async (req, res, next) => {
   }
 });
 
-// TODO
 usersRouter.get("/:username", async (req, res, next) => {
   try {
     const user = await getUserById(req.params.username);
@@ -138,6 +141,23 @@ usersRouter.get("/:username", async (req, res, next) => {
       next({
         name: "NoUserError",
         message: "No user exists with that username",
+      });
+    }
+    res.send(user);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+usersRouter.delete("/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const user = await deleteUser(userId);
+    if (!user) {
+      res.status(401);
+      next({
+        name: "NoUserError",
+        message: "No user exists with that id to delete",
       });
     }
     res.send(user);
