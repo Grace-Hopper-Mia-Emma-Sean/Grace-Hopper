@@ -1,6 +1,6 @@
 const { client } = require("../client");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const SALT_COUNT = 10;
 
 const createUser = async ({
@@ -31,24 +31,13 @@ const createUser = async ({
   }
 };
 
-const getAllUsers = async ({
-  username,
-  first_name,
-  last_name,
-  telephone,
-  isAdmin,
-}) => {
+const getAllUsers = async () => {
   try {
-    const {
-      rows: [users],
-    } = await client.query(
-      `
-      SELECT username, first_name, last_name, telephone, isAdmin
-      FROM users
-    `,
-      [username, first_name, last_name, telephone, isAdmin]
-    );
-    return users;
+    const { rows } = await client.query(`
+      SELECT username, first_name, last_name, telephone, "isAdmin"
+      FROM users;
+    `);
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -58,11 +47,14 @@ const getUserById = async (id) => {
   try {
     const {
       rows: [user],
-    } = await client.query(`
-      SELECT *
+    } = await client.query(
+      `
+      SELECT username, first_name, last_name, telephone, "isAdmin"
       FROM USERS
-      WHERE id=${id}`);
-    if (!user) return null;
+      WHERE id=$1`,
+      [id]
+    );
+    // if (!user) return null;
     return user;
   } catch (error) {
     throw error;
@@ -75,7 +67,7 @@ const getUserByUsername = async (username) => {
       rows: [user],
     } = await client.query(
       `
-      SELECT *
+      SELECT username, first_name, last_name, telephone, "isAdmin"
       FROM users
       WHERE username=$1
     `,

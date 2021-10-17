@@ -31,7 +31,7 @@ userAddressRouter.post("/", userLogin, async (req, res, next) => {
   }
 });
 
-userAddressRouter.get("/:id", requireLogIn, async (req, res, next) => {
+userAddressRouter.get("/:id", userLogin, async (req, res, next) => {
   const { id } = req.params;
   try {
     const address = await getUserAddressById(id);

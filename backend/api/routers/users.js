@@ -1,59 +1,28 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { userLogin } = require("../utils");
+const {
+  createUser,
+  getAllUsers,
+  getUserById,
+  getUserByUsername,
+  updateUser,
+  deleteUser,
+} = require("../../db");
 const usersRouter = express.Router();
 
 /**
- * TODO: Decide what's a wishlist item and what's necessary
  *
- * logging in = POST
- * register = POST
- * profile/acct info = GET, POST, PATCH (// ? and let them DELETE)
- * order history = GET
+ * DONE: createUser (register), getAllUsers, getUserById
+ *
+ * TODO: createUser (login), getUserByUsername (works when used in register...?)
  *
  */
 
-usersRouter.get("/account", userLogin, async (req, res, next) => {
-  const { id } = req.user;
-  try {
-    const user = await getAccountById(id);
-    res.send(user);
-  } catch (error) {
-    next(error);
-  }
-});
-
-usersRouter.get(
-  "/account/orders/:orderNumber",
-  userLogin, // ! and require owner of that order
-  async (req, res, next) => {
-    try {
-      const { orderNumber } = req.params;
-      const order = await getOrderByUser({ orderNumber });
-      res.send(order);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-usersRouter.get(
-  "/account/orders",
-  userLogin, // ! and require ownder of that order
-  async (req, res, next) => {
-    try {
-      const { username } = req.params;
-      const orders = await getOrdersByUser(id);
-      res.send(orders);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, first_name, last_name, telephone, isAdmin } =
+    req.body;
   try {
     const _user = await getUserByUsername(username);
     if (_user) {
@@ -67,7 +36,14 @@ usersRouter.post("/register", async (req, res, next) => {
         message: "Password must be 8 or more characters",
       });
     } else {
-      const user = await createUser({ username, password });
+      const user = await createUser({
+        username,
+        password,
+        first_name,
+        last_name,
+        telephone,
+        isAdmin,
+      });
 
       const token = jwt.sign(
         {
@@ -79,7 +55,6 @@ usersRouter.post("/register", async (req, res, next) => {
           expiresIn: "1w",
         }
       );
-
       res.send({
         user: user,
         message: "Thank you for signing up!",
@@ -93,7 +68,6 @@ usersRouter.post("/register", async (req, res, next) => {
 
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-
   if (!username || !password) {
     next({
       name: "MissingCredentialsError",
@@ -104,7 +78,6 @@ usersRouter.post("/login", async (req, res, next) => {
     const user = await getUserByUsername(username);
     const hashedPassword = user.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-
     if (user && passwordsMatch) {
       const token = jwt.sign(
         {
@@ -113,12 +86,10 @@ usersRouter.post("/login", async (req, res, next) => {
         },
         process.env.JWT_SECRET
       );
-
       delete user.password;
-
       res.send({
         user: user,
-        message: "you're logged in!",
+        message: "You're logged in!",
         token: token,
       });
     } else {
@@ -127,6 +98,49 @@ usersRouter.post("/login", async (req, res, next) => {
         message: "Username or password is incorrect",
       });
     }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+usersRouter.get("/", async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+    res.send(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DONE
+usersRouter.get("/:userId", async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.userId);
+    if (!user) {
+      res.status(401);
+      next({
+        name: "NoUserError",
+        message: "No user exists with that id",
+      });
+    }
+    res.send(user);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+// TODO
+usersRouter.get("/:username", async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.username);
+    if (!user) {
+      res.status(401);
+      next({
+        name: "NoUserError",
+        message: "No user exists with that username",
+      });
+    }
+    res.send(user);
   } catch ({ name, message }) {
     next({ name, message });
   }
