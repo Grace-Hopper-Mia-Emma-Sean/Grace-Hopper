@@ -13,11 +13,10 @@ const {
 const {userLoggedIn, requiredNotSent} = require('./utils')
 
 userPaymentRouter.post("/", async (req, res, next) => {
-    const { id } = req.user;
-    const { payment_type, provider, account_no, expiry } = req.body
+    const { id, payment_type, provider, account_no, expiry } = req.body
     try{
-        const createUserPayment = await createUserPayment({user_id: id, payment_type, provider, account_no, expiry})
-        res.send(createUserPayment)
+        const createdUserPayment = await createUserPayment({id, payment_type, provider, account_no, expiry})
+        res.send(createdUserPayment)
     }catch (error) {
         next (error )
     }
@@ -27,8 +26,8 @@ userPaymentRouter.get("/", async (req, res, next) => {
     try {
         const allUserPayment =  await getAllUserPayment();
         res.send(allUserPayment)
-    } catch (error) {
-        next (error)
+    } catch ({name, message}){
+        next ({name, message})
     }
 })
 
@@ -60,7 +59,8 @@ userPaymentRouter.patch('/:userPaymentId', userLoggedIn, requiredNotSent({requir
         }
 })
 
-userPaymentRouter.delete('/:userPaymentId', userLoggedIn, async (req, res, next) => {
+//userLoggedIn
+userPaymentRouter.delete('/:userPaymentId', async (req, res, next) => {
     const {userPaymentId} = req.params;
     
     try {

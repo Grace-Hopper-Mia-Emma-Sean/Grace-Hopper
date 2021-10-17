@@ -12,12 +12,10 @@ const {
 const {userLoggedIn, requiredNotSent} = require('./utils')
 
 orderItemsRouter.post("/", async (req, res, next) => {
-    const orderId = req.user.order_details.id;
-    const productId = req.product.id;
-    const {quantity} = req.body
+    const {order_id, product_id, quantity} = req.body;
     try{
-        const createOrderItems = await createOrderItems({order_id:orderId, product_id:productId, quantity})
-            res.send(createOrderItems)
+        const createdOrderItems = await createOrderItems({order_id, product_id, quantity})
+            res.send(createdOrderItems)
     }catch (error) {
         next (error )
     }
@@ -31,13 +29,11 @@ orderItemsRouter.get("/", async (req, res, next) => {
         next (error)
     }
 })
-
-orderItemsRouter.patch('/:orderItemsId', userLoggedIn, requiredNotSent({requiredParams: ["id", "order_id", "product_id", "quantity"], atLeastOne: true}), async (req, res, next) => {
-    const { quantity } = req.body;
+//userLoggedIn, requiredNotSent({requiredParams: ["id", "order_id", "product_id", "quantity"], atLeastOne: true})
+orderItemsRouter.patch('/:orderItemsId', async (req, res, next) => {
+    const {order_id, product_id, quantity} = req.body;
     const { orderItemsId } = req.params;
-    const orderId = req.user.order_details.id;
-    const productId = req.product.id;
-    const updateFields = {id: orderItemsId, order_id:orderId, product_id:productId, quantity}
+    const updateFields = {id: orderItemsId, order_id, product_id, quantity}
     
     try {
         const getOrderItems =  await getAllOrderItemsById(orderItemsId)
@@ -61,7 +57,8 @@ orderItemsRouter.patch('/:orderItemsId', userLoggedIn, requiredNotSent({required
         }
 })
 
-orderItemsRouter.delete('/:orderItemsId', userLoggedIn, async (req, res, next) => {
+//userLoggedIn
+orderItemsRouter.delete('/:orderItemsId', async (req, res, next) => {
     const { orderItemsId } = req.params;
     try {
         const deleteOrderItem = await destroyOrderItems(orderItemsId)

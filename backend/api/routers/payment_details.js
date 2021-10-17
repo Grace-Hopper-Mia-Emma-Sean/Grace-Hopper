@@ -15,8 +15,8 @@ const {userLoggedIn, requiredNotSent} = require('./utils')
 paymentDetailsRouter.post("/", async (req, res, next) => {
     const {order_id, amount, provider, status} = req.body
     try{
-        const createPaymentDetails = await createPaymentDetails({order_id, amount, provider, status})
-            res.send(createPaymentDetails)
+        const createdPaymentDetails = await createPaymentDetails({order_id, amount, provider, status})
+            res.send(createdPaymentDetails)
     }catch (error) {
         next (error )
     }
@@ -58,7 +58,8 @@ paymentDetailsRouter.patch('/:paymentDetailsId', userLoggedIn, requiredNotSent({
         }
 })
 
-paymentDetailsRouter.delete('/:paymendDetailsId', userLoggedIn, async (req, res, next) => {
+//userLoggedIn
+paymentDetailsRouter.delete('/:paymendDetailsId', async (req, res, next) => {
     const { paymendDetailsId } = req.params;
     try {
         const deletePaymentDetails = await destroyPaymentDetails(paymendDetailsId)

@@ -6,19 +6,18 @@ const {
     destroyOrderDetails,
     updateOrderDetails,
     getAllOrderDetails,
-    createOrderDetails
+    createOrderDetails,
+    
 
 } = require ('../../db')
 
 const {userLoggedIn, requiredNotSent} = require('./utils')
 
 orderDetailsRouter.post("/", async (req, res, next) => {
-    const userId= req.user.id;
-    const paymentId = req.payment_details.id
-    const { total } = req.body
+    const { user_id, payment_id,total } = req.body
     try{
-        const createOrderDetails = await createOrderDetails({user_id: userId, payment_id:paymentId, total})
-            res.send(createOrderDetails)
+        const createdOrderDetails = await createOrderDetails({user_id, payment_id, total})
+            res.send(createdOrderDetails)
     }catch (error) {
         next (error )
     }
@@ -33,12 +32,10 @@ orderDetailsRouter.get("/", async (req, res, next) => {
     }
 })
 orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requiredParams: ["id", "user_id", "total", "payment_id"], atLeastOne: true}), async (req, res, next) => {
-    const { total } = req.body;
+    const { user_id, payment_id,total } = req.body
     const { orderDetailsId } = req.params;
-    const userId = req.user.id;
-    const paymentId = req.payment_details.id;
 
-    const updateFields = {id: orderDetailsId, user_id: userId, total, payment_id:paymentId}
+    const updateFields = {id: orderDetailsId, user_id, total, payment_id}
     
     try {
         const getOrderDetails =  await getAllOrderDetailsById(orderDetailsId)
@@ -51,18 +48,19 @@ orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requ
         } else {
                 console.log("Get Order Details to Update:", getOrderDetails)
 
-                const updateOrderDetails= await updateOrderDetails(updateFields)
+                const updatedOrderDetails= await updateOrderDetails(updateFields)
 
                 console.log("Updated Order Details:", updateOrderDetails)
                 
-                res.send(updateOrderDetails)
+                res.send(updatedOrderDetails)
             }
         } catch (error){
             next (error)
         }
 })
 
-orderDetailsRouter.delete('/:orderDetailsId', userLoggedIn, async (req, res, next) => {
+//userLoggedIn
+orderDetailsRouter.delete('/:orderDetailsId', async (req, res, next) => {
     const { orderDetailsId } = req.params;
     
     try {
