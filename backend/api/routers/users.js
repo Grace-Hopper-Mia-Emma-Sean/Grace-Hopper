@@ -121,7 +121,7 @@ usersRouter.get("/:userId", async (req, res, next) => {
   try {
     const user = await getUserById(req.params.userId);
     if (!user) {
-      res.status(401);
+      res.status(404);
       next({
         name: "NoUserError",
         message: "No user exists with that id",
@@ -137,7 +137,7 @@ usersRouter.get("/:username", async (req, res, next) => {
   try {
     const user = await getUserById(req.params.username);
     if (!user) {
-      res.status(401);
+      res.status(404);
       next({
         name: "NoUserError",
         message: "No user exists with that username",
@@ -215,7 +215,7 @@ usersRouter.delete("/:userId", async (req, res, next) => {
   try {
     const user = await deleteUser(userId);
     if (!user) {
-      res.status(401);
+      res.status(404);
       next({
         name: "NoUserError",
         message: "No user exists with that id to delete",

@@ -47,7 +47,7 @@ apiRouter.use("/payment-details", require("./routers/payment_details"));
 // apiRouter.use("/product-inventory", require("./routers/product_inventory"));
 // apiRouter.use("/products", require("./routers/products"));
 // apiRouter.use("/shopping-session", require("./routers/shopping_session"));
-// apiRouter.use("/user-address", require("./routers/user_address"));
+apiRouter.use("/user-address", require("./routers/user_address"));
 apiRouter.use("/user-payment", require("./routers/user_payment"));
 apiRouter.use("/users", require("./routers/users"));
 
