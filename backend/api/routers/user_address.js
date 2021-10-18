@@ -13,10 +13,10 @@ const { userLogin, requiredNotSent } = require("./utils");
 /**
  *
  * DONE: createUserAddress
+ * DONE: getAllUserAddresses
+ * DONE: deleteUserAddress => handled through adapter and in users router
  *
- * TODO: getAllUserAddresses
  * TODO: updateUserAddress
- * TODO: deleteUserAddress
  *
  */
 
@@ -58,11 +58,5 @@ userAddressRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
-
-// userAddressRouter.post("/", userLogin, async (req, res, next) => {});
-
-// userAddressRouter.get("/:id", userLogin, async (req, res, next) => {});
-
-// userAddressRouter.patch("/:id", userLogin, async (req, res, next) => {});
 
 module.exports = userAddressRouter;

@@ -78,11 +78,14 @@ const deleteUserAddress = async (id) => {
   try {
     const {
       rows: [address],
-    } = await client.query(`
+    } = await client.query(
+      `
       DELETE FROM user_address
-      WHERE id=${id}
+      WHERE user_id=$1
       RETURNING *;
-    `);
+    `,
+      [id]
+    );
     return address;
   } catch (error) {
     throw error;
