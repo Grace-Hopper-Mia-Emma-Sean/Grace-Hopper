@@ -14,8 +14,9 @@ const { userLogin, requiredNotSent } = require("./utils");
  *
  * DONE: createUserAddress
  * DONE: getAllUserAddresses
- * DONE: deleteUserAddress => handled through adapter and in users router
+ * DONE: deleteUserAddress => handled through users router... we don't want users to be able to delete their own address, right? Unless they're permanently deleting their acct.
  *
+ * TODO: getUserAddressById => if we include that... then would be called in updateUserAddress?
  * TODO: updateUserAddress
  *
  */

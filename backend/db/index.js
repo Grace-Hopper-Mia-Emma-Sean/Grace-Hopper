@@ -24,9 +24,10 @@ const {
 
 const {
   createUserShoppingSession,
-  getShoppingSessionById,
-  updateShoppingSession,
-  deleteShoppingSession,
+  getAllUserShoppingSessions,
+  getUserShoppingSessionById,
+  updateUserShoppingSession,
+  deleteUserShoppingSession,
 } = require("./adapters/shopping_session");
 
 // products adapters
@@ -90,9 +91,10 @@ module.exports = {
   updateUserAddress,
   deleteUserAddress,
   createUserShoppingSession,
-  getShoppingSessionById,
-  updateShoppingSession,
-  deleteShoppingSession,
+  getAllUserShoppingSessions,
+  getUserShoppingSessionById,
+  updateUserShoppingSession,
+  deleteUserShoppingSession,
   createUserCartItem,
   getCartItemById,
   updateCartItems,
