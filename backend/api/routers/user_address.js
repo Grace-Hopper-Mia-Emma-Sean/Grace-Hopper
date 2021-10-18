@@ -3,7 +3,7 @@ const userAddressRouter = express.Router();
 
 const {
   createUserAddress,
-  getUserAddressById,
+  getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
 } = require("../../db");
@@ -14,13 +14,13 @@ const { userLogin, requiredNotSent } = require("./utils");
  *
  * DONE: createUserAddress
  *
- * TODO: getUserAddressById
- * TODO: updateUserAddress,
- * TODO: deleteUserAddress,
+ * TODO: getAllUserAddresses
+ * TODO: updateUserAddress
+ * TODO: deleteUserAddress
  *
  */
 
-userAddressRouter.post("/:userId", async (req, res, next) => {
+userAddressRouter.post("/", async (req, res, next) => {
   const {
     user_id,
     address_line1,
@@ -51,19 +51,11 @@ userAddressRouter.post("/:userId", async (req, res, next) => {
 });
 
 userAddressRouter.get("/", async (req, res, next) => {
-  const { userId } = req.params;
   try {
-    const address = await getUserAddressById(userId);
-    if (!address) {
-      res.status(404);
-      next({
-        name: "NoUserError",
-        message: "No user exists with that id",
-      });
-    }
+    const address = await getAllUserAddresses();
     res.send(address);
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 

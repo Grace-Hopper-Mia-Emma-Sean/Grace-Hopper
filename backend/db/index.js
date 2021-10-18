@@ -10,7 +10,7 @@ const {
 
 const {
   createUserAddress,
-  getUserAddressById,
+  getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
 } = require("./adapters/user_address");
@@ -38,15 +38,15 @@ const { createProductDiscount } = require("./adapters/product_discount");
 // orders adapters
 const { createOrderDetails } = require("./adapters/order_details");
 const { createOrderItems } = require("./adapters/order_items");
-const { getAllOrderDetails} = require ("./adapters/order_details")
-const { getAllOrderDetailsById } = require ("./adapters/order_details")
-const { destroyOrderDetails } = require ("./adapters/order_details")
-const { updateOrderDetails} = require ("./adapters/order_details")
-const { getAllOrderItems } = require ("./adapters/order_items")
-const { getAllOrderItemsById } =require ("./adapters/order_items")
-const { updateOrderItems } = require ("./adapters/order_items")
-const { destroyOrderItems} = require ("./adapters/order_items")
-const { canEditOrderItems} =  require ("./adapters/order_items")
+const { getAllOrderDetails } = require("./adapters/order_details");
+const { getAllOrderDetailsById } = require("./adapters/order_details");
+const { destroyOrderDetails } = require("./adapters/order_details");
+const { updateOrderDetails } = require("./adapters/order_details");
+const { getAllOrderItems } = require("./adapters/order_items");
+const { getAllOrderItemsById } = require("./adapters/order_items");
+const { updateOrderItems } = require("./adapters/order_items");
+const { destroyOrderItems } = require("./adapters/order_items");
+const { canEditOrderItems } = require("./adapters/order_items");
 
 // payment adapters
 const { createUserPayment } = require("./adapters/user_payment");
@@ -86,7 +86,7 @@ module.exports = {
   updateUser,
   deleteUser,
   createUserAddress,
-  getUserAddressById,
+  getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
   createUserShoppingSession,

@@ -38,16 +38,14 @@ const createUserAddress = async ({
   }
 };
 
-const getUserAddressById = async (id) => {
+const getAllUserAddresses = async () => {
   try {
-    const {
-      rows: [address],
-    } = await client.query(`
+    // ? This doesn't work if I do `address` instead of `rows`... it sends back an empty 200
+    const { rows } = await client.query(`
       SELECT *
       FROM user_address
-      WHERE id=${id}`);
-    if (!address) return null;
-    return address;
+    `);
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -93,7 +91,7 @@ const deleteUserAddress = async (id) => {
 
 module.exports = {
   createUserAddress,
-  getUserAddressById,
+  getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
 };
