@@ -38,7 +38,7 @@ const { JWT_SECRET } = process.env;
 // TODO: Change routes once we're ready
 apiRouter.use("/health", require("./utils/health"));
 // ! Commented out until there's routers for the following modules:
-// apiRouter.use("/cart-items", require("./routers/cart_items"));
+apiRouter.use("/cart-items", require("./routers/cart_items"));
 apiRouter.use("/order-details", require("./routers/order_details"));
 apiRouter.use("/order-items", require("./routers/order_items"));
 apiRouter.use("/payment-details", require("./routers/payment_details"));

@@ -77,10 +77,10 @@ const deleteUserShoppingSession = async (id) => {
       rows: [shoppingSession],
     } = await client.query(
       `
-      DELETE FROM shopping_session
-      WHERE user_id=$1
-      RETURNING *;
-    `,
+            DELETE FROM shopping_session
+            WHERE id=$1
+            RETURNING *;
+        `,
       [id]
     );
     return shoppingSession;

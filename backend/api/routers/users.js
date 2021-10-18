@@ -11,6 +11,7 @@ const {
   deleteUser,
   deleteUserAddress,
   deleteUserShoppingSession,
+  deleteUserCartItems,
 } = require("../../db");
 const usersRouter = express.Router();
 
@@ -188,9 +189,10 @@ usersRouter.patch(
   }
 );
 
-usersRouter.delete("/:userId", async (req, res, next) => {
+usersRouter.delete("/:userId/", async (req, res, next) => {
   const { userId } = req.params;
   try {
+    // const cartItems = await deleteUserCartItems(/*parameters*/);
     const shoppingSession = await deleteUserShoppingSession(userId);
     const address = await deleteUserAddress(userId);
     const user = await deleteUser(userId);
@@ -205,6 +207,7 @@ usersRouter.delete("/:userId", async (req, res, next) => {
       user: user,
       address: address,
       shoppingSession: shoppingSession,
+      cartItems: cartItems,
     };
     res.send(data);
     // ? When the next() below is kept, nodemon returns a `Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client` message, but all instances of the user are still removed regardless
