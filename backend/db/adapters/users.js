@@ -52,11 +52,10 @@ const getUserById = async (id) => {
     } = await client.query(
       `
       SELECT username, first_name, last_name, telephone, "isAdmin"
-      FROM USERS
+      FROM users
       WHERE id=$1`,
       [id]
     );
-    // if (!user) return null;
     return user;
   } catch (error) {
     throw error;
@@ -64,12 +63,13 @@ const getUserById = async (id) => {
 };
 
 const getUserByUsername = async (username) => {
+  // only used for login/register
   try {
     const {
       rows: [user],
     } = await client.query(
       `
-      SELECT username, first_name, last_name, telephone, "isAdmin"
+      SELECT *
       FROM users
       WHERE username=$1
     `,
@@ -104,28 +104,26 @@ const getUserByUsername = async (username) => {
 //   }
 // };
 
-const updateUser = async ({ id, ...fields }) => {
+const updateUser = async (id, fields = {}) => {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+  if (setString.toString.length === 0) return;
+  // const [username, first_name, last_name, telephone, isAdmin] = fields;
   try {
-    const toUpdate = {};
-    for (let column in fields) {
-      if (fields[column] !== undefined) {
-        toUpdate[column] = fields[column];
-      }
-    }
-    let user;
-    if (util.dbFields(fields).insert.length > 0) {
-      const { rows } = await client.query(
-        `
-        UPDATE users
-        SET ${util.dbFields(toUpdate).insert}
-        WHERE id=${id}
-        RETURNING *;
-        `,
-        Object.values(toUpdate)
-      );
-      user = rows[0];
-      return user;
-    }
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      UPDATE users
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+    `,
+      Object.values(fields)
+      // [username, first_name, last_name, telephone, isAdmin]
+    );
+    return user;
   } catch (error) {
     throw error;
   }

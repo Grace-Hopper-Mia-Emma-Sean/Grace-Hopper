@@ -1,7 +1,10 @@
 const express = require("express");
+const usersRouter = express.Router();
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { userLogin, dbFields, requiredNotSent } = require("../utils");
+
 const {
   createUser,
   getAllUsers,
@@ -13,25 +16,23 @@ const {
   deleteUserShoppingSession,
   deleteUserCartItems,
 } = require("../../db");
-const usersRouter = express.Router();
 
 /**
  *
  * DONE: createUser (register)
+ * DONE: "loginUser" (login)
  * DONE: getAllUsers
  * DONE: getUserById
  * DONE: deleteUser => if a user deletes their acct, someone else can register with that retired name - do we want to keep this functionality?
  *
- * TODO: createUser (login) => 404
- * TODO: updateUser => 404
- * TODO: getUserByUsername => 404 but works during register
+ * TODO: updateUser
  *
  */
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, first_name, last_name, telephone, isAdmin } =
-    req.body;
   try {
+    const { username, password, first_name, last_name, telephone, isAdmin } =
+      req.body;
     const _user = await getUserByUsername(username);
     if (_user) {
       next({
@@ -52,7 +53,6 @@ usersRouter.post("/register", async (req, res, next) => {
         telephone,
         isAdmin,
       });
-
       const token = jwt.sign(
         {
           id: user.id,
@@ -69,23 +69,21 @@ usersRouter.post("/register", async (req, res, next) => {
         token: token,
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    throw error;
   }
 });
 
 usersRouter.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    next({
-      name: "MissingCredentialsError",
-      message: "Please supply both a username and password",
-    });
-  }
   try {
+    const { username, password } = req.body;
+    if (!username || !password)
+      next({
+        name: "MissingCredentialsError",
+        message: "Please supply both a username and password",
+      });
     const user = await getUserByUsername(username);
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+    const passwordsMatch = await bcrypt.compare(password, user.password);
     if (user && passwordsMatch) {
       const token = jwt.sign(
         {
@@ -106,114 +104,53 @@ usersRouter.post("/login", async (req, res, next) => {
         message: "Username or password is incorrect",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    throw error;
   }
 });
 
 usersRouter.get("/", async (req, res, next) => {
-  try {
-    const users = await getAllUsers();
-    res.send(users);
-  } catch (error) {
-    next(error);
-  }
+  const users = await getAllUsers();
+  if (!users) res.status(404).send({ name: "NoUserError" });
+  res.status(200).send(users);
 });
 
 usersRouter.get("/:userId", async (req, res, next) => {
-  try {
-    const user = await getUserById(req.params.userId);
-    if (!user) {
-      res.status(404);
-      next({
-        name: "NoUserError",
-        message: "No user exists with that id",
-      });
-    }
-    res.send(user);
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
+  const user = await getUserById(req.params.userId);
+  if (!user)
+    res.status(404).send({
+      name: "NoUserError",
+      message: `No user exists with id ${req.params.userId}`,
+    });
+  res.status(200).send(user);
 });
-
-usersRouter.get("/:username", async (req, res, next) => {
-  try {
-    const user = await getUserById(req.params.username);
-    if (!user) {
-      res.status(404);
-      next({
-        name: "NoUserError",
-        message: "No user exists with that username",
-      });
-    }
-    res.send(user);
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-
-usersRouter.patch(
-  "/:routineId",
-  requiredNotSent({
-    requiredParams: ["username, first_name, last_name, telephone, isAdmin"],
-    atLeastOne: true,
-  }),
-  async (req, res, next) => {
-    const { userId } = req.params;
-    const { username, first_name, last_name, telephone, isAdmin } = req.body;
-    // const { id: userId } = req.user;
-    try {
-      const originalUser = await getUserById(userId);
-      if (!originalUser) {
-        next({
-          name: "NotFound",
-          message: `No user found by ID ${userId}`,
-        });
-        // } else if(userId !== originalUser.id) {
-        //   res.status(403);
-        //   next({name: "Unauthorized", message: "You cannot edit this routine!"});
-        // } else {
-        const newUser = await updateUser({
-          id: userId,
-          username,
-          first_name,
-          last_name,
-          telephone,
-          isAdmin,
-        });
-        res.send(newUser);
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 usersRouter.delete("/:userId/", async (req, res, next) => {
-  const { userId } = req.params;
   try {
-    // const cartItems = await deleteUserCartItems(/*parameters*/);
-    const shoppingSession = await deleteUserShoppingSession(userId);
-    const address = await deleteUserAddress(userId);
-    const user = await deleteUser(userId);
-    if (!user) {
-      res.status(404);
-      next({
+    const userId = await getUserById(req.params.userId);
+    if (!userId) {
+      res.status(404).send({
         name: "NoUserError",
-        message: "No user exists with that ID to delete",
+        message: `No user exists with id ${req.params.userId} exists to delete`,
+      });
+    } else {
+      // const cartItems = await deleteUserCartItems(/*parameters*/);
+      const shoppingSession = await deleteUserShoppingSession(userId);
+      const address = await deleteUserAddress(userId);
+      const user = await deleteUser(userId);
+      const data = {
+        user: user,
+        address: address,
+        shoppingSession: shoppingSession,
+        // cartItems: cartItems,
+      };
+      res.status(200).send({
+        message: `user with id ${req.params.userId} was successfully deleted`,
+        data: data,
       });
     }
-    const data = {
-      user: user,
-      address: address,
-      shoppingSession: shoppingSession,
-      cartItems: cartItems,
-    };
-    res.send(data);
-    // ? When the next() below is kept, nodemon returns a `Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client` message, but all instances of the user are still removed regardless
-    // next({ name: "UserDeleted", message: "User successfully deleted" });
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    throw error;
   }
 });
 
