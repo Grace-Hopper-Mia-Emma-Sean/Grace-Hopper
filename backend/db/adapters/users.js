@@ -81,49 +81,26 @@ const getUserByUsername = async (username) => {
   }
 };
 
-// const updateUser = async (id, fields = {}) => {
-//   const setString = Object.keys(fields)
-//     .map((key, index) => `"${key}"=$${index + 1}`)
-//     .join(", ");
-//   if (setString.toString.length === 0) return;
-//   try {
-//     const {
-//       rows: [user],
-//     } = await client.query(
-//       `
-//       UPDATE users
-//       SET ${setString}
-//       WHERE id=${id}
-//       RETURNING *;
-//     `,
-//       Object.values(fields)
-//     );
-//     return user;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
 const updateUser = async (id, fields = {}) => {
   const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(", ");
-  if (setString.toString.length === 0) return;
-  // const [username, first_name, last_name, telephone, isAdmin] = fields;
+    .map((key, index) => `"${key}"=${index + 1}"`)
+    .join(",");
+  if (setString.length === 0) return;
+  // const { id, username, first_name, last_name, telephone, isAdmin } = fields;
   try {
     const {
-      rows: [user],
+      rows: [payment],
     } = await client.query(
       `
-      UPDATE users
-      SET ${setString}
-      WHERE id=${id}
-      RETURNING *;
-    `,
+        UPDATE payment_details
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *
+        `,
+      // [id, username, first_name, last_name, telephone, isAdmin]
       Object.values(fields)
-      // [username, first_name, last_name, telephone, isAdmin]
     );
-    return user;
+    return payment;
   } catch (error) {
     throw error;
   }

@@ -4,6 +4,7 @@ const shoppingSessionRouter = express.Router();
 const {
   createUserShoppingSession,
   getAllUserShoppingSessions,
+  getUserById,
   getUserShoppingSessionById,
   updateUserShoppingSession,
   deleteUserShoppingSession,
@@ -43,12 +44,13 @@ shoppingSessionRouter.patch("/", async (req, res, next) => {});
 
 shoppingSessionRouter.delete("/:shoppingSessionId", async (req, res, next) => {
   const { shoppingSessionId } = req.params;
-  try {
-    const shoppingSession = await deleteUserShoppingSession(shoppingSessionId);
-    res.send(shoppingSession);
-  } catch (error) {
-    next(error);
-  }
+  if (!shoppingSessionId)
+    return res.status(404).send({
+      name: "NoShoppingSessionError",
+      message: `No shopping exists with id ${req.params}`,
+    });
+  const shoppingSession = await deleteUserShoppingSession(req.params);
+  res.send(shoppingSession);
 });
 
 module.exports = shoppingSessionRouter;

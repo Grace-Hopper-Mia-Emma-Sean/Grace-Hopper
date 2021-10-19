@@ -118,20 +118,88 @@ usersRouter.get("/", async (req, res, next) => {
 usersRouter.get("/:userId", async (req, res, next) => {
   const user = await getUserById(req.params.userId);
   if (!user)
-    res.status(404).send({
+    return res.status(404).send({
       name: "NoUserError",
       message: `No user exists with id ${req.params.userId}`,
     });
   res.status(200).send(user);
 });
 
+usersRouter.put("/:userId", async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.userId);
+    if (!user)
+      return res.status(404).send({
+        name: "NoUserError",
+        message: `No user exists with id ${user}`,
+      });
+    const updateFields = {
+      // oldUser: user,
+      newUser: {
+        username: req.body.username || user.username,
+        first_name: req.body.first_name || user.first_name,
+        last_name: req.body.last_name || user.last_name,
+        telephone: req.body.telephone || user.telephone,
+        isAdmin: req.body.isAdmin || user.isAdmin,
+      },
+    };
+    const userChanges = await updateUser({ updateFields });
+    return res.send({
+      update: userChanges || "aw, bummer. no changes",
+      updateFields,
+    });
+  } catch (error) {
+    throw error;
+  }
+});
+
+// usersRouter.patch(
+//   "/:userId",
+//   requiredNotSent({
+//     requiredParams: ["id, username, first_name, last_name, telephone, isAdmin"],
+//     atLeastOne: true,
+//   }),
+//   async (req, res, next) => {
+//     const { username, first_name, last_name, telephone, isAdmin } = req.body;
+//     const { userId } = req.params;
+//     const updateFields = {
+//       id: userId,
+//       username,
+//       first_name,
+//       last_name,
+//       telephone,
+//       isAdmin,
+//     };
+//     try {
+//       const getUserDetails = await getAllPaymentById(userId);
+//       if (!getUserDetails) {
+//         res.status(401);
+//         next({
+//           name: "NoOrderItemsError",
+//           message: "No oder item exist to update",
+//         });
+//       } else {
+//         console.log("Get Order Items to Update:", getUserDetails);
+
+//         const updatedUserDetails = await updatePaymentDetails(updateFields);
+
+//         console.log("Updated Order Items:", updatedUserDetails);
+
+//         res.send({ updatedUserDetails, updateFields });
+//       }
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
 usersRouter.delete("/:userId/", async (req, res, next) => {
   try {
     const userId = await getUserById(req.params.userId);
     if (!userId) {
-      res.status(404).send({
+      return res.status(404).send({
         name: "NoUserError",
-        message: `No user exists with id ${req.params.userId} exists to delete`,
+        message: `No user exists with id ${req.params.userId}`,
       });
     } else {
       // const cartItems = await deleteUserCartItems(/*parameters*/);

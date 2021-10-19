@@ -52,12 +52,9 @@ userAddressRouter.post("/", async (req, res, next) => {
 });
 
 userAddressRouter.get("/", async (req, res, next) => {
-  try {
-    const address = await getAllUserAddresses();
-    res.send(address);
-  } catch (error) {
-    next(error);
-  }
+  const addresses = await getAllUserAddresses();
+  if (!addresses) res.status(404).send({ name: "NoAddressError" });
+  res.status(200).send(addresses);
 });
 
 module.exports = userAddressRouter;
