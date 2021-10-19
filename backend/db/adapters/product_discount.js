@@ -23,6 +23,19 @@ const createProductDiscount = async ({
   }
 };
 
+const getAllProductDiscounts = async () => {
+  try {
+    const {rows} = await client.query(`
+      SELECT *
+      FROM product_discount;
+    `)
+    return rows;
+  } catch (error) {
+    throw (error)
+  }
+}
+
 module.exports = {
   createProductDiscount,
+  getAllProductDiscounts
 };
