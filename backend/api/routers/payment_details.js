@@ -58,8 +58,8 @@ paymentDetailsRouter.patch('/:paymentDetailsId', userLoggedIn, requiredNotSent({
         }
 })
 
-//userLoggedIn
-paymentDetailsRouter.delete('/:paymendDetailsId', async (req, res, next) => {
+
+paymentDetailsRouter.delete('/:paymendDetailsId', userLoggedIn, async (req, res, next) => {
     const { paymendDetailsId } = req.params;
     try {
         const deletePaymentDetails = await destroyPaymentDetails(paymendDetailsId)
