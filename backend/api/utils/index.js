@@ -36,7 +36,7 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   };
 };
 
-const userLogin = (req, res, next) => {
+const userLoggedIn = (req, res, next) => {
   if (!req.user) {
     res.status(401);
     next({
@@ -62,6 +62,6 @@ const dbFields = (fields) => {
 
 module.exports = {
   requiredNotSent,
-  userLogin,
+  userLoggedIn,
   dbFields,
 };

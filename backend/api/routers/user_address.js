@@ -8,7 +8,7 @@ const {
   deleteUserAddress,
 } = require("../../db");
 
-const { userLogin, requiredNotSent } = require("./utils");
+const { userLoggedIn, requiredNotSent } = require("./utils");
 
 /**
  *
@@ -21,7 +21,7 @@ const { userLogin, requiredNotSent } = require("./utils");
  *
  */
 
-userAddressRouter.post("/", async (req, res, next) => {
+userAddressRouter.post("/:user_id", userLoggedIn, async (req, res, next) => {
   const {
     user_id,
     address_line1,
@@ -45,7 +45,10 @@ userAddressRouter.post("/", async (req, res, next) => {
       telephone,
       mobile,
     });
-    res.send(address);
+    res.send({
+      message: `address created successfully for id ${user_id}`,
+      address: address,
+    });
   } catch (error) {
     next(error);
   }
