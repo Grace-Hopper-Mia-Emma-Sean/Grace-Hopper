@@ -56,7 +56,7 @@ async function updatePaymentDetails(id, fields = {}) {
     return;
   }
   
-  const { id, order_id, amount, provider, status} = fields;
+  // const { id, order_id, amount, provider, status} = fields;
 
   try {
     const {

@@ -16,6 +16,10 @@ const {
   createInitialProductDiscounts,
 } = require("./products");
 
+const {
+  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts
+} = require('../adapters/products')
+
 // orders seed
 const {
   createInitialOrderDetails,
@@ -154,9 +158,9 @@ const createTables = async () => {
                             description VARCHAR(255) NOT NULL,
                             SKU INTEGER NOT NULL,
                             category_id INTEGER REFERENCES product_category(id),
-                            inventory_id INTEGER REFERENCES product_category(id),
                             price INTEGER NOT NULL,
-                            discount_id INTEGER REFERENCES product_discount(id)
+                            discount_id INTEGER REFERENCES product_discount(id),
+                            quantity INTEGER NOT NULL
                           );
                       `);
 
@@ -255,4 +259,43 @@ const rebuildDB = async () => {
   }
 };
 
-module.exports = { rebuildDB };
+const testDB = async () => {
+  try{
+    console.log('Calling updateProduct on id 1')
+    const updatedProduct = await updateProduct(1, {
+        name: "The Apple M1 Chip (Recently Updated!)",
+        description: "Fast, reliable, and cutting-edge",
+        sku: "11111111",
+        category_id: "2",
+        price: "750",
+        discount_id: "2",
+        quantity: "30",
+    })
+    console.log("Result:", updatedProduct)
+
+    console.log('Calling createProduct')
+    const newProduct = await createProduct({
+        name: "Apple M2 Chip",
+        description: "The thinking man's processor",
+        SKU: "12121212",
+        category_id: "1",
+        price: "700",
+        discount_id: "1",
+        quantity: "50",
+    })
+    console.log("Result:", newProduct)
+
+    console.log('Calling deleteProduct on id 11')
+    const deletedProduct = await deleteProduct(11)
+    console.log("Result:", deletedProduct)
+
+    console.log('Calling getAllProducts')
+    const products = await getAllProducts()
+    console.log("Result:", products)
+  } catch (error){
+    console.log('Error during testDB')
+    throw error
+  }
+}
+
+module.exports = { rebuildDB, testDB };
