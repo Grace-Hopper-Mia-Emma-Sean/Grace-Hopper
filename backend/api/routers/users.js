@@ -1,60 +1,39 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { userLogin } = require("../utils");
 const usersRouter = express.Router();
 
+// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { userLogin, dbFields, requiredNotSent } = require("../utils");
+
+const {
+  createUser,
+  getAllUsers,
+  getUserById,
+  getUserByUsername,
+  updateUser,
+  deleteUser,
+  deleteUserAddress,
+  deleteUserShoppingSession,
+  deleteUserCartItems,
+} = require("../../db");
+
 /**
- * TODO: Decide what's a wishlist item and what's necessary
  *
- * logging in = POST
- * register = POST
- * profile/acct info = GET, POST, PATCH (// ? and let them DELETE)
- * order history = GET
+ * DONE: createUser (register)
+ * DONE: "loginUser" (login)
+ * DONE: getAllUsers
+ * DONE: getUserById
+ * DONE: deleteUser => if a user deletes their acct, someone else can register with that retired name - do we want to keep this functionality?
+ *
+ * TODO: updateUser
  *
  */
 
-usersRouter.get("/account", userLogin, async (req, res, next) => {
-  const { id } = req.user;
-  try {
-    const user = await getAccountById(id);
-    res.send(user);
-  } catch (error) {
-    next(error);
-  }
-});
-
-usersRouter.get(
-  "/account/orders/:orderNumber",
-  userLogin, // ! and require owner of that order
-  async (req, res, next) => {
-    try {
-      const { orderNumber } = req.params;
-      const order = await getOrderByUser({ orderNumber });
-      res.send(order);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-usersRouter.get(
-  "/account/orders",
-  userLogin, // ! and require ownder of that order
-  async (req, res, next) => {
-    try {
-      const { username } = req.params;
-      const orders = await getOrdersByUser(id);
-      res.send(orders);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
   try {
+    const { username, password, first_name, last_name, telephone, isAdmin } =
+      req.body;
     const _user = await getUserByUsername(username);
     if (_user) {
       next({
@@ -67,8 +46,14 @@ usersRouter.post("/register", async (req, res, next) => {
         message: "Password must be 8 or more characters",
       });
     } else {
-      const user = await createUser({ username, password });
-
+      const user = await createUser({
+        username,
+        password,
+        first_name,
+        last_name,
+        telephone,
+        isAdmin,
+      });
       const token = jwt.sign(
         {
           id: user.id,
@@ -79,32 +64,27 @@ usersRouter.post("/register", async (req, res, next) => {
           expiresIn: "1w",
         }
       );
-
       res.send({
         user: user,
         message: "Thank you for signing up!",
         token: token,
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    throw error;
   }
 });
 
 usersRouter.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    next({
-      name: "MissingCredentialsError",
-      message: "Please supply both a username and password",
-    });
-  }
   try {
+    const { username, password } = req.body;
+    if (!username || !password)
+      next({
+        name: "MissingCredentialsError",
+        message: "Please supply both a username and password",
+      });
     const user = await getUserByUsername(username);
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-
+    const passwordsMatch = await bcrypt.compare(password, user.password);
     if (user && passwordsMatch) {
       const token = jwt.sign(
         {
@@ -113,12 +93,10 @@ usersRouter.post("/login", async (req, res, next) => {
         },
         process.env.JWT_SECRET
       );
-
       delete user.password;
-
       res.send({
         user: user,
-        message: "you're logged in!",
+        message: "You're logged in!",
         token: token,
       });
     } else {
@@ -127,8 +105,121 @@ usersRouter.post("/login", async (req, res, next) => {
         message: "Username or password is incorrect",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    throw error;
+  }
+});
+
+usersRouter.get("/", async (req, res, next) => {
+  const users = await getAllUsers();
+  if (!users) res.status(404).send({ name: "NoUserError" });
+  res.status(200).send(users);
+});
+
+usersRouter.get("/:userId", async (req, res, next) => {
+  const user = await getUserById(req.params.userId);
+  if (!user)
+    return res.status(404).send({
+      name: "NoUserError",
+      message: `No user exists with id ${req.params.userId}`,
+    });
+  res.status(200).send(user);
+});
+
+usersRouter.put("/:userId", async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.userId);
+    if (!user)
+      return res.status(404).send({
+        name: "NoUserError",
+        message: `No user exists with id ${user}`,
+      });
+    const updateFields = {
+      // oldUser: user,
+      newUser: {
+        username: req.body.username || user.username,
+        first_name: req.body.first_name || user.first_name,
+        last_name: req.body.last_name || user.last_name,
+        telephone: req.body.telephone || user.telephone,
+        isAdmin: req.body.isAdmin || user.isAdmin,
+      },
+    };
+    const userChanges = await updateUser({ updateFields });
+    return res.send({
+      update: userChanges || "aw, bummer. no changes",
+      updateFields,
+    });
+  } catch (error) {
+    throw error;
+  }
+});
+
+// usersRouter.patch(
+//   "/:userId",
+//   requiredNotSent({
+//     requiredParams: ["id, username, first_name, last_name, telephone, isAdmin"],
+//     atLeastOne: true,
+//   }),
+//   async (req, res, next) => {
+//     const { username, first_name, last_name, telephone, isAdmin } = req.body;
+//     const { userId } = req.params;
+//     const updateFields = {
+//       id: userId,
+//       username,
+//       first_name,
+//       last_name,
+//       telephone,
+//       isAdmin,
+//     };
+//     try {
+//       const getUserDetails = await getAllPaymentById(userId);
+//       if (!getUserDetails) {
+//         res.status(401);
+//         next({
+//           name: "NoOrderItemsError",
+//           message: "No oder item exist to update",
+//         });
+//       } else {
+//         console.log("Get Order Items to Update:", getUserDetails);
+
+//         const updatedUserDetails = await updatePaymentDetails(updateFields);
+
+//         console.log("Updated Order Items:", updatedUserDetails);
+
+//         res.send({ updatedUserDetails, updateFields });
+//       }
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
+usersRouter.delete("/:userId/", async (req, res, next) => {
+  try {
+    const userId = await getUserById(req.params.userId);
+    if (!userId) {
+      return res.status(404).send({
+        name: "NoUserError",
+        message: `No user exists with id ${req.params.userId}`,
+      });
+    } else {
+      // const cartItems = await deleteUserCartItems(/*parameters*/);
+      const shoppingSession = await deleteUserShoppingSession(userId);
+      const address = await deleteUserAddress(userId);
+      const user = await deleteUser(userId);
+      const data = {
+        user: user,
+        address: address,
+        shoppingSession: shoppingSession,
+        // cartItems: cartItems,
+      };
+      res.status(200).send({
+        message: `user with id ${req.params.userId} was successfully deleted`,
+        data: data,
+      });
+    }
+  } catch (error) {
+    throw error;
   }
 });
 

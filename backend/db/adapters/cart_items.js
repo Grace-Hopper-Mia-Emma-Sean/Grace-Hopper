@@ -1,46 +1,61 @@
 const { client } = require("../client");
 
-const createUserCartItem = async ({ session_id, product_id, quantity }) => {
+const createUserCartItems = async ({ session_id, product_id, quantity }) => {
   try {
     const {
-      rows: [cartItem],
+      rows: [cartItems],
     } = await client.query(
       `
-      INSERT INTO cart_items("session_id", "product_id", quantity)
+      INSERT INTO cart_items(session_id, product_id, quantity)
       VALUES ($1, $2, $3)
       RETURNING *
     `,
       [session_id, product_id, quantity]
     );
-    return cartItem;
+    return cartItems;
   } catch (error) {
     throw error;
   }
 };
 
-const getCartItemById = async (id) => {
+const getAllUserCartItems = async () => {
   try {
-    const {
-      rows: [cartItem],
-    } = await client.query(`
+    const { rows } = await client.query(`
       SELECT *
       FROM cart_items
-      WHERE id=${id}`);
-    if (!cartItem) return null;
-    return cartItem;
+    `);
+    return rows;
   } catch (error) {
     throw error;
   }
 };
 
-const updateCartItems = async (id, fields = {}) => {
+const getUserCartItemsById = async (id) => {
+  try {
+    const {
+      rows: [cartItems],
+    } = await client.query(
+      `
+      SELECT *
+      FROM cart_items
+      WHERE user_id=$1
+    `,
+      [id]
+    );
+    return cartItems;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateUserCartItems = async (id, fields = {}) => {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
   if (setString.toString.length === 0) return;
   try {
     const {
-      rows: [cartItem],
+      rows: [cartItems],
     } = await client.query(
       `
       UPDATE cart_items
@@ -50,30 +65,34 @@ const updateCartItems = async (id, fields = {}) => {
     `,
       Object.values(fields)
     );
-    return cartItem;
+    return cartItems;
   } catch (error) {
     throw error;
   }
 };
 
-const deleteCartItems = async (id) => {
+const deleteUserCartItems = async (id) => {
   try {
     const {
-      rows: [cartItem],
-    } = await client.query(`
+      rows: [cartItems],
+    } = await client.query(
+      `
       DELETE FROM cart_items
-      WHERE id=${id}
+      WHERE id=$1
       RETURNING *;
-    `);
-    return cartItem;
+    `,
+      [id]
+    );
+    return cartItems;
   } catch (error) {
     throw error;
   }
 };
 
 module.exports = {
-  createUserCartItem,
-  getCartItemById,
-  updateCartItems,
-  deleteCartItems,
+  createUserCartItems,
+  getAllUserCartItems,
+  getUserCartItemsById,
+  updateUserCartItems,
+  deleteUserCartItems,
 };

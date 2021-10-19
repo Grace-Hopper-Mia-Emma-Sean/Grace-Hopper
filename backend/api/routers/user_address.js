@@ -1,71 +1,63 @@
 const express = require("express");
-const {
-  createUserAddress,
-  getUserAddressById,
-  updateUserAddress,
-  deleteUserAddress,
-} = require("..");
-const { userLogin } = require("../utils");
-
-const fields = {
-  user_id,
-  address_line1,
-  address_line2,
-  city,
-  state,
-  postal_code,
-  country,
-  telephone,
-  mobile,
-};
-
 const userAddressRouter = express.Router();
 
-userAddressRouter.post("/", userLogin, async (req, res, next) => {
+const {
+  createUserAddress,
+  getAllUserAddresses,
+  updateUserAddress,
+  deleteUserAddress,
+} = require("../../db");
+
+const { userLoggedIn, requiredNotSent } = require("./utils");
+
+/**
+ *
+ * DONE: createUserAddress
+ * DONE: getAllUserAddresses
+ * DONE: deleteUserAddress => handled through users router... we don't want users to be able to delete their own address, right? Unless they're permanently deleting their acct.
+ *
+ * TODO: getUserAddressById => if we include that... then would be called in updateUserAddress?
+ * TODO: updateUserAddress
+ *
+ */
+
+userAddressRouter.post("/:user_id", userLoggedIn, async (req, res, next) => {
+  const {
+    user_id,
+    address_line1,
+    address_line2,
+    city,
+    state,
+    postal_code,
+    country,
+    telephone,
+    mobile,
+  } = req.body;
   try {
-    fields = req.body;
-    const address = await createUserAddress(fields);
-    if (address) res.send(address);
+    const address = await createUserAddress({
+      user_id,
+      address_line1,
+      address_line2,
+      city,
+      state,
+      postal_code,
+      country,
+      telephone,
+      mobile,
+    });
+    res.send({
+      message: `address created successfully for id ${user_id}`,
+      address: address,
+    });
   } catch (error) {
     next(error);
   }
 });
 
-userAddressRouter.get("/:id", requireLogIn, async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const address = await getUserAddressById(id);
-    res.send(address);
-  } catch (error) {
-    next(error);
-  }
-});
-
-userAddressRouter.patch("/:id", userLogin, async (req, res, next) => {
-  // TODO: require user owns
-  const { id } = req.params;
-  fields = req.body;
-  const updateFields = {};
-  updateFields.id = id;
-  if (user_id) updateFields.user_id = user_id;
-  if (address_line1) updateFields.address_line1 = address_line1;
-  if (address_line2) updateFields.address_line2 = address_line2;
-  if (city) updateFields.city = city;
-  if (state) updateFields.state = state;
-  if (postal_code) updateFields.postal_code = postal_code;
-  if (country) updateFields.country = country;
-  if (telephone) updateFields.telephone = telephone;
-  if (mobile) updateFields.mobile = mobile;
-  try {
-    const originalAddress = await getUserAddressById(id);
-    if (originalAddress) {
-      const patchedAddress = await updateUserAddress(updateFields);
-      res.send(patchedAddress);
-    }
-    res.send(address);
-  } catch (error) {
-    next(error);
-  }
+userAddressRouter.get("/", async (req, res, next) => {
+  const addresses = await getAllUserAddresses();
+  if (!addresses) res.status(404).send({ name: "NoAddressError" });
+  res.status(200).send(addresses);
 });
 
 module.exports = userAddressRouter;

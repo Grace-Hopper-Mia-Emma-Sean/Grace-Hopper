@@ -1,17 +1,13 @@
 const { client } = require('../client')
 
 
-const createProduct = async({name, description, SKU, category_id, price, discount_id}) => {
+const createProduct = async({name, description, SKU, category_id, price, discount_id, quantity}) => {
     try {
         const {rows: [product]} = await client.query(`
-            INSERT INTO products( name, description, SKU, "category_id", price, discount_id)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO products( name, description, SKU, "category_id", price, discount_id, quantity)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *;
-        `, [name, description, SKU, category_id, price, discount_id])
-        // await client.query(`
-        //     INSERT INTO product_inventory(id, quantity)
-        //     VALUES($7, $8);
-        // `, [quantity])
+        `, [name, description, SKU, category_id, price, discount_id, quantity])
         return product;
     } catch (error){
         throw (error)
@@ -68,7 +64,7 @@ const getProductsByCategoryId = async(categoryId) => {
     }
 }
 
-const updateProduct = async({id, ...fields}) => {
+const updateProduct = async(id, fields ={}) => {
     const setString = Object.keys(fields).map(
         (key, index) => `"${key}"=$${ index + 1 }`
     ).join(', ')

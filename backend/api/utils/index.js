@@ -36,7 +36,7 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   };
 };
 
-const userLogin = (req, res, next) => {
+const userLoggedIn = (req, res, next) => {
   if (!req.user) {
     res.status(401);
     next({
@@ -47,7 +47,21 @@ const userLogin = (req, res, next) => {
   next();
 };
 
+const dbFields = (fields) => {
+  const insert = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  const select = Object.keys(fields)
+    .map((_, index) => `$${index + 1}`)
+    .join(", ");
+
+  const vals = Object.values(fields);
+  return { insert, select, vals };
+};
+
 module.exports = {
   requiredNotSent,
-  userLogin,
+  userLoggedIn,
+  dbFields,
 };

@@ -2,7 +2,7 @@ const {
   createUser,
   createUserAddress,
   createUserShoppingSession,
-  createUserCartItem,
+  createUserCartItems,
 } = require("..");
 
 const createInitialUsers = async () => {
@@ -283,7 +283,7 @@ const createInitialCartItems = async () => {
     ];
     // TODO: complete try block . . .
     const cartItems = await Promise.all(
-      cartItemsToCreate.map(createUserCartItem)
+      cartItemsToCreate.map(createUserCartItems)
     );
     console.log("Cart items created: ");
     console.log(cartItems);

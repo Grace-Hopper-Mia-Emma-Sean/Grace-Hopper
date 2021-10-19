@@ -1,7 +1,10 @@
 const { client } = require("../client");
 
+// const bcrypt = require("bcryptjs");
 const bcrypt = require("bcrypt");
 const SALT_COUNT = 10;
+
+const { userLogin, dbFields } = require("../../api/utils");
 
 const createUser = async ({
   username,
@@ -31,24 +34,13 @@ const createUser = async ({
   }
 };
 
-const getAllUsers = async ({
-  username,
-  first_name,
-  last_name,
-  telephone,
-  isAdmin,
-}) => {
+const getAllUsers = async () => {
   try {
-    const {
-      rows: [users],
-    } = await client.query(
-      `
-      SELECT username, first_name, last_name, telephone, isAdmin
-      FROM users
-    `,
-      [username, first_name, last_name, telephone, isAdmin]
-    );
-    return users;
+    const { rows } = await client.query(`
+      SELECT username, first_name, last_name, telephone, "isAdmin"
+      FROM users;
+    `);
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -58,11 +50,13 @@ const getUserById = async (id) => {
   try {
     const {
       rows: [user],
-    } = await client.query(`
-      SELECT *
-      FROM USERS
-      WHERE id=${id}`);
-    if (!user) return null;
+    } = await client.query(
+      `
+      SELECT username, first_name, last_name, telephone, "isAdmin"
+      FROM users
+      WHERE id=$1`,
+      [id]
+    );
     return user;
   } catch (error) {
     throw error;
@@ -70,6 +64,7 @@ const getUserById = async (id) => {
 };
 
 const getUserByUsername = async (username) => {
+  // only used for login/register
   try {
     const {
       rows: [user],
@@ -89,22 +84,24 @@ const getUserByUsername = async (username) => {
 
 const updateUser = async (id, fields = {}) => {
   const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(", ");
-  if (setString.toString.length === 0) return;
+    .map((key, index) => `"${key}"=${index + 1}"`)
+    .join(",");
+  if (setString.length === 0) return;
+  // const { id, username, first_name, last_name, telephone, isAdmin } = fields;
   try {
     const {
-      rows: [user],
+      rows: [payment],
     } = await client.query(
       `
-      UPDATE users
-      SET ${setString}
-      WHERE id=${id}
-      RETURNING *;
-    `,
+        UPDATE payment_details
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *
+        `,
+      // [id, username, first_name, last_name, telephone, isAdmin]
       Object.values(fields)
     );
-    return user;
+    return payment;
   } catch (error) {
     throw error;
   }
@@ -122,20 +119,11 @@ const deleteUser = async (id) => {
     `,
       [id]
     );
-    // delete refs addresses
-    // delete refs shopping_session
-    // delete refs user_payment
-    // delete refs order_details
+    return user;
   } catch (error) {
     throw error;
   }
 };
-
-// TODO: Differentiate getUserAcct from getUserOrders or merge?
-
-const getUserAcct = async () => {};
-
-const getUserOrders = async () => {};
 
 module.exports = {
   createUser,

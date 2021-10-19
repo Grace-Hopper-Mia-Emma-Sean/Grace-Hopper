@@ -18,22 +18,37 @@ const createUserShoppingSession = async ({ user_id, total }) => {
   }
 };
 
-const getShoppingSessionById = async (id) => {
+const getAllUserShoppingSessions = async () => {
+  try {
+    const { rows } = await client.query(`
+      SELECT *
+      FROM shopping_session
+    `);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUserShoppingSessionById = async (id) => {
   try {
     const {
       rows: [shoppingSession],
-    } = await client.query(`
+    } = await client.query(
+      `
       SELECT *
       FROM shopping_session
-      WHERE id=${id}`);
-    if (!shoppingSession) return null;
+      WHERE user_id=$1
+    `,
+      [id]
+    );
     return shoppingSession;
   } catch (error) {
     throw error;
   }
 };
 
-const updateShoppingSession = async (id, fields = {}) => {
+const updateUserShoppingSession = async (id, fields = {}) => {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
@@ -56,15 +71,18 @@ const updateShoppingSession = async (id, fields = {}) => {
   }
 };
 
-const deleteShoppingSession = async (id) => {
+const deleteUserShoppingSession = async (id) => {
   try {
     const {
       rows: [shoppingSession],
-    } = await client.query(`
-      DELETE FROM shopping_session
-      WHERE id=${id}
-      RETURNING *;
-    `);
+    } = await client.query(
+      `
+            DELETE FROM shopping_session
+            WHERE id=$1
+            RETURNING *;
+        `,
+      [id]
+    );
     return shoppingSession;
   } catch (error) {
     throw error;
@@ -73,7 +91,8 @@ const deleteShoppingSession = async (id) => {
 
 module.exports = {
   createUserShoppingSession,
-  getShoppingSessionById,
-  updateShoppingSession,
-  deleteShoppingSession,
+  getAllUserShoppingSessions,
+  getUserShoppingSessionById,
+  updateUserShoppingSession,
+  deleteUserShoppingSession,
 };

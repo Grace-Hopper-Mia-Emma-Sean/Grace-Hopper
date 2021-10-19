@@ -60,7 +60,9 @@ async function updateOrderItems(fields) {
   const { id, order_id, product_id, quantity} = fields;
   try {
     const {
-      rows: [orders]} = await client.query(`
+      rows: [orders],
+    } = await client.query(
+      `
             UPDATE order_items
             SET ${setString}
             WHERE id=${id}

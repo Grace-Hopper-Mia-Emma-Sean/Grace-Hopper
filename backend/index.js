@@ -6,27 +6,13 @@ const { client } = require("./db/client/");
 const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
-// const orderItemsRouter = require("./api/routers/order_items");
-// const orderDetailsRouter = require("./api/routers/order_details");
-// const userPaymentRouter = require("./api/routers/user_payment");
-// const paymentDetailsRouter = require("./api/routers/payment_details");
 const { PORT = 3000 } = process.env;
 const server = express();
 
 server.use(morgan("dev"));
 server.use(bodyParser.json());
 server.use(cors());
-// TODO: Change api route as necessary
 server.use("/api", apiRouter);
-
-
-// TODO: If we want server logging in testing
-// server.use((req, res, next) => {
-//   console.log("<____Body Logger START____>");
-//   console.log(req.body);
-//   console.log("<_____Body Logger END_____>");
-//   next();
-// });
 
 server.use((err, req, res, next) => {
   console.error(err.stack);
@@ -38,8 +24,6 @@ server.use((err, req, res, next) => {
   res.status(500).send({ message: "Internal Server Error!" });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server is up on port: ${PORT}`);
-});
+server.listen(PORT, () => console.log(`Server is up on port: ${PORT}`));
 
 client.connect();

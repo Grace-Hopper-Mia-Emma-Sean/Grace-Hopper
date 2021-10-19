@@ -10,24 +10,26 @@ const {
 
 const {
   createUserAddress,
-  getUserAddressById,
+  getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
 } = require("./adapters/user_address");
 
 const {
-  createUserCartItem,
-  getCartItemById,
-  updateCartItems,
-  deleteCartItems,
-} = require("./adapters/cart_items");
+  createUserShoppingSession,
+  getAllUserShoppingSessions,
+  getUserShoppingSessionById,
+  updateUserShoppingSession,
+  deleteUserShoppingSession,
+} = require("./adapters/shopping_session");
 
 const {
-  createUserShoppingSession,
-  getShoppingSessionById,
-  updateShoppingSession,
-  deleteShoppingSession,
-} = require("./adapters/shopping_session");
+  createUserCartItems,
+  getAllUserCartItems,
+  getUserCartItemsById,
+  updateUserCartItems,
+  deleteUserCartItems,
+} = require("./adapters/cart_items");
 
 // products adapters
 const { createProduct } = require("./adapters/products");
@@ -36,74 +38,87 @@ const { createProductInventory } = require("./adapters/product_inventory");
 const { createProductDiscount } = require("./adapters/product_discount");
 
 // orders adapters
-const { createOrderDetails } = require("./adapters/order_details");
-const { createOrderItems } = require("./adapters/order_items");
-const { getAllOrderDetails} = require ("./adapters/order_details")
-const { getAllOrderDetailsById } = require ("./adapters/order_details")
-const { destroyOrderDetails } = require ("./adapters/order_details")
-const { updateOrderDetails} = require ("./adapters/order_details")
-const { getAllOrderItems } = require ("./adapters/order_items")
-const { getAllOrderItemsById } =require ("./adapters/order_items")
-const { updateOrderItems } = require ("./adapters/order_items")
-const { destroyOrderItems} = require ("./adapters/order_items")
-const { canEditOrderItems} =  require ("./adapters/order_items")
+const {
+  createOrderDetails,
+  getAllOrderDetailsById,
+  getAllOrderDetails,
+  updateOrderDetails,
+  destroyOrderDetails,
+} = require("./adapters/order_details");
+
+const {
+  createOrderItems,
+  getAllOrderItems,
+  getAllOrderItemsById,
+  updateOrderItems,
+  destroyOrderItems,
+  canEditOrderItems,
+} = require("./adapters/order_items");
 
 // payment adapters
-const { createUserPayment } = require("./adapters/user_payment");
-const { createPaymentDetails } = require("./adapters/payment_details");
-const { getAllUserPayment } = require("./adapters/user_payment");
-const { getAllUserPaymentById } = require("./adapters/user_payment");
-const { updateUserPayment } = require("./adapters/user_payment");
-const { destroyUserPayment } = require("./adapters/user_payment");
-const { getAllPaymentById } = require("./adapters/payment_details");
-const { getAllPaymentDetails } = require("./adapters/payment_details");
-const { updatePaymentDetails } = require("./adapters/payment_details");
-const { destroyPaymentDetails } = require("./adapters/payment_details");
 
-module.exports = {
-  getAllPaymentDetails,
-  getAllPaymentById,
-  updatePaymentDetails,
-  destroyPaymentDetails,
+const {
+  createUserPayment,
   getAllUserPayment,
   getAllUserPaymentById,
   updateUserPayment,
   destroyUserPayment,
-  getAllOrderItems,
-  getAllOrderItemsById,
-  updateOrderItems,
-  createOrderItems,
-  destroyOrderItems,
+} = require("./adapters/user_payment");
+
+const {
+  createPaymentDetails,
+  getAllPaymentById,
+  getAllPaymentDetails,
+  updatePaymentDetails,
+  destroyPaymentDetails,
+} = require("./adapters/payment_details");
+
+module.exports = {
   canEditOrderItems,
-  destroyOrderDetails,
-  getAllOrderDetails,
-  getAllOrderDetailsById,
-  updateOrderDetails,
-  createUser,
-  getAllUsers,
-  getUserById,
-  getUserByUsername,
-  updateUser,
-  deleteUser,
-  createUserAddress,
-  getUserAddressById,
-  updateUserAddress,
-  deleteUserAddress,
-  createUserShoppingSession,
-  getShoppingSessionById,
-  updateShoppingSession,
-  deleteShoppingSession,
-  createUserCartItem,
-  getCartItemById,
-  updateCartItems,
-  deleteCartItems,
+  createOrderDetails,
+  createOrderItems,
+  createPaymentDetails,
   createProduct,
   createProductCategory,
-  createProductInventory,
   createProductDiscount,
-  createOrderDetails,
+  createProductInventory,
+  createUser,
+  createUserAddress,
+  createUserCartItems,
   createUserPayment,
-  createPaymentDetails,
+  createUserShoppingSession,
+  deleteUser,
+  deleteUserAddress,
+  deleteUserCartItems,
+  deleteUserShoppingSession,
+  destroyOrderDetails,
+  destroyOrderItems,
+  destroyPaymentDetails,
+  destroyUserPayment,
+  getAllOrderDetails,
+  getAllOrderDetailsById,
+  getAllOrderItems,
+  getAllOrderItemsById,
+  getAllPaymentById,
+  getAllPaymentDetails,
+  getAllUserAddresses,
+  getAllUserCartItems,
+  getAllUserPayment,
+  getAllUserPaymentById,
+  getAllUsers,
+  getAllUserShoppingSessions,
+  getUserById,
+  getUserByUsername,
+  getUserCartItemsById,
+  getUserShoppingSessionById,
+  updateOrderDetails,
+  updateOrderItems,
+  updatePaymentDetails,
+  updateUser,
+  updateUserAddress,
+  updateUserCartItems,
+  updateUserPayment,
+  updateUserShoppingSession,
 };
 
 //TO DO: export all db components here

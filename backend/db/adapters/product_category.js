@@ -13,6 +13,20 @@ const createProductCategory = async({name, description}) => {
     }
 }
 
+const getCategoryById = async(id) => {
+    try {
+        const {rows: [category]} = await client.query(`
+        SELECT *
+        FROM product_category
+        WHERE id = ${id}
+        `);
+        return category
+    } catch (error){
+        throw (error)
+    }
+}
+
 module.exports = {
-    createProductCategory
+    createProductCategory,
+    getCategoryById
 }
