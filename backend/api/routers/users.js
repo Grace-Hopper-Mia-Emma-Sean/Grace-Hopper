@@ -140,7 +140,12 @@ usersRouter.put("/:userId", async (req, res, next) => {
       first_name: req.body.first_name || user.first_name,
       last_name: req.body.last_name || user.last_name,
       telephone: req.body.telephone || user.telephone,
-      isAdmin: req.body.isAdmin || !user.isAdmin,
+      isAdmin:
+        req.body.isAdmin === true
+          ? true
+          : req.body.isAdmin === false
+          ? false
+          : user.isAdmin,
     };
     const userChanges = await updateUser(req.params.userId, updateFields);
     return res.send(userChanges);
