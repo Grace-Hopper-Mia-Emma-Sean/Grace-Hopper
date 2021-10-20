@@ -19,30 +19,25 @@ const {
   deleteUserCartItems,
 } = require("../../db");
 
-/**
- *
- * DONE: createUser (register)
- * DONE: "loginUser" (login)
- * DONE: getAllUsers
- * DONE: getUserById
- * DONE: deleteUser => if a user deletes their acct, someone else can register with that retired name - do we want to keep this functionality?
- *
- * TODO: updateUser
- *
- */
-
 usersRouter.post("/register", async (req, res, next) => {
   try {
-    const { username, password, first_name, last_name, telephone, isAdmin } =
-      req.body;
+    const {
+      username,
+      password,
+      first_name,
+      last_name,
+      telephone,
+      email,
+      isAdmin,
+    } = req.body;
     const _user = await getUserByUsername(username);
     if (_user) {
-      next({
+      return res.status(404).send({
         name: "UserExistsError",
         message: "A user by that username already exists",
       });
     } else if (password.length < 8) {
-      next({
+      return res.status(404).send({
         name: "PasswordLengthError",
         message: "Password must be 8 or more characters",
       });
@@ -53,6 +48,7 @@ usersRouter.post("/register", async (req, res, next) => {
         first_name,
         last_name,
         telephone,
+        email,
         isAdmin,
       });
       const token = jwt.sign(
@@ -140,6 +136,7 @@ usersRouter.put("/:userId", async (req, res, next) => {
       first_name: req.body.first_name || user.first_name,
       last_name: req.body.last_name || user.last_name,
       telephone: req.body.telephone || user.telephone,
+      email: req.body.email || user.email,
       isAdmin:
         req.body.isAdmin === true
           ? true
@@ -148,48 +145,12 @@ usersRouter.put("/:userId", async (req, res, next) => {
           : user.isAdmin,
     };
     const userChanges = await updateUser(req.params.userId, updateFields);
+    delete userChanges.password;
     return res.send(userChanges);
   } catch (error) {
     throw error;
   }
 });
-
-// usersRouter.patch(
-//   "/:userId",
-//   requiredNotSent({
-//     requiredParams: ["id, username, first_name, last_name, telephone, isAdmin"],
-//     atLeastOne: true,
-//   }),
-//   async (req, res, next) => {
-//     const { username, first_name, last_name, telephone, isAdmin } = req.body;
-//     const { userId } = req.params;
-//     const updateFields = {
-//       id: userId,
-//       username,
-//       first_name,
-//       last_name,
-//       telephone,
-//       isAdmin,
-//     };
-//     try {
-//       const getUserDetails = await getAllPaymentById(userId);
-//       if (!getUserDetails) {
-//         res.status(401);
-//         next({
-//           name: "NoOrderItemsError",
-//           message: "No oder item exist to update",
-//         });
-//       } else {
-//         console.log("Get Order Items to Update:", getUserDetails);
-//         const updatedUserDetails = await updatePaymentDetails(updateFields);
-//         console.log("Updated Order Items:", updatedUserDetails);
-//         res.send({ updatedUserDetails, updateFields });
-//       }
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
 
 usersRouter.delete("/:userId/", async (req, res, next) => {
   try {

@@ -10,6 +10,7 @@ const {
 
 const {
   createUserAddress,
+  getAddressByUserId,
   getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
@@ -95,6 +96,7 @@ module.exports = {
   destroyOrderItems,
   destroyPaymentDetails,
   destroyUserPayment,
+  getAddressByUserId,
   getAllOrderDetails,
   getAllOrderDetailsById,
   getAllOrderItems,
