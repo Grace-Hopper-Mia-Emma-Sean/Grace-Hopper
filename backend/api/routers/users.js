@@ -144,6 +144,11 @@ usersRouter.put("/:userId", async (req, res, next) => {
           ? false
           : user.isAdmin,
     };
+    if (JSON.stringify(user) === JSON.stringify(updateFields))
+      return res.status(404).send({
+        name: "NoUpdatesError",
+        message: "No items for this entry are being updated",
+      });
     const userChanges = await updateUser(req.params.userId, updateFields);
     delete userChanges.password;
     return res.send(userChanges);

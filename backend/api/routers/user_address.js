@@ -74,6 +74,11 @@ userAddressRouter.put("/:user_id", async (req, res, next) => {
       telephone: req.body.telephone || address.telephone,
       mobile: req.body.mobile || address.mobile,
     };
+    if (JSON.stringify(address) === JSON.stringify(updateFields))
+      return res.status(404).send({
+        name: "NoUpdatesError",
+        message: "No items for this entry are being updated",
+      });
     const addressChanges = await updateUserAddress(
       req.params.user_id,
       updateFields
