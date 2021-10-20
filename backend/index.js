@@ -14,6 +14,13 @@ server.use(bodyParser.json());
 server.use(cors());
 server.use("/api", apiRouter);
 
+// server.use((req, res, next) => {
+//   console.log("<____Body Logger START____>");
+//   console.log(req.body);
+//   console.log("<_____Body Logger END_____>");
+//   next();
+// });
+
 server.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(404).send("Not Found!");
