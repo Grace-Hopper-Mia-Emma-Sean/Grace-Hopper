@@ -1,6 +1,6 @@
 const { client } = require("../client");
 
-const createUserShoppingSession = async ({ user_id, total }) => {
+const createShoppingSession = async ({ user_id, total }) => {
   try {
     const {
       rows: [shoppingSession],
@@ -18,7 +18,7 @@ const createUserShoppingSession = async ({ user_id, total }) => {
   }
 };
 
-const getAllUserShoppingSessions = async () => {
+const getAllShoppingSessions = async () => {
   try {
     const { rows } = await client.query(`
       SELECT *
@@ -30,7 +30,7 @@ const getAllUserShoppingSessions = async () => {
   }
 };
 
-const getUserShoppingSessionById = async (id) => {
+const getShoppingSessionByUserId = async (id) => {
   try {
     const {
       rows: [shoppingSession],
@@ -48,37 +48,41 @@ const getUserShoppingSessionById = async (id) => {
   }
 };
 
-const updateUserShoppingSession = async (id, fields = {}) => {
+const updateShoppingSession = async (id, fields = {}) => {
+  // console.log(`id: ${id}`, `fields: ${fields}`);
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(", ");
-  if (setString.toString.length === 0) return;
+    .join(",");
+  // console.log(setString);
+  if (setString.length === 0) return;
   try {
     const {
-      rows: [shoppingSession],
+      rows: [session],
     } = await client.query(
       `
-      UPDATE shopping_session
-      SET ${setString}
-      WHERE id=${id}
-      RETURNING *;
-    `,
+        UPDATE shopping_session
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *
+      `,
       Object.values(fields)
     );
-    return shoppingSession;
+    // console.log(session);
+    return session;
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
 
-const deleteUserShoppingSession = async (id) => {
+const deleteShoppingSession = async (id) => {
   try {
     const {
       rows: [shoppingSession],
     } = await client.query(
       `
             DELETE FROM shopping_session
-            WHERE id=$1
+            WHERE user_id=$1
             RETURNING *;
         `,
       [id]
@@ -90,9 +94,9 @@ const deleteUserShoppingSession = async (id) => {
 };
 
 module.exports = {
-  createUserShoppingSession,
-  getAllUserShoppingSessions,
-  getUserShoppingSessionById,
-  updateUserShoppingSession,
-  deleteUserShoppingSession,
+  createShoppingSession,
+  getAllShoppingSessions,
+  getShoppingSessionByUserId,
+  updateShoppingSession,
+  deleteShoppingSession,
 };

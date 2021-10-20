@@ -1,7 +1,7 @@
 const {
   createUser,
   createUserAddress,
-  createUserShoppingSession,
+  createShoppingSession,
   createUserCartItems,
 } = require("..");
 
@@ -271,7 +271,7 @@ const createInitialShoppingSession = async () => {
       { user_id: 5, total: 50.33 },
     ];
     const shoppingSession = await Promise.all(
-      shoppingSessionToCreate.map(createUserShoppingSession)
+      shoppingSessionToCreate.map(createShoppingSession)
     );
     console.log("Shopping sessions created: ");
     console.log(shoppingSession);

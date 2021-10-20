@@ -15,7 +15,7 @@ const {
   updateUser,
   deleteUser,
   deleteUserAddress,
-  deleteUserShoppingSession,
+  deleteShoppingSession,
   deleteUserCartItems,
 } = require("../../db");
 
@@ -162,7 +162,7 @@ usersRouter.delete("/:userId/", async (req, res, next) => {
       });
     } else {
       // const cartItems = await deleteUserCartItems(/*parameters*/);
-      const shoppingSession = await deleteUserShoppingSession(userId);
+      const shoppingSession = await deleteShoppingSession(userId);
       const address = await deleteUserAddress(userId);
       const user = await deleteUser(userId);
       const data = {

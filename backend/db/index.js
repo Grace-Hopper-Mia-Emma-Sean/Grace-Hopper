@@ -17,11 +17,11 @@ const {
 } = require("./adapters/user_address");
 
 const {
-  createUserShoppingSession,
-  getAllUserShoppingSessions,
-  getUserShoppingSessionById,
-  updateUserShoppingSession,
-  deleteUserShoppingSession,
+  createShoppingSession,
+  getAllShoppingSessions,
+  getShoppingSessionByUserId,
+  updateShoppingSession,
+  deleteShoppingSession,
 } = require("./adapters/shopping_session");
 
 const {
@@ -87,11 +87,11 @@ module.exports = {
   createUserAddress,
   createUserCartItems,
   createUserPayment,
-  createUserShoppingSession,
+  createShoppingSession,
   deleteUser,
   deleteUserAddress,
   deleteUserCartItems,
-  deleteUserShoppingSession,
+  deleteShoppingSession,
   destroyOrderDetails,
   destroyOrderItems,
   destroyPaymentDetails,
@@ -108,11 +108,11 @@ module.exports = {
   getAllUserPayment,
   getAllUserPaymentById,
   getAllUsers,
-  getAllUserShoppingSessions,
+  getAllShoppingSessions,
   getUserById,
   getUserByUsername,
   getUserCartItemsById,
-  getUserShoppingSessionById,
+  getShoppingSessionByUserId,
   updateOrderDetails,
   updateOrderItems,
   updatePaymentDetails,
@@ -120,7 +120,7 @@ module.exports = {
   updateUserAddress,
   updateUserCartItems,
   updateUserPayment,
-  updateUserShoppingSession,
+  updateShoppingSession,
 };
 
 //TO DO: export all db components here

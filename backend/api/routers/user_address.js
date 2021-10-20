@@ -79,7 +79,7 @@ userAddressRouter.put("/:user_id", async (req, res, next) => {
       updateFields
     );
     res.status(200).send({
-      name: "user address was updated successfully",
+      message: "user address was updated successfully",
       addressChanges: addressChanges,
     });
   } catch (error) {
