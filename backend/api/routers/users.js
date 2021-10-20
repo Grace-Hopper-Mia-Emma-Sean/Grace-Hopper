@@ -16,7 +16,9 @@ const {
   deleteUser,
   deleteUserAddress,
   deleteShoppingSession,
-  deleteUserCartItems,
+  deleteCartItems,
+  getCartItemsByUserId,
+  destroyUserPayment: deleteUserPayment,
 } = require("../../db");
 
 usersRouter.post("/register", async (req, res, next) => {
@@ -166,15 +168,21 @@ usersRouter.delete("/:userId/", async (req, res, next) => {
         message: `No user exists with id ${req.params.userId}`,
       });
     } else {
-      // const cartItems = await deleteUserCartItems(/*parameters*/);
-      const shoppingSession = await deleteShoppingSession(userId);
-      const address = await deleteUserAddress(userId);
-      const user = await deleteUser(userId);
+      const cartItems = await getCartItemsByUserId(req.params.userId);
+      // leave cartItems in if clause with var to avoid undefined errors at res.send
+      if (cartItems) {
+        var cart = await deleteCartItems(cartItems.user_id);
+      }
+      const userPayment = await deleteUserPayment(req.params.userId);
+      const shoppingSession = await deleteShoppingSession(req.params.userId);
+      const address = await deleteUserAddress(req.params.userId);
+      const user = await deleteUser(req.params.userId);
       const data = {
-        user: user,
-        address: address,
+        cartItems: cart,
+        userPayment: userPayment,
         shoppingSession: shoppingSession,
-        // cartItems: cartItems,
+        address: address,
+        user: user,
       };
       res.status(200).send({
         message: `user with id ${req.params.userId} was successfully deleted`,

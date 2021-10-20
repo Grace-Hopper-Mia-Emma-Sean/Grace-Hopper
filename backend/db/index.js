@@ -25,15 +25,15 @@ const {
 } = require("./adapters/shopping_session");
 
 const {
-  createUserCartItems,
-  getAllUserCartItems,
-  getUserCartItemsById,
-  updateUserCartItems,
-  deleteUserCartItems,
+  createCartItems,
+  getCartItems,
+  getCartItemsByUserId,
+  updateCartItems,
+  deleteCartItems,
 } = require("./adapters/cart_items");
 
 // products adapters
-const { createProduct } = require("./adapters/products");
+const { createProduct, getProductById } = require("./adapters/products");
 const { createProductCategory } = require("./adapters/product_category");
 const { createProductInventory } = require("./adapters/product_inventory");
 const { createProductDiscount } = require("./adapters/product_discount");
@@ -85,12 +85,12 @@ module.exports = {
   createProductInventory,
   createUser,
   createUserAddress,
-  createUserCartItems,
+  createCartItems,
   createUserPayment,
   createShoppingSession,
   deleteUser,
   deleteUserAddress,
-  deleteUserCartItems,
+  deleteCartItems,
   deleteShoppingSession,
   destroyOrderDetails,
   destroyOrderItems,
@@ -104,21 +104,22 @@ module.exports = {
   getAllPaymentById,
   getAllPaymentDetails,
   getAllUserAddresses,
-  getAllUserCartItems,
+  getCartItems,
   getAllUserPayment,
   getAllUserPaymentById,
   getAllUsers,
   getAllShoppingSessions,
   getUserById,
   getUserByUsername,
-  getUserCartItemsById,
+  getCartItemsByUserId,
+  getProductById,
   getShoppingSessionByUserId,
   updateOrderDetails,
   updateOrderItems,
   updatePaymentDetails,
   updateUser,
   updateUserAddress,
-  updateUserCartItems,
+  updateCartItems,
   updateUserPayment,
   updateShoppingSession,
 };

@@ -36,11 +36,14 @@ const getShoppingSessionByUserId = async (id) => {
       rows: [shoppingSession],
     } = await client.query(
       `
-      SELECT *
+      SELECT session_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
       FROM shopping_session
-      WHERE user_id=$1
-    `,
-      [id]
+      INNER JOIN cart_items
+      ON shopping_session.id = cart_items.session_id
+      LEFT JOIN products
+      ON cart_items.product_id = products.id
+      WHERE shopping_session.user_id=${id}
+    `
     );
     return shoppingSession;
   } catch (error) {
@@ -48,12 +51,18 @@ const getShoppingSessionByUserId = async (id) => {
   }
 };
 
+// SELECT session_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+// FROM products
+// INNER JOIN cart_items
+// ON cart_items.product_id = products.id
+// LEFT JOIN shopping_session
+// ON shopping_session.id = cart_items.session_id
+// WHERE shopping_session.user_id=$1
+
 const updateShoppingSession = async (id, fields = {}) => {
-  // console.log(`id: ${id}`, `fields: ${fields}`);
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
-  // console.log(setString);
   if (setString.length === 0) return;
   try {
     const {
@@ -67,7 +76,6 @@ const updateShoppingSession = async (id, fields = {}) => {
       `,
       Object.values(fields)
     );
-    // console.log(session);
     return session;
   } catch (error) {
     console.error(error);

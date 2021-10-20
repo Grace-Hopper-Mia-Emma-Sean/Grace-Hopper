@@ -99,7 +99,7 @@ const createTables = async () => {
               CREATE TABLE shopping_session (
                 id SERIAL PRIMARY KEY, 
                 user_id INTEGER REFERENCES users(id),
-                total DECIMAL(19,2) NOT NULL
+                total DECIMAL(19,2)
               ); 
             `);
           try {

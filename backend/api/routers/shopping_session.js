@@ -48,6 +48,18 @@ shoppingSessionRouter.get("/", async (req, res, next) => {
   }
 });
 
+shoppingSessionRouter.get("/:user_id", async (req, res, next) => {
+  try {
+    const shoppingSession = await getShoppingSessionByUserId(
+      req.params.user_id
+    );
+    console.log(shoppingSession);
+    res.send(shoppingSession);
+  } catch (error) {
+    throw error;
+  }
+});
+
 shoppingSessionRouter.put("/:user_id", async (req, res, next) => {
   try {
     const session = await getShoppingSessionByUserId(req.params.user_id);
