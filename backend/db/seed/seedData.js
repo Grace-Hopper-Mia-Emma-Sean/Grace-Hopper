@@ -17,12 +17,27 @@ const {
 } = require("./products");
 
 const {
+<<<<<<< HEAD
   updateProduct,
   getProductById,
   deleteProduct,
   createProduct,
   getAllProducts,
 } = require("../adapters/products");
+=======
+  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts, updateAllProductDiscounts
+} = require('../adapters/products')
+>>>>>>> d46e72635b1a4ac532c552ebc0cad14dae94901e
+
+const {
+  getAllProductDiscounts,
+  deleteProductDiscount
+} = require('../adapters/product_discount')
+
+const { 
+  deleteProductCategory, 
+  getAllProductCategories 
+} = require("../adapters/product_category");
 
 // orders seed
 const {
@@ -35,6 +50,7 @@ const {
   createInitialUserPayment,
   createInitialPaymentDetails,
 } = require("./payments");
+
 
 const dropTables = async () => {
   try {
@@ -294,12 +310,27 @@ const testDB = async () => {
     const deletedProduct = await deleteProduct(11);
     console.log("Result:", deletedProduct);
 
+<<<<<<< HEAD
     console.log("Calling getAllProducts");
     const products = await getAllProducts();
     console.log("Result:", products);
   } catch (error) {
     console.log("Error during testDB");
     throw error;
+=======
+    console.log('Calling getAllProducts')
+    const products = await getAllProducts()
+    console.log("Result:", products)
+
+    // console.log('Calling delete product discount on discount 1')
+    // const newDiscounts = await updateAllProductDiscounts(1)
+    // const  discount = await deleteProductDiscount(1)
+    // console.log("Discounts now are:", await getAllProductDiscounts())
+
+  } catch (error){
+    console.log('Error during testDB')
+    throw error
+>>>>>>> d46e72635b1a4ac532c552ebc0cad14dae94901e
   }
 };
 
