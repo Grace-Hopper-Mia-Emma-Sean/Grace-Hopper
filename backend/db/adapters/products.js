@@ -1,6 +1,5 @@
 const { client } = require('../client')
 
-
 const createProduct = async({name, description, SKU, category_id, price, discount_id, quantity}) => {
     try {
         const {rows: [product]} = await client.query(`
@@ -9,18 +8,6 @@ const createProduct = async({name, description, SKU, category_id, price, discoun
             RETURNING *;
         `, [name, description, SKU, category_id, price, discount_id, quantity])
         return product;
-    } catch (error){
-        throw (error)
-    }
-}
-
-const getAllProductCategories = async () => {
-    try {
-        const { rows } = await client.query(`
-            SELECT *
-            FROM product_category;
-        `)
-        return rows;
     } catch (error){
         throw (error)
     }
@@ -85,14 +72,40 @@ const updateProduct = async(id, fields ={}) => {
     }
 }
 
+const updateAllProductDiscounts = async(discountId) => {
+    try {
+        const {rows} = await client.query(`
+            UPDATE products
+            SET discount_id=4
+            WHERE discount_id=${discountId}
+        `)
+        return rows
+    } catch (error){
+        throw error
+    }
+}
+
+const updateAllProductCategories = async(categoryId) => {
+    try {
+        const {rows} = await client.query(`
+            UPDATE products
+            SET category_id=4
+            WHERE category_id=${categoryId}
+        `)
+        return rows;
+    } catch (error){
+        throw error
+    }
+}
+
 const deleteProduct = async (id) => {
     try {
         const {rows: [product]} = await client.query(`
             DELETE FROM products
             WHERE id=${id}
             RETURNING *;
-        `);
-        return product
+           `)
+       
     } catch (error) {
         throw (error)
     }
@@ -100,10 +113,11 @@ const deleteProduct = async (id) => {
 
 module.exports = {
     createProduct,
-    getAllProductCategories,
     getProductById,
     getAllProducts,
     getProductsByCategoryId,
     updateProduct,
+    updateAllProductDiscounts,
+    updateAllProductCategories,
     deleteProduct
 }

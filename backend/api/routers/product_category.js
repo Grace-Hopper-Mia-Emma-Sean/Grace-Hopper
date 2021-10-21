@@ -2,12 +2,27 @@ const express = require("express");
 const productCategoryRouter = express.Router();
 
 const {
-    getAllProductCategories
+    updateAllProductCategories
 } = require('../../db/adapters/products')
 
 const {
-    getCategoryById
+    getAllProductCategories, createProductCategory
 } = require('../../db/adapters/product_category')
+
+const {
+    getCategoryById, deleteProductCategory
+} = require('../../db/adapters/product_category');
+const { client } = require("../../db/client");
+
+productCategoryRouter.post('/', async (req, res, next) => {
+    const {name, description} = req.body;
+    try {
+        const newCategory = await createProductCategory(req.body)
+        res.send(newCategory)
+    } catch(error) {
+        next(error)
+    }
+})
 
 productCategoryRouter.get('/', async (req, res, next)=> {
     try {
@@ -28,31 +43,16 @@ productCategoryRouter.get('/:categoryId', async (req, res, next)=> {
     }
 })
 
-// paymentDetailsRouter.patch('/:paymentDetailsId', userLoggedIn, requiredNotSent({requiredParams: ["id, order_id, amount, provider, status"], atLeastOne: true}), async (req, res, next) => {
-//     const { order_id, amount, provider, status } = req.body;
-//     const { paymentDetailsId } = req.params;
-//     const updateFields = {id: paymentDetailsId, order_id, amount, provider, status}
-    
-//     try {
-//         const getPaymentDetails =  await getAllPaymentById(paymentDetailsId)
-//         if (!getPaymentDetails) {
-//             res.status(401)
-//             next({
-//                 name: "NoOrderItemsError",
-//                 message: "No oder item exist to update"
-//             })
-//         } else {
-//                 console.log("Get Order Items to Update:", getPaymentDetails)
-
-//                 const updatedPaymentDetails= await updatePaymentDetails(updateFields)
-
-//                 console.log("Updated Order Items:", updatedPaymentDetails)
-
-//                 res.send(updatedPaymentDetails)
-//             }
-//         } catch (error){
-//             next (error)
-//         }
-// })
+productCategoryRouter.delete('/:categoryId', async (req, res, next) => {
+    try {
+        const {categoryId} = req.params
+        const updateCategories = await updateAllProductCategories(categoryId)
+        const category = await deleteProductCategory(categoryId)
+        res.status(200).send("This category was deleted!")
+    } catch (error){
+        throw error
+    }
+        
+})
 
 module.exports = productCategoryRouter;

@@ -35,7 +35,35 @@ const getAllProductDiscounts = async () => {
   }
 }
 
+const getProductDiscountById = async (discountId) => {
+  try {
+    const {rows: [discount]} = await client.query(`
+      SELECT *
+      FROM product_discount
+      WHERE id=${discountId}
+    `)
+  return discount
+  } catch (error){
+    throw error
+  }
+    
+}
+
+const deleteProductDiscount = async (discountId) => {
+  try {
+    const {rows: [discount]} = await client.query(`
+    DELETE FROM product_discount
+    WHERE id=${discountId}
+    RETURNING *
+  `)
+  } catch (error) {
+    throw (error)
+  }
+}
+
 module.exports = {
   createProductDiscount,
-  getAllProductDiscounts
+  getAllProductDiscounts,
+  getProductDiscountById,
+  deleteProductDiscount
 };

@@ -17,8 +17,18 @@ const {
 } = require("./products");
 
 const {
-  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts
+  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts, updateAllProductDiscounts
 } = require('../adapters/products')
+
+const {
+  getAllProductDiscounts,
+  deleteProductDiscount
+} = require('../adapters/product_discount')
+
+const { 
+  deleteProductCategory, 
+  getAllProductCategories 
+} = require("../adapters/product_category");
 
 // orders seed
 const {
@@ -31,6 +41,7 @@ const {
   createInitialUserPayment,
   createInitialPaymentDetails,
 } = require("./payments");
+
 
 const dropTables = async () => {
   try {
@@ -292,6 +303,12 @@ const testDB = async () => {
     console.log('Calling getAllProducts')
     const products = await getAllProducts()
     console.log("Result:", products)
+
+    // console.log('Calling delete product discount on discount 1')
+    // const newDiscounts = await updateAllProductDiscounts(1)
+    // const  discount = await deleteProductDiscount(1)
+    // console.log("Discounts now are:", await getAllProductDiscounts())
+
   } catch (error){
     console.log('Error during testDB')
     throw error

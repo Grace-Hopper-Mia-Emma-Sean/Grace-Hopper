@@ -127,6 +127,10 @@ const createInitialProductCategories = async () => {
         description:
           "For gaming, video editing, and other high-end uses",
       },
+      {
+        name: "Uncategorized/Miscellaneous",
+        description: "For one-off items, or those that can't be categorized"
+      }
     ];
     const categories = await Promise.all(
       categoriesToCreate.map(createProductCategory)
@@ -187,6 +191,12 @@ const createInitialProductDiscounts = async () => {
         discount_percent: 99,
         active: true,
       },
+      {
+        name: "No Discount",
+        description: "For items that have no discount",
+        discount_percent: 0,
+        active: false
+      }
     ];
     // TODO: complete try block . . .
     const discounts = await Promise.all(
