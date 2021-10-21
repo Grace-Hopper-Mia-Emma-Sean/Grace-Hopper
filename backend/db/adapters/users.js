@@ -1,7 +1,7 @@
 const { client } = require("../client");
 
-// const bcrypt = require("bcryptjs");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcrypt");
 const SALT_COUNT = 10;
 
 const { userLogin, dbFields } = require("../../api/utils");
@@ -83,29 +83,57 @@ const getUserByUsername = async (username) => {
 };
 
 const updateUser = async (id, fields = {}) => {
+  console.log(`id: ${id}`, `fields: ${fields}`);
+
   const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=${index + 1}"`)
+    .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
+  console.log(setString);
   if (setString.length === 0) return;
-  // const { id, username, first_name, last_name, telephone, isAdmin } = fields;
   try {
     const {
-      rows: [payment],
+      rows: [user],
     } = await client.query(
       `
-        UPDATE payment_details
+        UPDATE users
         SET ${setString}
         WHERE id=${id}
         RETURNING *
-        `,
-      // [id, username, first_name, last_name, telephone, isAdmin]
+      `,
       Object.values(fields)
     );
-    return payment;
+    console.log(user);
+    return user;
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
+
+// const updateUser = async (id, fields = {}) => {
+//   const setString = Object.keys(fields)
+//     .map((key, index) => `"${key}"=${index + 1}"`)
+//     .join(",");
+//   if (setString.length === 0) return;
+//   // const { id, username, first_name, last_name, telephone, isAdmin } = fields;
+//   try {
+//     const {
+//       rows: [payment],
+//     } = await client.query(
+//       `
+//         UPDATE users
+//         SET ${setString}
+//         WHERE id=${id}
+//         RETURNING *
+//         `,
+//       // [id, username, first_name, last_name, telephone, isAdmin]
+//       Object.values(fields)
+//     );
+//     return payment;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const deleteUser = async (id) => {
   try {

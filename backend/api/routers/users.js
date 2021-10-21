@@ -1,8 +1,9 @@
 const express = require("express");
 const usersRouter = express.Router();
 
-// const bcrypt = require("bcryptjs");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcrypt");
+const { client } = require("../../db/client");
 const jwt = require("jsonwebtoken");
 const { requiredNotSent, userLoggedIn } = require("../utils");
 
@@ -148,20 +149,19 @@ usersRouter.put("/:userId", async (req, res, next) => {
         message: `No user exists with id ${user}`,
       });
     const updateFields = {
-      // oldUser: user,
-      newUser: {
-        username: req.body.username || user.username,
-        first_name: req.body.first_name || user.first_name,
-        last_name: req.body.last_name || user.last_name,
-        telephone: req.body.telephone || user.telephone,
-        isAdmin: req.body.isAdmin || user.isAdmin,
-      },
+      username: req.body.username || user.username,
+      first_name: req.body.first_name || user.first_name,
+      last_name: req.body.last_name || user.last_name,
+      telephone: req.body.telephone || user.telephone,
+      isAdmin:
+        req.body.isAdmin === true
+          ? true
+          : req.body.isAdmin === false
+          ? false
+          : user.isAdmin,
     };
-    const userChanges = await updateUser({ updateFields });
-    return res.send({
-      update: userChanges || "aw, bummer. no changes",
-      updateFields,
-    });
+    const userChanges = await updateUser(req.params.userId, updateFields);
+    return res.send(userChanges);
   } catch (error) {
     throw error;
   }
@@ -194,11 +194,8 @@ usersRouter.put("/:userId", async (req, res, next) => {
 //         });
 //       } else {
 //         console.log("Get Order Items to Update:", getUserDetails);
-
 //         const updatedUserDetails = await updatePaymentDetails(updateFields);
-
 //         console.log("Updated Order Items:", updatedUserDetails);
-
 //         res.send({ updatedUserDetails, updateFields });
 //       }
 //     } catch (error) {
