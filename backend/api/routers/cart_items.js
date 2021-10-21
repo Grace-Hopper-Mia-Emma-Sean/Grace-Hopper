@@ -13,21 +13,21 @@ const {
 
 const { authenticate } = require("../utils");
 
-cartItemsRouter.post("/:userId", authenticate, async (req, res, next) => {
+cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
   const role = await getUserById(req.user.id);
   if (role.isAdmin !== true) return res.sendStatus(403);
   try {
-    const user = await getUserById(req.params.userId);
+    const user = await getUserById(req.params.user_id);
     if (!user)
       return res.status(404).send({
         name: "NoUserError",
-        message: `No user exists with id ${req.params.userId}`,
+        message: `No user exists with id ${req.params.user_id}`,
       });
-    const session = await getShoppingSessionByUserId(req.params.userId);
+    const session = await getShoppingSessionByUserId(req.params.user_id);
     if (!session)
       return res.status(401).send({
         name: "NoShoppingSessionError",
-        message: `User with id ${req.params.userId} does not have a shopping session to which they can add cart items`,
+        message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
       });
     console.log(session);
     const cartItems = await createCartItems({
@@ -36,7 +36,7 @@ cartItemsRouter.post("/:userId", authenticate, async (req, res, next) => {
       quantity: req.body.quantity,
     });
     res.send({
-      message: `cart item added successfully for user id ${req.params.userId}`,
+      message: `cart item added successfully for user id ${req.params.user_id}`,
       cartItems: cartItems,
     });
   } catch (error) {

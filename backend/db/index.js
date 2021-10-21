@@ -33,65 +33,82 @@ const {
 } = require("./adapters/cart_items");
 
 // products adapters
-const { createProduct, getProductById } = require("./adapters/products");
-const { createProductCategory } = require("./adapters/product_category");
-const { createProductInventory } = require("./adapters/product_inventory");
-const { createProductDiscount } = require("./adapters/product_discount");
+const {
+  createProduct,
+  getAllProductCategories,
+  getProductById,
+  getAllProducts,
+  getProductsByCategoryId,
+  updateProduct,
+  deleteProduct,
+} = require("./adapters/products");
+
+const {
+  createProductCategory,
+  getCategoryById,
+} = require("./adapters/product_category");
+
+const {
+  createProductInventory,
+  updateProductInventory,
+} = require("./adapters/product_inventory");
+
+const {
+  createProductDiscount,
+  getAllProductDiscounts,
+} = require("./adapters/product_discount");
 
 // orders adapters
 const {
-  createOrderDetails,
-  getAllOrderDetailsById,
   getAllOrderDetails,
+  getAllOrderDetailsById,
+  createOrderDetails,
   updateOrderDetails,
   destroyOrderDetails,
+  deleteOrderDetailsByUserId,
 } = require("./adapters/order_details");
 
 const {
-  createOrderItems,
   getAllOrderItems,
   getAllOrderItemsById,
+  createOrderItems,
   updateOrderItems,
   destroyOrderItems,
   canEditOrderItems,
+  deleteOrderItemsByUserId,
 } = require("./adapters/order_items");
 
 // payment adapters
 
 const {
-  createUserPayment,
   getAllUserPayment,
   getAllUserPaymentById,
+  createUserPayment,
   updateUserPayment,
   destroyUserPayment,
 } = require("./adapters/user_payment");
 
 const {
-  createPaymentDetails,
   getAllPaymentById,
   getAllPaymentDetails,
+  createPaymentDetails,
   updatePaymentDetails,
   destroyPaymentDetails,
 } = require("./adapters/payment_details");
 
 module.exports = {
-  canEditOrderItems,
-  createOrderDetails,
-  createOrderItems,
-  createPaymentDetails,
-  createProduct,
-  createProductCategory,
-  createProductDiscount,
   createProductInventory,
+  createShoppingSession,
   createUser,
   createUserAddress,
-  createCartItems,
   createUserPayment,
-  createShoppingSession,
+  deleteCartItems,
+  deleteOrderDetailsByUserId,
+  deleteOrderItemsByUserId,
+  deleteProduct,
+  deleteShoppingSession,
   deleteUser,
   deleteUserAddress,
-  deleteCartItems,
-  deleteShoppingSession,
   destroyOrderDetails,
   destroyOrderItems,
   destroyPaymentDetails,
@@ -103,25 +120,32 @@ module.exports = {
   getAllOrderItemsById,
   getAllPaymentById,
   getAllPaymentDetails,
+  getAllProductCategories,
+  getAllProductDiscounts,
+  getAllProducts,
+  getAllShoppingSessions,
   getAllUserAddresses,
-  getCartItems,
   getAllUserPayment,
   getAllUserPaymentById,
   getAllUsers,
-  getAllShoppingSessions,
+  getCartItems,
+  getCartItemsByUserId,
+  getCategoryById,
+  getProductById,
+  getProductsByCategoryId,
+  getShoppingSessionByUserId,
   getUserById,
   getUserByUsername,
-  getCartItemsByUserId,
-  getProductById,
-  getShoppingSessionByUserId,
+  updateCartItems,
   updateOrderDetails,
   updateOrderItems,
   updatePaymentDetails,
+  updateProduct,
+  updateProductInventory,
+  updateShoppingSession,
   updateUser,
   updateUserAddress,
-  updateCartItems,
   updateUserPayment,
-  updateShoppingSession,
 };
 
 //TO DO: export all db components here

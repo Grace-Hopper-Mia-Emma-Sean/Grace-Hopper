@@ -1,17 +1,10 @@
 const express = require("express");
 const usersRouter = express.Router();
 
+const { authenticate, admin, owner } = require("../utils");
 const bcrypt = require("bcryptjs");
 // const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {
-  userLoggedIn,
-  dbFields,
-  requiredNotSent,
-  authenticate,
-  admin,
-  owner,
-} = require("../utils");
 
 const {
   createUser,
@@ -25,6 +18,8 @@ const {
   deleteCartItems,
   getCartItemsByUserId,
   destroyUserPayment: deleteUserPayment,
+  deleteOrderDetailsByUserId,
+  deleteOrderItemsByUserId,
 } = require("../../db");
 
 usersRouter.post("/register", async (req, res, next) => {
@@ -153,17 +148,21 @@ usersRouter.delete(
           message: `No user exists with id ${req.params.userId}`,
         });
       } else {
+        const orderItems = await deleteOrderItemsByUserId(req.params.userId);
         const cartItems = await getCartItemsByUserId(req.params.userId);
         // leave cartItems in if clause with var to avoid undefined errors at res.send
-        if (cartItems) {
-          var cart = await deleteCartItems(cartItems.user_id);
-        }
+        if (cartItems) var cart = await deleteCartItems(cartItems.user_id);
+        const orderDetails = await deleteOrderDetailsByUserId(
+          req.params.userId
+        );
         const userPayment = await deleteUserPayment(req.params.userId);
         const shoppingSession = await deleteShoppingSession(req.params.userId);
         const address = await deleteUserAddress(req.params.userId);
         const user = await deleteUser(req.params.userId);
         const data = {
+          orderItems: orderItems,
           cartItems: cart,
+          orderDetails: orderDetails,
           userPayment: userPayment,
           shoppingSession: shoppingSession,
           address: address,
