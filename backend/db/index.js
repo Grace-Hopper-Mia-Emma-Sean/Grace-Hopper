@@ -10,115 +10,142 @@ const {
 
 const {
   createUserAddress,
+  getAddressByUserId,
   getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,
 } = require("./adapters/user_address");
 
 const {
-  createUserShoppingSession,
-  getAllUserShoppingSessions,
-  getUserShoppingSessionById,
-  updateUserShoppingSession,
-  deleteUserShoppingSession,
+  createShoppingSession,
+  getAllShoppingSessions,
+  getShoppingSessionByUserId,
+  updateShoppingSession,
+  deleteShoppingSession,
 } = require("./adapters/shopping_session");
 
 const {
-  createUserCartItems,
-  getAllUserCartItems,
-  getUserCartItemsById,
-  updateUserCartItems,
-  deleteUserCartItems,
+  createCartItems,
+  getCartItems,
+  getCartItemsByUserId,
+  updateCartItems,
+  deleteCartItems,
 } = require("./adapters/cart_items");
 
 // products adapters
-const { createProduct } = require("./adapters/products");
-const { createProductCategory } = require("./adapters/product_category");
-const { createProductInventory } = require("./adapters/product_inventory");
-const { createProductDiscount } = require("./adapters/product_discount");
+const {
+  createProduct,
+  getAllProductCategories,
+  getProductById,
+  getAllProducts,
+  getProductsByCategoryId,
+  updateProduct,
+  deleteProduct,
+} = require("./adapters/products");
+
+const {
+  createProductCategory,
+  getCategoryById,
+} = require("./adapters/product_category");
+
+const {
+  createProductInventory,
+  updateProductInventory,
+} = require("./adapters/product_inventory");
+
+const {
+  createProductDiscount,
+  getAllProductDiscounts,
+} = require("./adapters/product_discount");
 
 // orders adapters
 const {
-  createOrderDetails,
-  getAllOrderDetailsById,
   getAllOrderDetails,
+  getAllOrderDetailsById,
+  createOrderDetails,
   updateOrderDetails,
   destroyOrderDetails,
+  deleteOrderDetailsByUserId,
 } = require("./adapters/order_details");
 
 const {
-  createOrderItems,
   getAllOrderItems,
   getAllOrderItemsById,
+  createOrderItems,
   updateOrderItems,
   destroyOrderItems,
   canEditOrderItems,
+  deleteOrderItemsByUserId,
 } = require("./adapters/order_items");
 
 // payment adapters
 
 const {
-  createUserPayment,
   getAllUserPayment,
   getAllUserPaymentById,
+  createUserPayment,
   updateUserPayment,
   destroyUserPayment,
 } = require("./adapters/user_payment");
 
 const {
-  createPaymentDetails,
   getAllPaymentById,
   getAllPaymentDetails,
+  createPaymentDetails,
   updatePaymentDetails,
   destroyPaymentDetails,
 } = require("./adapters/payment_details");
 
 module.exports = {
-  canEditOrderItems,
-  createOrderDetails,
-  createOrderItems,
-  createPaymentDetails,
-  createProduct,
-  createProductCategory,
-  createProductDiscount,
   createProductInventory,
+  createShoppingSession,
   createUser,
   createUserAddress,
-  createUserCartItems,
   createUserPayment,
-  createUserShoppingSession,
+  deleteCartItems,
+  deleteOrderDetailsByUserId,
+  deleteOrderItemsByUserId,
+  deleteProduct,
+  deleteShoppingSession,
   deleteUser,
   deleteUserAddress,
-  deleteUserCartItems,
-  deleteUserShoppingSession,
   destroyOrderDetails,
   destroyOrderItems,
   destroyPaymentDetails,
   destroyUserPayment,
+  getAddressByUserId,
   getAllOrderDetails,
   getAllOrderDetailsById,
   getAllOrderItems,
   getAllOrderItemsById,
   getAllPaymentById,
   getAllPaymentDetails,
+  getAllProductCategories,
+  getAllProductDiscounts,
+  getAllProducts,
+  getAllShoppingSessions,
   getAllUserAddresses,
-  getAllUserCartItems,
   getAllUserPayment,
   getAllUserPaymentById,
   getAllUsers,
-  getAllUserShoppingSessions,
+  getCartItems,
+  getCartItemsByUserId,
+  getCategoryById,
+  getProductById,
+  getProductsByCategoryId,
+  getShoppingSessionByUserId,
   getUserById,
   getUserByUsername,
-  getUserCartItemsById,
-  getUserShoppingSessionById,
+  updateCartItems,
   updateOrderDetails,
   updateOrderItems,
   updatePaymentDetails,
+  updateProduct,
+  updateProductInventory,
+  updateShoppingSession,
   updateUser,
   updateUserAddress,
-  updateUserCartItems,
   updateUserPayment,
-  updateUserShoppingSession,
 };
 
 //TO DO: export all db components here

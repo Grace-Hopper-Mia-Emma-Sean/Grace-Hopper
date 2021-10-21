@@ -1,6 +1,6 @@
 const { client } = require("../client");
 
-const createOrderDetails = async ({ user_id, payment_id,total }) => {
+const createOrderDetails = async ({ user_id, payment_id, total }) => {
   try {
     const {
       rows: [orders],
@@ -55,7 +55,7 @@ async function updateOrderDetails(fields) {
   if (setString.length === 0) {
     return;
   }
-  const {id, user_id, total, payment_id} = fields;
+  const { id, user_id, total, payment_id } = fields;
   try {
     const {
       rows: [orders],
@@ -92,10 +92,25 @@ async function destroyOrderDetails(id) {
   }
 }
 
+const deleteOrderDetailsByUserId = async (id) => {
+  // diff than above; don't delete, please; used in deleting users
+  try {
+    const {
+      rows: [orderDetails],
+    } = await client.query(`
+      DELETE from order_details
+      WHERE user_id=${id}
+    `);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAllOrderDetails,
   getAllOrderDetailsById,
   createOrderDetails,
   updateOrderDetails,
   destroyOrderDetails,
+  deleteOrderDetailsByUserId,
 };

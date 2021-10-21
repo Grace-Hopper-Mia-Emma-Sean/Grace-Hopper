@@ -51,25 +51,46 @@ const getAllUserAddresses = async () => {
   }
 };
 
-const updateUserAddress = async ({ id, fields = {} }) => {
-  const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(", ");
-  if (setString.toString.length === 0) return;
+const getAddressByUserId = async (id) => {
   try {
     const {
       rows: [address],
     } = await client.query(
       `
-      UPDATE user_address
-      SET ${setString}
-      WHERE id=${id}
-      RETURNING *;
-    `,
-      Object.values(fields)
+      SELECT *
+      FROM user_address
+      WHERE id=$1`,
+      [id]
     );
     return address;
   } catch (error) {
+    throw error;
+  }
+};
+
+const updateUserAddress = async (id, fields = {}) => {
+  console.log(`id: ${id}`, `fields: ${fields}`);
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(",");
+  console.log(setString);
+  if (setString.length === 0) return;
+  try {
+    const {
+      rows: [address],
+    } = await client.query(
+      `
+        UPDATE user_address
+        SET ${setString}
+        WHERE id=${id}
+        RETURNING *
+      `,
+      Object.values(fields)
+    );
+    console.log(address);
+    return address;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -94,6 +115,7 @@ const deleteUserAddress = async (id) => {
 
 module.exports = {
   createUserAddress,
+  getAddressByUserId,
   getAllUserAddresses,
   updateUserAddress,
   deleteUserAddress,

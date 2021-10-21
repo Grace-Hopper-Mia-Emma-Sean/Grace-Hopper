@@ -1,3 +1,48 @@
+const { client } = require("../../db/client");
+const jwt = require("jsonwebtoken");
+
+const authenticate = (req, res, next) => {
+  console.log(req);
+  const authHeader = req.headers["authorization"];
+  if (authHeader == undefined) return res.sendStatus(403);
+  const bearer = authHeader.split(" ");
+  const token = bearer[1];
+  req.token = token;
+  jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+    if (error) return res.sendStatus(403);
+    req.user = user;
+    res.locals.username = req.user.username;
+    next();
+  });
+};
+
+const owner = async (req, res, next) => {
+  const username = res.locals.username;
+  const {
+    rows: [user],
+  } = await client.query(`
+    SELECT id, "isAdmin"
+    FROM users
+    WHERE username='${username}'
+  `);
+  const params = req.params.userId || req.params.user_id;
+  if (params !== user.id && user.isAdmin !== true) return res.sendStatus(403);
+  next();
+};
+
+const admin = async (req, res, next) => {
+  const username = res.locals.username;
+  const {
+    rows: [role],
+  } = await client.query(`
+    SELECT "isAdmin"
+    FROM users
+    WHERE username='${username}'
+  `);
+  if (role.isAdmin !== true) return res.sendStatus(403);
+  next();
+};
+
 const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   return (req, res, next) => {
     if (atLeastOne) {
@@ -61,6 +106,9 @@ const dbFields = (fields) => {
 };
 
 module.exports = {
+  authenticate,
+  admin,
+  owner,
   requiredNotSent,
   userLoggedIn,
   dbFields,
