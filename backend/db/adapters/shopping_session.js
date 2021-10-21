@@ -32,9 +32,7 @@ const getAllShoppingSessions = async () => {
 
 const getShoppingSessionByUserId = async (id) => {
   try {
-    const {
-      rows: [shoppingSession],
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT session_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
       FROM shopping_session
@@ -45,19 +43,11 @@ const getShoppingSessionByUserId = async (id) => {
       WHERE shopping_session.user_id=${id}
     `
     );
-    return shoppingSession;
+    return rows;
   } catch (error) {
     throw error;
   }
 };
-
-// SELECT session_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
-// FROM products
-// INNER JOIN cart_items
-// ON cart_items.product_id = products.id
-// LEFT JOIN shopping_session
-// ON shopping_session.id = cart_items.session_id
-// WHERE shopping_session.user_id=$1
 
 const updateShoppingSession = async (id, fields = {}) => {
   const setString = Object.keys(fields)

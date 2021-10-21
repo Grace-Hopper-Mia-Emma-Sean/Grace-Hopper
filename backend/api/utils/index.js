@@ -1,3 +1,41 @@
+const jwt = require("jsonwebtoken");
+
+// const authenticate = (req, res, next) => {
+//   console.log("hitting 0");
+//   try {
+//     console.log("hitting 1");
+//     const authHeader = req.headers.authorization;
+//     console.log("hitting 2");
+//     if (authHeader) {
+//       const token = authHeader.split(" ")[1];
+//       jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+//         if (error) return res.sendStatus(403);
+//         req.user = user;
+//         next();
+//       });
+//     }
+//   } catch (error) {
+//     console.log("hitting none");
+//   }
+// };
+
+const authenticate = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  if (authHeader == undefined) return res.sendStatus(403);
+  const bearer = authHeader.split(" ");
+  const token = bearer[1];
+  req.token = token;
+  jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+    if (error) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+const admin = async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+};
+
 const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
   return (req, res, next) => {
     if (atLeastOne) {
@@ -61,6 +99,7 @@ const dbFields = (fields) => {
 };
 
 module.exports = {
+  authenticate,
   requiredNotSent,
   userLoggedIn,
   dbFields,

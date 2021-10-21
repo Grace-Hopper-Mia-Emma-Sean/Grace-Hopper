@@ -163,7 +163,7 @@ const createTables = async () => {
                             description VARCHAR(255) NOT NULL,
                             SKU INTEGER NOT NULL,
                             category_id INTEGER REFERENCES product_category(id),
-                            price INTEGER NOT NULL,
+                            price DECIMAL(19,2) NOT NULL,
                             discount_id INTEGER REFERENCES product_discount(id),
                             quantity INTEGER NOT NULL
                           );
@@ -272,7 +272,7 @@ const testDB = async () => {
       description: "Fast, reliable, and cutting-edge",
       sku: "11111111",
       category_id: "2",
-      price: "750",
+      price: "749.99",
       discount_id: "2",
       quantity: "30",
     });

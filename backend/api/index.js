@@ -1,6 +1,7 @@
 const express = require("express");
 const apiRouter = express.Router();
 
+const { getUserById } = require("../db/adapters/users");
 const jwt = require("jsonwebtoken");
 // TODO: change getUserById import once names are finalized
 // const { getUserById } = require("../db/adapters/users");

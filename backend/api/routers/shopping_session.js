@@ -10,9 +10,11 @@ const {
   deleteShoppingSession,
 } = require("../../db");
 
-const { userLoggedIn, requiredNotSent } = require("./utils");
+const { userLoggedIn, requiredNotSent, authenticate } = require("../utils");
 
-shoppingSessionRouter.post("/:userId", async (req, res, next) => {
+shoppingSessionRouter.post("/:userId", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const user = await getUserById(req.params.userId);
     if (!user)
@@ -39,7 +41,9 @@ shoppingSessionRouter.post("/:userId", async (req, res, next) => {
   }
 });
 
-shoppingSessionRouter.get("/", async (req, res, next) => {
+shoppingSessionRouter.get("/", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const shoppingSession = await getAllShoppingSessions();
     res.send(shoppingSession);
@@ -48,7 +52,9 @@ shoppingSessionRouter.get("/", async (req, res, next) => {
   }
 });
 
-shoppingSessionRouter.get("/:user_id", async (req, res, next) => {
+shoppingSessionRouter.get("/:user_id", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const shoppingSession = await getShoppingSessionByUserId(
       req.params.user_id
@@ -60,7 +66,9 @@ shoppingSessionRouter.get("/:user_id", async (req, res, next) => {
   }
 });
 
-shoppingSessionRouter.put("/:user_id", async (req, res, next) => {
+shoppingSessionRouter.put("/:user_id", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const session = await getShoppingSessionByUserId(req.params.user_id);
     if (!session)
@@ -91,20 +99,26 @@ shoppingSessionRouter.put("/:user_id", async (req, res, next) => {
   }
 });
 
-shoppingSessionRouter.delete("/:user_id", async (req, res, next) => {
-  try {
-    const session = await getShoppingSessionByUserId(req.params.user_id);
-    console.log(session);
-    if (!session)
-      return res.status(404).send({
-        name: "NoShoppingSessionError",
-        message: `No shopping session exists for user with id ${req.params.user_id}`,
-      });
-    const deleteSession = await deleteShoppingSession(req.params.user_id);
-    res.send(deleteSession);
-  } catch (error) {
-    throw error;
+shoppingSessionRouter.delete(
+  "/:user_id",
+  authenticate,
+  async (req, res, next) => {
+    const role = await getUserById(req.user.id);
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    try {
+      const session = await getShoppingSessionByUserId(req.params.user_id);
+      console.log(session);
+      if (!session)
+        return res.status(404).send({
+          name: "NoShoppingSessionError",
+          message: `No shopping session exists for user with id ${req.params.user_id}`,
+        });
+      const deleteSession = await deleteShoppingSession(req.params.user_id);
+      res.send(deleteSession);
+    } catch (error) {
+      throw error;
+    }
   }
-});
+);
 
 module.exports = shoppingSessionRouter;

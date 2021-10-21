@@ -9,9 +9,11 @@ const {
   getUserById,
 } = require("../../db");
 
-const { userLoggedIn, requiredNotSent } = require("./utils");
+const { userLoggedIn, requiredNotSent, authenticate } = require("../utils");
 
-userAddressRouter.post("/:userId", async (req, res, next) => {
+userAddressRouter.post("/:userId", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const user = await getUserById(req.params.userId);
     if (!user)
@@ -49,13 +51,24 @@ userAddressRouter.post("/:userId", async (req, res, next) => {
   }
 });
 
-userAddressRouter.get("/", async (req, res, next) => {
+userAddressRouter.get("/", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   const addresses = await getAllUserAddresses();
   if (!addresses) res.status(404).send({ name: "NoAddressError" });
   res.status(200).send(addresses);
 });
 
-userAddressRouter.put("/:user_id", async (req, res, next) => {
+userAddressRouter.get("/:userId", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
+  const address = await getAddressByUserId(req.params.userId);
+  res.status(200).send(address);
+});
+
+userAddressRouter.put("/:user_id", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const address = await getAddressByUserId(req.params.user_id);
     if (!address)

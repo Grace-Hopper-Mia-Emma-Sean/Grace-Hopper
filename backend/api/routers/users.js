@@ -3,9 +3,13 @@ const usersRouter = express.Router();
 
 const bcrypt = require("bcryptjs");
 // const bcrypt = require("bcrypt");
-const { client } = require("../../db/client");
 const jwt = require("jsonwebtoken");
-const { userLogin, dbFields, requiredNotSent } = require("../utils");
+const {
+  userLoggedIn,
+  dbFields,
+  requiredNotSent,
+  authenticate,
+} = require("../utils");
 
 const {
   createUser,
@@ -23,52 +27,26 @@ const {
 
 usersRouter.post("/register", async (req, res, next) => {
   try {
-    const {
-      username,
-      password,
-      first_name,
-      last_name,
-      telephone,
-      email,
-      isAdmin,
-    } = req.body;
-    const _user = await getUserByUsername(username);
-    if (_user) {
-      return res.status(404).send({
-        name: "UserExistsError",
-        message: "A user by that username already exists",
-      });
-    } else if (password.length < 8) {
-      return res.status(404).send({
-        name: "PasswordLengthError",
-        message: "Password must be 8 or more characters",
-      });
-    } else {
-      const user = await createUser({
-        username,
-        password,
-        first_name,
-        last_name,
-        telephone,
-        email,
-        isAdmin,
-      });
-      const token = jwt.sign(
-        {
-          id: user.id,
-          username: user.username,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "1w",
-        }
-      );
-      res.send({
-        user: user,
-        message: "Thank you for signing up!",
-        token: token,
-      });
-    }
+    const _user = await getUserByUsername(req.body.username);
+    if (_user) res.status(404).send("Username already exists");
+    if (req.body.password.length < 8)
+      res.status(404).send("Password must be 8 or more characters");
+    const user = await createUser({
+      username: req.body.username,
+      password: req.body.password,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      telephone: req.body.telephone,
+      email: req.body.email,
+      isAdmin: req.body.isAdmin,
+    });
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+    delete user.password;
+    res.status(200).send({ token });
   } catch (error) {
     throw error;
   }
@@ -78,44 +56,36 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (!username || !password)
-      next({
-        name: "MissingCredentialsError",
-        message: "Please supply both a username and password",
-      });
+      res.status(401).send("Username or password is missing");
     const user = await getUserByUsername(username);
     const passwordsMatch = await bcrypt.compare(password, user.password);
-    if (user && passwordsMatch) {
+    if (!passwordsMatch)
+      res.status(401).send("Username or password is incorrect");
+    if (username && passwordsMatch) {
       const token = jwt.sign(
-        {
-          id: user.id,
-          username: user.username,
-        },
-        process.env.JWT_SECRET
+        { id: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
       );
       delete user.password;
-      res.send({
-        user: user,
-        message: "You're logged in!",
-        token: token,
-      });
-    } else {
-      next({
-        name: "IncorrectCredentialsError",
-        message: "Username or password is incorrect",
-      });
+      res.status(200).send({ token });
     }
   } catch (error) {
     throw error;
   }
 });
 
-usersRouter.get("/", async (req, res, next) => {
+usersRouter.get("/", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   const users = await getAllUsers();
   if (!users) res.status(404).send({ name: "NoUserError" });
   res.status(200).send(users);
 });
 
-usersRouter.get("/:userId", async (req, res, next) => {
+usersRouter.get("/:userId", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   const user = await getUserById(req.params.userId);
   if (!user)
     return res.status(404).send({
@@ -126,6 +96,8 @@ usersRouter.get("/:userId", async (req, res, next) => {
 });
 
 usersRouter.put("/:userId", async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const user = await getUserById(req.params.userId);
     if (!user)
@@ -160,6 +132,8 @@ usersRouter.put("/:userId", async (req, res, next) => {
 });
 
 usersRouter.delete("/:userId/", async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const userId = await getUserById(req.params.userId);
     if (!userId) {

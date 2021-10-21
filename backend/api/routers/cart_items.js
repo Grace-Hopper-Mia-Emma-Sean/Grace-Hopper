@@ -11,7 +11,11 @@ const {
   getShoppingSessionByUserId,
 } = require("../../db");
 
-cartItemsRouter.post("/:userId", async (req, res, next) => {
+const { authenticate } = require("../utils");
+
+cartItemsRouter.post("/:userId", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const user = await getUserById(req.params.userId);
     if (!user)
@@ -40,17 +44,23 @@ cartItemsRouter.post("/:userId", async (req, res, next) => {
   }
 });
 
-cartItemsRouter.get("/", async (req, res, next) => {
+cartItemsRouter.get("/", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   const cartItems = await getCartItems();
   res.send(cartItems);
 });
 
-cartItemsRouter.get("/:user_id", async (req, res, next) => {
+cartItemsRouter.get("/:user_id", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   const cartItems = await getCartItemsByUserId(req.params.user_id);
   res.send(cartItems);
 });
 
-cartItemsRouter.patch("/:user_id", async (req, res, next) => {
+cartItemsRouter.patch("/:user_id", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const user = await getUserById(req.params.user_id);
     if (!user)
@@ -91,14 +101,20 @@ cartItemsRouter.patch("/:user_id", async (req, res, next) => {
   }
 });
 
-cartItemsRouter.delete("/:cartItemsId", async (req, res, next) => {
-  const { cartItemsId } = req.params;
-  try {
-    const cartItems = await deleteCartItems(cartItemsId);
-    res.send(cartItems);
-  } catch (error) {
-    next(error);
+cartItemsRouter.delete(
+  "/:cartItemsId",
+  authenticate,
+  async (req, res, next) => {
+    const role = await getUserById(req.user.id);
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    const { cartItemsId } = req.params;
+    try {
+      const cartItems = await deleteCartItems(cartItemsId);
+      res.send(cartItems);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = cartItemsRouter;
