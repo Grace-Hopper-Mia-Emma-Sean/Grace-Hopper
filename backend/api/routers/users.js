@@ -23,8 +23,6 @@ const {
 } = require("../../db");
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, first_name, last_name, telephone, isAdmin } =
-    req.body;
   try {
     const _user = await getUserByUsername(req.body.username);
     if (_user) res.status(404).send("Username already exists");
@@ -57,7 +55,6 @@ usersRouter.post("/login", async (req, res, next) => {
     if (!username || !password)
       res.status(401).send("Username or password is missing");
     const user = await getUserByUsername(username);
-
     const passwordsMatch = await bcrypt.compare(password, user.password);
     if (!passwordsMatch)
       res.status(401).send("Username or password is incorrect");

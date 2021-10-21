@@ -54,7 +54,7 @@ async function updateOrderItems(id, fields = {}) {
     return;
   }
 
-  const { id, order_id, product_id, quantity } = fields;
+  const { order_id, product_id, quantity } = fields;
   try {
     const {
       rows: [orders],

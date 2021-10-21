@@ -9,11 +9,7 @@ const {
   createOrderItems,
 } = require("../../db");
 
-<<<<<<< HEAD
-const {userLoggedIn, requiredNotSent} = require('../utils')
-=======
 const { userLoggedIn, requiredNotSent } = require("../utils");
->>>>>>> users-routers-and-adapters
 
 orderItemsRouter.post("/", async (req, res, next) => {
   const { order_id, product_id, quantity } = req.body;
@@ -56,14 +52,6 @@ orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
 
       const updatedOrderItems = await updateOrderItems(updateFields);
 
-<<<<<<< HEAD
-                res.send(updatedOrderItems)
-            }
-        } catch (error){
-            next (error)
-        }
-})
-=======
       console.log("Updated Order Items:", updatedOrderItems);
 
       res.send(updatedOrderItems);
@@ -73,7 +61,6 @@ orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
   }
 });
 
->>>>>>> users-routers-and-adapters
 //userLoggedIn
 orderItemsRouter.delete("/:orderItemsId", async (req, res, next) => {
   const { orderItemsId } = req.params;

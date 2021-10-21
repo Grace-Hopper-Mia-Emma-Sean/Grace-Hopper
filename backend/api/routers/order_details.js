@@ -9,13 +9,7 @@ const {
   createOrderDetails,
 } = require("../../db");
 
-<<<<<<< HEAD
-} = require ('../../db')
-
-const {userLoggedIn, requiredNotSent} = require('../utils')
-=======
 const { userLoggedIn, requiredNotSent } = require("../utils");
->>>>>>> users-routers-and-adapters
 
 orderDetailsRouter.post("/", async (req, res, next) => {
   const { user_id, payment_id, total } = req.body;
@@ -75,20 +69,6 @@ orderDetailsRouter.patch(
   }
 );
 
-<<<<<<< HEAD
-
-orderDetailsRouter.delete('/:orderDetailsId', userLoggedIn, async (req, res, next) => {
-    const { orderDetailsId } = req.params;
-    
-    try {
-        const deleteOrderDetails = await destroyOrderDetails(orderDetailsId)
-        res.send(deleteOrderDetails)
-            
-        } catch ({name, message}){
-            next ({name, message})
-        }
-})
-=======
 //userLoggedIn
 orderDetailsRouter.delete("/:orderDetailsId", async (req, res, next) => {
   const { orderDetailsId } = req.params;
@@ -100,6 +80,5 @@ orderDetailsRouter.delete("/:orderDetailsId", async (req, res, next) => {
     next({ name, message });
   }
 });
->>>>>>> users-routers-and-adapters
 
 module.exports = orderDetailsRouter;

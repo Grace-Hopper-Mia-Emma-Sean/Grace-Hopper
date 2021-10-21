@@ -47,7 +47,6 @@ const {
   createProductCategory,
   getCategoryById,
   getAllProductCategories,
-  createProductCategory,
   deleteProductCategory,
 } = require("./adapters/product_category");
 
