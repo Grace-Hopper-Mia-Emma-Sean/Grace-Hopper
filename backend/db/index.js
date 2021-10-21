@@ -1,4 +1,3 @@
-// user adapters
 const {
   createUser,
   getAllUsers,
@@ -101,6 +100,7 @@ const {
 
 module.exports = {
   canEditOrderItems,
+  createCartItems,
   createOrderDetails,
   createOrderItems,
   createPaymentDetails,
