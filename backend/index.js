@@ -9,9 +9,9 @@ const morgan = require("morgan");
 const { PORT = 3000 } = process.env;
 const server = express();
 
+server.use(cors());
 server.use(morgan("dev"));
 server.use(bodyParser.json());
-server.use(cors());
 server.use("/api", apiRouter);
 
 server.use((err, req, res, next) => {

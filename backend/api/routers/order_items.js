@@ -9,7 +9,7 @@ const {
     createOrderItems
 } = require ('../../db')
 
-const {userLoggedIn, requiredNotSent} = require('./utils')
+const {userLoggedIn, requiredNotSent} = require('../utils')
 
 orderItemsRouter.post("/", async (req, res, next) => {
     const {order_id, product_id, quantity} = req.body;
@@ -56,7 +56,6 @@ orderItemsRouter.patch('/:orderItemsId', async (req, res, next) => {
             next (error)
         }
 })
-
 //userLoggedIn
 orderItemsRouter.delete('/:orderItemsId', async (req, res, next) => {
     const { orderItemsId } = req.params;

@@ -8,7 +8,7 @@ const {
   deleteUserAddress,
 } = require("../../db");
 
-const { userLoggedIn, requiredNotSent } = require("./utils");
+const { userLoggedIn, requiredNotSent } = require("../utils");
 
 /**
  *

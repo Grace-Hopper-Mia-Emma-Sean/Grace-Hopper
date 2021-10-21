@@ -11,7 +11,7 @@ const {
 
 } = require ('../../db')
 
-const {userLoggedIn, requiredNotSent} = require('./utils')
+const {userLoggedIn, requiredNotSent} = require('../utils')
 
 orderDetailsRouter.post("/", async (req, res, next) => {
     const { user_id, payment_id,total } = req.body
@@ -59,8 +59,8 @@ orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requ
         }
 })
 
-//userLoggedIn
-orderDetailsRouter.delete('/:orderDetailsId', async (req, res, next) => {
+
+orderDetailsRouter.delete('/:orderDetailsId', userLoggedIn, async (req, res, next) => {
     const { orderDetailsId } = req.params;
     
     try {

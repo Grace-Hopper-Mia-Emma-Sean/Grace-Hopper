@@ -10,7 +10,7 @@ const {
 } = require ('../../db');
 
 
-const {userLoggedIn, requiredNotSent} = require('./utils')
+const {userLoggedIn, requiredNotSent} = require('../utils')
 
 paymentDetailsRouter.post("/", async (req, res, next) => {
     const {order_id, amount, provider, status} = req.body

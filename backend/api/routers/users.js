@@ -4,7 +4,7 @@ const usersRouter = express.Router();
 // const bcrypt = require("bcryptjs");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { userLogin, dbFields, requiredNotSent } = require("../utils");
+const { requiredNotSent, userLoggedIn } = require("../utils");
 
 const {
   createUser,
@@ -31,16 +31,17 @@ const {
  */
 
 usersRouter.post("/register", async (req, res, next) => {
+  const { username, password, first_name, last_name, telephone, isAdmin } = req.body;
   try {
-    const { username, password, first_name, last_name, telephone, isAdmin } =
-      req.body;
     const _user = await getUserByUsername(username);
     if (_user) {
+      res.status(401)
       next({
         name: "UserExistsError",
         message: "A user by that username already exists",
       });
     } else if (password.length < 8) {
+      res.status(401)
       next({
         name: "PasswordLengthError",
         message: "Password must be 8 or more characters",
@@ -64,6 +65,7 @@ usersRouter.post("/register", async (req, res, next) => {
           expiresIn: "1w",
         }
       );
+      //res.send({user})
       res.send({
         user: user,
         message: "Thank you for signing up!",
@@ -84,6 +86,7 @@ usersRouter.post("/login", async (req, res, next) => {
         message: "Please supply both a username and password",
       });
     const user = await getUserByUsername(username);
+
     const passwordsMatch = await bcrypt.compare(password, user.password);
     if (user && passwordsMatch) {
       const token = jwt.sign(
@@ -115,6 +118,16 @@ usersRouter.get("/", async (req, res, next) => {
   if (!users) res.status(404).send({ name: "NoUserError" });
   res.status(200).send(users);
 });
+
+
+// usersRouter.get("/me", async (req, res, next) => {
+//   try {
+//     console.log(req.user)
+//     res.send(username, token)
+//       } catch ({ name, message }) {
+//         next({ name, message });
+//       }
+// })
 
 usersRouter.get("/:userId", async (req, res, next) => {
   const user = await getUserById(req.params.userId);
