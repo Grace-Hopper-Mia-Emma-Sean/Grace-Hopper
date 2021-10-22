@@ -2,6 +2,7 @@ const { client } = require("../../db/client");
 const jwt = require("jsonwebtoken");
 
 const authenticate = (req, res, next) => {
+  // console.log("hit auth");
   const authHeader = req.headers["authorization"];
   if (authHeader == undefined) return res.sendStatus(403);
   const bearer = authHeader.split(" ");
@@ -16,6 +17,7 @@ const authenticate = (req, res, next) => {
 };
 
 const owner = async (req, res, next) => {
+  // console.log("hit owner");
   const username = res.locals.username;
   const {
     rows: [user],
@@ -32,6 +34,7 @@ const owner = async (req, res, next) => {
 };
 
 const admin = async (req, res, next) => {
+  // console.log("hit admin");
   if (res.locals.params === JSON.stringify(req.user.id)) {
     next();
   } else {

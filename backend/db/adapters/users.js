@@ -1,7 +1,7 @@
 const { client } = require("../client");
 
-// const bcrypt = require("bcryptjs");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcrypt");
 const SALT_COUNT = 10;
 
 const { userLogin, dbFields } = require("../../api/utils");
@@ -92,11 +92,9 @@ const getUserByUsername = async (username) => {
 };
 
 const updateUser = async (id, fields = {}) => {
-  console.log(`id: ${id}`, `fields: ${fields}`);
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
-  console.log(setString);
   if (setString.length === 0) return;
   try {
     const {
@@ -110,7 +108,6 @@ const updateUser = async (id, fields = {}) => {
       `,
       Object.values(fields)
     );
-    console.log(user);
     return user;
   } catch (error) {
     console.error(error);
