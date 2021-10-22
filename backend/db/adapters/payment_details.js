@@ -30,15 +30,15 @@ async function getAllPaymentDetails() {
   }
 }
 
-async function getAllPaymentById({ id }) {
+async function getAllPaymentById(id) {
   try {
     const {
-      rows: [payment],
+      rows: [payment]
     } = await client.query(
       `
             SELECT*
-            FROM payment_details;
-            WHERE "order_id"=$1;
+            FROM payment_details
+            WHERE payment_details.id=$1;
         `,
       [id]
     );
@@ -48,19 +48,17 @@ async function getAllPaymentById({ id }) {
   }
 }
 
-async function updatePaymentDetails(fields = {}) {
+async function updatePaymentDetails(id, fields = {}) {
   const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=${index + 1}"`)
+    .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
   if (setString.length === 0) {
     return;
   }
-  
-  const { id, order_id, amount, provider, status} = fields;
 
   try {
     const {
-      rows: [payment],
+      rows: [payment]
     } = await client.query(
       `
             UPDATE payment_details
@@ -68,7 +66,7 @@ async function updatePaymentDetails(fields = {}) {
             WHERE id=${id}
             RETURNING *;
         `,
-        [id, order_id, amount, provider, status]
+        Object.values(fields)
     );
     return payment;
   } catch (error) {

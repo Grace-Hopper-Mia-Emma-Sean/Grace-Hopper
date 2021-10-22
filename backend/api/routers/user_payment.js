@@ -10,7 +10,7 @@ const {
 } = require ('../../db');
 
 
-const {userLoggedIn, requiredNotSent} = require('../utils')
+const {userLoggedIn} = require('../utils')
 
 userPaymentRouter.post("/", async (req, res, next) => {
     const { id, payment_type, provider, account_no, expiry } = req.body
@@ -31,11 +31,10 @@ userPaymentRouter.get("/", async (req, res, next) => {
     }
 })
 
-userPaymentRouter.patch('/:userPaymentId', userLoggedIn, requiredNotSent({requiredParams: ["id", "user_id", "payment_type", "provider", "account_no", "expiry"], atLeastOne: true}), async (req, res, next) => {
-    const { payment_type, provider, account_no, expiry } = req.body;
-    const { id } = req.user
+userPaymentRouter.patch('/:userPaymentId', async (req, res, next) => {
+    const { user_id, payment_type, provider, account_no, expiry } = req.body;
     const { userPaymentId } = req.params;
-    const updateFields = {id:userPaymentId, user_id:id, payment_type, provider, account_no, expiry}
+    const updateFields = {id:userPaymentId, user_id, payment_type, provider, account_no, expiry}
     
     try {
         const getUserPayment =  await getAllUserPaymentById(userPaymentId)
@@ -47,11 +46,8 @@ userPaymentRouter.patch('/:userPaymentId', userLoggedIn, requiredNotSent({requir
             })
         } else {
                 console.log("Get Order Items to Update:", getUserPayment)
-
-                const updatedUserPayment= await updateUserPayment(updateFields)
-
+                const updatedUserPayment= await updateUserPayment(userPaymentId, updateFields)
                 console.log("Updated Order Items:", updatedUserPayment)
-                
                 res.send(updatedUserPayment)
             }
         } catch (error){

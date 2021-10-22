@@ -10,7 +10,7 @@ const {
 } = require ('../../db');
 
 
-const {userLoggedIn, requiredNotSent} = require('../utils')
+const {userLoggedIn} = require('../utils')
 
 paymentDetailsRouter.post("/", async (req, res, next) => {
     const {order_id, amount, provider, status} = req.body
@@ -31,7 +31,7 @@ paymentDetailsRouter.get("/", async (req, res, next) => {
     }
 })
 
-paymentDetailsRouter.patch('/:paymentDetailsId', userLoggedIn, requiredNotSent({requiredParams: ["id, order_id, amount, provider, status"], atLeastOne: true}), async (req, res, next) => {
+paymentDetailsRouter.patch('/:paymentDetailsId', async (req, res, next) => {
     const { order_id, amount, provider, status } = req.body;
     const { paymentDetailsId } = req.params;
     const updateFields = {id: paymentDetailsId, order_id, amount, provider, status}
@@ -46,11 +46,8 @@ paymentDetailsRouter.patch('/:paymentDetailsId', userLoggedIn, requiredNotSent({
             })
         } else {
                 console.log("Get Order Items to Update:", getPaymentDetails)
-
-                const updatedPaymentDetails= await updatePaymentDetails(updateFields)
-
+                const updatedPaymentDetails= await updatePaymentDetails(paymentDetailsId, updateFields)
                 console.log("Updated Order Items:", updatedPaymentDetails)
-
                 res.send(updatedPaymentDetails)
             }
         } catch (error){
@@ -59,7 +56,7 @@ paymentDetailsRouter.patch('/:paymentDetailsId', userLoggedIn, requiredNotSent({
 })
 
 
-paymentDetailsRouter.delete('/:paymendDetailsId', userLoggedIn, async (req, res, next) => {
+paymentDetailsRouter.delete('/:paymendDetailsId', async (req, res, next) => {
     const { paymendDetailsId } = req.params;
     try {
         const deletePaymentDetails = await destroyPaymentDetails(paymendDetailsId)

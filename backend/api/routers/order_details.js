@@ -11,7 +11,7 @@ const {
 
 } = require ('../../db')
 
-const {userLoggedIn, requiredNotSent} = require('../utils')
+const {userLoggedIn} = require('../utils')
 
 orderDetailsRouter.post("/", async (req, res, next) => {
     const { user_id, payment_id,total } = req.body
@@ -31,8 +31,10 @@ orderDetailsRouter.get("/", async (req, res, next) => {
         next (error)
     }
 })
-orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requiredParams: ["id", "user_id", "total", "payment_id"], atLeastOne: true}), async (req, res, next) => {
-    const { user_id, payment_id,total } = req.body
+
+
+orderDetailsRouter.patch('/:orderDetailsId',  async (req, res, next) => {
+    const { user_id,total, payment_id } = req.body
     const { orderDetailsId } = req.params;
 
     const updateFields = {id: orderDetailsId, user_id, total, payment_id}
@@ -47,11 +49,8 @@ orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requ
             })
         } else {
                 console.log("Get Order Details to Update:", getOrderDetails)
-
-                const updatedOrderDetails= await updateOrderDetails(updateFields)
-
-                console.log("Updated Order Details:", updateOrderDetails)
-                
+                const updatedOrderDetails= await updateOrderDetails(orderDetailsId, updateFields)
+                console.log("Updated Order Details:", updatedOrderDetails)
                 res.send(updatedOrderDetails)
             }
         } catch (error){
@@ -60,7 +59,7 @@ orderDetailsRouter.patch('/:orderDetailsId', userLoggedIn, requiredNotSent({requ
 })
 
 
-orderDetailsRouter.delete('/:orderDetailsId', userLoggedIn, async (req, res, next) => {
+orderDetailsRouter.delete('/:orderDetailsId', async (req, res, next) => {
     const { orderDetailsId } = req.params;
     
     try {

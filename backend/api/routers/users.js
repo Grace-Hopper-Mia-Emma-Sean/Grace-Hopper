@@ -1,8 +1,8 @@
 const express = require("express");
 const usersRouter = express.Router();
 
-const bcrypt = require("bcryptjs");
-// const bcrypt = require("bcrypt");
+// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const { client } = require("../../db/client");
 const jwt = require("jsonwebtoken");
 const { requiredNotSent, userLoggedIn } = require("../utils");
@@ -121,14 +121,14 @@ usersRouter.get("/", async (req, res, next) => {
 });
 
 
-// usersRouter.get("/me", async (req, res, next) => {
-//   try {
-//     console.log(req.user)
-//     res.send(username, token)
-//       } catch ({ name, message }) {
-//         next({ name, message });
-//       }
-// })
+usersRouter.get("/me", async (req, res, next) => {
+  try {
+    console.log(req.user)
+    res.send(username, token)
+      } catch ({ name, message }) {
+        next({ name, message });
+      }
+})
 
 usersRouter.get("/:userId", async (req, res, next) => {
   const user = await getUserById(req.params.userId);

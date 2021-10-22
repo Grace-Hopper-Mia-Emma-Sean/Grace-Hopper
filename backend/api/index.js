@@ -3,7 +3,7 @@ const apiRouter = express.Router();
 
 const jwt = require("jsonwebtoken");
 // TODO: change getUserById import once names are finalized
-// const { getUserById } = require("../db/adapters/users");
+const { getUserById } = require("../db/adapters/users");
 const { JWT_SECRET } = process.env;
 
 // TODO: Tweak / comment back in when ready to use
@@ -47,5 +47,6 @@ apiRouter.use("/shopping-session", require("./routers/shopping_session"));
 apiRouter.use("/user-address", require("./routers/user_address"));
 apiRouter.use("/user_payment", require("./routers/user_payment"));
 apiRouter.use("/users", require("./routers/users"));
+// apiRouter.use("/stripe", require("./routers/stripe"))
 
 module.exports = apiRouter;

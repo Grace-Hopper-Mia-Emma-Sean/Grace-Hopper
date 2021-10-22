@@ -4,7 +4,7 @@ const { client } = require("../client");
 const createOrderItems = async ({ order_id, product_id, quantity }) => {
   try {
     const {
-      rows: orders,
+      rows: [orders],
     } = await client.query(
       `
         INSERT INTO order_items(order_id, product_id, quantity)
@@ -38,8 +38,10 @@ async function getAllOrderItemsById(id) {
     } = await client.query(
       `
             SELECT*
-            FROM order_items;
-            WHERE id=$1;
+            FROM order_items
+            JOIN products ON order_items.product_id=products.id
+            JOIN order_details ON order_items.order_id=order_details.id
+            WHERE order_items.id=$1;
         `,
       [id]
     );

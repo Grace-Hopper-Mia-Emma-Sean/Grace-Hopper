@@ -9,7 +9,7 @@ const {
     createOrderItems
 } = require ('../../db')
 
-const {userLoggedIn, requiredNotSent} = require('../utils')
+const {userLoggedIn} = require('../utils')
 
 orderItemsRouter.post("/", async (req, res, next) => {
     const {order_id, product_id, quantity} = req.body;
@@ -30,32 +30,33 @@ orderItemsRouter.get("/", async (req, res, next) => {
     }
 })
 //userLoggedIn, requiredNotSent({requiredParams: ["id", "order_id", "product_id", "quantity"], atLeastOne: true})
+
 orderItemsRouter.patch('/:orderItemsId', async (req, res, next) => {
-    const {order_id, product_id, quantity} = req.body;
+    const { order_id, product_id, quantity } = req.body;
     const { orderItemsId } = req.params;
-    const updateFields = {id: orderItemsId, order_id, product_id, quantity}
+    const updateFields = { id: orderItemsId, order_id, product_id, quantity }
     
     try {
+
         const getOrderItems =  await getAllOrderItemsById(orderItemsId)
+        console.log("test", getOrderItems)
         if (!getOrderItems) {
             res.status(401)
             next({
                 name: "NoOrderItemsError",
                 message: "No oder item exist to update"
             })
+            
         } else {
-                console.log("Get Order Items to Update:", getOrderItems)
-
-                const updatedOrderItems= await updateOrderItems(updateFields)
-
-                console.log("Updated Order Items:", updatedOrderItems)
-
+                const updatedOrderItems= await updateOrderItems(orderItemsId, updateFields)
+                console.log("test", updatedOrderItems)
                 res.send(updatedOrderItems)
             }
         } catch (error){
             next (error)
         }
 })
+
 //userLoggedIn
 orderItemsRouter.delete('/:orderItemsId', async (req, res, next) => {
     const { orderItemsId } = req.params;
