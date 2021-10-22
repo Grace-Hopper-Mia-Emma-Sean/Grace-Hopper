@@ -2,7 +2,6 @@ const { client } = require("../../db/client");
 const jwt = require("jsonwebtoken");
 
 const authenticate = (req, res, next) => {
-  console.log(req);
   const authHeader = req.headers["authorization"];
   if (authHeader == undefined) return res.sendStatus(403);
   const bearer = authHeader.split(" ");
@@ -25,22 +24,28 @@ const owner = async (req, res, next) => {
     FROM users
     WHERE username='${username}'
   `);
-  const params = req.params.userId || req.params.user_id;
-  if (params !== user.id && user.isAdmin !== true) return res.sendStatus(403);
-  next();
+  res.locals.params = req.params.userId || req.params.user_id;
+  JSON.stringify(user.isAdmin === true) ||
+  res.locals.params === JSON.stringify(req.user.id)
+    ? next()
+    : res.sendStatus(403);
 };
 
 const admin = async (req, res, next) => {
-  const username = res.locals.username;
-  const {
-    rows: [role],
-  } = await client.query(`
+  if (res.locals.params === JSON.stringify(req.user.id)) {
+    next();
+  } else {
+    const username = res.locals.username;
+    const {
+      rows: [role],
+    } = await client.query(`
     SELECT "isAdmin"
     FROM users
     WHERE username='${username}'
   `);
-  if (role.isAdmin !== true) return res.sendStatus(403);
-  next();
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    next();
+  }
 };
 
 const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {

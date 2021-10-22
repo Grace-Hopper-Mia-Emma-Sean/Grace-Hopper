@@ -179,4 +179,13 @@ usersRouter.delete(
   }
 );
 
+usersRouter.get("/:userId", authenticate, admin, async (req, res, next) => {
+  try {
+    console.log(req.user);
+    res.send(username, token);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 module.exports = usersRouter;
