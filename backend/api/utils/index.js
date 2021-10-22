@@ -27,15 +27,14 @@ const owner = async (req, res, next) => {
     WHERE username='${username}'
   `);
   res.locals.params = req.params.userId || req.params.user_id;
-  JSON.stringify(user.isAdmin === true) ||
-  res.locals.params === JSON.stringify(req.user.id)
+  user.isAdmin == true || res.locals.params == req.user.id
     ? next()
     : res.sendStatus(403);
 };
 
 const admin = async (req, res, next) => {
   // console.log("hit admin");
-  if (res.locals.params === JSON.stringify(req.user.id)) {
+  if (res.locals.params == req.user.id) {
     next();
   } else {
     const username = res.locals.username;

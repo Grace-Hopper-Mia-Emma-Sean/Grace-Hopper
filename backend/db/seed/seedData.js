@@ -76,20 +76,22 @@ const createTables = async () => {
     console.log("Starting to build tables...");
     try {
       console.log("creating users");
+      // Removed null reqs for users => if a guest makes a purchase, they'll be added to the user table to ensure we have a user id for other tables to reference
       await client.query(`
         CREATE TABLE users (
           id SERIAL PRIMARY KEY, 
-          username VARCHAR(255) UNIQUE NOT NULL,
-          password VARCHAR(255) NOT NULL,
-          first_name VARCHAR(255) NOT NULL,
-          last_name VARCHAR(255) NOT NULL,
-          telephone VARCHAR(15) NOT NULL,
-          email VARCHAR(255) NOT NULL,
+          username VARCHAR(255) UNIQUE,
+          password VARCHAR(255),
+          first_name VARCHAR(255),
+          last_name VARCHAR(255),
+          telephone VARCHAR(15),
+          email VARCHAR(255),
           "isAdmin" BOOLEAN DEFAULT false
         );
       `);
       try {
         console.log("creating user_address");
+        // Keeping null reqs for addresses => if we don't use Stripe, we'd need to get that info anyways for shipping and payments, etc.
         await client.query(`
               CREATE TABLE user_address (
                 id SERIAL PRIMARY KEY, 
@@ -106,6 +108,7 @@ const createTables = async () => {
             `);
         try {
           console.log("creating shopping_session");
+          // shopping_session is being archived, but it's staying as part of the seed to avoid complications downstream; will entirely remove time permitting after MVP met
           await client.query(`
               CREATE TABLE shopping_session (
                 id SERIAL PRIMARY KEY, 
@@ -164,7 +167,6 @@ const createTables = async () => {
                             status BOOLEAN DEFAULT false
                           );
                         `);
-
                     try {
                       console.log("creating products");
                       await client.query(`
@@ -179,7 +181,6 @@ const createTables = async () => {
                             quantity INTEGER NOT NULL
                           );
                       `);
-
                       try {
                         console.log("creating order_details");
                         await client.query(`
@@ -192,6 +193,7 @@ const createTables = async () => {
                         `);
                         try {
                           console.log("creating cart_items");
+                          // cart_items is being archived, but it's staying as part of the seed to avoid complications downstream; will entirely remove time permitting after MVP met
                           await client.query(`
                             CREATE TABLE cart_items (
                               id SERIAL PRIMARY KEY,
