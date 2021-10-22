@@ -9,7 +9,7 @@ const {
   createOrderItems,
 } = require("../../db");
 
-const { userLoggedIn, requiredNotSent } = require("../utils");
+const {userLoggedIn} = require('../utils')
 
 orderItemsRouter.post("/", async (req, res, next) => {
   const { order_id, product_id, quantity } = req.body;
@@ -34,32 +34,32 @@ orderItemsRouter.get("/", async (req, res, next) => {
   }
 });
 //userLoggedIn, requiredNotSent({requiredParams: ["id", "order_id", "product_id", "quantity"], atLeastOne: true})
-orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
-  const { order_id, product_id, quantity } = req.body;
-  const { orderItemsId } = req.params;
-  const updateFields = { id: orderItemsId, order_id, product_id, quantity };
 
-  try {
-    const getOrderItems = await getAllOrderItemsById(orderItemsId);
-    if (!getOrderItems) {
-      res.status(401);
-      next({
-        name: "NoOrderItemsError",
-        message: "No oder item exist to update",
-      });
-    } else {
-      console.log("Get Order Items to Update:", getOrderItems);
+orderItemsRouter.patch('/:orderItemsId', async (req, res, next) => {
+    const { order_id, product_id, quantity } = req.body;
+    const { orderItemsId } = req.params;
+    const updateFields = { id: orderItemsId, order_id, product_id, quantity }
+    
+    try {
 
-      const updatedOrderItems = await updateOrderItems(updateFields);
-
-      console.log("Updated Order Items:", updatedOrderItems);
-
-      res.send(updatedOrderItems);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+        const getOrderItems =  await getAllOrderItemsById(orderItemsId)
+        console.log("test", getOrderItems)
+        if (!getOrderItems) {
+            res.status(401)
+            next({
+                name: "NoOrderItemsError",
+                message: "No oder item exist to update"
+            })
+            
+        } else {
+                const updatedOrderItems= await updateOrderItems(orderItemsId, updateFields)
+                console.log("test", updatedOrderItems)
+                res.send(updatedOrderItems)
+            }
+        } catch (error){
+            next (error)
+        }
+})
 
 //userLoggedIn
 orderItemsRouter.delete("/:orderItemsId", async (req, res, next) => {

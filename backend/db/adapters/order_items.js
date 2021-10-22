@@ -2,7 +2,9 @@ const { client } = require("../client");
 
 const createOrderItems = async ({ order_id, product_id, quantity }) => {
   try {
-    const { rows: orders } = await client.query(
+    const {
+      rows: [orders],
+    } = await client.query(
       `
         INSERT INTO order_items(order_id, product_id, quantity)
         VALUES ($1, $2, $3)
@@ -35,8 +37,10 @@ async function getAllOrderItemsById(id) {
     } = await client.query(
       `
             SELECT*
-            FROM order_items;
-            WHERE id=$1;
+            FROM order_items
+            JOIN products ON order_items.product_id=products.id
+            JOIN order_details ON order_items.order_id=order_details.id
+            WHERE order_items.id=$1;
         `,
       [id]
     );
@@ -46,7 +50,7 @@ async function getAllOrderItemsById(id) {
   }
 }
 
-async function updateOrderItems(fields) {
+async function updateOrderItems(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
@@ -54,7 +58,7 @@ async function updateOrderItems(fields) {
     return;
   }
 
-  const { id, order_id, product_id, quantity } = fields;
+  const { order_id, product_id, quantity } = fields;
   try {
     const {
       rows: [orders],

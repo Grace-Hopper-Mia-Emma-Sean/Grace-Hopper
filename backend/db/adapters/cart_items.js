@@ -91,10 +91,26 @@ const deleteCartItems = async (id) => {
   }
 };
 
+const deleteProductsFromCarts = async (productId) => {
+  try {
+    const {
+      rows: [cartItems],
+    } = await client.query(`
+      DELETE FROM cart_items
+      WHERE product_id=${productId}
+      RETURNING *;
+    `);
+    return cartItems;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createCartItems,
   getCartItems,
   getCartItemsByUserId,
   updateCartItems,
   deleteCartItems,
+  deleteProductsFromCarts,
 };

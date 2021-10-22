@@ -14,10 +14,14 @@ const getAllUserPayment = async () => {
 
 const getAllUserPaymentById = async (id) =>{
     try {
-        const { rows: [userPayment] } = await client.query(`
+        const { 
+            rows: [userPayment] 
+        } = await client.query(`
+
             SELECT*
-            FROM user_payment;
-            WHERE id=$1;
+            FROM user_payment
+            WHERE user_payment.id=$1;
+
         `, [id])
         return userPayment;
     }catch (error) {
@@ -38,19 +42,19 @@ const createUserPayment = async ({user_id, payment_type, provider, account_no, e
     }
 }
 
-const updateUserPayment = async (fields) => {
-    const setString = Object.keys(fields).map((key, index) => `"${key}"=${index + 1}"`).join(',');
+const updateUserPayment = async (id, fields={}) => {
+    const setString = Object.keys(fields).map((key, index) => `"${key}"=$${index + 1}`).join(',');
     if (setString.length ===0){
         return ;
     }
-    const {id, user_id, payment_type, provider, account_no, expiry } = fields;
+
     try {
         const { rows: [userPayment] } = await client.query(`
             UPDATE user_payment
             SET ${setString}
             WHERE id=${id}
             RETURNING *;
-        `, [id, user_id, payment_type, provider, account_no, expiry])
+        `, Object.values(fields))
         return userPayment;
     }catch (error) {
         throw error;

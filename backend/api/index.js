@@ -15,6 +15,7 @@ apiRouter.use(async (req, res, next) => {
     const token = auth.slice(prefix.length);
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
+      console.log("from index api", id)
       if (id) {
         req.user = await getUserById(id);
         next();
@@ -43,5 +44,6 @@ apiRouter.use("/shopping-session", require("./routers/shopping_session"));
 apiRouter.use("/user-address", require("./routers/user_address"));
 apiRouter.use("/user_payment", require("./routers/user_payment"));
 apiRouter.use("/users", require("./routers/users"));
+// apiRouter.use("/stripe", require("./routers/stripe"))
 
 module.exports = apiRouter;

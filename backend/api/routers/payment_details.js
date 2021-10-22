@@ -9,7 +9,8 @@ const {
   destroyPaymentDetails,
 } = require("../../db");
 
-const { userLoggedIn, requiredNotSent } = require("../utils");
+
+const {userLoggedIn} = require('../utils')
 
 paymentDetailsRouter.post("/", async (req, res, next) => {
   const { order_id, amount, provider, status } = req.body;
@@ -35,51 +36,31 @@ paymentDetailsRouter.get("/", async (req, res, next) => {
   }
 });
 
-paymentDetailsRouter.patch(
-  "/:paymentDetailsId",
-  userLoggedIn,
-  requiredNotSent({
-    requiredParams: ["id, order_id, amount, provider, status"],
-    atLeastOne: true,
-  }),
-  async (req, res, next) => {
+paymentDetailsRouter.patch('/:paymentDetailsId', async (req, res, next) => {
     const { order_id, amount, provider, status } = req.body;
     const { paymentDetailsId } = req.params;
-    const updateFields = {
-      id: paymentDetailsId,
-      order_id,
-      amount,
-      provider,
-      status,
-    };
-
+    const updateFields = {id: paymentDetailsId, order_id, amount, provider, status}
+    
     try {
-      const getPaymentDetails = await getAllPaymentById(paymentDetailsId);
-      if (!getPaymentDetails) {
-        res.status(401);
-        next({
-          name: "NoOrderItemsError",
-          message: "No oder item exist to update",
-        });
-      } else {
-        console.log("Get Order Items to Update:", getPaymentDetails);
+        const getPaymentDetails =  await getAllPaymentById(paymentDetailsId)
+        if (!getPaymentDetails) {
+            res.status(401)
+            next({
+                name: "NoOrderItemsError",
+                message: "No oder item exist to update"
+            })
+        } else {
+                console.log("Get Order Items to Update:", getPaymentDetails)
+                const updatedPaymentDetails= await updatePaymentDetails(paymentDetailsId, updateFields)
+                console.log("Updated Order Items:", updatedPaymentDetails)
+                res.send(updatedPaymentDetails)
+            }
+        } catch (error){
+            next (error)
+        }
+});
 
-        const updatedPaymentDetails = await updatePaymentDetails(updateFields);
-
-        console.log("Updated Order Items:", updatedPaymentDetails);
-
-        res.send(updatedPaymentDetails);
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-paymentDetailsRouter.delete(
-  "/:paymendDetailsId",
-  userLoggedIn,
-  async (req, res, next) => {
+paymentDetailsRouter.delete('/:paymendDetailsId', async (req, res, next) => {
     const { paymendDetailsId } = req.params;
     try {
       const deletePaymentDetails = await destroyPaymentDetails(

@@ -1,4 +1,3 @@
-// user adapters
 const {
   createUser,
   getAllUsers,
@@ -30,22 +29,25 @@ const {
   getCartItemsByUserId,
   updateCartItems,
   deleteCartItems,
+  deleteProductsFromCarts,
 } = require("./adapters/cart_items");
 
-// products adapters
 const {
   createProduct,
-  getAllProductCategories,
   getProductById,
   getAllProducts,
   getProductsByCategoryId,
   updateProduct,
   deleteProduct,
+  updateAllProductCategories,
+  updateAllProductDiscounts,
 } = require("./adapters/products");
 
 const {
   createProductCategory,
   getCategoryById,
+  getAllProductCategories,
+  deleteProductCategory,
 } = require("./adapters/product_category");
 
 const {
@@ -56,9 +58,10 @@ const {
 const {
   createProductDiscount,
   getAllProductDiscounts,
+  getProductDiscountById,
+  deleteProductDiscount,
 } = require("./adapters/product_discount");
 
-// orders adapters
 const {
   getAllOrderDetails,
   getAllOrderDetailsById,
@@ -78,8 +81,6 @@ const {
   deleteOrderItemsByUserId,
 } = require("./adapters/order_items");
 
-// payment adapters
-
 const {
   getAllUserPayment,
   getAllUserPaymentById,
@@ -97,6 +98,14 @@ const {
 } = require("./adapters/payment_details");
 
 module.exports = {
+  canEditOrderItems,
+  createCartItems,
+  createOrderDetails,
+  createOrderItems,
+  createPaymentDetails,
+  createProduct,
+  createProductCategory,
+  createProductDiscount,
   createProductInventory,
   createShoppingSession,
   createUser,
@@ -106,6 +115,9 @@ module.exports = {
   deleteOrderDetailsByUserId,
   deleteOrderItemsByUserId,
   deleteProduct,
+  deleteProductCategory,
+  deleteProductDiscount,
+  deleteProductsFromCarts,
   deleteShoppingSession,
   deleteUser,
   deleteUserAddress,
@@ -132,10 +144,13 @@ module.exports = {
   getCartItemsByUserId,
   getCategoryById,
   getProductById,
+  getProductDiscountById,
   getProductsByCategoryId,
   getShoppingSessionByUserId,
   getUserById,
   getUserByUsername,
+  updateAllProductCategories,
+  updateAllProductDiscounts,
   updateCartItems,
   updateOrderDetails,
   updateOrderItems,
