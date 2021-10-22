@@ -1,35 +1,41 @@
 const express = require("express");
 const userPaymentRouter = express.Router();
 
-const {  
-    createUserPayment,
-    getAllUserPayment,
-    getAllUserPaymentById,
-    updateUserPayment,
-    destroyUserPayment,
-} = require ('../../db');
+const {
+  createUserPayment,
+  getAllUserPayment,
+  getAllUserPaymentById,
+  updateUserPayment,
+  destroyUserPayment,
+} = require("../../db");
 
 
 const {userLoggedIn} = require('../utils')
 
 userPaymentRouter.post("/", async (req, res, next) => {
-    const { id, payment_type, provider, account_no, expiry } = req.body
-    try{
-        const createdUserPayment = await createUserPayment({id, payment_type, provider, account_no, expiry})
-        res.send(createdUserPayment)
-    }catch (error) {
-        next (error )
-    }
-})
+  const { id, payment_type, provider, account_no, expiry } = req.body;
+  try {
+    const createdUserPayment = await createUserPayment({
+      id,
+      payment_type,
+      provider,
+      account_no,
+      expiry,
+    });
+    res.send(createdUserPayment);
+  } catch (error) {
+    next(error);
+  }
+});
 
 userPaymentRouter.get("/", async (req, res, next) => {
-    try {
-        const allUserPayment =  await getAllUserPayment();
-        res.send(allUserPayment)
-    } catch ({name, message}){
-        next ({name, message})
-    }
-})
+  try {
+    const allUserPayment = await getAllUserPayment();
+    res.send(allUserPayment);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 userPaymentRouter.patch('/:userPaymentId', async (req, res, next) => {
     const { user_id, payment_type, provider, account_no, expiry } = req.body;
@@ -56,16 +62,15 @@ userPaymentRouter.patch('/:userPaymentId', async (req, res, next) => {
 })
 
 //userLoggedIn
-userPaymentRouter.delete('/:userPaymentId', async (req, res, next) => {
-    const {userPaymentId} = req.params;
-    
-    try {
-        const deleteUserPayment = await destroyUserPayment(userPaymentId)
-        res.send(deleteUserPayment)
-            
-        } catch ({name, message}){
-            next ({name, message})
-        }
-})
+userPaymentRouter.delete("/:userPaymentId", async (req, res, next) => {
+  const { userPaymentId } = req.params;
+
+  try {
+    const deleteUserPayment = await destroyUserPayment(userPaymentId);
+    res.send(deleteUserPayment);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 module.exports = userPaymentRouter;

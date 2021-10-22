@@ -12,6 +12,7 @@ const createUser = async ({
   first_name,
   last_name,
   telephone,
+  email,
   isAdmin,
 }) => {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
@@ -20,12 +21,20 @@ const createUser = async ({
       rows: [user],
     } = await client.query(
       `
-        INSERT INTO users(username, password, first_name, last_name, telephone, "isAdmin")
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO users(username, password, first_name, last_name, telephone, email, "isAdmin")
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
         ON CONFLICT (username) DO NOTHING
         RETURNING *
     `,
-      [username, hashedPassword, first_name, last_name, telephone, isAdmin]
+      [
+        username,
+        hashedPassword,
+        first_name,
+        last_name,
+        telephone,
+        email,
+        isAdmin,
+      ]
     );
     delete user.password;
     return user;
@@ -37,7 +46,7 @@ const createUser = async ({
 const getAllUsers = async () => {
   try {
     const { rows } = await client.query(`
-      SELECT username, first_name, last_name, telephone, "isAdmin"
+      SELECT username, first_name, last_name, telephone, email, "isAdmin"
       FROM users;
     `);
     return rows;
@@ -52,7 +61,7 @@ const getUserById = async (id) => {
       rows: [user],
     } = await client.query(
       `
-      SELECT username, first_name, last_name, telephone, "isAdmin"
+      SELECT username, first_name, last_name, telephone, email, "isAdmin"
       FROM users
       WHERE id=$1`,
       [id]
@@ -64,7 +73,7 @@ const getUserById = async (id) => {
 };
 
 const getUserByUsername = async (username) => {
-  // only used for login/register
+  // This function returns a user's PW, so we're only using it for for register (check if username exists) and login (check if PW is right), and then the PW is deleted before res.send
   try {
     const {
       rows: [user],
@@ -84,7 +93,6 @@ const getUserByUsername = async (username) => {
 
 const updateUser = async (id, fields = {}) => {
   console.log(`id: ${id}`, `fields: ${fields}`);
-
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
@@ -110,31 +118,6 @@ const updateUser = async (id, fields = {}) => {
   }
 };
 
-// const updateUser = async (id, fields = {}) => {
-//   const setString = Object.keys(fields)
-//     .map((key, index) => `"${key}"=${index + 1}"`)
-//     .join(",");
-//   if (setString.length === 0) return;
-//   // const { id, username, first_name, last_name, telephone, isAdmin } = fields;
-//   try {
-//     const {
-//       rows: [payment],
-//     } = await client.query(
-//       `
-//         UPDATE users
-//         SET ${setString}
-//         WHERE id=${id}
-//         RETURNING *
-//         `,
-//       // [id, username, first_name, last_name, telephone, isAdmin]
-//       Object.values(fields)
-//     );
-//     return payment;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
 const deleteUser = async (id) => {
   try {
     const {
@@ -142,10 +125,9 @@ const deleteUser = async (id) => {
     } = await client.query(
       `
       DELETE FROM users
-      WHERE id=$1
+      WHERE id=${id}
       RETURNING *;
-    `,
-      [id]
+    `
     );
     return user;
   } catch (error) {

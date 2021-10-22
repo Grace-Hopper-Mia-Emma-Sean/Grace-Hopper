@@ -1,6 +1,5 @@
 const { client } = require("../client");
 
-
 const createOrderItems = async ({ order_id, product_id, quantity }) => {
   try {
     const {
@@ -51,24 +50,27 @@ async function getAllOrderItemsById(id) {
   }
 }
 
-async function updateOrderItems(id, fields={} ) {
+async function updateOrderItems(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(',');
+    .join(",");
   if (setString.length === 0) {
     return;
   }
 
+  const { order_id, product_id, quantity } = fields;
   try {
     const {
-      rows: [orders]
+      rows: [orders],
     } = await client.query(
       `
             UPDATE order_items
             SET ${setString}
             WHERE id=${id}
             RETURNING *;
-        `, Object.values(fields));
+        `,
+      [id, order_id, product_id, quantity]
+    );
     return orders;
   } catch (error) {
     throw error;
@@ -93,14 +95,35 @@ async function destroyOrderItems(id) {
   }
 }
 
+const deleteOrderItemsByUserId = async (id) => {
+  // diff than above; don't delete, please; used in deleting users
+  try {
+    const {
+      rows: [orderItems],
+    } = await client.query(`
+      DELETE from order_items
+      USING order_details
+      WHERE order_details.id = order_items.order_id
+      AND order_details.user_id=${id}
+    `);
+    return orderItems;
+  } catch (error) {
+    throw error;
+  }
+};
 
 async function canEditOrderItems(order_id, product_id) {
-  const {rows: [canEditOrderItems] } = await client.query(`
+  const {
+    rows: [canEditOrderItems],
+  } = await client.query(
+    `
     SELECT* FROM order_items
     JOIN order_details ON order_items."order_id"=order_details.id
     JOIN products ON order_items."product_id"=products.id
     AND order_items.order_id = $1, order_items.product_id =$2
-  `,[order_id, product_id]);
+  `,
+    [order_id, product_id]
+  );
   return canEditOrderItems;
 }
 
@@ -110,5 +133,6 @@ module.exports = {
   createOrderItems,
   updateOrderItems,
   destroyOrderItems,
-  canEditOrderItems
+  canEditOrderItems,
+  deleteOrderItemsByUserId,
 };

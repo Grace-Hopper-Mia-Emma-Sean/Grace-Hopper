@@ -2,55 +2,145 @@ const express = require("express");
 const shoppingSessionRouter = express.Router();
 
 const {
-  createUserShoppingSession,
-  getAllUserShoppingSessions,
+  createShoppingSession,
+  getAllShoppingSessions,
   getUserById,
-  getUserShoppingSessionById,
-  updateUserShoppingSession,
-  deleteUserShoppingSession,
+  getShoppingSessionByUserId,
+  updateShoppingSession,
+  deleteShoppingSession,
 } = require("../../db");
 
-/**
- *
- * DONE: createUserShoppingSession
- * DONE: getAllUserShoppingSessions
- * DONE: deleteUserShoppingSession
- *
- * TODO: getUserShoppingSessionById => if we include that... then would be called in updateUserShoppingSession?
- * TODO: updateUserShoppingSession
- *
- */
+const { authenticate, owner, admin } = require("../utils");
 
-shoppingSessionRouter.post("/", async (req, res, next) => {
-  const { user_id, total } = req.body;
+shoppingSessionRouter.post(
+  "/:userId",
+  authenticate,
+  owner,
+  admin,
+  async (req, res, next) => {
+    const role = await getUserById(req.user.id);
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    try {
+      const user = await getUserById(req.params.userId);
+      if (!user)
+        return res.status(404).send({
+          name: "NoUserError",
+          message: `No user exists with id ${req.params.userId}`,
+        });
+      const existingSession = await getShoppingSessionByUserId(
+        req.params.userId
+      );
+      if (existingSession)
+        return res.status(401).send({
+          name: "ShoppingSessionExistsError",
+          message: `User with id ${req.params.userId} already has a shopping session`,
+        });
+      const shoppingSession = await createShoppingSession({
+        user_id: req.params.userId,
+        total: req.body.total,
+      });
+      res.send({
+        message: `shopping session created successfully for user id ${req.params.userId}`,
+        shoppingSession: shoppingSession,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+shoppingSessionRouter.get("/", authenticate, admin, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
-    const shoppingSession = await createUserShoppingSession({ user_id, total });
+    const shoppingSession = await getAllShoppingSessions();
     res.send(shoppingSession);
   } catch (error) {
     next(error);
   }
 });
 
-shoppingSessionRouter.get("/", async (req, res, next) => {
-  try {
-    const shoppingSession = await getAllUserShoppingSessions();
-    res.send(shoppingSession);
-  } catch (error) {
-    next(error);
+shoppingSessionRouter.get(
+  "/:user_id",
+  authenticate,
+  owner,
+  admin,
+  async (req, res, next) => {
+    const role = await getUserById(req.user.id);
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    try {
+      const shoppingSession = await getShoppingSessionByUserId(
+        req.params.user_id
+      );
+      console.log(shoppingSession);
+      res.send(shoppingSession);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-shoppingSessionRouter.patch("/", async (req, res, next) => {});
+shoppingSessionRouter.put(
+  "/:user_id",
+  authenticate,
+  owner,
+  admin,
+  async (req, res, next) => {
+    const role = await getUserById(req.user.id);
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    try {
+      const session = await getShoppingSessionByUserId(req.params.user_id);
+      if (!session)
+        return res.status(404).send({
+          name: "NoShoppingSessionError",
+          message: `No shopping session exists for user with id ${req.params.user_id}`,
+        });
+      const updateFields = {
+        id: session.id,
+        user_id: session.user_id,
+        total: req.body.total,
+      };
+      if (JSON.stringify(session) === JSON.stringify(updateFields))
+        return res.status(404).send({
+          name: "NoUpdatesError",
+          message: "No items for this entry are being updated",
+        });
+      const sessionChanges = await updateShoppingSession(
+        req.params.user_id,
+        updateFields
+      );
+      res.status(200).send({
+        message: "shopping session was updated successfully",
+        sessionChanges: sessionChanges,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-shoppingSessionRouter.delete("/:shoppingSessionId", async (req, res, next) => {
-  const { shoppingSessionId } = req.params;
-  if (!shoppingSessionId)
-    return res.status(404).send({
-      name: "NoShoppingSessionError",
-      message: `No shopping exists with id ${req.params}`,
-    });
-  const shoppingSession = await deleteUserShoppingSession(req.params);
-  res.send(shoppingSession);
-});
+shoppingSessionRouter.delete(
+  "/:user_id",
+  authenticate,
+  owner,
+  admin,
+  async (req, res, next) => {
+    const role = await getUserById(req.user.id);
+    if (role.isAdmin !== true) return res.sendStatus(403);
+    try {
+      const session = await getShoppingSessionByUserId(req.params.user_id);
+      console.log(session);
+      if (!session)
+        return res.status(404).send({
+          name: "NoShoppingSessionError",
+          message: `No shopping session exists for user with id ${req.params.user_id}`,
+        });
+      const deleteSession = await deleteShoppingSession(req.params.user_id);
+      res.send(deleteSession);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = shoppingSessionRouter;

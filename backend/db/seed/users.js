@@ -1,8 +1,8 @@
 const {
   createUser,
   createUserAddress,
-  createUserShoppingSession,
-  createUserCartItems,
+  createShoppingSession,
+  createCartItems,
 } = require("..");
 
 const createInitialUsers = async () => {
@@ -16,6 +16,7 @@ const createInitialUsers = async () => {
         first_name: "Haru",
         last_name: "Aoi",
         telephone: "1234567890",
+        email: "haruaoi.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -24,6 +25,7 @@ const createInitialUsers = async () => {
         first_name: "Haru",
         last_name: "Estarriol",
         telephone: "2345678901",
+        email: "haruestarriol.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -32,6 +34,7 @@ const createInitialUsers = async () => {
         first_name: "Erin",
         last_name: "Loirratse",
         telephone: "3456789012",
+        email: "erinloirratse.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -40,6 +43,7 @@ const createInitialUsers = async () => {
         first_name: "Ember",
         last_name: "Elise",
         telephone: "4567890123",
+        email: "emberelise.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -48,6 +52,7 @@ const createInitialUsers = async () => {
         first_name: "Eisha",
         last_name: "Elise",
         telephone: "5678901234",
+        email: "eishaelise.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -56,6 +61,7 @@ const createInitialUsers = async () => {
         first_name: "Emma",
         last_name: "Loirratse",
         telephone: "6789012345",
+        email: "emmaloirratse.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -64,6 +70,7 @@ const createInitialUsers = async () => {
         first_name: "Nia",
         last_name: "Akemi",
         telephone: "8901234567",
+        email: "niaakemi.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -72,6 +79,7 @@ const createInitialUsers = async () => {
         first_name: "Miku",
         last_name: "Akemi",
         telephone: "9012345678",
+        email: "mikuakemi.fakeemail@gmail.com",
         isAdmin: false,
       },
       {
@@ -80,6 +88,7 @@ const createInitialUsers = async () => {
         first_name: "Emma",
         last_name: "Elise",
         telephone: "9876543210",
+        email: "emmaelise.fakeemail@gmail.com",
         isAdmin: true,
       },
       {
@@ -88,6 +97,7 @@ const createInitialUsers = async () => {
         first_name: "Mia",
         last_name: "Dao",
         telephone: "8765432109",
+        email: "miadao.fakeemail@gmail.com",
         isAdmin: true,
       },
       {
@@ -96,6 +106,7 @@ const createInitialUsers = async () => {
         first_name: "Sean",
         last_name: "Conte",
         telephone: "7654321098",
+        email: "seanconte.fakeemail@gmail.com",
         isAdmin: true,
       },
     ];
@@ -260,7 +271,7 @@ const createInitialShoppingSession = async () => {
       { user_id: 5, total: 50.33 },
     ];
     const shoppingSession = await Promise.all(
-      shoppingSessionToCreate.map(createUserShoppingSession)
+      shoppingSessionToCreate.map(createShoppingSession)
     );
     console.log("Shopping sessions created: ");
     console.log(shoppingSession);
@@ -282,9 +293,7 @@ const createInitialCartItems = async () => {
       { session_id: 7, product_id: 10, quantity: 2 },
     ];
     // TODO: complete try block . . .
-    const cartItems = await Promise.all(
-      cartItemsToCreate.map(createUserCartItems)
-    );
+    const cartItems = await Promise.all(cartItemsToCreate.map(createCartItems));
     console.log("Cart items created: ");
     console.log(cartItems);
     console.log("Finished creating cart items");

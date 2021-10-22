@@ -17,8 +17,27 @@ const {
 } = require("./products");
 
 const {
-  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts
+<<<<<<< HEAD
+  updateProduct,
+  getProductById,
+  deleteProduct,
+  createProduct,
+  getAllProducts,
+} = require("../adapters/products");
+=======
+  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts, updateAllProductDiscounts
 } = require('../adapters/products')
+>>>>>>> d46e72635b1a4ac532c552ebc0cad14dae94901e
+
+const {
+  getAllProductDiscounts,
+  deleteProductDiscount
+} = require('../adapters/product_discount')
+
+const { 
+  deleteProductCategory, 
+  getAllProductCategories 
+} = require("../adapters/product_category");
 
 // orders seed
 const {
@@ -31,6 +50,7 @@ const {
   createInitialUserPayment,
   createInitialPaymentDetails,
 } = require("./payments");
+
 
 const dropTables = async () => {
   try {
@@ -69,6 +89,7 @@ const createTables = async () => {
           first_name VARCHAR(255) NOT NULL,
           last_name VARCHAR(255) NOT NULL,
           telephone VARCHAR(15) NOT NULL,
+          email VARCHAR(255) NOT NULL,
           "isAdmin" BOOLEAN DEFAULT false
         );
       `);
@@ -94,7 +115,7 @@ const createTables = async () => {
               CREATE TABLE shopping_session (
                 id SERIAL PRIMARY KEY, 
                 user_id INTEGER REFERENCES users(id),
-                total DECIMAL(19,4) NOT NULL
+                total DECIMAL(19,2)
               ); 
             `);
           try {
@@ -143,7 +164,7 @@ const createTables = async () => {
                           CREATE TABLE payment_details (
                             id SERIAL PRIMARY KEY, 
                             order_id INTEGER CHECK (order_id>0),
-                            amount DECIMAL(19,4) CHECK (amount>0),
+                            amount DECIMAL(19,2) CHECK (amount>0),
                             provider VARCHAR(255),
                             status BOOLEAN DEFAULT false
                           );
@@ -158,7 +179,7 @@ const createTables = async () => {
                             description VARCHAR(255) NOT NULL,
                             SKU INTEGER NOT NULL,
                             category_id INTEGER REFERENCES product_category(id),
-                            price INTEGER NOT NULL,
+                            price DECIMAL(19,2) NOT NULL,
                             discount_id INTEGER REFERENCES product_discount(id),
                             quantity INTEGER NOT NULL
                           );
@@ -170,7 +191,7 @@ const createTables = async () => {
                           CREATE TABLE order_details (
                             id SERIAL PRIMARY KEY,
                             "user_id" INTEGER REFERENCES users(id),
-                            total DECIMAL(19,4) CHECK (total>0),
+                            total DECIMAL(19,2) CHECK (total>0),
                             "payment_id" INTEGER REFERENCES payment_details(id)
                             );
                         `);
@@ -260,42 +281,57 @@ const rebuildDB = async () => {
 };
 
 const testDB = async () => {
-  try{
-    console.log('Calling updateProduct on id 1')
+  try {
+    console.log("Calling updateProduct on id 1");
     const updatedProduct = await updateProduct(1, {
-        name: "The Apple M1 Chip (Recently Updated!)",
-        description: "Fast, reliable, and cutting-edge",
-        sku: "11111111",
-        category_id: "2",
-        price: "750",
-        discount_id: "2",
-        quantity: "30",
-    })
-    console.log("Result:", updatedProduct)
+      name: "The Apple M1 Chip (Recently Updated!)",
+      description: "Fast, reliable, and cutting-edge",
+      sku: "11111111",
+      category_id: "2",
+      price: "749.99",
+      discount_id: "2",
+      quantity: "30",
+    });
+    console.log("Result:", updatedProduct);
 
-    console.log('Calling createProduct')
+    console.log("Calling createProduct");
     const newProduct = await createProduct({
-        name: "Apple M2 Chip",
-        description: "The thinking man's processor",
-        SKU: "12121212",
-        category_id: "1",
-        price: "700",
-        discount_id: "1",
-        quantity: "50",
-    })
-    console.log("Result:", newProduct)
+      name: "Apple M2 Chip",
+      description: "The thinking man's processor",
+      SKU: "12121212",
+      category_id: "1",
+      price: "700",
+      discount_id: "1",
+      quantity: "50",
+    });
+    console.log("Result:", newProduct);
 
-    console.log('Calling deleteProduct on id 11')
-    const deletedProduct = await deleteProduct(11)
-    console.log("Result:", deletedProduct)
+    console.log("Calling deleteProduct on id 11");
+    const deletedProduct = await deleteProduct(11);
+    console.log("Result:", deletedProduct);
 
+<<<<<<< HEAD
+    console.log("Calling getAllProducts");
+    const products = await getAllProducts();
+    console.log("Result:", products);
+  } catch (error) {
+    console.log("Error during testDB");
+    throw error;
+=======
     console.log('Calling getAllProducts')
     const products = await getAllProducts()
     console.log("Result:", products)
+
+    // console.log('Calling delete product discount on discount 1')
+    // const newDiscounts = await updateAllProductDiscounts(1)
+    // const  discount = await deleteProductDiscount(1)
+    // console.log("Discounts now are:", await getAllProductDiscounts())
+
   } catch (error){
     console.log('Error during testDB')
     throw error
+>>>>>>> d46e72635b1a4ac532c552ebc0cad14dae94901e
   }
-}
+};
 
 module.exports = { rebuildDB, testDB };

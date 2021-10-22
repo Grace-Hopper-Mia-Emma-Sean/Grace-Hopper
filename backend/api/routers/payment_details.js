@@ -1,35 +1,40 @@
 const express = require("express");
 const paymentDetailsRouter = express.Router();
 
-const { 
-    getAllPaymentDetails,
-    createPaymentDetails,
-    getAllPaymentById,
-    updatePaymentDetails,
-    destroyPaymentDetails,
-} = require ('../../db');
+const {
+  getAllPaymentDetails,
+  createPaymentDetails,
+  getAllPaymentById,
+  updatePaymentDetails,
+  destroyPaymentDetails,
+} = require("../../db");
 
 
 const {userLoggedIn} = require('../utils')
 
 paymentDetailsRouter.post("/", async (req, res, next) => {
-    const {order_id, amount, provider, status} = req.body
-    try{
-        const createdPaymentDetails = await createPaymentDetails({order_id, amount, provider, status})
-            res.send(createdPaymentDetails)
-    }catch (error) {
-        next (error )
-    }
-})
+  const { order_id, amount, provider, status } = req.body;
+  try {
+    const createdPaymentDetails = await createPaymentDetails({
+      order_id,
+      amount,
+      provider,
+      status,
+    });
+    res.send(createdPaymentDetails);
+  } catch (error) {
+    next(error);
+  }
+});
 
 paymentDetailsRouter.get("/", async (req, res, next) => {
-    try {
-        const allPaymentDetails =  await getAllPaymentDetails();
-        res.send(allPaymentDetails)
-    } catch (error) {
-        next (error)
-    }
-})
+  try {
+    const allPaymentDetails = await getAllPaymentDetails();
+    res.send(allPaymentDetails);
+  } catch (error) {
+    next(error);
+  }
+});
 
 paymentDetailsRouter.patch('/:paymentDetailsId', async (req, res, next) => {
     const { order_id, amount, provider, status } = req.body;
@@ -53,18 +58,19 @@ paymentDetailsRouter.patch('/:paymentDetailsId', async (req, res, next) => {
         } catch (error){
             next (error)
         }
-})
-
+});
 
 paymentDetailsRouter.delete('/:paymendDetailsId', async (req, res, next) => {
     const { paymendDetailsId } = req.params;
     try {
-        const deletePaymentDetails = await destroyPaymentDetails(paymendDetailsId)
-        res.send(deletePaymentDetails)
-            
-        } catch ({name, message}){
-            next ({name, message})
-        }
-})
+      const deletePaymentDetails = await destroyPaymentDetails(
+        paymendDetailsId
+      );
+      res.send(deletePaymentDetails);
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  }
+);
 
 module.exports = paymentDetailsRouter;

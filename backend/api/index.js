@@ -1,12 +1,11 @@
 const express = require("express");
 const apiRouter = express.Router();
 
-const jwt = require("jsonwebtoken");
-// TODO: change getUserById import once names are finalized
 const { getUserById } = require("../db/adapters/users");
+
+const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 
-// TODO: Tweak / comment back in when ready to use
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";
   const auth = req.header("Authorization");
@@ -32,16 +31,14 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-// TODO: Change routes once we're ready
 apiRouter.use("/health", require("./utils/health"));
-// ! Commented out until there's routers for the following modules:
 apiRouter.use("/cart-items", require("./routers/cart_items"));
 apiRouter.use("/order_details", require("./routers/order_details"));
 apiRouter.use("/order_items", require("./routers/order_items"));
 apiRouter.use("/payment_details", require("./routers/payment_details"));
 apiRouter.use("/product_category", require("./routers/product_category"));
 apiRouter.use("/product_discount", require("./routers/product_discount"));
-// apiRouter.use("/product-inventory", require("./routers/product_inventory"));
+apiRouter.use("/product-inventory", require("./routers/product_inventory"));
 apiRouter.use("/products", require("./routers/products"));
 apiRouter.use("/shopping-session", require("./routers/shopping_session"));
 apiRouter.use("/user-address", require("./routers/user_address"));

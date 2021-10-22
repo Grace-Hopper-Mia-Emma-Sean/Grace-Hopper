@@ -1,27 +1,30 @@
 const express = require("express");
 const orderDetailsRouter = express.Router();
 
-const {   
-    getAllOrderDetailsById,
-    destroyOrderDetails,
-    updateOrderDetails,
-    getAllOrderDetails,
-    createOrderDetails,
-    
+const {
+  getAllOrderDetailsById,
+  destroyOrderDetails,
+  updateOrderDetails,
+  getAllOrderDetails,
+  createOrderDetails,
+} = require("../../db");
 
-} = require ('../../db')
 
 const {userLoggedIn} = require('../utils')
 
 orderDetailsRouter.post("/", async (req, res, next) => {
-    const { user_id, payment_id,total } = req.body
-    try{
-        const createdOrderDetails = await createOrderDetails({user_id, payment_id, total})
-            res.send(createdOrderDetails)
-    }catch (error) {
-        next (error )
-    }
-})
+  const { user_id, payment_id, total } = req.body;
+  try {
+    const createdOrderDetails = await createOrderDetails({
+      user_id,
+      payment_id,
+      total,
+    });
+    res.send(createdOrderDetails);
+  } catch (error) {
+    next(error);
+  }
+});
 
 orderDetailsRouter.get("/", async (req, res, next) => {
     try {
@@ -37,8 +40,8 @@ orderDetailsRouter.patch('/:orderDetailsId',  async (req, res, next) => {
     const { user_id,total, payment_id } = req.body
     const { orderDetailsId } = req.params;
 
-    const updateFields = {id: orderDetailsId, user_id, total, payment_id}
-    
+    const updateFields = { id: orderDetailsId, user_id, total, payment_id };
+
     try {
         const getOrderDetails =  await getAllOrderDetailsById(orderDetailsId)
         if (!getOrderDetails) {
@@ -56,8 +59,8 @@ orderDetailsRouter.patch('/:orderDetailsId',  async (req, res, next) => {
         } catch (error){
             next (error)
         }
-})
-
+    }
+);
 
 orderDetailsRouter.delete('/:orderDetailsId', async (req, res, next) => {
     const { orderDetailsId } = req.params;
