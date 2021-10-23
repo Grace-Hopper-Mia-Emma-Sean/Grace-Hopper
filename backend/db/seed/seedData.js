@@ -17,26 +17,22 @@ const {
 } = require("./products");
 
 const {
-<<<<<<< HEAD
   updateProduct,
   getProductById,
   deleteProduct,
   createProduct,
   getAllProducts,
+  updateAllProductDiscounts,
 } = require("../adapters/products");
-=======
-  updateProduct, getProductById, deleteProduct, createProduct, getAllProducts, updateAllProductDiscounts
-} = require('../adapters/products')
->>>>>>> d46e72635b1a4ac532c552ebc0cad14dae94901e
 
 const {
   getAllProductDiscounts,
-  deleteProductDiscount
-} = require('../adapters/product_discount')
+  deleteProductDiscount,
+} = require("../adapters/product_discount");
 
-const { 
-  deleteProductCategory, 
-  getAllProductCategories 
+const {
+  deleteProductCategory,
+  getAllProductCategories,
 } = require("../adapters/product_category");
 
 // orders seed
@@ -50,7 +46,6 @@ const {
   createInitialUserPayment,
   createInitialPaymentDetails,
 } = require("./payments");
-
 
 const dropTables = async () => {
   try {
@@ -81,20 +76,22 @@ const createTables = async () => {
     console.log("Starting to build tables...");
     try {
       console.log("creating users");
+      // Removed null reqs for users => if a guest makes a purchase, they'll be added to the user table to ensure we have a user id for other tables to reference
       await client.query(`
         CREATE TABLE users (
           id SERIAL PRIMARY KEY, 
-          username VARCHAR(255) UNIQUE NOT NULL,
-          password VARCHAR(255) NOT NULL,
-          first_name VARCHAR(255) NOT NULL,
-          last_name VARCHAR(255) NOT NULL,
-          telephone VARCHAR(15) NOT NULL,
-          email VARCHAR(255) NOT NULL,
+          username VARCHAR(255) UNIQUE,
+          password VARCHAR(255),
+          first_name VARCHAR(255),
+          last_name VARCHAR(255),
+          telephone VARCHAR(15),
+          email VARCHAR(255),
           "isAdmin" BOOLEAN DEFAULT false
         );
       `);
       try {
         console.log("creating user_address");
+        // Keeping null reqs for addresses => if we don't use Stripe, we'd need to get that info anyways for shipping and payments, etc.
         await client.query(`
               CREATE TABLE user_address (
                 id SERIAL PRIMARY KEY, 
@@ -111,6 +108,7 @@ const createTables = async () => {
             `);
         try {
           console.log("creating shopping_session");
+          // shopping_session is being archived, but it's staying as part of the seed to avoid complications downstream; will entirely remove time permitting after MVP met
           await client.query(`
               CREATE TABLE shopping_session (
                 id SERIAL PRIMARY KEY, 
@@ -169,7 +167,6 @@ const createTables = async () => {
                             status BOOLEAN DEFAULT false
                           );
                         `);
-
                     try {
                       console.log("creating products");
                       await client.query(`
@@ -184,7 +181,6 @@ const createTables = async () => {
                             quantity INTEGER NOT NULL
                           );
                       `);
-
                       try {
                         console.log("creating order_details");
                         await client.query(`
@@ -197,6 +193,7 @@ const createTables = async () => {
                         `);
                         try {
                           console.log("creating cart_items");
+                          // cart_items is being archived, but it's staying as part of the seed to avoid complications downstream; will entirely remove time permitting after MVP met
                           await client.query(`
                             CREATE TABLE cart_items (
                               id SERIAL PRIMARY KEY,
@@ -310,27 +307,12 @@ const testDB = async () => {
     const deletedProduct = await deleteProduct(11);
     console.log("Result:", deletedProduct);
 
-<<<<<<< HEAD
     console.log("Calling getAllProducts");
     const products = await getAllProducts();
     console.log("Result:", products);
   } catch (error) {
     console.log("Error during testDB");
     throw error;
-=======
-    console.log('Calling getAllProducts')
-    const products = await getAllProducts()
-    console.log("Result:", products)
-
-    // console.log('Calling delete product discount on discount 1')
-    // const newDiscounts = await updateAllProductDiscounts(1)
-    // const  discount = await deleteProductDiscount(1)
-    // console.log("Discounts now are:", await getAllProductDiscounts())
-
-  } catch (error){
-    console.log('Error during testDB')
-    throw error
->>>>>>> d46e72635b1a4ac532c552ebc0cad14dae94901e
   }
 };
 

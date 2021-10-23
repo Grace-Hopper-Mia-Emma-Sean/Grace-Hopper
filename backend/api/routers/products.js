@@ -11,8 +11,6 @@ const {
   deleteProductsFromCarts,
 } = require("../../db");
 
-const { client } = require("../../db/client");
-
 productsRouter.get("/", async (req, res, next) => {
   try {
     const products = await getAllProducts();
@@ -76,29 +74,18 @@ productsRouter.patch("/:productId", async (req, res, next) => {
 
     const updateFields = {};
 
-    if (name) {
-      updateFields.name = name;
-    }
+    if (name) updateFields.name = name;
 
-    if (description) {
-      updateFields.description = description;
-    }
+    if (description) updateFields.description = description;
 
-    if (category_id) {
-      updateFields.category_id = category_id;
-    }
+    if (category_id) updateFields.category_id = category_id;
 
-    if (price) {
-      updateFields.price = price;
-    }
+    if (price) updateFields.price = price;
 
-    if (discount_id) {
-      updateFields.discount_id = discount_id;
-    }
+    if (discount_id) updateFields.discount_id = discount_id;
 
-    if (quantity) {
-      updateFields.quantity = quantity;
-    }
+    if (quantity) updateFields.quantity = quantity;
+
     const updatedProduct = await updateProduct(productId, {
       name,
       description,

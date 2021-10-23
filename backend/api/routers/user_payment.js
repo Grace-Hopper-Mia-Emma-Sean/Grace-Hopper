@@ -37,29 +37,39 @@ userPaymentRouter.get("/", async (req, res, next) => {
   }
 });
 
-userPaymentRouter.patch('/:userPaymentId', async (req, res, next) => {
-    const { user_id, payment_type, provider, account_no, expiry } = req.body;
-    const { userPaymentId } = req.params;
-    const updateFields = {id:userPaymentId, user_id, payment_type, provider, account_no, expiry}
-    
-    try {
-        const getUserPayment =  await getAllUserPaymentById(userPaymentId)
-        if (!getUserPayment) {
-            res.status(401)
-            next({
-                name: "NoOrderItemsError",
-                message: "No oder item exist to update"
-            })
-        } else {
-                console.log("Get Order Items to Update:", getUserPayment)
-                const updatedUserPayment= await updateUserPayment(userPaymentId, updateFields)
-                console.log("Updated Order Items:", updatedUserPayment)
-                res.send(updatedUserPayment)
-            }
-        } catch (error){
-            next (error)
-        }
-})
+userPaymentRouter.patch("/:userPaymentId", async (req, res, next) => {
+  const { user_id, payment_type, provider, account_no, expiry } = req.body;
+  const { userPaymentId } = req.params;
+  const updateFields = {
+    id: userPaymentId,
+    user_id,
+    payment_type,
+    provider,
+    account_no,
+    expiry,
+  };
+
+  try {
+    const getUserPayment = await getAllUserPaymentById(userPaymentId);
+    if (!getUserPayment) {
+      res.status(401);
+      next({
+        name: "NoOrderItemsError",
+        message: "No oder item exist to update",
+      });
+    } else {
+      console.log("Get Order Items to Update:", getUserPayment);
+      const updatedUserPayment = await updateUserPayment(
+        userPaymentId,
+        updateFields
+      );
+      console.log("Updated Order Items:", updatedUserPayment);
+      res.send(updatedUserPayment);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 //userLoggedIn
 userPaymentRouter.delete("/:userPaymentId", async (req, res, next) => {

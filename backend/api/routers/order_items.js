@@ -35,31 +35,32 @@ orderItemsRouter.get("/", async (req, res, next) => {
 });
 //userLoggedIn, requiredNotSent({requiredParams: ["id", "order_id", "product_id", "quantity"], atLeastOne: true})
 
-orderItemsRouter.patch('/:orderItemsId', async (req, res, next) => {
-    const { order_id, product_id, quantity } = req.body;
-    const { orderItemsId } = req.params;
-    const updateFields = { id: orderItemsId, order_id, product_id, quantity }
-    
-    try {
+orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
+  const { order_id, product_id, quantity } = req.body;
+  const { orderItemsId } = req.params;
+  const updateFields = { id: orderItemsId, order_id, product_id, quantity };
 
-        const getOrderItems =  await getAllOrderItemsById(orderItemsId)
-        console.log("test", getOrderItems)
-        if (!getOrderItems) {
-            res.status(401)
-            next({
-                name: "NoOrderItemsError",
-                message: "No oder item exist to update"
-            })
-            
-        } else {
-                const updatedOrderItems= await updateOrderItems(orderItemsId, updateFields)
-                console.log("test", updatedOrderItems)
-                res.send(updatedOrderItems)
-            }
-        } catch (error){
-            next (error)
-        }
-})
+  try {
+    const getOrderItems = await getAllOrderItemsById(orderItemsId);
+    console.log("test", getOrderItems);
+    if (!getOrderItems) {
+      res.status(401);
+      next({
+        name: "NoOrderItemsError",
+        message: "No oder item exist to update",
+      });
+    } else {
+      const updatedOrderItems = await updateOrderItems(
+        orderItemsId,
+        updateFields
+      );
+      console.log("test", updatedOrderItems);
+      res.send(updatedOrderItems);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 //userLoggedIn
 orderItemsRouter.delete("/:orderItemsId", async (req, res, next) => {
