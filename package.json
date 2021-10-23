@@ -4,9 +4,9 @@
   "description": "Fullstack Web Development Grace Hopper Capstone Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "api": "cd backend && nodemon /backend/index.js -L",
-    "seed": "cd backend && node /backend/db/seed/seed.js"
+    "seed": "cd backend && node /backend/db/seed/seed.js",
+    "start": "cd backend && nodemon /backend/index.js -L"
   },
   "repository": {
     "type": "git",
