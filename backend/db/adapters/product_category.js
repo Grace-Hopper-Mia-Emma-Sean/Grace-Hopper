@@ -38,6 +38,27 @@ const getCategoryById = async(id) => {
     }
 }
 
+const updateCategory = async(id, fields ={}) => {
+    const setString = Object.keys(fields).map(
+        (key, index) => `"${key}"=$${ index + 1 }`
+    ).join(', ')
+
+    if (setString.length === 0){
+        return;
+    }
+    try {
+        const {rows: [product]} = await client.query(`
+            UPDATE product_category
+            SET ${setString}
+            WHERE id=${id}
+            RETURNING *;
+        `, Object.values(fields))
+        return product;
+    } catch (error) {
+        throw (error)
+    }
+}
+
 const deleteProductCategory = async(categoryId)=>{
     try {
         const {rows: [category]} = await client.query(`
@@ -54,5 +75,6 @@ module.exports = {
     createProductCategory,
     getAllProductCategories,
     getCategoryById,
-    deleteProductCategory,
+    updateCategory,
+    deleteProductCategory
 }

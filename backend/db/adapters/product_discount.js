@@ -46,7 +46,26 @@ const getProductDiscountById = async (discountId) => {
   } catch (error){
     throw error
   }
-    
+}
+
+const updateProductDiscount = async (id, fields={}) => {
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${key}"=$${ index + 1 }`
+    ).join(', ')
+  if (setString.length === 0){
+      return;
+  }
+  try {
+      const {rows: [discount]} = await client.query(`
+          UPDATE product_discount
+          SET ${setString}
+          WHERE id=${id}
+          RETURNING *;
+      `, Object.values(fields))
+      return discount;
+  } catch (error) {
+      throw (error)
+  }
 }
 
 const deleteProductDiscount = async (discountId) => {
@@ -65,5 +84,6 @@ module.exports = {
   createProductDiscount,
   getAllProductDiscounts,
   getProductDiscountById,
+  updateProductDiscount,
   deleteProductDiscount
 };
