@@ -60,20 +60,8 @@ paymentDetailsRouter.patch('/:paymentDetailsId', authenticate, admin, async (req
         }
 });
 
-paymentDetailsRouter.delete('/:paymendDetailsId', authenticate, admin, async (req, res, next) => {
-    const { paymendDetailsId } = req.params;
-    try {
-      const deletePaymentDetails = await destroyPaymentDetails(
-        paymendDetailsId
-      );
-      console.log("Updated Order Items:", updatedPaymentDetails);
-      res.send(updatedPaymentDetails);
-    } catch (error) {
-      next(error);
-  }
-});
 
-paymentDetailsRouter.delete("/:paymendDetailsId", async (req, res, next) => {
+paymentDetailsRouter.delete("/:paymendDetailsId", authenticate, admin, async (req, res, next) => {
   const { paymendDetailsId } = req.params;
   try {
     const deletePaymentDetails = await destroyPaymentDetails(paymendDetailsId);

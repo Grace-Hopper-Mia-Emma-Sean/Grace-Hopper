@@ -10,9 +10,9 @@ const {
 } = require("../../db");
 
 
-const {authenticate, owner, admin} = require('../utils')
+const {authenticate, admin} = require('../utils')
 
-userPaymentRouter.post("/", async (req, res, next) => {
+userPaymentRouter.post("/", authenticate, admin, async (req, res, next) => {
   const { id, payment_type, provider, account_no, expiry } = req.body;
   try {
     const createdUserPayment = await createUserPayment({
@@ -28,7 +28,7 @@ userPaymentRouter.post("/", async (req, res, next) => {
   }
 });
 
-userPaymentRouter.get("/", async (req, res, next) => {
+userPaymentRouter.get("/", authenticate, admin, async (req, res, next) => {
   try {
     const allUserPayment = await getAllUserPayment();
     res.send(allUserPayment);
@@ -37,7 +37,7 @@ userPaymentRouter.get("/", async (req, res, next) => {
   }
 });
 
-userPaymentRouter.patch("/:userPaymentId", async (req, res, next) => {
+userPaymentRouter.patch("/:userPaymentId", authenticate, admin, async (req, res, next) => {
   const { user_id, payment_type, provider, account_no, expiry } = req.body;
   const { userPaymentId } = req.params;
   const updateFields = {
@@ -72,7 +72,7 @@ userPaymentRouter.patch("/:userPaymentId", async (req, res, next) => {
 });
 
 //userLoggedIn
-userPaymentRouter.delete("/:userPaymentId", async (req, res, next) => {
+userPaymentRouter.delete("/:userPaymentId", authenticate, admin, async (req, res, next) => {
   const { userPaymentId } = req.params;
 
   try {
