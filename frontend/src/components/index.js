@@ -1,5 +1,5 @@
-export { Login } from "./user/Login";
+export { Login } from "./users/Login";
 export { Navbar } from "./misc/Navbar";
 export { NotFound } from "./misc/Error";
-export { Register } from "./user/Register";
+export { Register } from "./users/Register";
 export { Testing } from "./misc/Testing";
