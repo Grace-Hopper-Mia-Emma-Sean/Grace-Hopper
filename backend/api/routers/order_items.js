@@ -9,7 +9,7 @@ const {
   createOrderItems,
 } = require("../../db");
 
-const {authenticate, owner, admin} = require('../utils')
+const {authenticate, admin} = require('../utils')
 
 orderItemsRouter.post("/", async (req, res, next) => {
   const { order_id, product_id, quantity } = req.body;
