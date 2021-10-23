@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { NotFound } from "./components";
+import { Login, Navbar, NotFound, Register, Testing } from "./components";
 
 export default function App() {
   return (
     <Router>
+      <Navbar />
+      <Testing />
       <Switch>
-        {/* <Route exact path="/" component={} /> */}
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
+        <Route exact path="/" />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
