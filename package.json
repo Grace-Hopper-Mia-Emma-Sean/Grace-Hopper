@@ -4,9 +4,9 @@
   "description": "Fullstack Web Development Grace Hopper Capstone Project",
   "main": "index.js",
   "scripts": {
-    "api": "cd backend && node /backend/index.js -L",
-    "db": "cd backend && node /backend/db/seed/seed.js",
-    "start": "cd backend && node /backend/index.js -L"
+    "api": "cd backend && node ./backend/index.js -L",
+    "db": "cd backend && node ./backend/db/seed/seed.js",
+    "start": "cd backend && node ./backend/index.js -L"
   },
   "repository": {
     "type": "git",
