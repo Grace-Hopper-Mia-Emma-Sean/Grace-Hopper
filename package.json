@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api": "cd backend && nodemon /backend/index.js -L"
+    "api": "cd backend && nodemon /backend/index.js -L",
+    "api-seed": "cd backend && node /backend/db/seed/seed.js"
   },
   "repository": {
     "type": "git",
