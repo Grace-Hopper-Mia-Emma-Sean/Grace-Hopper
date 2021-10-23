@@ -10,9 +10,9 @@ const {
 } = require("../../db");
 
 
-const {userLoggedIn} = require('../utils')
+const {authenticate, admin} = require('../utils')
 
-paymentDetailsRouter.post("/", async (req, res, next) => {
+paymentDetailsRouter.post("/", authenticate, admin, async (req, res, next) => {
   const { order_id, amount, provider, status } = req.body;
   try {
     const createdPaymentDetails = await createPaymentDetails({
@@ -27,7 +27,7 @@ paymentDetailsRouter.post("/", async (req, res, next) => {
   }
 });
 
-paymentDetailsRouter.get("/", async (req, res, next) => {
+paymentDetailsRouter.get("/", authenticate, admin, async (req, res, next) => {
   try {
     const allPaymentDetails = await getAllPaymentDetails();
     res.send(allPaymentDetails);
@@ -36,7 +36,7 @@ paymentDetailsRouter.get("/", async (req, res, next) => {
   }
 });
 
-paymentDetailsRouter.patch('/:paymentDetailsId', async (req, res, next) => {
+paymentDetailsRouter.patch('/:paymentDetailsId', authenticate, admin, async (req, res, next) => {
     const { order_id, amount, provider, status } = req.body;
     const { paymentDetailsId } = req.params;
     const updateFields = {id: paymentDetailsId, order_id, amount, provider, status}
@@ -60,7 +60,7 @@ paymentDetailsRouter.patch('/:paymentDetailsId', async (req, res, next) => {
         }
 });
 
-paymentDetailsRouter.delete('/:paymendDetailsId', async (req, res, next) => {
+paymentDetailsRouter.delete('/:paymendDetailsId', authenticate, admin, async (req, res, next) => {
     const { paymendDetailsId } = req.params;
     try {
       const deletePaymentDetails = await destroyPaymentDetails(

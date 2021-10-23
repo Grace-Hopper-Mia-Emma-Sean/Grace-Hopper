@@ -10,7 +10,7 @@ const {
 } = require("../../db");
 
 
-const {userLoggedIn} = require('../utils')
+const {authenticate, owner, admin} = require('../utils')
 
 userPaymentRouter.post("/", async (req, res, next) => {
   const { id, payment_type, provider, account_no, expiry } = req.body;
