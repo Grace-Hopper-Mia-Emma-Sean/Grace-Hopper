@@ -18,6 +18,7 @@ import {
   MailIcon,
   NotificationsIcon,
   MoreIcon,
+  ShoppingCartIcon,
 } from "../MUI";
 
 const Search = styled("div")(({ theme }) => ({
@@ -177,7 +178,7 @@ export function Navbar() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            Grace Shopper
           </Typography>
           <Search>
             <SearchIconWrapper>

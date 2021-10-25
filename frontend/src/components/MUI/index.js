@@ -48,11 +48,12 @@ import { Radio } from "@mui/material";
 import { RadioGroup } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Select from "@material-ui/core/Select";
+import { ShoppingCartIcon } from "@mui/icons-material/ShoppingCart";
 import Snackbar from "@mui/material/Snackbar";
 import { styled } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@material-ui/core/TextField";
-import Toolbar from "@material-ui/core/ToolBar";
+import { Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useRadioGroup from "@mui/material/RadioGroup";
@@ -109,6 +110,7 @@ export {
   RadioGroup,
   SearchIcon,
   Select,
+  ShoppingCartIcon,
   Snackbar,
   styled,
   ThemeProvider,
