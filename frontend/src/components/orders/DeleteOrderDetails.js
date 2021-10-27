@@ -14,10 +14,10 @@ export function DeleteOrderDetails() {
         },[])
     return (
         <>
-            <span> Order Details </span>
+            <span> Order Details Deleted </span>
             { deleteOrderDetails && deleteOrderDetails.map (deleteOrderDetail => {
                 return (
-                    <div className="order_details" key={deleteOrderDetail.id}> 
+                    <div className="orderDetailsDeleted" key={deleteOrderDetail.id}> 
                     <ul> ID: {deleteOrderDetail.id} </ul>
                     </div>
                 )
