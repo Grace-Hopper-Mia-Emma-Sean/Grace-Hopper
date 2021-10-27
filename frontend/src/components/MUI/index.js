@@ -48,7 +48,7 @@ import { Radio } from "@mui/material";
 import { RadioGroup } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Select from "@material-ui/core/Select";
-import { ShoppingCartIcon } from "@mui/icons-material/ShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Snackbar from "@mui/material/Snackbar";
 import { styled } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
