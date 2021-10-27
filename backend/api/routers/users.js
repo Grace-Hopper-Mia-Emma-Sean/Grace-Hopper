@@ -65,7 +65,7 @@ usersRouter.post("/login", async (req, res, next) => {
         { expiresIn: "7d" }
       );
       delete user.password;
-      res.status(200).send({ token });
+      res.status(200).send({ token, id: user.id, isAdmin: user.isAdmin });
     }
   } catch (error) {
     throw error;
