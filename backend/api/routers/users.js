@@ -43,7 +43,7 @@ usersRouter.post("/register", async (req, res, next) => {
       { expiresIn: "7d" }
     );
     delete user.password;
-    res.status(200).send({ token });
+    res.status(200).send({ token, id: user.id });
   } catch (error) {
     throw error;
   }
