@@ -78,4 +78,4 @@ const getUserById = async (id) => {
     .then((response) => response.data);
 };
 
-export { login, register };
+export { login, register, getUsers, getUserById };

@@ -13,7 +13,7 @@ export function Testing({ loggedIn }) {
           <br />
           <Link to="*">404</Link>
           <br />
-          {/* <p>Logout</p> */}
+          <Link to="/admin">Admin</Link>
         </p>
       ) : (
         <p>

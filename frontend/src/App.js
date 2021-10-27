@@ -11,10 +11,12 @@ import {
   PaymentDetails,
   UserPayment,
   CreateOrderDetails,
+  UsersTable,
 } from "./components";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(false);
@@ -59,6 +61,8 @@ export default function App() {
             username={username}
             password={password}
             token={token}
+            admin={admin}
+            setAdmin={setAdmin}
             setLoggedIn={setLoggedIn}
             setUsername={setUsername}
             setPassword={setPassword}
@@ -74,7 +78,7 @@ export default function App() {
           path="/create_order_details"
           component={CreateOrderDetails}
         />
-
+        <Route path="/admin" component={UsersTable}></Route>
         <Route exact path="/" />
         <Route path="*" component={NotFound} />
       </Switch>

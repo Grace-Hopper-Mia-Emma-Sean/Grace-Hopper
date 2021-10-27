@@ -1,4 +1,4 @@
-import { login, register } from "./users";
+import { login, register, getUsers, getUserById } from "./users";
 
 import {
   createCartItem,
@@ -54,4 +54,6 @@ export {
   getCartItemsByUserId,
   updateCartItems,
   deleteCartItem,
+  getUsers,
+  getUserById,
 };

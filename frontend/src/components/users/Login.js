@@ -29,7 +29,6 @@ export function Login({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const data = new FormData(e.currentTarget);
 
     try {
@@ -38,9 +37,10 @@ export function Login({
       setPassword(password);
       setToken(loginUser.data.token);
       setLoggedIn(true);
-      localStorage.setItem("token", loginUser.data.token);
+      localStorage.setItem("token", loginUser.data);
       localStorage.setItem("username", username);
-      <Redirect to="/" />;
+      // <Redirect to="/" />;
+      console.log(`User data: ${loginUser}`);
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
