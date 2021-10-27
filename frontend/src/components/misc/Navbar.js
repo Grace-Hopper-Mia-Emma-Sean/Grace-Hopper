@@ -1,10 +1,13 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+import { Logout } from "..";
 
 import {
   styled,
   alpha,
   AppBar,
   Box,
+  Button,
   Toolbar,
   IconButton,
   Typography,
@@ -61,7 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export function Navbar() {
+export function Navbar({ token, loggedIn, username, setLoggedIn }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -107,46 +110,6 @@ export function Navbar() {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -179,6 +142,35 @@ export function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {!loggedIn ? (
+              <Button
+                component={Link}
+                to="/login"
+                underline="hover"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontFamily: "Lato",
+                }}
+              >
+                Login
+              </Button>
+            ) : null}
+            {!loggedIn ? (
+              <Button
+                component={Link}
+                to="/register"
+                underline="hover"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontFamily: "Lato",
+                }}
+              >
+                Register
+              </Button>
+            ) : null}
+            {loggedIn ? <Logout /> : null}
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -200,22 +192,8 @@ export function Navbar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }

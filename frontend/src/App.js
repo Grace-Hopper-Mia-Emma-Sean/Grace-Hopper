@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { 
-  Login, 
-  Navbar, 
-  NotFound, 
-  Register, 
-  Testing, 
-  OrderDetails, 
+import {
+  Login,
+  Navbar,
+  NotFound,
+  Register,
+  Testing,
+  OrderDetails,
   OrderItems,
   PaymentDetails,
   UserPayment,
-  CreateOrderDetails
- } from "./components";
+  CreateOrderDetails,
+} from "./components";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,7 +31,12 @@ export default function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar
+        username={username}
+        loggedIn={loggedIn}
+        token={token}
+        setLoggedIn={setLoggedIn}
+      />
       <Testing loggedIn={loggedIn} />
       <Switch>
         <Route path="/register" component={Register}>
@@ -60,15 +65,18 @@ export default function App() {
             setToken={setToken}
           />
         </Route>
-        <Route exact path="/order_details" component={OrderDetails}/>
-        <Route exact path="/order_items" component={OrderItems}/>
-        <Route exact path="/payment_details" component={PaymentDetails}/>
-        <Route exact path="/user_payment"component={UserPayment} />
-        <Route exact path="/create_order_details" component={CreateOrderDetails}/>
+        <Route exact path="/order_details" component={OrderDetails} />
+        <Route exact path="/order_items" component={OrderItems} />
+        <Route exact path="/payment_details" component={PaymentDetails} />
+        <Route exact path="/user_payment" component={UserPayment} />
+        <Route
+          exact
+          path="/create_order_details"
+          component={CreateOrderDetails}
+        />
 
         <Route exact path="/" />
         <Route path="*" component={NotFound} />
-        
       </Switch>
     </Router>
   );

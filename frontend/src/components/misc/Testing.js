@@ -13,9 +13,7 @@ export function Testing({ loggedIn }) {
           <br />
           <Link to="*">404</Link>
           <br />
-          <p>
-            Logout <Logout />
-          </p>
+          {/* <p>Logout</p> */}
         </p>
       ) : (
         <p>
@@ -34,27 +32,3 @@ export function Testing({ loggedIn }) {
     </div>
   );
 }
-
-// <div className="testing">
-//   <h2>Start of Testing Component...</h2>
-
-//     {loggedIn ?
-
-//       (Link to="/">Home</Link>
-//               <p>
-
-//       <br />
-//       <Link to="*">404</Link>
-//       <p>
-//         Logout <Logout />
-//       </p></p>
-//       ) : ( <p>
-//       <Link to="/register">Register</Link>
-//       <br />
-//       <Link to="/login">Login</Link>
-//       <br />
-//             </p>
-
-//       )}
-//   <h2>End of Testing Component...</h2>
-// </div>
