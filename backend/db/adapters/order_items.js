@@ -2,9 +2,7 @@ const { client } = require("../client");
 
 const createOrderItems = async ({ order_id, product_id, quantity }) => {
   try {
-    const {
-      rows: [orders],
-    } = await client.query(
+    const { rows } = await client.query(
       `
         INSERT INTO order_items(order_id, product_id, quantity)
         VALUES ($1, $2, $3)
@@ -12,7 +10,7 @@ const createOrderItems = async ({ order_id, product_id, quantity }) => {
     `,
       [order_id, product_id, quantity]
     );
-    return orders;
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -113,9 +111,7 @@ const deleteOrderItemsByUserId = async (id) => {
 };
 
 async function canEditOrderItems(order_id, product_id) {
-  const {
-    rows: [canEditOrderItems],
-  } = await client.query(
+  const {rows } = await client.query(
     `
     SELECT* FROM order_items
     JOIN order_details ON order_items."order_id"=order_details.id
@@ -124,7 +120,7 @@ async function canEditOrderItems(order_id, product_id) {
   `,
     [order_id, product_id]
   );
-  return canEditOrderItems;
+  return rows;
 }
 
 module.exports = {

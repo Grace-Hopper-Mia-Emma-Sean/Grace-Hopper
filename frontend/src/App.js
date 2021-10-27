@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { Login, Navbar, NotFound, Register, Testing } from "./components";
+import { 
+  Login, 
+  Navbar, 
+  NotFound, 
+  Register, 
+  Testing, 
+  OrderDetails, 
+  OrderItems,
+  PaymentDetails,
+  UserPayment,
+  CreateOrderDetails
+ } from "./components";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -51,6 +62,7 @@ export default function App() {
         </Route>
         <Route exact path="/" />
         <Route path="*" component={NotFound} />
+        
       </Switch>
     </Router>
   );
