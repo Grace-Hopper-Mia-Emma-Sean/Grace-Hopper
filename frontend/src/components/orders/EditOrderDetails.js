@@ -14,7 +14,7 @@ export function EditOrderDetails() {
         },[])
     return (
         <>
-            <span> Order Items Editted </span>
+            <span> Order Details Editted </span>
             { editOrderDetails && editOrderDetails.map (editOrderDetail => {
                 return (
                     <div className="editOrderDetail" key={editOrderDetail.id}> 
