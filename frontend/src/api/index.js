@@ -1,45 +1,57 @@
 import { login, register } from "./users";
 
-import { 
-    order_details, 
-    edit_order_details, 
-    delete_order_details, 
-    create_order_details, 
-    edit_order_items, 
-    delete_order_items, 
-    create_order_items,
-    order_items } from "./orders"
-
+import {
+  createCartItem,
+  getCartItems,
+  getCartItemsByUserId,
+  updateCartItems,
+  deleteCartItem,
+} from "./cart";
 
 import {
-    payment_details,
-    edit_payment_details,
-    delete_payment_details,
-    create_payment_details,
-    user_payment,
-    edit_user_payment,
-    delete_user_payment,
-    create_user_payment
-} from "./payment"
+  order_details,
+  edit_order_details,
+  delete_order_details,
+  create_order_details,
+  edit_order_items,
+  delete_order_items,
+  create_order_items,
+  order_items,
+} from "./orders";
 
+import {
+  payment_details,
+  edit_payment_details,
+  delete_payment_details,
+  create_payment_details,
+  user_payment,
+  edit_user_payment,
+  delete_user_payment,
+  create_user_payment,
+} from "./payment";
 
-
-export { 
-    login, 
-    register,
-    order_details, 
-    edit_order_details, 
-    delete_order_details, 
-    create_order_details, 
-    edit_order_items, 
-    delete_order_items, 
-    create_order_items,
-    order_items,
-    payment_details,
-    edit_payment_details,
-    delete_payment_details,
-    create_payment_details,
-    user_payment,
-    edit_user_payment,
-    delete_user_payment,
-    create_user_payment};
+export {
+  login,
+  register,
+  order_details,
+  edit_order_details,
+  delete_order_details,
+  create_order_details,
+  edit_order_items,
+  delete_order_items,
+  create_order_items,
+  order_items,
+  payment_details,
+  edit_payment_details,
+  delete_payment_details,
+  create_payment_details,
+  user_payment,
+  edit_user_payment,
+  delete_user_payment,
+  create_user_payment,
+  createCartItem,
+  getCartItems,
+  getCartItemsByUserId,
+  updateCartItems,
+  deleteCartItem,
+};

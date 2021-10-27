@@ -1,5 +1,15 @@
 import axios from "axios";
 
+/**
+ *
+ * DONE: login, register
+ *
+ * TODO: getAllUsers, getUserById, createCartItems, getAllCartItems, getCartItemsByUserId, updateCartItems, removeCartItems
+ *
+ * STRETCH || ARCHIVED: CRUD address, CRUD shopping_session, updateUser, deleteUser
+ *
+ */
+
 const register = async (username, password) => {
   return axios({
     method: "POST",
@@ -38,6 +48,34 @@ const login = async (username, password) => {
         "Oh, no! It looks like your either your username is incorrect. Please, try again."
       );
   });
+};
+
+const getUsers = async () => {
+  return axios({
+    method: "GET",
+    url: "/users",
+  })
+    .catch((error) => {
+      throw error.response.data.error;
+    })
+    .then((response) => response.data);
+};
+
+const getUserById = async (id) => {
+  return axios({
+    method: "GET",
+    url: `/users/${id}`,
+    data: { userId: id },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .catch((error) => {
+      console.error(error.response.data);
+      // find a way to avoid having to use alert
+      alert("No user exists with that id");
+    })
+    .then((response) => response.data);
 };
 
 export { login, register };
