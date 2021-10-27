@@ -42,15 +42,13 @@ const login = async (username, password) => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then(() => console.log("test"))
-    .catch((error) => {
-      console.error(error.response);
-      if (error.response.data.name == "IncorrectCredentialsError")
-        return alert(
-          "Oh, no! It looks like your either your username is incorrect. Please, try again."
-        );
-    });
+  }).catch((error) => {
+    console.error(error.response.data);
+    if (error.response.data.name == "IncorrectCredentialsError")
+      return alert(
+        "Oh, no! It looks like your either your username is incorrect. Please, try again."
+      );
+  });
   // if we do .then((res) => {}), it returns undefined in the Login component
 };
 

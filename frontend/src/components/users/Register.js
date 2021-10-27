@@ -41,11 +41,21 @@ export function Register({
       const registerUser = await register(username, password);
       setUsername(username);
       setPassword(password);
-      setToken(registerUser.data.token);
       setLoggedIn(true);
-      localStorage.setItem("token", registerUser.data.token);
-      localStorage.setItem("username", username);
-      <Redirect to="/" />;
+      let KVPs = [
+        { token: registerUser.data.token },
+        { username: username },
+        {
+          admin:
+            registerUser.data.isAdmin == null
+              ? false
+              : registerUser.data.isAdmin,
+        },
+        { id: registerUser.data.id },
+      ];
+      KVPs.forEach((KVP) =>
+        localStorage.setItem(Object.keys(KVP), Object.values(KVP))
+      );
     } catch (error) {
       console.error(error);
       if (error.name == "UserExistsError")

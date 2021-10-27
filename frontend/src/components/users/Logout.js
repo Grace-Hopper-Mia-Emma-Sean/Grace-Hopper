@@ -1,16 +1,14 @@
 import { LogoutIcon, Button } from "../MUI";
 import { Redirect } from "react-router";
 
-export function Logout() {
+export function Logout({ setLoggedIn }) {
   return (
     <Button
       underline="hover"
       onClick={() => {
-        let keys = ["username", "token"];
+        let keys = ["username", "token", "admin", "id"];
         keys.forEach((k) => localStorage.removeItem(k));
-        <Redirect to="/" />;
-        // Temp workaround to re-render after logging out:
-        window.location.href = "/";
+        setLoggedIn(false);
       }}
       style={{
         textDecoration: "none",

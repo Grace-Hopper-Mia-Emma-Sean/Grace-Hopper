@@ -23,11 +23,6 @@ export function Login({
   setLoggedIn,
   setUsername,
   setPassword,
-  setToken,
-  // admin,
-  // setAdmin,
-  // userId,
-  // setUserId,
 }) {
   const theme = createTheme();
 
@@ -37,19 +32,21 @@ export function Login({
 
     try {
       const loginUser = await login(username, password);
-      // setAdmin(true);
-      // console.log(admin);
-      // console.log("test");
-      // console.log(loginUser);
-      // console.log(loginUser.data);
-      // console.log(admin);
+      setLoggedIn(true);
       setUsername(username);
       setPassword(password);
-      setToken(loginUser.data.token);
-      setLoggedIn(true);
-      localStorage.setItem("token", loginUser.data.token);
-      localStorage.setItem("username", username);
-      <Redirect to="/" />;
+      let KVPs = [
+        { token: loginUser.data.token },
+        { username: username },
+        {
+          admin:
+            loginUser.data.isAdmin == null ? false : loginUser.data.isAdmin,
+        },
+        { id: loginUser.data.id },
+      ];
+      KVPs.forEach((KVP) =>
+        localStorage.setItem(Object.keys(KVP), Object.values(KVP))
+      );
     } catch (error) {
       console.error(error);
       setLoggedIn(false);

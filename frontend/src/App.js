@@ -16,19 +16,21 @@ import {
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [token, setToken] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
+      setLoggedIn(true);
       setToken(localStorage.getItem("token"));
       setUsername(localStorage.getItem("username"));
-      setLoggedIn(true);
-      // setAdmin(loginUser.data.isAdmin);
+      setAdmin(localStorage.getItem("admin"));
+      setUserId(localStorage.getItem("id"));
+      console.log(token, username, admin, userId);
       return () => Navbar;
     }
   }, [loggedIn, username]);
@@ -43,17 +45,17 @@ export default function App() {
       />
       <Testing loggedIn={loggedIn} />
       <Switch>
-        <Route path="/register" component={Register}>
+        <Route path="/register">
           <Register
             loggedIn={loggedIn}
             username={username}
             password={password}
             token={token}
             confirmPassword={confirmPassword}
-            // admin={admin}
-            // userId={userId}
-            // setUserId={setUserId}
-            // setAdmin={setAdmin}
+            admin={admin}
+            userId={userId}
+            setUserId={setUserId}
+            setAdmin={setAdmin}
             setLoggedIn={setLoggedIn}
             setUsername={setUsername}
             setPassword={setPassword}
@@ -61,16 +63,16 @@ export default function App() {
             setConfirmPassword={setConfirmPassword}
           />
         </Route>
-        <Route path="/login" component={Login}>
+        <Route path="/login">
           <Login
             loggedIn={loggedIn}
             username={username}
             password={password}
             token={token}
-            // admin={admin}
-            // userId={userId}
-            // setUserId={setUserId}
-            // setAdmin={setAdmin}
+            admin={admin}
+            userId={userId}
+            setUserId={setUserId}
+            setAdmin={setAdmin}
             setLoggedIn={setLoggedIn}
             setUsername={setUsername}
             setPassword={setPassword}

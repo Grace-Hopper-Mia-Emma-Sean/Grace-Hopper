@@ -170,7 +170,7 @@ export function Navbar({ token, loggedIn, username, setLoggedIn }) {
                 Register
               </Button>
             ) : null}
-            {loggedIn ? <Logout /> : null}
+            {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
             <IconButton
               size="large"
               aria-label="show 4 new mails"
