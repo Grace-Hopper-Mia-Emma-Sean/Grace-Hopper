@@ -60,6 +60,12 @@ export default function App() {
             setToken={setToken}
           />
         </Route>
+        <Route exact path="/order_details" component={OrderDetails}/>
+        <Route exact path="/order_items" component={OrderItems}/>
+        <Route exact path="/payment_details" component={PaymentDetails}/>
+        <Route exact path="/user_payment"component={UserPayment} />
+        <Route exact path="/create_order_details" component={CreateOrderDetails}/>
+
         <Route exact path="/" />
         <Route path="*" component={NotFound} />
         
