@@ -28,6 +28,7 @@ const register = async (username, password) => {
         "So, this is awkward. That name's already taken. Go ahead and try picking another one."
       );
   });
+  // if we do .then((res) => {}), it returns undefined in the Login component
 };
 
 const login = async (username, password) => {
@@ -41,13 +42,16 @@ const login = async (username, password) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).catch((error) => {
-    console.error(error.response.data);
-    if (error.response.data.name == "IncorrectCredentialsError")
-      return alert(
-        "Oh, no! It looks like your either your username is incorrect. Please, try again."
-      );
-  });
+  })
+    .then(() => console.log("test"))
+    .catch((error) => {
+      console.error(error.response);
+      if (error.response.data.name == "IncorrectCredentialsError")
+        return alert(
+          "Oh, no! It looks like your either your username is incorrect. Please, try again."
+        );
+    });
+  // if we do .then((res) => {}), it returns undefined in the Login component
 };
 
 const getUsers = async () => {

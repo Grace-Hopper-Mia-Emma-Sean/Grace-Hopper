@@ -24,23 +24,32 @@ export function Login({
   setUsername,
   setPassword,
   setToken,
+  // admin,
+  // setAdmin,
+  // userId,
+  // setUserId,
 }) {
   const theme = createTheme();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    // const data = new FormData(e.currentTarget);
 
     try {
       const loginUser = await login(username, password);
+      // setAdmin(true);
+      // console.log(admin);
+      // console.log("test");
+      // console.log(loginUser);
+      // console.log(loginUser.data);
+      // console.log(admin);
       setUsername(username);
       setPassword(password);
       setToken(loginUser.data.token);
       setLoggedIn(true);
-      localStorage.setItem("token", loginUser.data);
+      localStorage.setItem("token", loginUser.data.token);
       localStorage.setItem("username", username);
-      // <Redirect to="/" />;
-      console.log(`User data: ${loginUser}`);
+      <Redirect to="/" />;
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
