@@ -12,6 +12,16 @@ import {
   UserPayment,
   CreateOrderDetails,
   UsersTable,
+  CreateOrderItems,
+  DeleteOrderDetails,
+  DeleteOrderItems,
+  EditOrderDetails,
+  EditOrderItems,
+  CreatePaymentDetails,
+  CreateUserPayment,
+  DeleteUserPayment,
+  EditPaymentDetails,
+  EditUserPayment
 } from "./components";
 
 export default function App() {
@@ -83,6 +93,22 @@ export default function App() {
         <Route exact path="/order_items" component={OrderItems} />
         <Route exact path="/payment_details" component={PaymentDetails} />
         <Route exact path="/user_payment" component={UserPayment} />
+
+        <Route exact path="/create_order_items" component={CreateOrderItems} />
+        <Route exact path="/create_order_items" component={CreateOrderDetails} /> 
+        <Route exact path="/create_payment_details" component={CreatePaymentDetails} />
+        <Route exact path="/create_user_payment" component={CreateUserPayment} />
+          
+        <Route exact path="/delete_order_details" component={DeleteOrderDetails} />
+        <Route exact path="/delete_order_items" component={DeleteOrderItems} />
+        <Route exact path="/delete_user_payment" component={DeleteUserPayment} />
+        <Route exact path="/delete_user_payment" component={DeletePaymentDetails} />
+          
+        <Route exact path="/edit_order_details" component={EditOrderDetails} />
+        <Route exact path="/edit_order_items" component={EditOrderItems} />
+        <Route exact path="/edit_payment_details" component={EditPaymentDetails} />
+        <Route exact path="/edit_user_payment" component={EditUserPayment} />
+          
         <Route
           exact
           path="/create_order_details"
