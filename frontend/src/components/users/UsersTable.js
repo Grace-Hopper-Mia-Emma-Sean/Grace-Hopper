@@ -21,17 +21,49 @@ export function UsersTable() {
   const rows = [...users];
 
   const columns = [
-    { field: "username", headerName: "Username", width: 150 },
-    { field: "first_name", headerName: "First Name", width: 150 },
-    { field: "last_name", headerName: "Last Name", width: 150 },
-    { field: "telephone", headerName: "Phone", width: 150 },
-    { field: "email", headerName: "Email", width: 250 },
-    { field: "isAdmin", headerName: "Admin", width: 150 },
+    {
+      field: "username",
+      headerName: "Username",
+      headerAlign: "center",
+      width: 150,
+    },
+    {
+      field: "first_name",
+      headerName: "First Name",
+      headerAlign: "center",
+      width: 150,
+    },
+    {
+      field: "last_name",
+      headerName: "Last Name",
+      headerAlign: "center",
+      width: 150,
+    },
+    {
+      field: "telephone",
+      headerName: "Phone",
+      headerAlign: "center",
+      width: 150,
+      align: "center",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      headerAlign: "center",
+      width: 325,
+    },
+    {
+      field: "isAdmin",
+      headerName: "Admin",
+      headerAlign: "center",
+      width: 150,
+      align: "center",
+    },
   ];
 
   return (
     <div>
-      <div style={{ height: 650, width: "65%" }}>
+      <div style={{ height: 650, width: "70%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
       </div>
     </div>

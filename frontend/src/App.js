@@ -23,7 +23,10 @@ import {
   EditOrderItems,
   EditPaymentDetails,
   EditUserPayment,
-  Products
+  Products,
+  CartTable,
+  AdminTable,
+  ProductsTable,
 } from "./components";
 
 export default function App() {
@@ -34,7 +37,7 @@ export default function App() {
   const [userId, setUserId] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [token, setToken] = useState("");
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -100,28 +103,59 @@ export default function App() {
         <Route exact path="/user_payment" component={UserPayment} />
 
         <Route exact path="/create_order_items" component={CreateOrderItems} />
-        <Route exact path="/create_order_items" component={CreateOrderDetails} /> 
-        <Route exact path="/create_payment_details" component={CreatePaymentDetails} />
-        <Route exact path="/create_user_payment" component={CreateUserPayment} />
-          
-        <Route exact path="/delete_order_details" component={DeleteOrderDetails} />
+        <Route
+          exact
+          path="/create_order_items"
+          component={CreateOrderDetails}
+        />
+        <Route
+          exact
+          path="/create_payment_details"
+          component={CreatePaymentDetails}
+        />
+        <Route
+          exact
+          path="/create_user_payment"
+          component={CreateUserPayment}
+        />
+
+        <Route
+          exact
+          path="/delete_order_details"
+          component={DeleteOrderDetails}
+        />
         <Route exact path="/delete_order_items" component={DeleteOrderItems} />
-        <Route exact path="/delete_user_payment" component={DeleteUserPayment} />
-        <Route exact path="/delete_user_payment" component={DeletePaymentDetails} />
-          
+        <Route
+          exact
+          path="/delete_user_payment"
+          component={DeleteUserPayment}
+        />
+        <Route
+          exact
+          path="/delete_user_payment"
+          component={DeletePaymentDetails}
+        />
+
         <Route exact path="/edit_order_details" component={EditOrderDetails} />
         <Route exact path="/edit_order_items" component={EditOrderItems} />
-        <Route exact path="/edit_payment_details" component={EditPaymentDetails} />
+        <Route
+          exact
+          path="/edit_payment_details"
+          component={EditPaymentDetails}
+        />
         <Route exact path="/edit_user_payment" component={EditUserPayment} />
-          
+
         <Route
           exact
           path="/create_order_details"
           component={CreateOrderDetails}
         />
-        <Route path="/admin" component={UsersTable}></Route>
+        <Route exact path="/admin" component={AdminTable}></Route>
+        <Route exact path="/admin/users" component={UsersTable}></Route>
+        <Route exact path="/admin/cart" component={CartTable}></Route>
+        <Route exact path="/admin/products" component={ProductsTable}></Route>
         <Route exact path="/">
-            <Products searchTerm={searchTerm}/>
+          <Products searchTerm={searchTerm} />
         </Route>
         <Route path="*" component={NotFound} />
       </Switch>
