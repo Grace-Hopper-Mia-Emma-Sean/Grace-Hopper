@@ -22,28 +22,32 @@ const createCartItem = async (userId, productId, quantity) => {
     });
 };
 
-const getCartItems = async (userId, productId, quantity) => {
+const getCartItems = async (token) => {
   return axios({
     method: "GET",
-    url: "/cart",
-    data: {
-      productId: productId,
-      quantity: quantity,
+    url: "/cart-items",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   })
     .catch((error) => {
       throw error.response.data.error;
     })
-    .then((response) => response.data);
+    .then((response) => {
+      response.data;
+      console.log(response);
+      localStorage.setItem("cart", JSON.stringify(response.data));
+    });
 };
 
-const getCartItemsByUserId = async (userId, productId, quantity) => {
+const getCartItemsByUserId = async (token) => {
   return axios({
     method: "GET",
     url: `/cart/${userId}`,
-    data: {
-      productId: productId,
-      quantity: quantity,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   })
     .catch((error) => {

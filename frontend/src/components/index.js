@@ -21,4 +21,6 @@ export { EditOrderItems } from "./orders/EditOrderItems";
 export { EditPaymentDetails } from "./payment/EditPaymentDetails";
 export { EditUserPayment } from "./payment/EditUserPayment";
 export { UsersTable } from "./users/UsersTable";
-export { Products } from "./home/products"
+export { Products } from "./home/products";
+export { CartTable } from "./cart/CartTable";
+export { AdminTable } from "./misc/AdminTable";
