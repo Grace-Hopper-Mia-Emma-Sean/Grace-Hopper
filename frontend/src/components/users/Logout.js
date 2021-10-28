@@ -1,22 +1,37 @@
-import { LogoutIcon, Button } from "../MUI";
-import { Redirect } from "react-router";
+import { LogoutIcon, IconButton, Button } from "../MUI";
+import { Link } from "react-router-dom";
 
 export function Logout({ setLoggedIn }) {
   return (
-    <Button
-      underline="hover"
-      onClick={() => {
-        let keys = ["username", "token", "admin", "id"];
-        keys.forEach((k) => localStorage.removeItem(k));
-        setLoggedIn(false);
-      }}
-      style={{
-        textDecoration: "none",
-        color: "white",
-        fontFamily: "Lato",
-      }}
-    >
-      Logout
-    </Button>
+    <Link to="/">
+      <IconButton
+        underline="hover"
+        onClick={() => {
+          let keys = ["username", "token", "admin", "id"];
+          keys.forEach((k) => localStorage.removeItem(k));
+          setLoggedIn(false);
+        }}
+        style={{
+          textDecoration: "none",
+          color: "white",
+          fontFamily: "Lato",
+        }}
+      >
+        <LogoutIcon></LogoutIcon>
+      </IconButton>
+    </Link>
   );
+}
+
+{
+  /* <IconButton
+  size="large"
+  edge="end"
+  aria-label="logout of current user"
+  aria-haspopup="true"
+  // onClick={handleProfileMenuOpen}
+  color="inherit"
+>
+  <Logout />
+</IconButton>; */
 }

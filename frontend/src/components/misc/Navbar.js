@@ -123,14 +123,18 @@ export function Navbar({ token, loggedIn, username, setLoggedIn }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+          <Button
+            component={Link}
+            to="/"
+            underline="hover"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              fontFamily: "Lato",
+            }}
           >
             Grace Shopper
-          </Typography>
+          </Button>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -170,7 +174,20 @@ export function Navbar({ token, loggedIn, username, setLoggedIn }) {
                 Register
               </Button>
             ) : null}
-            {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
+            {loggedIn ? (
+              <Button
+                component={Link}
+                to="/admin"
+                underline="hover"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontFamily: "Lato",
+                }}
+              >
+                Admin
+              </Button>
+            ) : null}
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -191,6 +208,7 @@ export function Navbar({ token, loggedIn, username, setLoggedIn }) {
             >
               <AccountCircle />
             </IconButton>
+            {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
           </Box>
         </Toolbar>
       </AppBar>
