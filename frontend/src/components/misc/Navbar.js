@@ -64,7 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export function Navbar({ token, loggedIn, username, setLoggedIn }) {
+export function Navbar({ token, loggedIn, username, setLoggedIn, searchTerm, setSearchTerm }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -142,6 +142,7 @@ export function Navbar({ token, loggedIn, username, setLoggedIn }) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onChange={function(event){setSearchTerm(event.target.value)}}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />

@@ -22,7 +22,8 @@ import {
   EditOrderDetails,
   EditOrderItems,
   EditPaymentDetails,
-  EditUserPayment
+  EditUserPayment,
+  Products
 } from "./components";
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
   const [userId, setUserId] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [token, setToken] = useState("");
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -53,6 +55,8 @@ export default function App() {
         loggedIn={loggedIn}
         token={token}
         setLoggedIn={setLoggedIn}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
       />
       <Testing loggedIn={loggedIn} />
       <Switch>
@@ -116,7 +120,9 @@ export default function App() {
           component={CreateOrderDetails}
         />
         <Route path="/admin" component={UsersTable}></Route>
-        <Route exact path="/" />
+        <Route exact path="/">
+            <Products searchTerm={searchTerm}/>
+        </Route>
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

@@ -1,5 +1,7 @@
 import { login, register, getUsers, getUserById } from "./users";
 
+import  getProducts from "./products.js";
+
 import {
   createCartItem,
   getCartItems,
@@ -56,4 +58,5 @@ export {
   deleteCartItem,
   getUsers,
   getUserById,
+  getProducts
 };
