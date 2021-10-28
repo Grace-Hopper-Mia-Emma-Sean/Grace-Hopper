@@ -15,6 +15,7 @@ import { CardHeader } from "@material-ui/core";
 import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { DataGrid } from "@mui/x-data-grid";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -45,7 +46,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "@material-ui/core/Modal";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import Paper from "@mui/material/Paper"
+import Paper from "@mui/material/Paper";
 import { Radio } from "@mui/material";
 import { RadioGroup } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -79,6 +80,7 @@ export {
   Container,
   createTheme,
   CssBaseline,
+  DataGrid,
   DeleteOutlinedIcon,
   Dialog,
   DialogActions,

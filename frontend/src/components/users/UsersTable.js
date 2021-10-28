@@ -1,15 +1,8 @@
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 
-import { useState, useEffect } from "react";
-
+import { DataGrid } from "../MUI";
 import { getUsers } from "../../api/";
+import { useState, useEffect } from "react";
 
 export function UsersTable() {
   const [users, setUsers] = useState([]);
@@ -23,37 +16,24 @@ export function UsersTable() {
       .finally(localStorage.removeItem("users"));
   }, []);
 
+  users.forEach((user, i) => Object.assign(user, { id: i + 1 }));
+
+  const rows = [...users];
+
+  const columns = [
+    { field: "username", headerName: "Username", width: 150 },
+    { field: "first_name", headerName: "First Name", width: 150 },
+    { field: "last_name", headerName: "Last Name", width: 150 },
+    { field: "telephone", headerName: "Phone", width: 150 },
+    { field: "email", headerName: "Email", width: 250 },
+    { field: "isAdmin", headerName: "Admin", width: 150 },
+  ];
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Username</TableCell>
-            <TableCell align="left">First&nbsp;Name</TableCell>
-            <TableCell align="left">Last&nbsp;Name</TableCell>
-            <TableCell align="left">Phone</TableCell>
-            <TableCell align="left">Email</TableCell>
-            <TableCell align="left">Admin</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow
-              key={user.username}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {user.username}
-              </TableCell>
-              <TableCell align="left">{user.first_name}</TableCell>
-              <TableCell align="left">{user.last_name}</TableCell>
-              <TableCell align="left">{user.telephone}</TableCell>
-              <TableCell align="left">{user.email}</TableCell>
-              <TableCell align="left">{JSON.stringify(user.isAdmin)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <div style={{ height: 650, width: "65%" }}>
+        <DataGrid rows={rows} columns={columns} pageSize={10} />
+      </div>
+    </div>
   );
 }
