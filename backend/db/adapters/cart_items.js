@@ -21,8 +21,12 @@ const createCartItems = async ({ session_id, product_id, quantity }) => {
 const getCartItems = async () => {
   try {
     const { rows } = await client.query(`
-      SELECT *
-      FROM cart_items
+      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+      FROM shopping_session
+      INNER JOIN cart_items
+      ON shopping_session.id = cart_items.session_id
+      LEFT JOIN products
+      ON cart_items.product_id = products.id;
     `);
     return rows;
   } catch (error) {
@@ -36,7 +40,7 @@ const getCartItemsByUserId = async (id) => {
       rows: [cartItems],
     } = await client.query(
       `
-      SELECT user_id, session_id, product_id, quantity
+      SELECT user_id, product_id, quantity
       FROM cart_items
       INNER JOIN shopping_session
       ON cart_items.session_id = shopping_session.id
