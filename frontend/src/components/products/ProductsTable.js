@@ -1,40 +1,53 @@
 import * as React from "react";
 
 import { DataGrid } from "../MUI";
-import { getCartItems } from "../../api/";
+import { getProducts } from "../../api/";
 import { useState, useEffect } from "react";
 
-export function CartTable() {
-  const [cart, setCart] = useState([]);
+export function ProductsTable() {
+  const [product, setProduct] = useState([]);
 
   useEffect(async () => {
-    await getCartItems(localStorage.getItem("token"))
+    await getProducts(localStorage.getItem("token"))
       .then(() => {
-        console.log(localStorage.getItem("cart"));
-        setCart(JSON.parse(localStorage.getItem("cart")));
+        console.log(localStorage.getItem("product"));
+        setProduct(JSON.parse(localStorage.getItem("product")));
       })
       .catch((error) => console.log(error))
-      .finally(localStorage.removeItem("cart"));
+      .finally(localStorage.removeItem("product"));
   }, []);
 
-  cart.forEach((cart, i) => Object.assign(cart, { id: i + 1 }));
+  product.forEach((product, i) => Object.assign(product, { id: i + 1 }));
 
-  const rows = [...cart];
+  const rows = [...product];
   console.log(rows);
 
   const columns = [
     {
-      field: "user_id",
-      headerName: "User ID",
+      field: "id",
+      headerName: "Product ID",
       headerAlign: "center",
-      width: 100,
+      width: 150,
       align: "center",
     },
     {
       field: "name",
-      headerName: "Product",
+      headerName: "Product Name",
       headerAlign: "center",
       width: 350,
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      headerAlign: "center",
+      width: 300,
+    },
+    {
+      field: "sku",
+      headerName: "SKU",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
     },
     {
       field: "price",
@@ -46,13 +59,6 @@ export function CartTable() {
     {
       field: "quantity",
       headerName: "Quantity",
-      headerAlign: "center",
-      width: 100,
-      align: "center",
-    },
-    {
-      field: "total",
-      headerName: "Total",
       headerAlign: "center",
       width: 100,
       align: "center",

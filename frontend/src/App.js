@@ -26,6 +26,7 @@ import {
   Products,
   CartTable,
   AdminTable,
+  ProductsTable,
 } from "./components";
 
 export default function App() {
@@ -152,6 +153,7 @@ export default function App() {
         <Route exact path="/admin" component={AdminTable}></Route>
         <Route exact path="/admin/users" component={UsersTable}></Route>
         <Route exact path="/admin/cart" component={CartTable}></Route>
+        <Route exact path="/admin/products" component={ProductsTable}></Route>
         <Route exact path="/">
           <Products searchTerm={searchTerm} />
         </Route>

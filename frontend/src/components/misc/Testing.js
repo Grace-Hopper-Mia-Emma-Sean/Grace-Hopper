@@ -18,6 +18,8 @@ export function Testing({ loggedIn }) {
           <Link to="/admin/users">Admin - Users</Link>
           <br />
           <Link to="/admin/cart">Admin - Cart</Link>
+          <br />
+          <Link to="/admin/products">Admin - Products</Link>
         </p>
       ) : (
         <p>

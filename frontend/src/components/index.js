@@ -24,3 +24,4 @@ export { UsersTable } from "./users/UsersTable";
 export { Products } from "./home/products";
 export { CartTable } from "./cart/CartTable";
 export { AdminTable } from "./misc/AdminTable";
+export { ProductsTable } from "./products/ProductsTable";
