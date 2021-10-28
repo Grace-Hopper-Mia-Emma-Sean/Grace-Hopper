@@ -6,6 +6,7 @@ export function UserPayment() {
         useEffect(() => {
             const fetchUserPayment = async () => {
                 const resp = await user_payment() 
+                console.log(resp.data)
                 setUserPayment(resp.data)
                 console.log(userPayments)
             }
@@ -17,7 +18,7 @@ export function UserPayment() {
             { userPayments.map (userPayment => {
                 return (
                     <div className="order_details" key={userPayment.id}> 
-                    <ul> User ID: {userPayment.user_id} </ul>
+                    <ul> ID: {userPayment.id} </ul>
                     <ul> Payment_Type: {userPayment.paymnent_type} </ul>
                     <ul> Payment Option: {userPayment.provider} </ul>
                     <ul> Account Number: {userPayment.account_no} </ul>

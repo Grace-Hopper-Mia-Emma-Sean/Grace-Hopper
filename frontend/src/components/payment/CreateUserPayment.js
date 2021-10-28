@@ -6,8 +6,10 @@ export function CreateUserPayment() {
         useEffect(() => {
             const fetchCreateUserPayment = async () => {
                 const resp = await create_user_payment  () 
+                console.log(resp)
                 setCreateUserPayment(resp.data)
                 console.log(createUserPayment)
+                
             }
             fetchCreateUserPayment()
         },[])

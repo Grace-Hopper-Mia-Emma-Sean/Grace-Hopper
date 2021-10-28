@@ -1,4 +1,5 @@
 import axios from "axios";
+import {useState} from "react";
 
 //Payment Details
 const payment_details = async () => {
@@ -16,7 +17,7 @@ const payment_details = async () => {
 const edit_payment_details = async (order_id,amount, provider, status) => {
   return axios({
     method: "PATCH",
-    url: `/payment_details/${paymentDetailsId}`,
+    url: `/payment-details/${paymentDetailsId}`,
     data: {
       order_id: order_id,
       amount: amount,
@@ -32,21 +33,32 @@ const edit_payment_details = async (order_id,amount, provider, status) => {
 };
 
 const delete_payment_details = async () => {
+ const [ paymentDetailsId, setPaymentDetailsId ] = useState([])
+  useEffect(() => {
+    const fetchUserPayment = async () => {
+        const resp = await user_payment() 
+        console.log(resp.data.id)
+        setPaymentDetailsId(resp.data.id)
+    }
+    fetchUserPayment()
+},[paymentDetailsId])
+
   return axios({
     method: "DELETE",
-    url: `/payment_details/${paymentDetailsId}`,
+    url: `/payment-details/${paymentDetailsId}`,
     headers: {
       "Content-Type": "application/json",
     },
   }).catch((error) => {
     console.error(error.response.data);
   });
+  
 };
 
 const create_payment_details = async (order_id,amount, provider, status) => {
   return axios({
     method: "POST",
-    url: "/payment_details",
+    url: "/payment-details",
     data: {
       order_id: order_id,
       amount: amount,
@@ -81,7 +93,7 @@ const edit_user_payment = async (user_id,payment_type,provider,account_no, expir
   const token = localStorage.getItem("token");
   return axios({
     method: "PATCH",
-    url: `/user_payment/${userPaymentId}`,
+    url: `/user-payment/${userPaymentId}`,
     data: {
       id: userPaymentId,
       user_id:user_id ,
@@ -103,7 +115,7 @@ const delete_user_payment = async () => {
  const token = localStorage.getItem("token");
  return axios({
     method: "DELETE",
-    url: `/user_payment/${userPaymentId}`,
+    url: `/user-payment/${userPaymentId}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -117,7 +129,7 @@ const create_user_payment = async (id, user_id, payment_type, provider,account_n
   const token = localStorage.getItem("token");
   return axios({
     method: "POST",
-    url: "/payment_details",
+    url: "/user-payment",
     data: {
       id: id,
       user_id:user_id ,

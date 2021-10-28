@@ -5,7 +5,8 @@ export function DeletePaymentDetails() {
     const [ deletePaymentDetails, setDeletePaymentDetails ] = useState([])
         useEffect(() => {
             const fetchDeletePaymentDetails = async () => {
-                const resp = await delete_payment_details () 
+                const resp = await delete_payment_details ()
+                console.log(resp) 
                 setDeletePaymentDetails(resp.data)
                 console.log(deletePaymentDetails)
             }

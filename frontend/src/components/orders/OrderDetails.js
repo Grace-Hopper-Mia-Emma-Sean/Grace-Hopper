@@ -6,6 +6,7 @@ export function OrderDetails() {
         useEffect(() => {
             const fetchOrderDetails = async () => {
                 const resp = await order_details() 
+                console.log(resp)
                 setOrderDetails(resp.data)
                 console.log(orderDetails)
             }
@@ -14,7 +15,7 @@ export function OrderDetails() {
     return (
         <>
             <span>Order Details</span>
-            { orderDetails.map (orderDetail => {
+            { orderDetails && orderDetails.map (orderDetail => {
                 return (
                     <div className="order_details" key={orderDetail.id}> 
                     <ul> Total: {orderDetail.total} </ul>

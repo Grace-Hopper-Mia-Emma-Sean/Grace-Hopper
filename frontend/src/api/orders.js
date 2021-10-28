@@ -5,9 +5,9 @@ import axios from "axios";
 const order_details = async () => {
   return axios({
     method: "GET",
-    url: "/order_details",
+    url: "/order-details",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
   }).catch((error) => {
     console.error(error.response.data);
@@ -17,7 +17,7 @@ const order_details = async () => {
 const edit_order_details = async (user_id, payment_id, total) => {
   return axios({
       method: "PATCH",
-      url: `/order_details/${orderDetailsId}`,
+      url: `/order-details/${orderDetailsId}`,
       data: {
         user_id: user_id,
         payment_id: payment_id,
@@ -34,7 +34,7 @@ const edit_order_details = async (user_id, payment_id, total) => {
 const delete_order_details = async () => {
   return axios({
     method: "DELETE",
-    url: `/order_details/${orderDetailsId}`,
+    url: `/order-details/${orderDetailsId}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -46,7 +46,7 @@ const delete_order_details = async () => {
 const create_order_details = async (user_id, payment_id, total) => {
   return axios({
     method: "POST",
-    url: "/order_details",
+    url: "/order-details",
     data: {
       user_id: user_id,
       payment_id: payment_id,
@@ -65,9 +65,9 @@ const create_order_details = async (user_id, payment_id, total) => {
 const edit_order_items = async (order_id, product_id, quantity) => {
   return axios({
       method: "PATCH",
-      url: `/order_items/${orderItemsId}`,
+      url: `/order-items/${orderItemsId}`,
       data: {
-       order_id: order_id,
+      order_id: order_id,
       product_id: product_id,
       quantity: quantity,
       },
@@ -82,7 +82,7 @@ const edit_order_items = async (order_id, product_id, quantity) => {
 const delete_order_items = async () => {
   return axios({
     method: "DELETE",
-    url: `/order_items/${orderItemsId}`,
+    url: `/order-items/${orderItemsId}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -94,7 +94,7 @@ const delete_order_items = async () => {
 const create_order_items = async (order_id, product_id, quantity) => {
   return axios({
     method: "POST",
-    url: "/order_items",
+    url: "/order-items",
     data: {
       order_id: order_id,
       product_id: product_id,
@@ -111,7 +111,7 @@ const create_order_items = async (order_id, product_id, quantity) => {
 const order_items = async () => {
   return axios({
     method: "GET",
-    url: "/order_items",
+    url: "/order-items",
     headers: {
       "Content-Type": "application/json",
     },

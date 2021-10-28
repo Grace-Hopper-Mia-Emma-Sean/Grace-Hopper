@@ -6,7 +6,8 @@ export function DeleteUserPayment() {
         useEffect(() => {
             const fetchDeleteUserPayment= async () => {
                 const resp = await delete_user_payment  () 
-                setDeleteUserPayment(resp.data)
+                console.log(resp)
+                setDeleteUserPayment(resp)
                 console.log(deleteUserPayment)
             }
             fetchDeleteUserPayment()
@@ -14,13 +15,6 @@ export function DeleteUserPayment() {
     return (
         <>
             <span> User Payment Deleted</span>
-            { deleteUserPayment && deleteUserPayment.map (deleteUserPay => {
-                return (
-                    <div className="deleteUserPay" key={deleteUserPay.id}> 
-                    <ul> ID: {deleteUserPay.id} </ul>
-                    </div>
-                )
-            })}
         </>
     )
   }

@@ -6,6 +6,7 @@ export function OrderItems() {
         useEffect(() => {
             const fetchOrderItems = async () => {
                 const resp = await order_items() 
+                console.log(resp)
                 setOrderItems(resp.data)
                 console.log(orderItems)
             }

@@ -6,6 +6,7 @@ export function PaymentDetails() {
         useEffect(() => {
             const fetchPaymentDetails = async () => {
                 const resp = await payment_details() 
+                console.log(resp)
                 setPaymentDetails(resp.data)
                 console.log(paymentDetails)
             }
