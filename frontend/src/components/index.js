@@ -25,3 +25,5 @@ export { Products } from "./home/products";
 export { CartTable } from "./cart/CartTable";
 export { AdminTable } from "./misc/AdminTable";
 export { ProductsTable } from "./products/ProductsTable";
+export { CreateCartItem } from "./cart/CreateCartItem";
+export { CartIcon } from "./cart/CartIcon";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Logout } from "..";
+import { Logout, CartIcon } from "..";
 
 import {
   styled,
@@ -198,15 +198,7 @@ export function Navbar({
                 Admin
               </Button>
             ) : null}
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <CartIcon />
             <IconButton
               size="large"
               edge="end"

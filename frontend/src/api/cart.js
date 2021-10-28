@@ -41,10 +41,11 @@ const getCartItems = async (token) => {
     });
 };
 
-const getCartItemsByUserId = async (token) => {
+const getCartItemsByUserId = async (token, id) => {
+  console.log(id);
   return axios({
     method: "GET",
-    url: `/cart/${userId}`,
+    url: `/cart-items/${id}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -53,13 +54,16 @@ const getCartItemsByUserId = async (token) => {
     .catch((error) => {
       throw error.response.data.error;
     })
-    .then((response) => response.data);
+    .then((response) => {
+      response.data;
+      localStorage.setItem("product", JSON.stringify(response.data));
+    });
 };
 
 const updateCartItems = async (token, userId, productId, quantity) => {
   return axios({
     method: "PATCH",
-    url: `cart/${userId}`,
+    url: `cart-items/${userId}`,
     data: {
       productId: productId,
       quantity: quantity,
@@ -80,7 +84,7 @@ const updateCartItems = async (token, userId, productId, quantity) => {
 const deleteCartItem = async (token, userId, productId, quantity) => {
   return axios({
     method: "DELETE",
-    url: `cartitems/${userId}`,
+    url: `cart-items/${userId}`,
     data: { id: userId },
     headers: {
       "Content-Type": "application/json",

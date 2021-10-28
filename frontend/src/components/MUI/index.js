@@ -1,4 +1,5 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Alert } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -16,6 +17,7 @@ import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { DataGrid } from "@mui/x-data-grid";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -24,6 +26,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Divider } from "@material-ui/core";
 import { Drawer } from "@material-ui/core";
+import EditIcon from "@mui/icons-material/Edit";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import Fade from "@material-ui/core/Fade";
 import FormControl from "@mui/material/FormControl";
@@ -53,6 +56,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Select from "@material-ui/core/Select";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Snackbar from "@mui/material/Snackbar";
+import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@material-ui/core/TextField";
@@ -64,6 +68,7 @@ import { useTheme } from "@material-ui/core/styles";
 
 export {
   AccountCircle,
+  AddShoppingCartIcon,
   Alert,
   alpha,
   AppBar,
@@ -81,6 +86,7 @@ export {
   createTheme,
   CssBaseline,
   DataGrid,
+  DeleteForeverIcon,
   DeleteOutlinedIcon,
   Dialog,
   DialogActions,
@@ -89,6 +95,7 @@ export {
   DialogTitle,
   Divider,
   Drawer,
+  EditIcon,
   EditOutlinedIcon,
   Fade,
   FormControl,
@@ -118,6 +125,7 @@ export {
   Select,
   ShoppingCartIcon,
   Snackbar,
+  Stack,
   styled,
   ThemeProvider,
   TextField,
