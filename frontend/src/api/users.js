@@ -52,15 +52,22 @@ const login = async (username, password) => {
   // if we do .then((res) => {}), it returns undefined in the Login component
 };
 
-const getUsers = async () => {
+const getUsers = async (token) => {
   return axios({
     method: "GET",
     url: "/users",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .catch((error) => {
       throw error.response.data.error;
     })
-    .then((response) => response.data);
+    .then((response) => {
+      response.data;
+      localStorage.setItem("users", JSON.stringify(response.data));
+    });
 };
 
 const getUserById = async (id) => {
