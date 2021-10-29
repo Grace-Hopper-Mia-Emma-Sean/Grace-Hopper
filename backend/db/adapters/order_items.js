@@ -56,7 +56,6 @@ async function updateOrderItems(id, fields = {}) {
     return;
   }
 
-  const { order_id, product_id, quantity } = fields;
   try {
     const {
       rows: [orders],
@@ -67,7 +66,7 @@ async function updateOrderItems(id, fields = {}) {
             WHERE id=${id}
             RETURNING *;
         `,
-      [id, order_id, product_id, quantity]
+      Object.keys(fields)
     );
     return orders;
   } catch (error) {
