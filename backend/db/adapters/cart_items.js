@@ -7,7 +7,7 @@ const createCartItems = async ({ product_id, quantity }) => {
     } = await client.query(
       `
       INSERT INTO cart_items(product_id, quantity, user_id)
-      VALUES ($1, $2, $3, $4)
+      VALUES ($1, $2, $3)
       RETURNING *
     `,
       [product_id, quantity]
