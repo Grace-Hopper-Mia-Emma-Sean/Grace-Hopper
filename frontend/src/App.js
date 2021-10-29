@@ -50,7 +50,7 @@ export default function App() {
       console.log(token, username, admin, userId);
       return () => Navbar;
     }
-  }, [loggedIn, username]);
+  }, [loggedIn, username, admin, userId]);
 
   return (
     <Router>
@@ -103,14 +103,14 @@ export default function App() {
         <Route exact path="/order_items" component={OrderItems} />
         <Route exact path="/payment_details" component={PaymentDetails} />
 
-        <Route exact path="/user_payment" >
-            <UserPayment 
+        <Route exact path="/user_payment">
+          <UserPayment
             loggedIn={loggedIn}
             token={token}
             setLoggedIn={setLoggedIn}
             setToken={setToken}
-            />
-         </Route>
+          />
+        </Route>
 
         <Route exact path="/create_order_items" component={CreateOrderItems} />
         <Route

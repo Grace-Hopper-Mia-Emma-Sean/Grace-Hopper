@@ -43,12 +43,14 @@ const useStyles = makeStyles((theme) => ({
 export function Products({ searchTerm }) {
   const classes = useStyles();
   const [products, setProducts] = useState([]);
+  const [admin, setAdmin] = useState([]);
 
   useEffect(async () => {
     await getProducts(localStorage.getItem("token"))
       .then(() => {
         console.log(localStorage.getItem("product"));
         setProducts(JSON.parse(localStorage.getItem("product")));
+        setAdmin(JSON.parse(localStorage.getItem("admin")));
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("product"));
@@ -100,18 +102,20 @@ export function Products({ searchTerm }) {
                           ${product.price}
                         </Typography>
                       </Grid>
-                      <Box>
-                        <Grid item>
-                          <Button>
-                            <EditIcon />
-                          </Button>
-                        </Grid>
-                        <Grid item>
-                          <Button>
-                            <DeleteForeverIcon />
-                          </Button>
-                        </Grid>
-                      </Box>
+                      {admin === true ? (
+                        <Box>
+                          <Grid item>
+                            <Button>
+                              <EditIcon />
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button>
+                              <DeleteForeverIcon />
+                            </Button>
+                          </Grid>
+                        </Box>
+                      ) : null}
                     </Grid>
                   </Grid>
                 </Paper>
