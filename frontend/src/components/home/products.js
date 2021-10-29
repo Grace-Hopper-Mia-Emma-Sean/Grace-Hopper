@@ -1,7 +1,20 @@
 import { getProducts } from "../../api";
 import React, { useState, useEffect } from "react";
 
-import { Grid, makeStyles, Paper, ButtonBase, Typography } from "../MUI";
+import {
+  Grid,
+  makeStyles,
+  Paper,
+  ButtonBase,
+  Typography,
+  EditIcon,
+  Button,
+  DeleteForeverIcon,
+  Box,
+  Stack,
+} from "../MUI";
+
+import { CreateCartItem } from "..";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,20 +93,25 @@ export function Products({ searchTerm }) {
                             SKU: {product.sku}
                           </Typography>
                         </Grid>
-                        <Grid item>
-                          <Typography
-                            variant="body2"
-                            style={{ cursor: "pointer" }}
-                          >
-                            Add to Cart!
-                          </Typography>
-                        </Grid>
+                        <CreateCartItem />
                       </Grid>
                       <Grid item>
                         <Typography variant="subtitle1">
                           ${product.price}
                         </Typography>
                       </Grid>
+                      <Box>
+                        <Grid item>
+                          <Button>
+                            <EditIcon />
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button>
+                            <DeleteForeverIcon />
+                          </Button>
+                        </Grid>
+                      </Box>
                     </Grid>
                   </Grid>
                 </Paper>

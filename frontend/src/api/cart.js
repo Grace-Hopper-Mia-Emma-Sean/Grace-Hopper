@@ -14,7 +14,7 @@ const createCartItem = async (userId, productId, quantity) => {
     },
   })
     .catch((error) => {
-      throw error.response.data.error;
+      console.error(error.response.data.error);
     })
     .then((response) => {
       response.data; // find a way to avoid having to use alert
@@ -36,30 +36,35 @@ const getCartItems = async (token) => {
     })
     .then((response) => {
       response.data;
-      console.log(response);
+      console.error(response);
       localStorage.setItem("cart", JSON.stringify(response.data));
     });
 };
 
-const getCartItemsByUserId = async (token) => {
+const getCartItemsByUserId = async (token, id) => {
+  console.log(token, id);
   return axios({
     method: "GET",
-    url: `/cart/${userId}`,
+    url: `/cart-items/${id}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   })
     .catch((error) => {
-      throw error.response.data.error;
+      console.error(error.response.data.error);
     })
-    .then((response) => response.data);
+    .then((response) => {
+      response.data;
+      console.log(response.data);
+      localStorage.setItem("cart", JSON.stringify(response.data));
+    });
 };
 
 const updateCartItems = async (token, userId, productId, quantity) => {
   return axios({
     method: "PATCH",
-    url: `cart/${userId}`,
+    url: `cart-items/${userId}`,
     data: {
       productId: productId,
       quantity: quantity,
@@ -80,14 +85,14 @@ const updateCartItems = async (token, userId, productId, quantity) => {
 const deleteCartItem = async (token, userId, productId, quantity) => {
   return axios({
     method: "DELETE",
-    url: `cartitems/${userId}`,
+    url: `cart-items/${userId}`,
     data: { id: userId },
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   })
-    .catch((error) => console.error(error.response.data))
+    .catch((error) => console.error(error.response.data.error))
     .then((response) => {
       response.data;
       // find a way to avoid having to use alert

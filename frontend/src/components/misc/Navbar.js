@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Logout } from "..";
+import { Logout, CartIcon } from "..";
 
 import {
   styled,
@@ -71,6 +71,7 @@ export function Navbar({
   setLoggedIn,
   searchTerm,
   setSearchTerm,
+  admin,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -184,7 +185,7 @@ export function Navbar({
                 Register
               </Button>
             ) : null}
-            {loggedIn ? (
+            {loggedIn && admin === true ? (
               <Button
                 component={Link}
                 to="/admin"
@@ -198,26 +199,20 @@ export function Navbar({
                 Admin
               </Button>
             ) : null}
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <CartIcon />
+            {loggedIn && admin === true ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : null}
             {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
           </Box>
         </Toolbar>
