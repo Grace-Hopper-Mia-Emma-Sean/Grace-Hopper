@@ -10,7 +10,7 @@ const createCartItems = async ({ product_id, quantity }) => {
       VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [product_id, quantity]
+      [product_id, quantity, user_id]
     );
     return cartItems;
   } catch (error) {
