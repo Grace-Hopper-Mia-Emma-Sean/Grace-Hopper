@@ -24,12 +24,12 @@ cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
         message: `No user exists with id ${req.params.user_id}`,
       });
     const session = await getShoppingSessionByUserId(req.params.user_id);
-    if (!session)
-      return res.status(401).send({
-        name: "NoShoppingSessionError",
-        message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
-      });
-    console.log(session);
+    // if (!session)
+    //   return res.status(401).send({
+    //     name: "NoShoppingSessionError",
+    //     message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
+    //   });
+    // console.log(session);
     const cartItems = await createCartItems({
       session_id: session.session_id,
       product_id: req.body.product_id,
@@ -74,12 +74,12 @@ cartItemsRouter.patch("/:user_id", authenticate, async (req, res, next) => {
         name: "NoUserError",
         message: `No user exists with id ${req.params.user_id}`,
       });
-    const session = await getShoppingSessionByUserId(req.params.user_id);
-    if (!session)
-      return res.status(404).send({
-        name: "NoShoppingSessionError",
-        message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
-      });
+    // const session = await getShoppingSessionByUserId(req.params.user_id);
+    // if (!session)
+    //   return res.status(404).send({
+    //     name: "NoShoppingSessionError",
+    //     message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
+    //   });
     const cartItems = await getCartItemsByUserId(req.params.user_id);
     if (!cartItems)
       return res.status(404).send({
