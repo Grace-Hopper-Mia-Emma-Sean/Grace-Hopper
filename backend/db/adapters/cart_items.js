@@ -1,16 +1,16 @@
 const { client } = require("../client");
 
-const createCartItems = async ({ session_id, product_id, quantity }) => {
+const createCartItems = async ({ product_id, quantity, user_id }) => {
   try {
     const {
       rows: [cartItems],
     } = await client.query(
       `
-      INSERT INTO cart_items(session_id, product_id, quantity)
+      INSERT INTO cart_items(product_id, quantity, user_id)
       VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [session_id, product_id, quantity]
+      [product_id, quantity, user_id]
     );
     return cartItems;
   } catch (error) {
@@ -22,9 +22,7 @@ const getCartItems = async () => {
   try {
     const { rows } = await client.query(`
       SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
-      FROM shopping_session
-      INNER JOIN cart_items
-      ON shopping_session.id = cart_items.session_id
+      FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id;
     `);
@@ -40,13 +38,11 @@ const getCartItemsByUserId = async (id) => {
       rows: [cartItems],
     } = await client.query(
       `
-      SELECT user_id, product_id, quantity
+      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
       FROM cart_items
-      INNER JOIN shopping_session
-      ON cart_items.session_id = shopping_session.id
-      LEFT JOIN users
-      ON users.id = shopping_session.user_id
-      WHERE users.id=$1
+      LEFT JOIN products
+      ON cart_items.product_id = products.id
+      WHERE user_id=$1
     `,
       [id]
     );
@@ -64,9 +60,7 @@ const updateCartItems = async (id, fields) => {
       `
       UPDATE cart_items
       SET quantity = ${fields}
-      FROM shopping_session
-      WHERE cart_items.session_id = shopping_session.id
-      AND shopping_session.user_id = ${id}
+      WHERE user_id=${id}
       RETURNING *
     `
     );
@@ -83,9 +77,7 @@ const deleteCartItems = async (id) => {
     } = await client.query(
       `
       DELETE FROM cart_items
-      USING shopping_session
-      WHERE shopping_session.id = cart_items.session_id
-      AND shopping_session.user_id=${id}
+      WHERE user_id=${id}
       RETURNING *;
     `
     );
