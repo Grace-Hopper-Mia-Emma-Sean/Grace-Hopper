@@ -15,9 +15,15 @@ export function PaymentDetails() {
     return (
         <>
             <span> Payment Details</span>
+            {paymentDetails.forEach(paymentDetail => {
+                localStorage.setItem("paymentDetailId", JSON.stringify(paymentDetail.id))
+
+            })}
+
             { paymentDetails.map (paymentDetail => {
                 return (
                     <div className="order_details" key={paymentDetail.id}> 
+                    <ul> Payment ID: {paymentDetail.id} </ul>
                     <ul> Amount: {paymentDetail.amount} </ul>
                     <ul> Payment Option: {paymentDetail.provider} </ul>
 

@@ -12,16 +12,14 @@ export function DeletePaymentDetails() {
             }
             fetchDeletePaymentDetails()
         },[])
-    return (
-        <>
-            <span> Payment Details Deleted</span>
-            { deletePaymentDetails && deletePaymentDetails.map (deletePaymentDetail => {
-                return (
-                    <div className="deletePaymentDetail" key={deletePaymentDetail.id}> 
-                    <ul> ID: {deletePaymentDetail.id} </ul>
+        return (
+            <>
+                <form onSubmit={DeletePaymentDetails}>  
+                    <div ClassName="DeletePaymentDetails">
+                        <button type="submit"> Delete Payment Details</button>
+    
                     </div>
-                )
-            })}
-        </>
-    )
+                </form>
+            </>
+        )
   }

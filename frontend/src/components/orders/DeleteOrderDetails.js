@@ -14,14 +14,12 @@ export function DeleteOrderDetails() {
         },[])
     return (
         <>
-            <span> Order Details Deleted </span>
-            { deleteOrderDetails && deleteOrderDetails.map (deleteOrderDetail => {
-                return (
-                    <div className="orderDetailsDeleted" key={deleteOrderDetail.id}> 
-                    <ul> ID: {deleteOrderDetail.id} </ul>
-                    </div>
-                )
-            })}
+            <form onSubmit={DeleteOrderDetails}>  
+                <div ClassName="DeleteOrderDetails">
+                    <button type="submit"> Delete Order Details</button>
+
+                </div>
+            </form>
         </>
     )
   }

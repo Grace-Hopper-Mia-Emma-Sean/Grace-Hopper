@@ -12,16 +12,13 @@ export function EditPaymentDetails() {
             }
             fetchEditPaymentDetails()
         },[])
-    return (
-        <>
-            <span> Payment Details Editted</span>
-            { editPaymentDetails && editPaymentDetails.map (editPaymentDetail => {
-                return (
-                    <div className="editPaymentDetail" key={editPaymentDetail.id}> 
-                    <ul> ID: {editPaymentDetail.id} </ul>
-                    </div>
-                )
-            })}
-        </>
-    )
+        return (
+            <>
+                <span> Edit Payment Details</span>
+                <form onSubmit={EditPaymentDetails}>
+                    <label> Hi </label>
+    
+                </form>
+            </>
+        )
   }

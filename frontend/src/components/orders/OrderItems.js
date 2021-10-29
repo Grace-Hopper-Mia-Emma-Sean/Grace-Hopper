@@ -15,9 +15,14 @@ export function OrderItems() {
     return (
         <>
             <span>Order Items</span>
+            {orderItems.forEach(orderItem => {
+                localStorage.setItem("orderItemId", JSON.stringify(orderItem.id))
+
+            })}
             { orderItems.map (orderItem => {
                 return (
                     <div className="order_items" key={orderItem.id}> 
+                    <ul> Oreder Item ID: {orderItem.id}</ul>
                     <ul> Product ID: {orderItem.product_id}</ul>
                     <ul> Order ID: {orderItem.order_id}</ul>
                     <ul> Quantity: {orderItem.quantity} </ul>

@@ -15,6 +15,7 @@ const order_details = async () => {
 };
 
 const edit_order_details = async (user_id, payment_id, total) => {
+  const orderDetailsId = localStorage.getItem("orderdetail_id")
   return axios({
       method: "PATCH",
       url: `/order-details/${orderDetailsId}`,
@@ -32,6 +33,7 @@ const edit_order_details = async (user_id, payment_id, total) => {
 };
 
 const delete_order_details = async () => {
+ const orderDetailsId = localStorage.getItem("orderdetail_id")
   return axios({
     method: "DELETE",
     url: `/order-details/${orderDetailsId}`,
@@ -63,6 +65,7 @@ const create_order_details = async (user_id, payment_id, total) => {
 //OrderItems
 
 const edit_order_items = async (order_id, product_id, quantity) => {
+  const orderItemsId = localStorage.getItem("orderItemId")
   return axios({
       method: "PATCH",
       url: `/order-items/${orderItemsId}`,
@@ -79,7 +82,10 @@ const edit_order_items = async (order_id, product_id, quantity) => {
     });
 };
 
+
 const delete_order_items = async () => {
+ const orderItemsId = localStorage.getItem("orderItemId")
+
   return axios({
     method: "DELETE",
     url: `/order-items/${orderItemsId}`,

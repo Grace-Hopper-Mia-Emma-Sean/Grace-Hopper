@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useState} from "react";
+
 
 //Payment Details
 const payment_details = async () => {
@@ -15,6 +15,7 @@ const payment_details = async () => {
 };
 
 const edit_payment_details = async (order_id,amount, provider, status) => {
+  const paymentDetailsId = localStorage.getItem("paymentDetailId")
   return axios({
     method: "PATCH",
     url: `/payment-details/${paymentDetailsId}`,
@@ -33,16 +34,7 @@ const edit_payment_details = async (order_id,amount, provider, status) => {
 };
 
 const delete_payment_details = async () => {
- const [ paymentDetailsId, setPaymentDetailsId ] = useState([])
-  useEffect(() => {
-    const fetchUserPayment = async () => {
-        const resp = await user_payment() 
-        console.log(resp.data.id)
-        setPaymentDetailsId(resp.data.id)
-    }
-    fetchUserPayment()
-},[paymentDetailsId])
-
+ const paymentDetailsId = localStorage.getItem("paymentDetailId")
   return axios({
     method: "DELETE",
     url: `/payment-details/${paymentDetailsId}`,
@@ -70,12 +62,14 @@ const create_payment_details = async (order_id,amount, provider, status) => {
     },
   }).catch((error) => {
     console.error(error.response.data);
-  });
+  })
+  
 };
 
 //User Payment
 
 const user_payment = async () => {
+
   const token = localStorage.getItem("token");
   return axios({
     method: "GET",
@@ -86,33 +80,37 @@ const user_payment = async () => {
     },
   }).catch((error) => {
     console.error(error.response.data);
-  });
+  })
 };
 
-const edit_user_payment = async (user_id,payment_type,provider,account_no, expiry) => {
-  const token = localStorage.getItem("token");
-  return axios({
-    method: "PATCH",
-    url: `/user-payment/${userPaymentId}`,
-    data: {
-      id: userPaymentId,
-      user_id:user_id ,
-      payment_type: payment_type,
-      provider: provider,
-      account_no: account_no,
-      expiry:expiry,
-    },
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch((error) => {
-    console.error(error.response.data);
-  });
-};
+
+// const edit_user_payment = async (user_id,payment_type,provider,account_no,expiry) => {
+//   const token = localStorage.getItem("token");
+//   const userPaymentId = localStorage.getItem("user_paymentId")
+
+//   return axios({
+//     method: "PATCH",
+//     url: `/user-payment/${userPaymentId}`,
+//     data: {
+//       user_id: user_id,
+//       payment_type: payment_type,
+//       provider: provider,
+//       account_no: account_no,
+//       expiry: expiry,
+//     },
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }).catch((error) => {
+//     console.error(error.response.data);
+//   });
+// };
 
 const delete_user_payment = async () => {
  const token = localStorage.getItem("token");
+ const userPaymentId = localStorage.getItem("user_paymentId")
+
  return axios({
     method: "DELETE",
     url: `/user-payment/${userPaymentId}`,
@@ -153,7 +151,7 @@ export {
   delete_payment_details,
   create_payment_details,
   user_payment,
-  edit_user_payment,
+  // edit_user_payment,
   delete_user_payment,
   create_user_payment,
 };

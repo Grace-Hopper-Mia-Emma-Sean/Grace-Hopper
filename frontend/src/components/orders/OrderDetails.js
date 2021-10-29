@@ -15,9 +15,14 @@ export function OrderDetails() {
     return (
         <>
             <span>Order Details</span>
+            {orderDetails.forEach(orderDetail => {
+                localStorage.setItem("orderdetail_id", JSON.stringify(orderDetail.id))
+
+            })}
             { orderDetails && orderDetails.map (orderDetail => {
                 return (
                     <div className="order_details" key={orderDetail.id}> 
+                    <ul> Order Details ID: {orderDetail.id} </ul>
                     <ul> Total: {orderDetail.total} </ul>
                     </div>
                 )

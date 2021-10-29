@@ -102,7 +102,15 @@ export default function App() {
         <Route exact path="/order_details" component={OrderDetails} />
         <Route exact path="/order_items" component={OrderItems} />
         <Route exact path="/payment_details" component={PaymentDetails} />
-        <Route exact path="/user_payment" component={UserPayment} />
+
+        <Route exact path="/user_payment" >
+            <UserPayment 
+            loggedIn={loggedIn}
+            token={token}
+            setLoggedIn={setLoggedIn}
+            setToken={setToken}
+            />
+         </Route>
 
         <Route exact path="/create_order_items" component={CreateOrderItems} />
         <Route
@@ -134,7 +142,7 @@ export default function App() {
         />
         <Route
           exact
-          path="/delete_user_payment"
+          path="/delete_payment_details"
           component={DeletePaymentDetails}
         />
 
