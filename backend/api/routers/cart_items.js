@@ -11,7 +11,7 @@ const {
   getShoppingSessionByUserId,
 } = require("../../db");
 
-const { authenticate, admin } = require("../utils");
+const { authenticate, admin, owner } = require("../utils");
 
 cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
   const role = await getUserById(req.user.id);
@@ -56,8 +56,8 @@ cartItemsRouter.get(
   authenticate,
   owner,
   async (req, res, next) => {
-    const role = await getUserById(req.user.id);
-    if (role.isAdmin !== true) return res.sendStatus(403);
+    // const role = await getUserById(req.user.id);
+    // if (role.isAdmin !== true) return res.sendStatus(403);
     const cartItems = await getCartItemsByUserId(req.params.user_id);
     res.send(cartItems);
   }
