@@ -1,6 +1,6 @@
 const { client } = require("../client");
 
-const createCartItems = async ({ product_id, quantity }) => {
+const createCartItems = async ({ product_id, quantity, user_id }) => {
   try {
     const {
       rows: [cartItems],
