@@ -27,6 +27,7 @@ import {
   CartTable,
   AdminTable,
   ProductsTable,
+  CartCard,
 } from "./components";
 
 export default function App() {
@@ -57,6 +58,7 @@ export default function App() {
         username={username}
         loggedIn={loggedIn}
         token={token}
+        admin={admin}
         setLoggedIn={setLoggedIn}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -150,6 +152,7 @@ export default function App() {
           path="/create_order_details"
           component={CreateOrderDetails}
         />
+        <Route exact path="/cart" component={CartCard}></Route>
         <Route exact path="/admin" component={AdminTable}></Route>
         <Route exact path="/admin/users" component={UsersTable}></Route>
         <Route exact path="/admin/cart" component={CartTable}></Route>

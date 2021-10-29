@@ -13,6 +13,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { CardHeader } from "@material-ui/core";
+import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -82,6 +83,7 @@ export {
   CardActions,
   CardContent,
   CardHeader,
+  CardMedia,
   Container,
   createTheme,
   CssBaseline,

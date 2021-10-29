@@ -14,7 +14,7 @@ const createCartItem = async (userId, productId, quantity) => {
     },
   })
     .catch((error) => {
-      throw error.response.data.error;
+      console.error(error.response.data.error);
     })
     .then((response) => {
       response.data; // find a way to avoid having to use alert
@@ -36,13 +36,13 @@ const getCartItems = async (token) => {
     })
     .then((response) => {
       response.data;
-      console.log(response);
+      console.error(response);
       localStorage.setItem("cart", JSON.stringify(response.data));
     });
 };
 
 const getCartItemsByUserId = async (token, id) => {
-  console.log(id);
+  console.log(token, id);
   return axios({
     method: "GET",
     url: `/cart-items/${id}`,
@@ -52,11 +52,12 @@ const getCartItemsByUserId = async (token, id) => {
     },
   })
     .catch((error) => {
-      throw error.response.data.error;
+      console.error(error.response.data.error);
     })
     .then((response) => {
       response.data;
-      localStorage.setItem("product", JSON.stringify(response.data));
+      console.log(response.data);
+      localStorage.setItem("cart", JSON.stringify(response.data));
     });
 };
 
@@ -91,7 +92,7 @@ const deleteCartItem = async (token, userId, productId, quantity) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .catch((error) => console.error(error.response.data))
+    .catch((error) => console.error(error.response.data.error))
     .then((response) => {
       response.data;
       // find a way to avoid having to use alert

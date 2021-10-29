@@ -13,6 +13,8 @@ export function Testing({ loggedIn }) {
           <br />
           <Link to="*">404</Link>
           <br />
+          <Link to="/cart">Cart</Link>
+          <br />
           <Link to="/admin">Admin</Link>
           <br />
           <Link to="/admin/users">Admin - Users</Link>

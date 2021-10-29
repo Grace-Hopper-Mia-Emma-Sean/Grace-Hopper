@@ -71,6 +71,7 @@ export function Navbar({
   setLoggedIn,
   searchTerm,
   setSearchTerm,
+  admin,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -184,7 +185,7 @@ export function Navbar({
                 Register
               </Button>
             ) : null}
-            {loggedIn ? (
+            {loggedIn && admin === true ? (
               <Button
                 component={Link}
                 to="/admin"
@@ -199,17 +200,19 @@ export function Navbar({
               </Button>
             ) : null}
             <CartIcon />
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {loggedIn && admin === true ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : null}
             {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
           </Box>
         </Toolbar>
