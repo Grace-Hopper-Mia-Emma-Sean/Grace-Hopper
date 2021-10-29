@@ -34,6 +34,7 @@ cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
       session_id: session.session_id,
       product_id: req.body.product_id,
       quantity: req.body.quantity,
+      user_id: req.body.user_id,
     });
     res.send({
       message: `cart item added successfully for user id ${req.params.user_id}`,
