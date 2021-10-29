@@ -7,48 +7,97 @@ import {
   CardMedia,
   Button,
   Typography,
+  Box,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Stack,
 } from "../MUI";
 
-import { getCartItemsByUserId } from "../../api";
+import { getCartItemsByUserId, getCartItems } from "../../api";
 import { useState, useEffect } from "react";
 
 export function CartCard() {
   const [cart, setCart] = useState([]);
+  const [quantity, setQuantity] = useState("");
+
+  const quantityChange = (e) => setQuantity(e.target.value);
+
+  // useEffect(async () => {
+  //   const token = localStorage.getItem("token");
+  //   const id = localStorage.getItem("id");
+  //   await getCartItemsByUserId(token, id)
+  //     .then(() => {
+  //       console.log(localStorage.getItem("cart"));
+  //       setCart([JSON.parse(localStorage.getItem("cart"))]);
+  //     })
+  //     .catch((error) => console.log(error))
+  //     .finally(localStorage.removeItem("cart"));
+  // }, []);
 
   useEffect(async () => {
-    const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
-    await getCartItemsByUserId(token, id)
+    await getCartItems(localStorage.getItem("token"))
       .then(() => {
         console.log(localStorage.getItem("cart"));
-        setCart([JSON.parse(localStorage.getItem("cart"))]);
+        setCart(JSON.parse(localStorage.getItem("cart")));
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
   }, []);
 
-  const badgeCount = cart === null ? 0 : cart.length;
+  const image = `http://placeimg.com/128/128/tech/${Math.floor(
+    Math.random() * 20 + 1
+  )}`;
+
+  // const badgeCount = cart === null ? 0 : cart.length;
 
   return (
-    <Card sx={{ maxWidth: 256 }}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {/* {cart.product} */}
-        </Typography>
-        <Typography variant="body2" color="text.secondary"></Typography>
-        <CardMedia
-          component="img"
-          height="128"
-          width="128"
-          image="http://placeimg.com/128/128/tech"
-          alt="tech"
-        />
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <div>
+      {cart.map((cart) => {
+        return (
+          <Card sx={{ maxWidth: 256 }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {cart.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary"></Typography>
+              <CardMedia
+                component="img"
+                height="128"
+                width="128"
+                image={image}
+                alt="tech"
+              />
+              <Typography gutterBottom variant="h6" component="div">
+                {cart.description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Quantity
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={quantity}
+                    label="Quantity"
+                    onChange={quantityChange}
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
+                      return <MenuItem value={number}>{number}</MenuItem>;
+                    })}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Button variant="contained">Remove from Cart</Button>
+            </CardActions>
+          </Card>
+        );
+      })}
+    </div>
   );
 }
 
