@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const createCartItem = async (userId, productId, quantity) => {
+const createCartItem = async (productId, quantity, userId) => {
   return axios({
     method: "POST",
     url: `/cart/${userId}`,
     data: {
       productId: productId,
       quantity: quantity,
+      userId: userId,
     },
     headers: {
       "Content-Type": "application/json",

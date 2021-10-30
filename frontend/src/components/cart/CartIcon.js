@@ -1,6 +1,8 @@
-import { IconButton, Badge, ShoppingCartIcon } from "../MUI";
+import { IconButton, Badge, ShoppingCartIcon, Button } from "../MUI";
 import { useState, useEffect } from "react";
+import { Link } from "react";
 import { getCartItems, getCartItemsByUserId } from "../../api";
+import { useHistory } from "react-router-dom";
 
 export function CartIcon() {
   const [cart, setCart] = useState([]);
@@ -19,16 +21,20 @@ export function CartIcon() {
 
   const badgeCount = cart == [""] ? 0 : cart.length;
 
+  // {
+  //   loggedIn ? <Redirect to="/" /> : null;
+  // }
+
   return (
     <div>
       {badgeCount > 0 ? (
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" component={Link} to="cart">
           <Badge badgeContent={badgeCount} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
       ) : (
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" component={Link} to="/cart">
           <ShoppingCartIcon />
         </IconButton>
       )}
