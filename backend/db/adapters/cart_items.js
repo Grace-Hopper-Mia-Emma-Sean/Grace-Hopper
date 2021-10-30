@@ -34,10 +34,7 @@ const getCartItems = async () => {
 
 const getCartItemsByUserId = async (id) => {
   try {
-    const {
-      rows: [cartItems],
-    } = await client.query(
-      `
+    const { rows } = await client.query(`
       SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
       FROM cart_items
       LEFT JOIN products
@@ -46,7 +43,7 @@ const getCartItemsByUserId = async (id) => {
     `,
       [id]
     );
-    return cartItems;
+    return rows;
   } catch (error) {
     throw error;
   }
