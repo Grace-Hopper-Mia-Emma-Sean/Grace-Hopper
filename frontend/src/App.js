@@ -27,6 +27,8 @@ import {
   CartTable,
   AdminTable,
   ProductsTable,
+  EditProduct,
+  CreateProduct,
   CartCard,
 } from "./components";
 
@@ -39,6 +41,7 @@ export default function App() {
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [token, setToken] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [productToEdit, setProductToEdit] = useState('')
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -164,7 +167,15 @@ export default function App() {
         <Route exact path="/admin" component={AdminTable}></Route>
         <Route exact path="/admin/users" component={UsersTable}></Route>
         <Route exact path="/admin/cart" component={CartTable}></Route>
-        <Route exact path="/admin/products" component={ProductsTable}></Route>
+        <Route exact path="/admin/products">
+          <ProductsTable productToEdit={productToEdit} setProductToEdit={setProductToEdit}/>
+        </Route>
+        <Route exact path="/editProduct">
+          <EditProduct productToEdit={productToEdit} />
+        </Route>
+        <Route exact path="/createproduct">
+          <CreateProduct />
+        </Route>
         <Route exact path="/">
           <Products searchTerm={searchTerm} />
         </Route>
