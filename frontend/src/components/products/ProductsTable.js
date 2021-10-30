@@ -5,7 +5,7 @@ import { getProducts } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function ProductsTable({productToEdit, setProductToEdit}) {
+export function ProductsTable({ productToEdit, setProductToEdit }) {
   const [product, setProduct] = useState([]);
 
   useEffect(async () => {
@@ -25,11 +25,17 @@ export function ProductsTable({productToEdit, setProductToEdit}) {
 
   const renderEditButton = (item) => {
     return (
-      <Link to ="/editProduct">
-      <button onClick={function (){console.log(item.row), setProductToEdit(item.row)}}>Edit</button>
+      <Link to="/editProduct">
+        <button
+          onClick={function () {
+            console.log(item.row), setProductToEdit(item.row);
+          }}
+        >
+          Edit
+        </button>
       </Link>
-    )
-  }
+    );
+  };
 
   const columns = [
     {
@@ -77,7 +83,7 @@ export function ProductsTable({productToEdit, setProductToEdit}) {
       headerName: "Category",
       headerAlign: "center",
       width: 100,
-      align: "center"
+      align: "center",
     },
     {
       field: "edit",
@@ -85,15 +91,15 @@ export function ProductsTable({productToEdit, setProductToEdit}) {
       headerAlign: "center",
       width: 100,
       align: "center",
-      renderCell: renderEditButton
-    }
+      renderCell: renderEditButton,
+    },
   ];
   return (
     <div>
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
-        <Link to= "/createproduct">
-        <button>Add a New Product</button>
+        <Link to="/createProduct">
+          <button>Add a New Product</button>
         </Link>
       </div>
     </div>

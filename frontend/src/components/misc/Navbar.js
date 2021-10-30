@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Logout, CartIcon } from "..";
+import { Logout, CartIcon, OpenDrawer } from "..";
 
 import {
   styled,
@@ -73,64 +73,11 @@ export function Navbar({
   setSearchTerm,
   admin,
 }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <OpenDrawer />
           <Button
             component={Link}
             to="/"
@@ -185,7 +132,7 @@ export function Navbar({
                 Register
               </Button>
             ) : null}
-            {loggedIn && admin === true ? (
+            {loggedIn && admin === "true" ? (
               <Button
                 component={Link}
                 to="/admin"
@@ -200,14 +147,14 @@ export function Navbar({
               </Button>
             ) : null}
             <CartIcon />
-            {loggedIn && admin === true ? (
+            {loggedIn ? (
               <IconButton
                 size="large"
                 edge="end"
                 aria-label="account of current user"
-                aria-controls={menuId}
+                // aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                // onClick={handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
@@ -217,6 +164,7 @@ export function Navbar({
           </Box>
         </Toolbar>
       </AppBar>
+      <OpenDrawer loggedIn={loggedIn} admin={admin} />
     </Box>
   );
 }
