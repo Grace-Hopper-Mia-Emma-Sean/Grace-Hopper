@@ -1,21 +1,18 @@
 import {delete_user_payment } from "../../api";
 import {useState, useEffect} from "react";
 
-export function DeleteUserPayment() {
+export function DeleteUserPayment({userPaymentId}) {
     const [ deleteUserPayment, setDeleteUserPayment ] = useState([])
-        useEffect(() => {
-            const fetchDeleteUserPayment= async () => {
-                const resp = await delete_user_payment() 
-                console.log(resp)
-                setDeleteUserPayment(resp)
-                console.log(deleteUserPayment)
-               
-            }
-            fetchDeleteUserPayment()
-        },[])
+        
+        const handleSubmit = (event)=> {
+            event.preventDefault();
+
+            delete_user_payment(userPaymentId) 
+        }
+       
     return (
         <>
-            <form onSubmit={DeleteUserPayment}>  
+            <form onSubmit={handleSubmit}>  
                 <div ClassName="DeleteUserPayment">
                     <button type="submit" > Delete User Payment</button>
                     

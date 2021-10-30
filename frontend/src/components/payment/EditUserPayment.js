@@ -1,74 +1,84 @@
-// import {edit_user_payment} from "../../api";
-import axios from "axios";
-import {useState, useEffect} from "react";
+import { ClassNames } from "@emotion/react";
+import { InsertEmoticon } from "@material-ui/icons";
+import * as React from "react";
+import { useState, useEffect } from 'react'
+import { Link, Redirect } from "react-router-dom";
+
+import {edit_user_payment} from '../../api'
+
+import {TextField, makeStyles} from '../MUI'
 
 
-export function EditUserPayment({userPaymentId, token}) {
-    const [userId, setUserId] = useState('')
-    const [paymentType, setPaymentType] = useState('')
+
+const useStyles = makeStyles((theme) => ({
+    editUserPayment: {
+        align: "center"
+    },
+    editItem: {
+        marginBottom: '10'
+    }
+}))
+
+export function EditUserPayment({userPaymentToEdit}){
+    const classes = useStyles();
+    
+    const [orderId, setOrderId] = useState('')
+    const [amountPay, setAmountPay] = useState('')
     const [paymentProvider, setPaymentProvider] = useState('')
-    const [accountNo, setAccountNo] = useState('')
-    const [expireDate, setExpireDate] = useState('')
-    const [editUserPayment, setEditUserPayment ] = useState(false)
+    const [statusPay, setStatusPay] = useState(false)
 
-    // const token = localStorage.getItem("token");
-    // const userPaymentId = localStorage.getItem("user_paymentId")
+    const id = paymentToEdit.id
 
 
-        useEffect(() => {
-            
-            return axios({
-                method: "PATCH",
-                url: `/user-payment/${userPaymentId}`,
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    
-                    user_id: userId,
-                    payment_type: paymentType,
-                    provider: paymentProvider,
-                    account_no: accountNo,
-                    expiry: expireDate,
-                
-                    })
-                }) .then (response => {
-                    console.log(response)
-                    setEditUserPayment(true)
-                    
-                })
-                .catch((error) => {
-                    console.error(error.response.data);
-                    });
-        
-        },[])
+//   return axios({
+//     method: "PATCH",
+//     url: `/user-payment/${id}`,
+//     data: {
+//       user_id: user_id,
+//       payment_type: payment_type,
+//       provider: provider,
+//       account_no: account_no,
+//       expiry: expiry,
+//     },
+
     return (
-        <>
-            <span> Edit User Payment </span>
-            <form onSubmit={EditUserPayment}>
-                <label> User ID </label>
-                <input type="text" name="user_id" value={userId} onChange={(event)=> setUserId(event.target.value)}></input>
-            
-                <label> Payment Type </label>
-                <input type="text" name="payment_type" value={paymentType} onChange={(event)=> setPaymentType(event.target.value)}></input>
-            
-                <label> Payment Provider </label>
-                <input type="text" name="provider" value={paymentProvider} onChange={(event)=> setPaymentProvider(event.target.value)}></input>
-            
-                <label> Account Number </label>
-                <input type="text" name="account_no" value={accountNo} onChange={(event)=> setAccountNo(event.target.value)}></input>
-            
-                <label> Expiration Date </label>
-                <input type="text" name="expiry" value={expireDate} onChange={(event)=> setExpireDate(event.target.value)}></input>
+        <div className={classes.editUserPaymentDetails}>
+            <div className={classes.editItem}>
+                Now Editing Payment ID: {paymentToEdit.id}
+                <br/>
+                <br/>
+                Edit Amount: <TextField onChange={function(event) {setAmountPay(event.target.value)}}/>
+            </div>
 
-                <button type="submit"> Pay Up!!</button>
-            </form>
+            <div className={classes.editItem}>
+                Now Editing Order ID: {paymentToEdit.order_id}
+                <br/>
+                <br/>
+                Edit Order ID: <TextField onChange={function(event) {setOrderId(event.target.value)}}/>
+            </div>
 
-                {/* {editUserPayment ? alert ("You've successfully paid us for what you bought!") : null} */}
-        </>
+                <br/>
+            <div className={classes.editItem}>
+                Current Payment Provider: {paymentToEdit.provider}
+                <br/>
+                Edit Payment Provider: <TextField onChange={function(event) {setPaymentProvider(event.target.value)}}/>
+            </div>
+                <br/>
+            <div className={classes.editItem}>
+                Current Status: {paymentToEdit.account_no}
+                <br/>
+                True: <TextField type="checkbox" name="statusPay" onChange={function(event) {setStatusPay(event.target.value)}} />
+            </div>
+                
+                <Link to ="/payment_details">
+                <button>Cancel</button>
+                </Link>
+
+                <Link to ="/payment_details">
+                <button onClick={function()
+                    {edit_payment_details(id, orderId, amountPay, paymentProvider, statusPay)} 
+                    }>Edit Payment Details</button>
+                </Link>
+        </div>
     )
-  }
-
-
-  
+}

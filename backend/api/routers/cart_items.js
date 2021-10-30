@@ -11,11 +11,11 @@ const {
   getShoppingSessionByUserId,
 } = require("../../db");
 
-const { authenticate, admin, owner } = require("../utils");
+const { authenticate } = require("../utils");
 
 cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
-  // const role = await getUserById(req.user.id);
-  // if (role.isAdmin !== true) return res.sendStatus(403);
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
   try {
     const user = await getUserById(req.params.user_id);
     if (!user)
@@ -23,17 +23,17 @@ cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
         name: "NoUserError",
         message: `No user exists with id ${req.params.user_id}`,
       });
-    // const session = await getShoppingSessionByUserId(req.params.user_id);
-    // if (!session)
-    //   return res.status(401).send({
-    //     name: "NoShoppingSessionError",
-    //     message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
-    //   });
-    // console.log(session);
+    const session = await getShoppingSessionByUserId(req.params.user_id);
+    if (!session)
+      return res.status(401).send({
+        name: "NoShoppingSessionError",
+        message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
+      });
+    console.log(session);
     const cartItems = await createCartItems({
+      session_id: session.session_id,
       product_id: req.body.product_id,
       quantity: req.body.quantity,
-      user_id: req.body.user_id,
     });
     res.send({
       message: `cart item added successfully for user id ${req.params.user_id}`,
@@ -44,24 +44,19 @@ cartItemsRouter.post("/:user_id", authenticate, async (req, res, next) => {
   }
 });
 
-cartItemsRouter.get("/", authenticate, admin, async (req, res, next) => {
+cartItemsRouter.get("/", authenticate, async (req, res, next) => {
   const role = await getUserById(req.user.id);
   if (role.isAdmin !== true) return res.sendStatus(403);
   const cartItems = await getCartItems();
   res.send(cartItems);
 });
 
-cartItemsRouter.get(
-  "/:user_id",
-  authenticate,
-  owner,
-  async (req, res, next) => {
-    // const role = await getUserById(req.user.id);
-    // if (role.isAdmin !== true) return res.sendStatus(403);
-    const cartItems = await getCartItemsByUserId(req.params.user_id);
-    res.send(cartItems);
-  }
-);
+cartItemsRouter.get("/:user_id", authenticate, async (req, res, next) => {
+  const role = await getUserById(req.user.id);
+  if (role.isAdmin !== true) return res.sendStatus(403);
+  const cartItems = await getCartItemsByUserId(req.params.user_id);
+  res.send(cartItems);
+});
 
 cartItemsRouter.patch("/:user_id", authenticate, async (req, res, next) => {
   const role = await getUserById(req.user.id);
@@ -73,12 +68,12 @@ cartItemsRouter.patch("/:user_id", authenticate, async (req, res, next) => {
         name: "NoUserError",
         message: `No user exists with id ${req.params.user_id}`,
       });
-    // const session = await getShoppingSessionByUserId(req.params.user_id);
-    // if (!session)
-    //   return res.status(404).send({
-    //     name: "NoShoppingSessionError",
-    //     message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
-    //   });
+    const session = await getShoppingSessionByUserId(req.params.user_id);
+    if (!session)
+      return res.status(404).send({
+        name: "NoShoppingSessionError",
+        message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
+      });
     const cartItems = await getCartItemsByUserId(req.params.user_id);
     if (!cartItems)
       return res.status(404).send({

@@ -7,7 +7,22 @@ export function Logout({ setLoggedIn }) {
       <IconButton
         underline="hover"
         onClick={() => {
-          let keys = ["username", "token", "admin", "id", "user_paymentId", "orderdetail_id", "orderItemId", "paymentDetailId"];
+          let keys = [
+          "username", 
+          "token", 
+          "admin", 
+          "id", 
+          "userPayments", 
+          "userPaymentId",
+          "productId", 
+          "payment_details_Id", 
+          "payment_details",
+          "orderItems",
+          "orderDetails",
+          "orderDetailId",
+          "users"
+        
+        ];
           keys.forEach((k) => localStorage.removeItem(k));
           setLoggedIn(false);
         }}

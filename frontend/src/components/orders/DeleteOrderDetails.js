@@ -1,25 +1,45 @@
-import {delete_order_details } from "../../api";
-import {useState, useEffect} from "react";
+import { ClassNames } from "@emotion/react";
+import { InsertEmoticon } from "@material-ui/icons";
+import * as React from "react";
+import { useState, useEffect } from 'react'
+import { Link, Redirect } from "react-router-dom";
 
-export function DeleteOrderDetails() {
-    const [ deleteOrderDetails, setDeleteOrderDetails ] = useState([])
-        useEffect(() => {
-            const fetchDeleteOrderDetails = async () => {
-                const resp = await delete_order_details () 
-                console.log(resp)
-                setDeleteOrderDetails(resp.data)
-                console.log(deleteOrderDetails)
-            }
-            fetchDeleteOrderDetails()
-        },[])
+import {delete_order_details} from '../../api'
+
+import { makeStyles} from '../MUI'
+
+
+
+const useStyles = makeStyles((theme) => ({
+    deleteOrderDetails: {
+        align: "center"
+    },
+    editItem: {
+        marginBottom: '10'
+    }
+}))
+
+
+export function DeleteOrderDetails({orderDetailsToDelete}){
+    const classes = useStyles();
+    const id = orderDetailsToDelete.id
+
     return (
-        <>
-            <form onSubmit={DeleteOrderDetails}>  
-                <div ClassName="DeleteOrderDetails">
-                    <button type="submit"> Delete Order Details</button>
+        <div className={classes.deleteOrderDetails}>
+            <div className={classes.editItem}>
+                Deleting Order Detail ID: {orderDetailsToDelete.id}
+                <br/>
+                <br/>
+            </div>
+                <Link to ="/order_details">
+                <button>Cancel</button>
+                </Link>
 
-                </div>
-            </form>
-        </>
+                <Link to ="/order_details">
+                <button onClick={function()
+                    {delete_order_details(id)} 
+                    }>Delete</button>
+                </Link>
+        </div>
     )
-  }
+}

@@ -31,12 +31,12 @@ const getAllUserPaymentById = async (id) =>{
 
 const createUserPayment = async ({user_id, payment_type, provider, account_no, expiry}) => {
     try {
-        const { rows } = await client.query(`
+        const { rows: [userPayment] } = await client.query(`
             INSERT INTO user_payment("user_id", payment_type, provider, account_no, expiry)
             VALUES ($1, $2, $3, $4, $5)
             RETURNING *;
         `,[user_id, payment_type, provider, account_no, expiry])
-        return rows;
+        return userPayment;
     }catch (error) {
         throw error;
     }

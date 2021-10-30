@@ -27,7 +27,7 @@ import {
   delete_payment_details,
   create_payment_details,
   user_payment,
-//   edit_user_payment,
+  edit_user_payment,
   delete_user_payment,
   create_user_payment,
 } from "./payment";
@@ -48,7 +48,7 @@ export {
   delete_payment_details,
   create_payment_details,
   user_payment,
-//   edit_user_payment,
+  edit_user_payment,
   delete_user_payment,
   create_user_payment,
   createCartItem,

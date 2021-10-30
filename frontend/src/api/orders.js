@@ -11,18 +11,24 @@ const order_details = async () => {
     },
   }).catch((error) => {
     console.error(error.response.data);
+  })
+  .then((response) => {
+    const orderDetails = response.data;
+    console.log(response);
+    localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+    localStorage.setItem("orderDetailId", JSON.stringify(orderDetails.map (orderDetail => orderDetail.id)));
+
   });
 };
 
-const edit_order_details = async (user_id, payment_id, total) => {
-  const orderDetailsId = localStorage.getItem("orderdetail_id")
+const edit_order_details = async (id, userId, paymentId, totalOf) => {
   return axios({
       method: "PATCH",
-      url: `/order-details/${orderDetailsId}`,
+      url: `/order-details/${id}`,
       data: {
-        user_id: user_id,
-        payment_id: payment_id,
-        total: total,
+        user_id: userId,
+        payment_id: paymentId,
+        total: totalOf
       },
       headers: {
         "Content-Type": "application/json",
@@ -32,11 +38,11 @@ const edit_order_details = async (user_id, payment_id, total) => {
     });
 };
 
-const delete_order_details = async () => {
- const orderDetailsId = localStorage.getItem("orderdetail_id")
+const delete_order_details = async (id) => {
+
   return axios({
     method: "DELETE",
-    url: `/order-details/${orderDetailsId}`,
+    url: `/order-details/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -64,15 +70,15 @@ const create_order_details = async (user_id, payment_id, total) => {
 
 //OrderItems
 
-const edit_order_items = async (order_id, product_id, quantity) => {
-  const orderItemsId = localStorage.getItem("orderItemId")
+const edit_order_items = async (id, orderDetailId, productId, quantityOf) => {
+
   return axios({
       method: "PATCH",
-      url: `/order-items/${orderItemsId}`,
+      url: `/order-items/${id}`,
       data: {
-      order_id: order_id,
-      product_id: product_id,
-      quantity: quantity,
+      order_id: orderDetailId,
+      product_id: productId,
+      quantity: quantityOf,
       },
       headers: {
         "Content-Type": "application/json",
@@ -123,6 +129,13 @@ const order_items = async () => {
     },
   }).catch((error) => {
     console.error(error.response.data);
+  })
+  .then((response) => {
+    const orderItems = response.data;
+    console.log(response);
+    localStorage.setItem("orderItems", JSON.stringify(orderItems));
+    // localStorage.setItem("orderItemId", JSON.stringify(orderItems.map (orderItem => orderItem.id)));
+
   });
 };
 

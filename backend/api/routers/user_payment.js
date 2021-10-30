@@ -9,7 +9,8 @@ const {
   destroyUserPayment,
 } = require("../../db");
 
-const { authenticate, admin } = require("../utils");
+
+const {authenticate, admin} = require('../utils')
 
 userPaymentRouter.post("/", authenticate, admin, async (req, res, next) => {
   const { id, payment_type, provider, account_no, expiry } = req.body;
@@ -36,59 +37,50 @@ userPaymentRouter.get("/", authenticate, admin, async (req, res, next) => {
   }
 });
 
-userPaymentRouter.patch(
-  "/:userPaymentId",
-  authenticate,
-  admin,
-  async (req, res, next) => {
-    const { user_id, payment_type, provider, account_no, expiry } = req.body;
-    const { userPaymentId } = req.params;
-    const updateFields = {
-      id: userPaymentId,
-      user_id,
-      payment_type,
-      provider,
-      account_no,
-      expiry,
-    };
+userPaymentRouter.patch("/:userPaymentId", authenticate, admin, async (req, res, next) => {
+  const { user_id, payment_type, provider, account_no, expiry } = req.body;
+  const { userPaymentId } = req.params;
+  const updateFields = {
+    id: userPaymentId,
+    user_id,
+    payment_type,
+    provider,
+    account_no,
+    expiry,
+  };
 
-    try {
-      const getUserPayment = await getAllUserPaymentById(userPaymentId);
-      if (!getUserPayment) {
-        res.status(401);
-        next({
-          name: "NoOrderItemsError",
-          message: "No oder item exist to update",
-        });
-      } else {
-        console.log("Get Order Items to Update:", getUserPayment);
-        const updatedUserPayment = await updateUserPayment(
-          userPaymentId,
-          updateFields
-        );
-        console.log("Updated Order Items:", updatedUserPayment);
-        res.send(updatedUserPayment);
-      }
-    } catch (error) {
-      next(error);
+  try {
+    const getUserPayment = await getAllUserPaymentById(userPaymentId);
+    if (!getUserPayment) {
+      res.status(401);
+      next({
+        name: "NoOrderItemsError",
+        message: "No oder item exist to update",
+      });
+    } else {
+      console.log("Get Order Items to Update:", getUserPayment);
+      const updatedUserPayment = await updateUserPayment(
+        userPaymentId,
+        updateFields
+      );
+      console.log("Updated Order Items:", updatedUserPayment);
+      res.send(updatedUserPayment);
     }
+  } catch (error) {
+    next(error);
   }
-);
+});
 
-userPaymentRouter.delete(
-  "/:userPaymentId",
-  authenticate,
-  admin,
-  async (req, res, next) => {
-    const { userPaymentId } = req.params;
+//userLoggedIn
+userPaymentRouter.delete("/:userPaymentId", authenticate, admin, async (req, res, next) => {
+  const { userPaymentId } = req.params;
 
-    try {
-      const deleteUserPayment = await destroyUserPayment(userPaymentId);
-      res.send(deleteUserPayment);
-    } catch ({ name, message }) {
-      next({ name, message });
-    }
+  try {
+    const deleteUserPayment = await destroyUserPayment(userPaymentId);
+    res.send(deleteUserPayment);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
-);
+});
 
 module.exports = userPaymentRouter;
