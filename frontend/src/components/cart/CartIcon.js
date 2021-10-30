@@ -28,13 +28,13 @@ export function CartIcon() {
   return (
     <div>
       {badgeCount > 0 ? (
-        <IconButton size="large" color="inherit" component={Link} to="cart">
+        <IconButton size="large" color="inherit" textDecoration="none">
           <Badge badgeContent={badgeCount} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
       ) : (
-        <IconButton size="large" color="inherit" component={Link} to="/cart">
+        <IconButton size="large" color="inherit" textDecoration="none">
           <ShoppingCartIcon />
         </IconButton>
       )}

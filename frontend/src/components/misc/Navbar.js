@@ -146,7 +146,9 @@ export function Navbar({
                 Admin
               </Button>
             ) : null}
-            <CartIcon />
+            <Link to="/cart">
+              <CartIcon />
+            </Link>
             {loggedIn ? (
               <IconButton
                 size="large"

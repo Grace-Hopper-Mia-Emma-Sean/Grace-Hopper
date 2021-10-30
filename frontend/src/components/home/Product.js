@@ -95,7 +95,7 @@ export function Products({ searchTerm }) {
                             SKU: {product.sku}
                           </Typography>
                         </Grid>
-                        <CreateCartItem />
+                        <CreateCartItem product={product} />
                       </Grid>
                       <Grid item>
                         <Typography variant="subtitle1">

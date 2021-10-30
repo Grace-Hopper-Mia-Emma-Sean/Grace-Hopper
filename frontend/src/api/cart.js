@@ -3,7 +3,7 @@ import axios from "axios";
 const createCartItem = async (productId, quantity, userId) => {
   return axios({
     method: "POST",
-    url: `/cart/${userId}`,
+    url: `/cart-items/${userId}`,
     data: {
       productId: productId,
       quantity: quantity,
@@ -11,11 +11,11 @@ const createCartItem = async (productId, quantity, userId) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   })
     .catch((error) => {
-      console.error(error.response.data.error);
+      console.error(error.response.data);
     })
     .then((response) => {
       response.data; // find a way to avoid having to use alert
