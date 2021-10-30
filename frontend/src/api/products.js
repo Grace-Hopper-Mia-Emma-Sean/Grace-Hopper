@@ -18,4 +18,62 @@ const getProducts = async () => {
     });
 };
 
-export default getProducts;
+const editProduct = async(id, name, description, sku, category, price, discount, quantity) => {
+  const token = localStorage.getItem("token")
+  console.log(token)
+  return axios({
+    method: "PATCH",
+    url: `/products/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + token
+    },
+    data: JSON.stringify({
+      name: name,
+      description: description,
+      SKU: sku,
+      category_id: category,
+      price: price,
+      discount_id: discount,
+      quantity: quantity
+    })
+  }).catch((error)=>  {
+    console.error(error.response.data)
+  })
+  .then((response) => {
+    response.data;
+    console.log(response);
+    window.location.reload(true)
+  })
+}
+
+const createProduct = async(name, description, sku, category, price, discount, quantity ) => {
+  const token = localStorage.getItem("token")
+  console.log(token)
+  return axios ({
+    method: "POST",
+    url: '/products',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + token
+    },
+    data: JSON.stringify({
+      name: name,
+      description: description,
+      SKU: sku,
+      category_id: category,
+      price: price,
+      discount_id: discount,
+      quantity: quantity
+    })
+  }).catch((error)=>  {
+    console.error(error.response.data)
+  })
+  .then((response) => {
+    response.data;
+    console.log(response);
+    window.location.reload(true)
+  })
+}
+
+export { getProducts, editProduct, createProduct };
