@@ -12,7 +12,7 @@ import {
   MenuIcon,
 } from "../MUI";
 
-export function OpenDrawer({ login, admin }) {
+export function OpenDrawer({ loggedIn, admin }) {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const useStyles = makeStyles(() => ({
@@ -57,8 +57,7 @@ export function OpenDrawer({ login, admin }) {
             </ListItemText>
           </ListItem>
           <Divider />
-          {localStorage.getItem("username") &&
-          localStorage.getItem("admin") === "true" ? (
+          {loggedIn && admin == "true" ? (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>
                 <Link to="/admin" className={classes.link}>
@@ -68,7 +67,7 @@ export function OpenDrawer({ login, admin }) {
             </ListItem>
           ) : null}
           <Divider />
-          {!localStorage.getItem("username") ? (
+          {!loggedIn ? (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>
                 <Link to="/login" className={classes.link}>
@@ -78,7 +77,7 @@ export function OpenDrawer({ login, admin }) {
             </ListItem>
           ) : null}
           <Divider />
-          {!localStorage.getItem("username") ? (
+          {!loggedIn ? (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>
                 <Link to="/register" className={classes.link}>
@@ -88,7 +87,7 @@ export function OpenDrawer({ login, admin }) {
             </ListItem>
           ) : null}
           <Divider />
-          {localStorage.getItem("username") ? (
+          {loggedIn ? (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>
                 <Link to="/" className={classes.link}>

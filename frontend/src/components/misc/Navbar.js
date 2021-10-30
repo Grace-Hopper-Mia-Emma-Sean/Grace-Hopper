@@ -77,7 +77,7 @@ export function Navbar({
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <OpenDrawer />
+          <OpenDrawer loggedIn={loggedIn} admin={admin} />
           <Button
             component={Link}
             to="/"
@@ -164,7 +164,6 @@ export function Navbar({
           </Box>
         </Toolbar>
       </AppBar>
-      <OpenDrawer loggedIn={loggedIn} admin={admin} />
     </Box>
   );
 }
