@@ -43,6 +43,14 @@ export default function App() {
   const [token, setToken] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [productToEdit, setProductToEdit] = useState("");
+  const [paymentToEdit, setPaymentToEdit] = useState("");
+  const [paymentToDelete, setPaymentToDelete ] = useState("");
+  const [userPaymentToEdit, setUserPaymentToEdit] = useState("")
+  const [userPaymentToDelete, setUserPaymentToDelete] = useState("")
+  const [orderItemsToEdit, setOrderItemsToEdit] = useState("")
+  const [orderItemsToDelete, setOrderItemsToDelete] = useState("")
+  const [orderDetailsToEdit, setOrderDetailsToEdit] = useState("")
+  const [orderDetailsToDelete, setOrderDetailsToDelete] = useState("")
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -105,67 +113,119 @@ export default function App() {
             setToken={setToken}
           />
         </Route>
-        <Route exact path="/order_details" component={OrderDetails} />
-        <Route exact path="/order_items" component={OrderItems} />
-        <Route exact path="/payment_details" component={PaymentDetails} />
 
-        <Route exact path="/user_payment">
+        <Route exact path="/admin/user_payment">
           <UserPayment
             loggedIn={loggedIn}
             token={token}
             setLoggedIn={setLoggedIn}
             setToken={setToken}
+            userPaymentToEdit={userPaymentToEdit}
+            setUserPaymentToEdit={setUserPaymentToEdit}
+            userPaymentToDelete={userPaymentToDelete}
+            setUserPaymentToDelete={setUserPaymentToDelete}
+          />
+        </Route>
+
+        <Route exact path="/payment_details">
+          <PaymentDetails
+            loggedIn={loggedIn}
+            token={token}
+            setLoggedIn={setLoggedIn}
+            setToken={setToken}
+            paymentToEdit={paymentToEdit}
+            setPaymentToEdit={setPaymentToEdit}
+            paymentToDelete={paymentToDelete}
+            setPaymentToDelete={setPaymentToDelete}
+          />
+        </Route>
+
+        <Route exact path="/order_details">
+          <OrderDetails
+            loggedIn={loggedIn}
+            token={token}
+            setLoggedIn={setLoggedIn}
+            setToken={setToken}
+            orderDetailsToEdit={orderDetailsToEdit}
+            setOrderDetailsToEdit={setOrderDetailsToEdit}
+            orderDetailsToDelete={orderDetailsToDelete}
+            setOrderDetailsToDelete={setOrderDetailsToDelete}
+          />
+        </Route>
+
+        <Route exact path="/order_items">
+          <OrderItems
+            loggedIn={loggedIn}
+            token={token}
+            setLoggedIn={setLoggedIn}
+            setToken={setToken}
+            orderItemsToEdit={orderItemsToEdit}
+            setOrderItemsToEdit={setOrderItemsToEdit}
+            orderItemsToDelete={orderItemsToDelete} 
+            setOrderItemsToDelete={setOrderItemsToDelete}
           />
         </Route>
 
         <Route exact path="/create_order_items" component={CreateOrderItems} />
-        <Route
-          exact
-          path="/create_order_items"
-          component={CreateOrderDetails}
-        />
-        <Route
-          exact
-          path="/create_payment_details"
-          component={CreatePaymentDetails}
-        />
-        <Route
-          exact
-          path="/create_user_payment"
-          component={CreateUserPayment}
-        />
+        <Route exact path="/create_order_details" component={CreateOrderDetails}/>
+        <Route exact path="/create_payment_details" component={CreatePaymentDetails} />
+        <Route exact path="/create_user_payment" component={CreateUserPayment} />
 
-        <Route
-          exact
-          path="/delete_order_details"
-          component={DeleteOrderDetails}
-        />
-        <Route exact path="/delete_order_items" component={DeleteOrderItems} />
-        <Route
-          exact
-          path="/delete_user_payment"
-          component={DeleteUserPayment}
-        />
-        <Route
-          exact
-          path="/delete_payment_details"
-          component={DeletePaymentDetails}
-        />
+        <Route exact path="/delete_order_details" >
+          <DeleteOrderDetails
+          orderDetailsToDelete={orderDetailsToDelete}
+          setOrderDetailsToDelete={setOrderDetailsToDelete}
+          /></Route>
+      
 
-        <Route exact path="/edit_order_details" component={EditOrderDetails} />
-        <Route exact path="/edit_order_items" component={EditOrderItems} />
-        <Route
-          exact
-          path="/edit_payment_details"
-          component={EditPaymentDetails}
-        />
-        <Route exact path="/edit_user_payment" component={EditUserPayment} />
+        <Route exact path="/delete_order_items">
+          <DeleteOrderItems
+         orderItemsToDelete={orderItemsToDelete} 
+         setOrderItemsToDelete={setOrderItemsToDelete}
+          /></Route>
 
-        <Route
-          exact
-          path="/create_order_details"
-          component={CreateOrderDetails}
-        />
+        <Route exact path="/delete_user_payment">
+          <DeleteUserPayment
+          userPaymentToDelete={userPaymentToDelete}
+          setUserPaymentToDelete={setUserPaymentToDelete}
+          /> 
+        </Route>
+
+        <Route exact path="admin/delete_payment_details" >
+        <DeletePaymentDetails
+        paymentToDelete={paymentToDelete}
+        setPaymentToDelete={setPaymentToDelete}
+        /></Route>
+
+        <Route exact path="/edit_order_details">
+          <EditOrderDetails
+          orderDetailsToEdit={orderDetailsToEdit}
+          setOrderDetailsToEdit={setOrderDetailsToEdit}
+          paymentToEdit={paymentToEdit}
+          /></Route>
+        
+
+        <Route exact path="/edit_order_items">
+          <EditOrderItems
+            orderItemsToEdit={orderItemsToEdit}
+            setOrderItemsToEdit={setOrderItemsToEdit}
+          /> </Route>
+
+        <Route exact path="/edit_payment_details">
+        <EditPaymentDetails
+         paymentToEdit={paymentToEdit}
+         setPaymentToEdit={setPaymentToEdit}
+        /></Route>
+
+        <Route exact path="/edit_user_payment">
+        <EditUserPayment
+        userPaymentToEdit={userPaymentToEdit}
+        setUserPaymentToEdit={setUserPaymentToEdit}
+        /></Route>
+
+       
+
+
         <Route exact path="/cart" component={CartCard}></Route>
         <Route exact path="/admin" component={AdminTable}></Route>
         <Route exact path="/admin/users" component={UsersTable}></Route>

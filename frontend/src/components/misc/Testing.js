@@ -22,6 +22,15 @@ export function Testing({ loggedIn }) {
           <Link to="/admin/cart">Admin - Cart</Link>
           <br />
           <Link to="/admin/products">Admin - Products</Link>
+          <br />
+          <Link to="/admin/user_payment">Admin - User Payment</Link>
+          <br />
+          <Link to="/payment_details">Testing - Payment Details</Link>
+          <br />
+          <Link to="/order_items">Testing - Order Items</Link>
+          <br />
+          <Link to="/order_details">Testing - Order Details</Link>
+
         </p>
       ) : (
         <p>
@@ -34,6 +43,12 @@ export function Testing({ loggedIn }) {
           <Link to="/register">Register</Link>
           <br />
           <Link to="/login">Login</Link>
+          <br/>
+          <Link to="/payment_details">Payment Details</Link>
+          <br />
+          <Link to="/order_items">Order Items</Link>
+          <br />
+          <Link to="/order_details">Order Details</Link>
         </p>
       )}
       <h2>End of Testing Component...</h2>

@@ -12,9 +12,13 @@ const getProducts = async () => {
       console.error(error.response.data);
     })
     .then((response) => {
-      response.data;
+      const products = response.data;
+      
       console.log(response);
-      localStorage.setItem("product", JSON.stringify(response.data));
+      localStorage.setItem("product", JSON.stringify(products));
+
+      localStorage.setItem("productId", JSON.stringify(products.map (product => product.id)));
+
     });
 };
 

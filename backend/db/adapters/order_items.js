@@ -2,7 +2,9 @@ const { client } = require("../client");
 
 const createOrderItems = async ({ order_id, product_id, quantity }) => {
   try {
-    const { rows } = await client.query(
+    const {
+      rows: [orders],
+    } = await client.query(
       `
         INSERT INTO order_items(order_id, product_id, quantity)
         VALUES ($1, $2, $3)
@@ -10,7 +12,7 @@ const createOrderItems = async ({ order_id, product_id, quantity }) => {
     `,
       [order_id, product_id, quantity]
     );
-    return rows;
+    return orders;
   } catch (error) {
     throw error;
   }
@@ -56,6 +58,7 @@ async function updateOrderItems(id, fields = {}) {
     return;
   }
 
+  const { order_id, product_id, quantity } = fields;
   try {
     const {
       rows: [orders],
@@ -66,7 +69,7 @@ async function updateOrderItems(id, fields = {}) {
             WHERE id=${id}
             RETURNING *;
         `,
-      Object.keys(fields)
+      [id, order_id, product_id, quantity]
     );
     return orders;
   } catch (error) {
@@ -110,7 +113,9 @@ const deleteOrderItemsByUserId = async (id) => {
 };
 
 async function canEditOrderItems(order_id, product_id) {
-  const {rows } = await client.query(
+  const {
+    rows: [canEditOrderItems],
+  } = await client.query(
     `
     SELECT* FROM order_items
     JOIN order_details ON order_items."order_id"=order_details.id
@@ -119,7 +124,7 @@ async function canEditOrderItems(order_id, product_id) {
   `,
     [order_id, product_id]
   );
-  return rows;
+  return canEditOrderItems;
 }
 
 module.exports = {

@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 // const bcrypt = require("bcrypt");
 const SALT_COUNT = 10;
 
+const { userLogin, dbFields } = require("../../api/utils");
+
 const createUser = async ({
   username,
   password,

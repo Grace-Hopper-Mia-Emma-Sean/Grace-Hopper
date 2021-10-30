@@ -1,7 +1,15 @@
 import * as React from "react";
 
 import { createTheme, ThemeProvider, Typography } from "../MUI";
-import { UsersTable, CartTable, ProductsTable } from "..";
+import { 
+  UsersTable, 
+  CartTable, 
+  ProductsTable,
+  UserPayment,
+  PaymentDetails,
+  OrderItems,
+  OrderDetails
+ } from "..";
 
 const theme = createTheme();
 
@@ -32,6 +40,27 @@ export function AdminTable() {
           Products
           <ProductsTable />
         </Typography>
+
+        <Typography variant="h3">
+          Products
+          <UserPayment />
+        </Typography>
+
+        <Typography variant="h3">
+          Products
+          <PaymentDetails />
+        </Typography>
+
+        <Typography variant="h3">
+          Products
+          <OrderItems />
+        </Typography>
+
+        <Typography variant="h3">
+          Products
+          <OrderDetails />
+        </Typography>
+        
       </ThemeProvider>
     </div>
   );
