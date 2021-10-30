@@ -21,12 +21,13 @@ export { EditOrderItems } from "./orders/EditOrderItems";
 export { EditPaymentDetails } from "./payment/EditPaymentDetails";
 export { EditUserPayment } from "./payment/EditUserPayment";
 export { UsersTable } from "./users/UsersTable";
-export { Products } from "./home/products";
+export { Products } from "./home/Product";
 export { CartTable } from "./cart/CartTable";
 export { AdminTable } from "./misc/AdminTable";
 export { ProductsTable } from "./products/ProductsTable";
-export { EditProduct } from "./products/editProduct";
-export { CreateProduct } from "./products/CreateProduct"
+export { EditProduct } from "./products/EditProduct";
+export { CreateProduct } from "./products/CreateProduct";
 export { CreateCartItem } from "./cart/CreateCartItem";
 export { CartIcon } from "./cart/CartIcon";
 export { CartCard } from "./cart/CartCard";
+export { OpenDrawer } from "./misc/OpenDrawer";

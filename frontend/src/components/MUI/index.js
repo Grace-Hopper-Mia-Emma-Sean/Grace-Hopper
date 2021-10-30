@@ -34,11 +34,13 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import { IconButton } from "@material-ui/core";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
 import InputBase from "@mui/material/InputBase";
 import InputLabel from "@material-ui/core/InputLabel";
 import Link from "@mui/material/Link";
 import { List } from "@material-ui/core";
 import { ListItem } from "@material-ui/core";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import { ListItemText } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -104,11 +106,13 @@ export {
   FormControlLabel,
   Grid,
   IconButton,
+  InboxIcon,
   InputBase,
   InputLabel,
   Link,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   LockOutlinedIcon,
   LogoutIcon,

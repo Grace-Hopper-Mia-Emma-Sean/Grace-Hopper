@@ -30,6 +30,7 @@ import {
   EditProduct,
   CreateProduct,
   CartCard,
+  OpenDrawer,
 } from "./components";
 
 export default function App() {
@@ -41,7 +42,7 @@ export default function App() {
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [token, setToken] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [productToEdit, setProductToEdit] = useState('')
+  const [productToEdit, setProductToEdit] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -65,7 +66,9 @@ export default function App() {
         setLoggedIn={setLoggedIn}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-      />
+      >
+        <OpenDrawer loggedIn={loggedIn} admin={admin} />
+      </Navbar>
       <Testing loggedIn={loggedIn} />
       <Switch>
         <Route path="/register">
@@ -106,14 +109,14 @@ export default function App() {
         <Route exact path="/order_items" component={OrderItems} />
         <Route exact path="/payment_details" component={PaymentDetails} />
 
-        <Route exact path="/user_payment" >
-            <UserPayment 
+        <Route exact path="/user_payment">
+          <UserPayment
             loggedIn={loggedIn}
             token={token}
             setLoggedIn={setLoggedIn}
             setToken={setToken}
-            />
-         </Route>
+          />
+        </Route>
 
         <Route exact path="/create_order_items" component={CreateOrderItems} />
         <Route
@@ -168,12 +171,15 @@ export default function App() {
         <Route exact path="/admin/users" component={UsersTable}></Route>
         <Route exact path="/admin/cart" component={CartTable}></Route>
         <Route exact path="/admin/products">
-          <ProductsTable productToEdit={productToEdit} setProductToEdit={setProductToEdit}/>
+          <ProductsTable
+            productToEdit={productToEdit}
+            setProductToEdit={setProductToEdit}
+          />
         </Route>
         <Route exact path="/editProduct">
           <EditProduct productToEdit={productToEdit} />
         </Route>
-        <Route exact path="/createproduct">
+        <Route exact path="/createProduct">
           <CreateProduct />
         </Route>
         <Route exact path="/">
