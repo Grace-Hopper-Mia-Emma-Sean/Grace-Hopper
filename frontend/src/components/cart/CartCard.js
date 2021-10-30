@@ -24,27 +24,27 @@ export function CartCard() {
 
   const quantityChange = (e) => setQuantity(e.target.value);
 
-  // useEffect(async () => {
-  //   const token = localStorage.getItem("token");
-  //   const id = localStorage.getItem("id");
-  //   await getCartItemsByUserId(token, id)
-  //     .then(() => {
-  //       console.log(localStorage.getItem("cart"));
-  //       setCart([JSON.parse(localStorage.getItem("cart"))]);
-  //     })
-  //     .catch((error) => console.log(error))
-  //     .finally(localStorage.removeItem("cart"));
-  // }, []);
-
   useEffect(async () => {
-    await getCartItems(localStorage.getItem("token"))
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    await getCartItemsByUserId(token, id)
       .then(() => {
         console.log(localStorage.getItem("cart"));
-        setCart(JSON.parse(localStorage.getItem("cart")));
+        setCart([JSON.parse(localStorage.getItem("cart"))]);
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
   }, []);
+
+  // useEffect(async () => {
+  //   await getCartItems(localStorage.getItem("token"))
+  //     .then(() => {
+  //       console.log(localStorage.getItem("cart"));
+  //       setCart(JSON.parse(localStorage.getItem("cart")));
+  //     })
+  //     .catch((error) => console.log(error));
+  //   // .finally(localStorage.removeItem("cart"));
+  // }, []);
 
   const image = `http://placeimg.com/128/128/tech/${Math.floor(
     Math.random() * 20 + 1
