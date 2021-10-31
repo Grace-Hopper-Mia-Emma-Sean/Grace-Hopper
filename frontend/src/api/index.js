@@ -1,12 +1,12 @@
 import { login, register, getUsers, getUserById } from "./users";
 
-import  {getProducts, editProduct, createProduct } from "./products.js";
+import { getProducts, editProduct, createProduct } from "./products.js";
 
 import {
   createCartItem,
   getCartItems,
   getCartItemsByUserId,
-  updateCartItems,
+  updateCartItem,
   deleteCartItem,
 } from "./cart";
 
@@ -54,11 +54,11 @@ export {
   createCartItem,
   getCartItems,
   getCartItemsByUserId,
-  updateCartItems,
+  updateCartItem,
   deleteCartItem,
   getUsers,
   getUserById,
   getProducts,
   editProduct,
-  createProduct
+  createProduct,
 };

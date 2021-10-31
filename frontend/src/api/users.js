@@ -4,7 +4,7 @@ import axios from "axios";
  *
  * DONE: login, register
  *
- * TODO: getAllUsers, getUserById, createCartItems, getAllCartItems, getCartItemsByUserId, updateCartItems, removeCartItems
+ * TODO: getAllUsers, getUserById, createCartItems, getAllCartItems, getCartItemsByUserId, updateCartItem, removeCartItems
  *
  * STRETCH || ARCHIVED: CRUD address, CRUD shopping_session, updateUser, deleteUser
  *

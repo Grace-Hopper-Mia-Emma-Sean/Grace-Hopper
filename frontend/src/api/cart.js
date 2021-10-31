@@ -62,7 +62,7 @@ const getCartItemsByUserId = async (token, id) => {
     });
 };
 
-const updateCartItems = async (token, userId, productId, quantity) => {
+const updateCartItem = async (token, userId, productId, quantity) => {
   return axios({
     method: "PATCH",
     url: `cart-items/${userId}`,
@@ -106,6 +106,6 @@ export {
   createCartItem,
   getCartItems,
   getCartItemsByUserId,
-  updateCartItems,
+  updateCartItem,
   deleteCartItem,
 };

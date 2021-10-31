@@ -58,7 +58,7 @@ const updateCartItems = async (id, fields) => {
       `
       UPDATE cart_items
       SET quantity = ${fields}
-      WHERE user_id=${id}
+      WHERE id=${id}
       RETURNING *
     `
     );

@@ -56,15 +56,13 @@ export function Products({ searchTerm }) {
       .finally(localStorage.removeItem("product"));
   }, []);
 
-  function productMatches(product, text) {
-    if (product.name.toLowerCase().includes(text.toLowerCase())) {
-      return true;
-    }
-  }
+  const productMatches = (product, text) =>
+    product.name.toLowerCase().includes(text.toLowerCase());
 
   const filteredProducts = products.filter((product) =>
     productMatches(product, searchTerm)
   );
+
   const productsToDisplay = searchTerm.length > 0 ? filteredProducts : products;
 
   return (
