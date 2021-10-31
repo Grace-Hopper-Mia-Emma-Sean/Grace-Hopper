@@ -49,7 +49,7 @@ export function UserPayment({
             console.log(item.row), setUserPaymentToDelete(item.row);
           }}
         >
-          Edit
+          Delete
         </button>
       </Link>
     );

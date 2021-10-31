@@ -50,7 +50,7 @@ export function PaymentDetails({
             console.log(item.row), setPaymentToDelete(item.row);
           }}
         >
-          Edit
+          Delete
         </button>
       </Link>
     );
@@ -74,6 +74,12 @@ export function PaymentDetails({
     {
       field: "amount",
       headerName: "Amount",
+      headerAlign: "center",
+      width: 300,
+    },
+    {
+      field: "provider",
+      headerName: "Payment Provider",
       headerAlign: "center",
       width: 300,
     },

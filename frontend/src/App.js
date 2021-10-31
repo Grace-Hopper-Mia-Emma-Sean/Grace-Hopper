@@ -208,6 +208,7 @@ export default function App() {
           orderDetailsToEdit={orderDetailsToEdit}
           setOrderDetailsToEdit={setOrderDetailsToEdit}
           paymentToEdit={paymentToEdit}
+          setPaymentToDelete={setPaymentToDelete}
           /></Route>
         
 
@@ -215,6 +216,10 @@ export default function App() {
           <EditOrderItems
             orderItemsToEdit={orderItemsToEdit}
             setOrderItemsToEdit={setOrderItemsToEdit}
+            orderDetailsToEdit={orderDetailsToEdit}
+            setOrderDetailsToEdit={setOrderDetailsToEdit}
+            productToEdit={productToEdit}
+            setProductToEdit={setProductToEdit}
           /> </Route>
 
         <Route exact path="/edit_payment_details">
