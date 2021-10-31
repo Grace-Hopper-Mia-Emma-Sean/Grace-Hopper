@@ -11,7 +11,6 @@ export function Logout({ setLoggedIn }) {
           "username", 
           "token", 
           "admin", 
-          "id", 
           "userPayments", 
           "userPaymentId",
           "productId", 
@@ -20,7 +19,8 @@ export function Logout({ setLoggedIn }) {
           "orderItems",
           "orderDetails",
           "orderDetailId",
-          "users"
+          "users",
+          "orderItemId"
         
         ];
           keys.forEach((k) => localStorage.removeItem(k));

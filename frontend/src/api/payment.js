@@ -134,7 +134,7 @@ const delete_user_payment = async (id, token) => {
   });
 };
 
-const create_user_payment = async ( token, userId, paymentId, paymentProvider, accountNo, expireDate) => {
+const create_user_payment = async (token, userId, paymentId, paymentProvider, accountNo, expireDate) => {
  
   // const token = localStorage.getItem("token");
   return axios({
