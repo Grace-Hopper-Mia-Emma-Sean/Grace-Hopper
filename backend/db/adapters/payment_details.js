@@ -2,7 +2,9 @@ const { client } = require("../client");
 
 const createPaymentDetails = async ({ order_id, amount, provider, status }) => {
   try {
-    const { rows } = await client.query(
+    const {
+      rows: [payment],
+    } = await client.query(
       `
         INSERT INTO payment_details(order_id, amount, provider, status)
         VALUES ($1, $2, $3, $4)
@@ -10,7 +12,7 @@ const createPaymentDetails = async ({ order_id, amount, provider, status }) => {
     `,
       [order_id, amount, provider, status]
     );
-    return rows;
+    return payment;
   } catch (error) {
     throw error;
   }
@@ -31,7 +33,7 @@ async function getAllPaymentDetails() {
 async function getAllPaymentById(id) {
   try {
     const {
-      rows: [payment]
+      rows: [payment],
     } = await client.query(
       `
             SELECT*
@@ -56,7 +58,7 @@ async function updatePaymentDetails(id, fields = {}) {
 
   try {
     const {
-      rows: [payment]
+      rows: [payment],
     } = await client.query(
       `
             UPDATE payment_details
@@ -64,7 +66,7 @@ async function updatePaymentDetails(id, fields = {}) {
             WHERE id=${id}
             RETURNING *;
         `,
-        Object.values(fields)
+      Object.values(fields)
     );
     return payment;
   } catch (error) {
