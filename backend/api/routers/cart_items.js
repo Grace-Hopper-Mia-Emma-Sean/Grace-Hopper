@@ -63,9 +63,7 @@ cartItemsRouter.get(
   }
 );
 
-//github.com/Grace-Hopper-Mia-Emma-Sean/Grace-Hopper/compare/6566d78...d58040b
-
-https: cartItemsRouter.patch(
+cartItemsRouter.patch(
   "/:user_id",
   authenticate,
   async (req, res, next) => {
