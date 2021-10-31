@@ -21,7 +21,7 @@ const createCartItems = async ({ product_id, quantity, user_id }) => {
 const getCartItems = async () => {
   try {
     const { rows } = await client.query(`
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+      SELECT id, user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
       FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id;
@@ -36,7 +36,7 @@ const getCartItemsByUserId = async (id) => {
   try {
     const { rows } = await client.query(
       `
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+      SELECT id, user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
       FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id
@@ -75,7 +75,7 @@ const deleteCartItems = async (id) => {
     } = await client.query(
       `
       DELETE FROM cart_items
-      WHERE user_id=${id}
+      WHERE id=${id}
       RETURNING *;
     `
     );

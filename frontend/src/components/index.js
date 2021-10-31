@@ -31,3 +31,4 @@ export { CreateCartItem } from "./cart/CreateCartItem";
 export { CartIcon } from "./cart/CartIcon";
 export { CartCard } from "./cart/CartCard";
 export { OpenDrawer } from "./misc/OpenDrawer";
+export { DeleteCartItem } from "./cart/DeleteCartItem";

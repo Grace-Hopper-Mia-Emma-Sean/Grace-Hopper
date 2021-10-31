@@ -17,6 +17,7 @@ import {
 
 import { getCartItemsByUserId, getCartItems } from "../../api";
 import { useState, useEffect } from "react";
+import { DeleteCartItem } from "./DeleteCartItem";
 
 export function CartCard() {
   const [cart, setCart] = useState([]);
@@ -30,7 +31,7 @@ export function CartCard() {
     await getCartItemsByUserId(token, id)
       .then(() => {
         console.log(localStorage.getItem("cart"));
-        setCart([JSON.parse(localStorage.getItem("cart"))]);
+        setCart(JSON.parse(localStorage.getItem("cart")));
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
@@ -49,6 +50,8 @@ export function CartCard() {
   const image = `http://placeimg.com/128/128/tech/${Math.floor(
     Math.random() * 20 + 1
   )}`;
+
+  console.log(cart);
 
   // const badgeCount = cart === null ? 0 : cart.length;
 
@@ -92,7 +95,7 @@ export function CartCard() {
                   </Select>
                 </FormControl>
               </Box>
-              <Button variant="contained">Remove from Cart</Button>
+              <DeleteCartItem />
             </CardActions>
           </Card>
         );
