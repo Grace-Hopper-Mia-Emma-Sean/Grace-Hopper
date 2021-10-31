@@ -6,9 +6,9 @@ const createCartItem = async (productId, quantity, userId) => {
     method: "POST",
     url: `/cart-items/${userId}`,
     data: {
-      productId: productId,
+      product_id: productId,
       quantity: quantity,
-      userId: userId,
+      user_id: userId,
     },
     headers: {
       "Content-Type": "application/json",
@@ -67,8 +67,9 @@ const updateCartItems = async (token, userId, productId, quantity) => {
     method: "PATCH",
     url: `cart-items/${userId}`,
     data: {
-      productId: productId,
+      product_id: productId,
       quantity: quantity,
+      user_id: userId,
     },
     headers: {
       "Content-Type": "application/json",

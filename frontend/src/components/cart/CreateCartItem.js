@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 export function CreateCartItem({ product, loggedIn }) {
   const quantity = 1;
-  const userId = localStorage.getItem("id");
+  const userId = JSON.parse(localStorage.getItem("id"));
 
   const addItem = async () => {
     await createCartItem(product.id, quantity, userId)
