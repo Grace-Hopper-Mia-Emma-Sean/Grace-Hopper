@@ -104,7 +104,7 @@ export function Products({ searchTerm }) {
                         <Box>
                           <Grid item>
                             <Button>
-                              <EditIcon />
+                              <EditIcon cart={cart} setQuantity={setQuantity} />
                             </Button>
                           </Grid>
                           <Grid item>

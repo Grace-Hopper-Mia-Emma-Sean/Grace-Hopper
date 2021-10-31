@@ -2,21 +2,14 @@ import { Button, Box, FormControl, InputLabel, Select, MenuItem } from "../MUI";
 import { updateCartItem } from "../../api";
 import { useState, useEffect } from "react";
 
-export function EditCartItem({ cart }) {
-  const [quantity, setQuantity] = useState("");
-
-  const quantityChange = (e) => setQuantity(e.target.value);
-
+export function EditCartItem({ cart, setQuantity }) {
   const editItem = async (e) => {
-    setQuantity(e.target.value);
-    await updateCartItem(cart.id, quantity)
+    await updateCartItem(cart.id, 2, localStorage.getItem("id"))
       .then(() => {
-        console.log("cart item removed successfully");
+        console.log("cart item changed successfully");
       })
       .catch((error) => console.log(error));
   };
-
-  console.log(cart);
 
   return (
     <div>

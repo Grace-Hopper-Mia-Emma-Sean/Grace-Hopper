@@ -49,15 +49,16 @@ const useStyles = makeStyles((theme) => ({
 
 export function CartCard() {
   const [cart, setCart] = useState([]);
-  const [quantity, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState();
   const [sum, setSum] = useState();
   const classes = useStyles();
+
+  const token = localStorage.getItem("token");
+  const id = localStorage.getItem("id");
 
   const quantityChange = (e) => setQuantity(e.target.value);
 
   useEffect(async () => {
-    const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
     await getCartItemsByUserId(token, id)
       .then(() => {
         setCart(JSON.parse(localStorage.getItem("cart")));
@@ -73,7 +74,7 @@ export function CartCard() {
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
-  }, []);
+  }, [quantity]);
 
   const image = `http://placeimg.com/128/128/tech/${Math.floor(
     Math.random() * 20 + 1
