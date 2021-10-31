@@ -21,11 +21,7 @@ const createCartItems = async ({ product_id, quantity, user_id }) => {
 const getCartItems = async () => {
   try {
     const { rows } = await client.query(`
-<<<<<<< HEAD
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
-=======
       SELECT cart_items.id, user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
->>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id;
@@ -40,11 +36,7 @@ const getCartItemsByUserId = async (id) => {
   try {
     const { rows } = await client.query(
       `
-<<<<<<< HEAD
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
-=======
       SELECT cart_items.id, user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
->>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id
@@ -58,19 +50,16 @@ const getCartItemsByUserId = async (id) => {
   }
 };
 
-const updateCartItems = async (id, fields) => {
+const updateCartItems = async (cartItemsId, userId, quantity) => {
   try {
     const {
       rows: [cartItems],
     } = await client.query(
       `
       UPDATE cart_items
-      SET quantity = ${fields}
-<<<<<<< HEAD
-      WHERE user_id=${id}
-=======
-      WHERE id=${id}
->>>>>>> 06e908a46c6a4153f157135b622af938c805f817
+      SET quantity = ${quantity}
+      WHERE id=${cartItemsId}
+      AND user_id=${userId}
       RETURNING *
     `
     );
@@ -87,11 +76,7 @@ const deleteCartItems = async (id) => {
     } = await client.query(
       `
       DELETE FROM cart_items
-<<<<<<< HEAD
-      WHERE user_id=${id}
-=======
       WHERE id=${id}
->>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       RETURNING *;
     `
     );

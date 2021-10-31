@@ -30,27 +30,6 @@ const getAllUserPaymentById = async (id) => {
   }
 };
 
-<<<<<<< HEAD
-        `, [id])
-        return userPayment;
-    }catch (error) {
-        throw error;
-    }
-}
-
-const createUserPayment = async ({user_id, payment_type, provider, account_no, expiry}) => {
-    try {
-        const { rows } = await client.query(`
-            INSERT INTO user_payment("user_id", payment_type, provider, account_no, expiry)
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING *;
-        `,[user_id, payment_type, provider, account_no, expiry])
-        return rows;
-    }catch (error) {
-        throw error;
-    }
-}
-=======
 const createUserPayment = async ({
   user_id,
   payment_type,
@@ -74,7 +53,6 @@ const createUserPayment = async ({
     throw error;
   }
 };
->>>>>>> 06e908a46c6a4153f157135b622af938c805f817
 
 const updateUserPayment = async (id, fields = {}) => {
   const setString = Object.keys(fields)

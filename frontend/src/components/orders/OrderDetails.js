@@ -49,7 +49,7 @@ export function OrderDetails({
             console.log(item.row), setOrderDetailsToDelete(item.row);
           }}
         >
-          Edit
+          Delete
         </button>
       </Link>
     );

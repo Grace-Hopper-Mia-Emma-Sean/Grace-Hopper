@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 
 import {
   Card,
@@ -128,7 +130,13 @@ export function CartCard() {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Typography sx={{ fontSize: 36 }}>Total: {sum}</Typography>
+
+        <Typography > <a href="/order_details" >Go To Checkout </a> </Typography>
+
       </Box>
+
+     
+
     </div>
   );
 }
