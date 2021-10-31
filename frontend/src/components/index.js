@@ -33,3 +33,4 @@ export { CartCard } from "./cart/CartCard";
 export { OpenDrawer } from "./misc/OpenDrawer";
 export { DeleteCartItem } from "./cart/DeleteCartItem";
 export { EditCartItem } from "./cart/EditCartItem";
+export { CartSum } from "./cart/CartSum";

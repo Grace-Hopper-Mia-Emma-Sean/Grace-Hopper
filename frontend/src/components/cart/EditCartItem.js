@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 
 export function EditCartItem({ cart, setQuantity }) {
   const editItem = async (e) => {
-    await updateCartItem(cart.id, 2, localStorage.getItem("id"))
+    await updateCartItem(cart.id, e.target.value, localStorage.getItem("id"))
       .then(() => {
-        console.log("cart item changed successfully");
+        setQuantity(e.target.value);
       })
       .catch((error) => console.log(error));
   };

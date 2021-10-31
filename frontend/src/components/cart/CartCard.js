@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-
 import {
   Card,
   CardActions,
@@ -23,7 +22,7 @@ import {
 
 import { getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
-import { EditCartItem, DeleteCartItem } from "..";
+import { EditCartItem, DeleteCartItem, CartSum } from "..";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,44 +50,26 @@ const useStyles = makeStyles((theme) => ({
 
 export function CartCard() {
   const [cart, setCart] = useState([]);
-  const [quantity, setQuantity] = useState();
-  const [sum, setSum] = useState();
+
   const classes = useStyles();
 
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
 
-  const quantityChange = (e) => setQuantity(e.target.value);
-
   useEffect(async () => {
     await getCartItemsByUserId(token, id)
       .then(() => {
-        setCart(JSON.parse(localStorage.getItem("cart")));
-      })
-      .then(() => {
-        setSum(
-          cart
-            .reduce((total, array) => {
-              return total + JSON.parse(array.total);
-            }, 0)
-            .toLocaleString("en-US")
+        setCart(
+          JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         );
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
-  }, [quantity]);
+  }, []);
 
   const image = `http://placeimg.com/128/128/tech/${Math.floor(
     Math.random() * 20 + 1
   )}`;
-
-  console.log(sum);
-
-  const sum2 = cart
-    .reduce((total, array) => {
-      return total + JSON.parse(array.total);
-    }, 0)
-    .toLocaleString("en-US");
 
   return (
     <div>
@@ -126,17 +107,14 @@ export function CartCard() {
           );
         })}
       </div>
+      <CartSum cart={cart} />
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Typography sx={{ fontSize: 36 }}>Total: {sum}</Typography>
-
-        <Typography > <a href="/order_details" >Go To Checkout </a> </Typography>
-
+        <Typography>
+          <a href="/order_details">Go To Checkout </a>{" "}
+        </Typography>
       </Box>
-
-     
-
     </div>
   );
 }
