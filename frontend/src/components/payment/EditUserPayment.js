@@ -30,20 +30,6 @@ export function EditUserPayment({userPaymentToEdit}){
 
     const id = paymentToEdit.id
 
-<<<<<<< HEAD
-//   return axios({
-//     method: "PATCH",
-//     url: `/user-payment/${id}`,
-//     data: {
-//       user_id: user_id,
-//       payment_type: payment_type,
-//       provider: provider,
-//       account_no: account_no,
-//       expiry: expiry,
-//     },
-
-=======
->>>>>>> 8cbdd17 (edit editUserPayment)
 //   return axios({
 //     method: "PATCH",
 //     url: `/user-payment/${id}`,
