@@ -116,8 +116,8 @@ cartItemsRouter.delete(
   "/:cartItemsId",
   authenticate,
   async (req, res, next) => {
-    const role = await getUserById(req.user.id);
-    if (role.isAdmin !== true) return res.sendStatus(403);
+    // const role = await getUserById(req.user.id);
+    // if (role.isAdmin !== true) return res.sendStatus(403);
     const { cartItemsId } = req.params;
     try {
       const cartItems = await deleteCartItems(cartItemsId);
