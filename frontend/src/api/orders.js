@@ -14,7 +14,6 @@ const order_details = async () => {
   })
   .then((response) => {
     const orderDetails = response.data;
-    console.log(response);
     localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
     // localStorage.setItem("orderDetailId", JSON.stringify(orderDetails.map (orderDetail => orderDetail.id)));
 
