@@ -62,14 +62,14 @@ const getCartItemsByUserId = async (token, id) => {
     });
 };
 
-const updateCartItem = async (token, userId, productId, quantity) => {
+const updateCartItem = async (token, cartId, quantity) => {
   return axios({
     method: "PATCH",
-    url: `cart-items/${userId}`,
+    url: `cart-items/${cartId}`,
     data: {
-      product_id: productId,
+      // product_id: productId,
       quantity: quantity,
-      user_id: userId,
+      // user_id: userId,
     },
     headers: {
       "Content-Type": "application/json",

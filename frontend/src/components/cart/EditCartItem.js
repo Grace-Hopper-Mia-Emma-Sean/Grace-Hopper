@@ -7,9 +7,9 @@ export function EditCartItem({ cart }) {
 
   const quantityChange = (e) => setQuantity(e.target.value);
 
-  const editItem = async () => {
-    console.log(cart);
-    await updateCartItem(cart.id)
+  const editItem = async (e) => {
+    setQuantity(e.target.value);
+    await updateCartItem(cart.id, quantity)
       .then(() => {
         console.log("cart item removed successfully");
       })
