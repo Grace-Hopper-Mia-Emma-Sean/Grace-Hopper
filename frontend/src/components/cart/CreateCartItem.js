@@ -9,7 +9,7 @@ export function CreateCartItem({ product, loggedIn }) {
   const addItem = async () => {
     await createCartItem(product.id, quantity, userId)
       .then(() => {
-        console.log(item, product.id, quantity, userId);
+        console.log(product.id, quantity, userId);
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
