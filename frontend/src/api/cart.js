@@ -84,14 +84,14 @@ const updateCartItems = async (token, userId, productId, quantity) => {
     });
 };
 
-const deleteCartItem = async (token, userId, productId, quantity) => {
+const deleteCartItem = async (cartId) => {
   return axios({
     method: "DELETE",
-    url: `cart-items/${userId}`,
-    data: { user_id: userId },
+    url: `cart-items/${cartId}`,
+    data: { user_id: cartId },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   })
     .catch((error) => console.error(error.response.data.error))

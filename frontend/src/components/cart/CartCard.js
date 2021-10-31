@@ -15,7 +15,7 @@ import {
   Stack,
 } from "../MUI";
 
-import { getCartItemsByUserId, getCartItems } from "../../api";
+import { getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
 import { DeleteCartItem } from "./DeleteCartItem";
 
@@ -37,23 +37,9 @@ export function CartCard() {
       .finally(localStorage.removeItem("cart"));
   }, []);
 
-  // useEffect(async () => {
-  //   await getCartItems(localStorage.getItem("token"))
-  //     .then(() => {
-  //       console.log(localStorage.getItem("cart"));
-  //       setCart(JSON.parse(localStorage.getItem("cart")));
-  //     })
-  //     .catch((error) => console.log(error));
-  //   // .finally(localStorage.removeItem("cart"));
-  // }, []);
-
   const image = `http://placeimg.com/128/128/tech/${Math.floor(
     Math.random() * 20 + 1
   )}`;
-
-  console.log(cart);
-
-  // const badgeCount = cart === null ? 0 : cart.length;
 
   return (
     <div>
@@ -95,7 +81,7 @@ export function CartCard() {
                   </Select>
                 </FormControl>
               </Box>
-              <DeleteCartItem />
+              <DeleteCartItem cart={cart} />
             </CardActions>
           </Card>
         );

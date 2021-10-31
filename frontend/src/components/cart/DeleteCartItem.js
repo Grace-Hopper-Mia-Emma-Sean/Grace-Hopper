@@ -2,9 +2,10 @@ import { Button } from "../MUI";
 import { deleteCartItem } from "../../api";
 import { useState, useEffect } from "react";
 
-export function DeleteCartItem({ product, loggedIn }) {
+export function DeleteCartItem({ cart }) {
   const removeItem = async () => {
-    await deleteCartItem(JSON.parse(localStorage.getItem("id")))
+    console.log(cart);
+    await deleteCartItem(cart.id)
       .then(() => {
         console.log("cart item removed successfully");
       })
