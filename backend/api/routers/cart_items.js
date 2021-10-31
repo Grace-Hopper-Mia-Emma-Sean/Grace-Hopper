@@ -63,16 +63,25 @@ cartItemsRouter.get(
   }
 );
 
-cartItemsRouter.patch("/:user_id", authenticate, async (req, res, next) => {
-  const role = await getUserById(req.user.id);
-  if (role.isAdmin !== true) return res.sendStatus(403);
+cartItemsRouter.patch("/:cartItemsId", authenticate, async (req, res, next) => {
+  // const role = await getUserById(req.user.id);
+  // if (role.isAdmin !== true) return res.sendStatus(403);
   try {
+<<<<<<< HEAD
     const user = await getUserById(req.params.user_id);
     if (!user)
       return res.status(404).send({
         name: "NoUserError",
         message: `No user exists with id ${req.params.user_id}`,
       });
+=======
+    // const user = await getUserById(req.params.user_id);
+    // if (!user)
+    //   return res.status(404).send({
+    //     name: "NoUserError",
+    //     message: `No user exists with id ${req.params.user_id}`,
+    //   });
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
     // const session = await getShoppingSessionByUserId(req.params.user_id);
     // if (!session)
     //   return res.status(404).send({
@@ -94,7 +103,7 @@ cartItemsRouter.patch("/:user_id", authenticate, async (req, res, next) => {
       });
     console.log(req.params.user_id, updateFields.quantity);
     const cartChanges = await updateCartItems(
-      req.params.user_id,
+      req.params.cartId,
       updateFields.quantity
     );
     res.status(200).send({
@@ -110,8 +119,8 @@ cartItemsRouter.delete(
   "/:cartItemsId",
   authenticate,
   async (req, res, next) => {
-    const role = await getUserById(req.user.id);
-    if (role.isAdmin !== true) return res.sendStatus(403);
+    // const role = await getUserById(req.user.id);
+    // if (role.isAdmin !== true) return res.sendStatus(403);
     const { cartItemsId } = req.params;
     try {
       const cartItems = await deleteCartItems(cartItemsId);

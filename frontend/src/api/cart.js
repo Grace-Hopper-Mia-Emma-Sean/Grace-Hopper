@@ -6,9 +6,9 @@ const createCartItem = async (productId, quantity, userId) => {
     method: "POST",
     url: `/cart-items/${userId}`,
     data: {
-      productId: productId,
+      product_id: productId,
       quantity: quantity,
-      userId: userId,
+      user_id: userId,
     },
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const getCartItems = async (token) => {
     },
   })
     .catch((error) => {
-      throw error.response.data.error;
+      console.error(error.response.data.error);
     })
     .then((response) => {
       response.data;
@@ -62,13 +62,14 @@ const getCartItemsByUserId = async (token, id) => {
     });
 };
 
-const updateCartItems = async (token, userId, productId, quantity) => {
+const updateCartItem = async (token, cartId, quantity) => {
   return axios({
     method: "PATCH",
-    url: `cart-items/${userId}`,
+    url: `cart-items/${cartId}`,
     data: {
-      productId: productId,
+      // product_id: productId,
       quantity: quantity,
+      // user_id: userId,
     },
     headers: {
       "Content-Type": "application/json",
@@ -83,14 +84,14 @@ const updateCartItems = async (token, userId, productId, quantity) => {
     });
 };
 
-const deleteCartItem = async (token, userId, productId, quantity) => {
+const deleteCartItem = async (cartId) => {
   return axios({
     method: "DELETE",
-    url: `cart-items/${userId}`,
-    data: { id: userId },
+    url: `cart-items/${cartId}`,
+    data: { user_id: cartId },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   })
     .catch((error) => console.error(error.response.data.error))
@@ -105,6 +106,6 @@ export {
   createCartItem,
   getCartItems,
   getCartItemsByUserId,
-  updateCartItems,
+  updateCartItem,
   deleteCartItem,
 };

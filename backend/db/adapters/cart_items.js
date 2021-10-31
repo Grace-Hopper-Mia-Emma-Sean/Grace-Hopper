@@ -21,7 +21,11 @@ const createCartItems = async ({ product_id, quantity, user_id }) => {
 const getCartItems = async () => {
   try {
     const { rows } = await client.query(`
+<<<<<<< HEAD
       SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+=======
+      SELECT cart_items.id, user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id;
@@ -34,11 +38,13 @@ const getCartItems = async () => {
 
 const getCartItemsByUserId = async (id) => {
   try {
-    const {
-      rows: [cartItems],
-    } = await client.query(
+    const { rows } = await client.query(
       `
+<<<<<<< HEAD
       SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+=======
+      SELECT cart_items.id, user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       FROM cart_items
       LEFT JOIN products
       ON cart_items.product_id = products.id
@@ -51,6 +57,7 @@ const getCartItemsByUserId = async (id) => {
     throw error;
   }
 };
+
 const updateCartItems = async (id, fields) => {
   try {
     const {
@@ -59,7 +66,11 @@ const updateCartItems = async (id, fields) => {
       `
       UPDATE cart_items
       SET quantity = ${fields}
+<<<<<<< HEAD
       WHERE user_id=${id}
+=======
+      WHERE id=${id}
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       RETURNING *
     `
     );
@@ -68,6 +79,7 @@ const updateCartItems = async (id, fields) => {
     throw error;
   }
 };
+
 const deleteCartItems = async (id) => {
   try {
     const {
@@ -75,7 +87,11 @@ const deleteCartItems = async (id) => {
     } = await client.query(
       `
       DELETE FROM cart_items
+<<<<<<< HEAD
       WHERE user_id=${id}
+=======
+      WHERE id=${id}
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       RETURNING *;
     `
     );
@@ -84,6 +100,7 @@ const deleteCartItems = async (id) => {
     throw error;
   }
 };
+
 const deleteProductsFromCarts = async (productId) => {
   try {
     const {

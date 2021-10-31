@@ -13,14 +13,45 @@ import {
   FormControl,
   Select,
   Stack,
+  Grid,
+  makeStyles,
+  Paper,
+  ButtonBase,
 } from "../MUI";
 
-import { getCartItemsByUserId, getCartItems } from "../../api";
+import { getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
+import { EditCartItem, DeleteCartItem } from "..";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 7,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: "auto",
+    maxWidth: 500,
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  columns: {
+    columns: "2 auto",
+  },
+}));
 
 export function CartCard() {
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState("");
+  const [sum, setSum] = useState();
+  const classes = useStyles();
 
   const quantityChange = (e) => setQuantity(e.target.value);
 
@@ -29,74 +60,74 @@ export function CartCard() {
     const id = localStorage.getItem("id");
     await getCartItemsByUserId(token, id)
       .then(() => {
-        console.log(localStorage.getItem("cart"));
-        setCart([JSON.parse(localStorage.getItem("cart"))]);
+        setCart(JSON.parse(localStorage.getItem("cart")));
+      })
+      .then(() => {
+        setSum(
+          cart
+            .reduce((total, array) => {
+              return total + JSON.parse(array.total);
+            }, 0)
+            .toLocaleString("en-US")
+        );
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("cart"));
   }, []);
 
-  // useEffect(async () => {
-  //   await getCartItems(localStorage.getItem("token"))
-  //     .then(() => {
-  //       console.log(localStorage.getItem("cart"));
-  //       setCart(JSON.parse(localStorage.getItem("cart")));
-  //     })
-  //     .catch((error) => console.log(error));
-  //   // .finally(localStorage.removeItem("cart"));
-  // }, []);
-
   const image = `http://placeimg.com/128/128/tech/${Math.floor(
     Math.random() * 20 + 1
   )}`;
 
-  // const badgeCount = cart === null ? 0 : cart.length;
+  console.log(sum);
+
+  const sum2 = cart
+    .reduce((total, array) => {
+      return total + JSON.parse(array.total);
+    }, 0)
+    .toLocaleString("en-US");
 
   return (
     <div>
-      {cart.map((cart) => {
-        return (
-          <Card sx={{ maxWidth: 256 }}>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {cart.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary"></Typography>
-              <CardMedia
-                component="img"
-                height="128"
-                width="128"
-                image={image}
-                alt="tech"
-              />
-              <Typography gutterBottom variant="h6" component="div">
-                {cart.description}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Quantity
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={quantity}
-                    label="Quantity"
-                    onChange={quantityChange}
-                  >
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
-                      return <MenuItem value={number}>{number}</MenuItem>;
-                    })}
-                  </Select>
-                </FormControl>
-              </Box>
-              <Button variant="contained">Remove from Cart</Button>
-            </CardActions>
-          </Card>
-        );
-      })}
+      <div>
+        {cart.map((cart) => {
+          return (
+            <div className={classes.root}>
+              <Paper className={classes.paper}>
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <ButtonBase className={classes.image}>
+                      <img className={classes.img} alt="complex" src={image} />
+                    </ButtonBase>
+                  </Grid>
+                  <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography gutterBottom variant="subtitle1">
+                          {cart.name}
+                        </Typography>
+                        {/* <Typography variant="body2" gutterBottom>
+                        Spacing
+                      </Typography> */}
+                        <EditCartItem cart={cart} />
+                        <DeleteCartItem cart={cart} />
+                      </Grid>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="subtitle1">${cart.total}</Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </div>
+          );
+        })}
+      </div>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <Typography sx={{ fontSize: 36 }}>Total: {sum}</Typography>
+      </Box>
     </div>
   );
 }
