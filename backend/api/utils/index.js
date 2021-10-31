@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 const authenticate = (req, res, next) => {
   // console.log("hit auth");
   const authHeader = req.headers["authorization"];
-  if (authHeader == undefined) return res.sendStatus(403);
+  // if the user isn't registered, they can still use the site--hence next() and not 403--to add items to their cart, etc., but their items would be stored locally, not on the db, until going to purchase
+  if (authHeader == undefined) next();
   const bearer = authHeader.split(" ");
   const token = bearer[1];
   req.token = token;

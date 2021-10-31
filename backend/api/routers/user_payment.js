@@ -74,7 +74,10 @@ userPaymentRouter.patch(
   }
 );
 
+<<<<<<< HEAD
+=======
 //userLoggedIn
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
 userPaymentRouter.delete(
   "/:userPaymentId",
   authenticate,

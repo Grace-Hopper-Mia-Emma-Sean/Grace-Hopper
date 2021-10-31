@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
 
 export function EditUserPayment({userPaymentToEdit}){
     const classes = useStyles();
-    
-    const [orderId, setOrderId] = useState('')
-    const [amountPay, setAmountPay] = useState('')
+
+    const userId = localStorage.getItem('id')
+    const [paymentType, setPaymentType] = useState('')
     const [paymentProvider, setPaymentProvider] = useState('')
-    const [statusPay, setStatusPay] = useState(false)
+    const [accountNo, setAccountNo] = useState('')
+    const [expireDate, setExpireDate] = useState('')
 
     const id = paymentToEdit.id
-
 
 //   return axios({
 //     method: "PATCH",
@@ -42,42 +42,43 @@ export function EditUserPayment({userPaymentToEdit}){
 //     },
 
     return (
-        <div className={classes.editUserPaymentDetails}>
+        <div className={classes.userPaymentToEdit}>
             <div className={classes.editItem}>
-                Now Editing Payment ID: {paymentToEdit.id}
+                Now Editing User Payment ID: {paymentToEdit.id}
                 <br/>
                 <br/>
-                Edit Amount: <TextField onChange={function(event) {setAmountPay(event.target.value)}}/>
+                Edit Payment Type: <TextField onChange={function(event) {setPaymentType(event.target.value)}}/>
             </div>
 
             <div className={classes.editItem}>
-                Now Editing Order ID: {paymentToEdit.order_id}
+                Now Editing Payment Provide: {paymentToEdit.provider}
                 <br/>
-                <br/>
-                Edit Order ID: <TextField onChange={function(event) {setOrderId(event.target.value)}}/>
-            </div>
-
-                <br/>
-            <div className={classes.editItem}>
-                Current Payment Provider: {paymentToEdit.provider}
                 <br/>
                 Edit Payment Provider: <TextField onChange={function(event) {setPaymentProvider(event.target.value)}}/>
             </div>
+
                 <br/>
             <div className={classes.editItem}>
-                Current Status: {paymentToEdit.account_no}
+                Current Account Number: {paymentToEdit.account_no}
                 <br/>
-                True: <TextField type="checkbox" name="statusPay" onChange={function(event) {setStatusPay(event.target.value)}} />
+                Edit Account Number: <TextField onChange={function(event) {setAccountNo(event.target.value)}}/>
+            </div>
+                <br/>
+            <div className={classes.editItem}>
+                Current Expiration Date: {paymentToEdit.expiry}
+                <br/>
+                Edit Expiration Date: <TextField onChange={function(event) {setExpireDate(event.target.value)}}/>
+
             </div>
                 
-                <Link to ="/payment_details">
+                <Link to ="/user_payment">
                 <button>Cancel</button>
                 </Link>
 
-                <Link to ="/payment_details">
+                <Link to ="/user_payment">
                 <button onClick={function()
-                    {edit_payment_details(id, orderId, amountPay, paymentProvider, statusPay)} 
-                    }>Edit Payment Details</button>
+                    {edit_user_payment(id, userId, paymentType, paymentProvider, accountNo, expireDate)} 
+                    }>Edit User Payment</button>
                 </Link>
         </div>
     )
