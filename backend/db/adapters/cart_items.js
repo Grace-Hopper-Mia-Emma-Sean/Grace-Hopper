@@ -32,16 +32,11 @@ const getCartItems = async () => {
 
 const getCartItemsByUserId = async (id) => {
   try {
-<<<<<<< HEAD
-    const { rows } = await client.query(`
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
-=======
     const {
       rows: [cartItems],
     } = await client.query(
       `
       SELECT user_id, session_id, product_id, quantity
->>>>>>> 3bcb2da (doing stuff more stuff on stuff)
       FROM cart_items
       INNER JOIN shopping_session
       ON cart_items.session_id = shopping_session.id
@@ -56,7 +51,6 @@ const getCartItemsByUserId = async (id) => {
     throw error;
   }
 };
-
 const updateCartItems = async (id, fields) => {
   try {
     const {
@@ -76,7 +70,6 @@ const updateCartItems = async (id, fields) => {
     throw error;
   }
 };
-
 const deleteCartItems = async (id) => {
   try {
     const {
@@ -95,7 +88,6 @@ const deleteCartItems = async (id) => {
     throw error;
   }
 };
-
 const deleteProductsFromCarts = async (productId) => {
   try {
     const {

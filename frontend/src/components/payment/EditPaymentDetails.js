@@ -11,7 +11,7 @@ import {TextField, makeStyles} from '../MUI'
 
 
 const useStyles = makeStyles((theme) => ({
-    editPaymentDetails: {
+    editUserPaymentDetails: {
         align: "center"
     },
     editItem: {
@@ -30,7 +30,7 @@ export function EditPaymentDetails({paymentToEdit}){
     const id = paymentToEdit.id
 
     return (
-        <div className={classes.editPaymentDetails}>
+        <div className={classes.editUserPaymentDetails}>
             <div className={classes.editItem}>
                 Now Editing Payment ID: {paymentToEdit.id}
                 <br/>
