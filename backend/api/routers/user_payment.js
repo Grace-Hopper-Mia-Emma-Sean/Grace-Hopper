@@ -13,10 +13,9 @@ const {
 const {authenticate, admin} = require('../utils')
 
 userPaymentRouter.post("/", authenticate, admin, async (req, res, next) => {
-  const { id, payment_type, provider, account_no, expiry } = req.body;
+  const { payment_type, provider, account_no, expiry } = req.body;
   try {
     const createdUserPayment = await createUserPayment({
-      id,
       payment_type,
       provider,
       account_no,

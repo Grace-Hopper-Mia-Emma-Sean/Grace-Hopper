@@ -169,7 +169,12 @@ export default function App() {
         <Route exact path="/create_order_items" component={CreateOrderItems} />
         <Route exact path="/create_order_details" component={CreateOrderDetails}/>
         <Route exact path="/create_payment_details" component={CreatePaymentDetails} />
-        <Route exact path="/create_user_payment" component={CreateUserPayment} />
+
+        <Route exact path="/create_user_payment">
+          <CreateUserPayment
+          token={token}
+          />
+          </Route>
 
         <Route exact path="/delete_order_details" >
           <DeleteOrderDetails
@@ -188,10 +193,11 @@ export default function App() {
           <DeleteUserPayment
           userPaymentToDelete={userPaymentToDelete}
           setUserPaymentToDelete={setUserPaymentToDelete}
+          token={token}
           /> 
         </Route>
 
-        <Route exact path="admin/delete_payment_details" >
+        <Route exact path="/delete_payment_details" >
         <DeletePaymentDetails
         paymentToDelete={paymentToDelete}
         setPaymentToDelete={setPaymentToDelete}
