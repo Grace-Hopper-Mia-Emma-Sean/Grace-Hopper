@@ -33,7 +33,7 @@ async function getAllPaymentDetails() {
 async function getAllPaymentById(id) {
   try {
     const {
-      rows: [payment]
+      rows: [payment],
     } = await client.query(
       `
             SELECT*
@@ -58,7 +58,7 @@ async function updatePaymentDetails(id, fields = {}) {
 
   try {
     const {
-      rows: [payment]
+      rows: [payment],
     } = await client.query(
       `
             UPDATE payment_details
@@ -66,7 +66,7 @@ async function updatePaymentDetails(id, fields = {}) {
             WHERE id=${id}
             RETURNING *;
         `,
-        Object.values(fields)
+      Object.values(fields)
     );
     return payment;
   } catch (error) {

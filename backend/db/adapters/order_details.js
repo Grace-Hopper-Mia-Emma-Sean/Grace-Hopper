@@ -33,7 +33,7 @@ const getAllOrderDetails = async () => {
 const getAllOrderDetailsById = async (id) => {
   try {
     const {
-      rows: [orders]
+      rows: [orders],
     } = await client.query(
       `
             SELECT*
@@ -48,24 +48,26 @@ const getAllOrderDetailsById = async (id) => {
   }
 };
 
-async function updateOrderDetails(id, fields={}) {
+async function updateOrderDetails(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
   if (setString.length === 0) {
     return;
   }
-  
+
   try {
     const {
-      rows: [orders]
+      rows: [orders],
     } = await client.query(
       `
             UPDATE order_details
             SET ${setString}
             WHERE id=${id}
             RETURNING *;
-        `, Object.values(fields));
+        `,
+      Object.values(fields)
+    );
     return orders;
   } catch (error) {
     throw error;
