@@ -14,7 +14,7 @@ export function PaymentDetails({
   const [payment, setPayment] = useState([]);
 
   useEffect(async () => {
-    await payment_details(localStorage.getItem("payment_details"))
+    await payment_details(localStorage.getItem("token"))
       .then(() => {
         console.log(localStorage.getItem("payment_details"));
         setPayment(JSON.parse(localStorage.getItem("payment_details")));

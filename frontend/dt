@@ -1,0 +1,17 @@
+ id |    username    |                           password                           | first_name | last_name | telephone  |               email               | isAdmin 
+----+----------------+--------------------------------------------------------------+------------+-----------+------------+-----------------------------------+---------
+  1 | haru.estarriol | $2a$10$3NkjasE4CBYGSVmw3QqlTuwNEixzlaR1EnWpeEO58rFlj1JJcozWu | Haru       | Estarriol | 2345678901 | haruestarriol.fakeemail@gmail.com | f
+  2 | erin.loirratse | $2a$10$rt/7lPJ8SRGBWvBeeMb/tubm/dkwRl2bkYTa/1BUH/ziyE9Y9MR9i | Erin       | Loirratse | 3456789012 | erinloirratse.fakeemail@gmail.com | f
+  3 | ember.elise    | $2a$10$hYUG/Vb1nCDHFQgNB8VxVOm.b896TqraqGp1LNWhcJa.NmqP55lMK | Ember      | Elise     | 4567890123 | emberelise.fakeemail@gmail.com    | f
+  4 | eisha.elise    | $2a$10$OyZlntIZGhyRGRvGrHVEou1wY0bociikilK1WDQVNm4RGtNZrNatO | Eisha      | Elise     | 5678901234 | eishaelise.fakeemail@gmail.com    | f
+  5 | emma.loirratse | $2a$10$G/exVscIAdUW4yl0uVSvIufJFsLFf./Ei0zBbqF/aFXEN4b/qh6hm | Emma       | Loirratse | 6789012345 | emmaloirratse.fakeemail@gmail.com | f
+  6 | nia.akemi      | $2a$10$DuMFQpVjbQRqHppS5hNZ5eoi3.GuuXCkZT3x4Qo98SHT3g7zxj6/. | Nia        | Akemi     | 8901234567 | niaakemi.fakeemail@gmail.com      | f
+  7 | miku.akemi     | $2a$10$UwINluwLrZj02Dtt2LN96uOG1vBuA/OHtALpkFsfUEhmHuYy60aI. | Miku       | Akemi     | 9012345678 | mikuakemi.fakeemail@gmail.com     | f
+  8 | emmaelise      | $2a$10$CFAPd00VcIvpZFh8SMKElOYNMxKztK6vlmOvYYZPa14MlUVMx3u52 | Emma       | Elise     | 9876543210 | emmaelise.fakeemail@gmail.com     | t
+  9 | miadao         | $2a$10$.aiV1suFIzaoC351Fr17HuPP8233gAhToTqTqZwFJN5hu.JI4wTia | Mia        | Dao       | 8765432109 | miadao.fakeemail@gmail.com        | t
+ 10 | seanconte      | $2a$10$BIQQIcdpVAhKhjI047CwUeib23uxZOjZFkQdBeHRA.FXPF/1E.75S | Sean       | Conte     | 7654321098 | seanconte.fakeemail@gmail.com     | t
+ 11 | haru.aoi       | $2a$10$q9OtT3nBS3Y2boY4tW9mcO/rtLdOpuZZzWguaEH5J4139JnSILi1a | Haru       | Aoi       | 1234567890 | haruaoi.fakeemail@gmail.com       | f
+ 12 | emmaTest       | $2a$10$U3pz64NlkvZbJCTLiAEfZezKjxx9aw4OsbskOAp1iZOMF006Hb1xm |            |           |            |                                   | 
+ 13 | emmatest       | $2a$10$lvjWp5q4eD3JnaEDYK.K5eNXK/dmfGZtA1UWVxvFQ5HR4x2kVv8KS |            |           |            |                                   | 
+(13 rows)
+

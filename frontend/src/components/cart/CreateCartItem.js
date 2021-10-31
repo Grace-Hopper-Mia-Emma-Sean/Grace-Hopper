@@ -2,21 +2,24 @@ import { AddShoppingCartIcon, Button } from "../MUI";
 import { createCartItem } from "../../api";
 import { useState, useEffect } from "react";
 
-export function CreateCartItem() {
-  const [cart, setCart] = useState([]);
+export function CreateCartItem({ product, loggedIn }) {
+  const quantity = 1;
+  const userId = localStorage.getItem("id");
 
-  // useEffect(async () => {
-  //   await createCartItem(productId, quantity, userId)
-  //     .then(() => {
-  //       setCart([]);
-  //     })
-  //     .catch((error) => console.log(error))
-  //     .finally(localStorage.removeItem("cart"));
-  // }, []);
+  const addItem = async () => {
+    await createCartItem(product.id, quantity, userId)
+      .then(() => {
+        console.log(item, product.id, quantity, userId);
+      })
+      .catch((error) => console.log(error))
+      .finally(localStorage.removeItem("cart"));
+  };
 
   return (
     <div>
-      <Button variant="contained">Add to Cart</Button>
+      <Button variant="contained" onClick={addItem}>
+        Add to Cart
+      </Button>
     </div>
   );
 }

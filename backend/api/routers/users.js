@@ -43,7 +43,7 @@ usersRouter.post("/register", async (req, res, next) => {
       { expiresIn: "7d" }
     );
     delete user.password;
-    res.status(200).send({ token, id: user.id });
+    res.status(200).send({ token });
   } catch (error) {
     throw error;
   }
@@ -65,7 +65,7 @@ usersRouter.post("/login", async (req, res, next) => {
         { expiresIn: "7d" }
       );
       delete user.password;
-      res.status(200).send({ token, id: user.id, isAdmin: user.isAdmin });
+      res.status(200).send({ token });
     }
   } catch (error) {
     throw error;

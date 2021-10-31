@@ -14,7 +14,7 @@ export function OrderItems({
   const [orderItems, setOrderItems] = useState([]);
 
   useEffect(async () => {
-    await order_items(localStorage.getItem("orderItems"))
+    await order_items(localStorage.getItem("token"))
       .then(() => {
         console.log(localStorage.getItem("orderItems"));
         setOrderItems(JSON.parse(localStorage.getItem("orderItems")));

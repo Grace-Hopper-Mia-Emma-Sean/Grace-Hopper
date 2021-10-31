@@ -14,9 +14,7 @@ const order_details = async () => {
   })
   .then((response) => {
     const orderDetails = response.data;
-    console.log(response);
     localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-    localStorage.setItem("orderDetailId", JSON.stringify(orderDetails.map (orderDetail => orderDetail.id)));
 
   });
 };
@@ -89,12 +87,11 @@ const edit_order_items = async (id, orderDetailId, productId, quantityOf) => {
 };
 
 
-const delete_order_items = async () => {
- const orderItemsId = localStorage.getItem("orderItemId")
+const delete_order_items = async (id) => {
 
   return axios({
     method: "DELETE",
-    url: `/order-items/${orderItemsId}`,
+    url: `/order-items/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -134,7 +131,6 @@ const order_items = async () => {
     const orderItems = response.data;
     console.log(response);
     localStorage.setItem("orderItems", JSON.stringify(orderItems));
-    // localStorage.setItem("orderItemId", JSON.stringify(orderItems.map (orderItem => orderItem.id)));
 
   });
 };

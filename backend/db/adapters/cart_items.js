@@ -1,16 +1,16 @@
 const { client } = require("../client");
 
-const createCartItems = async ({ product_id, quantity, user_id }) => {
+const createCartItems = async ({ session_id, product_id, quantity }) => {
   try {
     const {
       rows: [cartItems],
     } = await client.query(
       `
-      INSERT INTO cart_items(product_id, quantity, user_id)
+      INSERT INTO cart_items(session_id, product_id, quantity)
       VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [product_id, quantity, user_id]
+      [session_id, product_id, quantity]
     );
     return cartItems;
   } catch (error) {
@@ -21,10 +21,8 @@ const createCartItems = async ({ product_id, quantity, user_id }) => {
 const getCartItems = async () => {
   try {
     const { rows } = await client.query(`
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+      SELECT *
       FROM cart_items
-      LEFT JOIN products
-      ON cart_items.product_id = products.id;
     `);
     return rows;
   } catch (error) {
@@ -38,20 +36,21 @@ const getCartItemsByUserId = async (id) => {
       rows: [cartItems],
     } = await client.query(
       `
-      SELECT user_id, name, cart_items.quantity, price, cart_items.quantity*price AS total
+      SELECT user_id, session_id, product_id, quantity
       FROM cart_items
-      LEFT JOIN products
-      ON cart_items.product_id = products.id
-      WHERE user_id=$1
+      INNER JOIN shopping_session
+      ON cart_items.session_id = shopping_session.id
+      LEFT JOIN users
+      ON users.id = shopping_session.user_id
+      WHERE users.id=$1
     `,
       [id]
     );
-    return cartItems;
+    return rows;
   } catch (error) {
     throw error;
   }
 };
-
 const updateCartItems = async (id, fields) => {
   try {
     const {
@@ -60,7 +59,9 @@ const updateCartItems = async (id, fields) => {
       `
       UPDATE cart_items
       SET quantity = ${fields}
-      WHERE user_id=${id}
+      FROM shopping_session
+      WHERE cart_items.session_id = shopping_session.id
+      AND shopping_session.user_id = ${id}
       RETURNING *
     `
     );
@@ -69,7 +70,6 @@ const updateCartItems = async (id, fields) => {
     throw error;
   }
 };
-
 const deleteCartItems = async (id) => {
   try {
     const {
@@ -77,7 +77,9 @@ const deleteCartItems = async (id) => {
     } = await client.query(
       `
       DELETE FROM cart_items
-      WHERE user_id=${id}
+      USING shopping_session
+      WHERE shopping_session.id = cart_items.session_id
+      AND shopping_session.user_id=${id}
       RETURNING *;
     `
     );
@@ -86,7 +88,6 @@ const deleteCartItems = async (id) => {
     throw error;
   }
 };
-
 const deleteProductsFromCarts = async (productId) => {
   try {
     const {

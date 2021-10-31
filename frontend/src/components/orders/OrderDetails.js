@@ -14,7 +14,7 @@ export function OrderDetails({
   const [orderDetails, setOrderDetails] = useState([]);
 
   useEffect(async () => {
-    await order_details(localStorage.getItem("orderDetails"))
+    await order_details(localStorage.getItem("token"))
       .then(() => {
         console.log(localStorage.getItem("orderDetails"));
         setOrderDetails(JSON.parse(localStorage.getItem("orderDetails")));

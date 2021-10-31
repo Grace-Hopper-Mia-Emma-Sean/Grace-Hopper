@@ -39,11 +39,11 @@ const edit_payment_details = async (id, orderId, amountPay, paymentProvider, sta
   });
 };
 
-const delete_payment_details = async () => {
- const paymentDetailsId = localStorage.getItem("paymentDetailId")
+const delete_payment_details = async (id) => {
+
   return axios({
     method: "DELETE",
-    url: `/payment-details/${paymentDetailsId}`,
+    url: `/payment-details/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -97,13 +97,13 @@ const user_payment = async () => {
 };
 
 
-const edit_user_payment = async (user_id,payment_type,provider,account_no,expiry) => {
+const edit_user_payment = async (id, user_id,payment_type,provider,account_no,expiry) => {
   const token = localStorage.getItem("token");
-  const userPaymentId = localStorage.getItem("user_paymentId")
+  // const userPaymentId = localStorage.getItem("user_paymentId")
 
   return axios({
     method: "PATCH",
-    url: `/user-payment/${userPaymentId}`,
+    url: `/user-payment/${id}`,
     data: {
       user_id: user_id,
       payment_type: payment_type,
@@ -120,12 +120,11 @@ const edit_user_payment = async (user_id,payment_type,provider,account_no,expiry
   });
 };
 
-const delete_user_payment = async (userPaymentId) => {
- const token = localStorage.getItem("token");
+const delete_user_payment = async (id, token) => {
 
  return axios({
     method: "DELETE",
-    url: `/user-payment/${userPaymentId}`,
+    url: `/user-payment/${id}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -135,18 +134,18 @@ const delete_user_payment = async (userPaymentId) => {
   });
 };
 
-const create_user_payment = async (id, user_id, payment_type, provider,account_no, expiry) => {
-  const token = localStorage.getItem("token");
+const create_user_payment = async (token, userId, paymentId, paymentProvider, accountNo, expireDate) => {
+ 
+  // const token = localStorage.getItem("token");
   return axios({
     method: "POST",
     url: "/user-payment",
     data: {
-      id: id,
-      user_id:user_id ,
-      payment_type: payment_type,
-      provider: provider,
-      account_no: account_no,
-      expiry:expiry,
+      user_id:userId ,
+      payment_type: paymentId,
+      provider: paymentProvider,
+      account_no: accountNo,
+      expiry:expireDate,
     },
     headers: {
       "Content-Type": "application/json",
