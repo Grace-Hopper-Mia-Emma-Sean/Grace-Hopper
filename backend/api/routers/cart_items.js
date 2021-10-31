@@ -67,21 +67,12 @@ cartItemsRouter.patch("/:cartItemsId", authenticate, async (req, res, next) => {
   // const role = await getUserById(req.user.id);
   // if (role.isAdmin !== true) return res.sendStatus(403);
   try {
-<<<<<<< HEAD
-    const user = await getUserById(req.params.user_id);
-    if (!user)
-      return res.status(404).send({
-        name: "NoUserError",
-        message: `No user exists with id ${req.params.user_id}`,
-      });
-=======
     // const user = await getUserById(req.params.user_id);
     // if (!user)
     //   return res.status(404).send({
     //     name: "NoUserError",
     //     message: `No user exists with id ${req.params.user_id}`,
     //   });
->>>>>>> 06e908a46c6a4153f157135b622af938c805f817
     // const session = await getShoppingSessionByUserId(req.params.user_id);
     // if (!session)
     //   return res.status(404).send({
