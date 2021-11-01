@@ -22,6 +22,7 @@ export function CartTable() {
   const rows = [...cart];
   console.log(rows);
 
+
   const columns = [
     {
       field: "user_id",

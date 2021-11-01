@@ -4,40 +4,36 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
-
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+import { getCartItemsByUserId } from "../../api";
+import { useEffect, useState } from 'react';
+import { CartItemTotal } from '..';
 
 export default function Review() {
+    const [cartItems, setCartItems] = useState([]);
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+
+    useEffect(async () => {
+        await getCartItemsByUserId(token, id)
+          .then(() => {
+            console.log(localStorage.getItem("cart"))
+            setCartItems(JSON.parse(localStorage.getItem("cart")))
+          })
+          .catch((error) => console.log(error))
+          .finally(localStorage.removeItem("cart"))
+      }, []);
+
+    const products = [...cartItems];
+    console.log(products)
+      
+      const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+      const payments = [
+        { name: 'Card type', detail: 'Visa' },
+        { name: 'Card holder', detail: 'Mr John Smith' },
+        { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+        { name: 'Expiry date', detail: '04/2024' },
+      ];
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -54,21 +50,21 @@ export default function Review() {
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
+              Total: {localStorage.getItem("Cart Total")}
           </Typography>
         </ListItem>
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
+            Shipping Testing 
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
+          <Typography gutterBottom>John Smith Testing</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
+            Payment details Testing
           </Typography>
           <Grid container>
             {payments.map((payment) => (

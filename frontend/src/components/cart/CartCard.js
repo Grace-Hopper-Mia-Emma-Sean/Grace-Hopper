@@ -48,8 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function CartCard() {
-  const [cart, setCart] = useState([]);
+export function CartCard({cart, setCart}) {
+  // const [cart, setCart] = useState([]);
+  //making it global to be accessible to CartTotal and Checkout
+
 
   const classes = useStyles();
 

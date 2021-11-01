@@ -23,6 +23,7 @@ export function CartItemTotal({ cart }) {
   return (
     <Grid item>
       <Typography variant="subtitle1">${total}</Typography>
+      {localStorage.setItem("Cart Total", total)}
     </Grid>
   );
 }

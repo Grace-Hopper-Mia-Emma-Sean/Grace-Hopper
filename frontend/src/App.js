@@ -33,7 +33,8 @@ import {
   CartCard,
   OpenDrawer,
   Dashboard,
-  Footer
+  Footer,
+  CartItemTotal,
 } from "./components";
 
 import { Checkout } from "./components/checkout/Checkout"
@@ -56,6 +57,9 @@ export default function App() {
   const [orderItemsToDelete, setOrderItemsToDelete] = useState("")
   const [orderDetailsToEdit, setOrderDetailsToEdit] = useState("")
   const [orderDetailsToDelete, setOrderDetailsToDelete] = useState("")
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState([])
+
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -241,9 +245,24 @@ export default function App() {
         setUserPaymentToEdit={setUserPaymentToEdit}
         /></Route>
         <Route exact path="/checkout" component={Checkout}></Route>
+
         <Route exact path="/financial_dashboard" component={Dashboard}></Route>
        
-        <Route exact path="/cart" component={CartCard}></Route>
+        <Route exact path="/cart"> 
+        <CartCard
+        cart={cart}
+        setCart={setCart}
+        /></Route>
+
+        <Route exact path="/cart"> 
+        <CartItemTotal
+        cart={cart}
+        setCart={setCart}
+        total={total}
+        setTotal={setTotal}
+        /></Route>
+
+
         <Route exact path="/admin" component={AdminTable}></Route>
         <Route exact path="/admin/users" component={UsersTable}></Route>
         <Route exact path="/admin/cart" component={CartTable}></Route>
