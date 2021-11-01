@@ -242,11 +242,7 @@ export default function App() {
         /></Route>
         <Route exact path="/checkout" component={Checkout}></Route>
         <Route exact path="/financial_dashboard" component={Dashboard}></Route>
-
-        {/* Testing Footer */}
-        <Route exact path="/footer" component={Footer}></Route>
        
-
         <Route exact path="/cart" component={CartCard}></Route>
         <Route exact path="/admin" component={AdminTable}></Route>
         <Route exact path="/admin/users" component={UsersTable}></Route>
@@ -271,7 +267,7 @@ export default function App() {
       </Switch>
 
       <Footer/>
-      
+
     </Router>
   );
 }
