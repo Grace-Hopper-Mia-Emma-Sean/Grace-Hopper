@@ -32,6 +32,7 @@ import {
   CreateProduct,
   CartCard,
   OpenDrawer,
+  Dashboard
 } from "./components";
 
 import { Checkout } from "./components/checkout/Checkout"
@@ -237,6 +238,8 @@ export default function App() {
         setUserPaymentToEdit={setUserPaymentToEdit}
         /></Route>
         <Route exact path="/checkout" component={Checkout}></Route>
+        <Route exact path="/financial_dashboard" component={Dashboard}></Route>
+
 
         <Route exact path="/cart" component={CartCard}></Route>
         <Route exact path="/admin" component={AdminTable}></Route>

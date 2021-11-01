@@ -32,6 +32,8 @@ export function Testing({ loggedIn }) {
           <Link to="/order_details">Testing - Order Details</Link>
           <br />
           <Link to="/checkout">Testing - Checkout</Link>
+          <br />
+          <Link to="/financial_dashboard">Testing - Financial Dashboard</Link>
 
         </p>
       ) : (
@@ -53,6 +55,7 @@ export function Testing({ loggedIn }) {
           <Link to="/order_details">Order Details</Link>
           <br />
           <Link to="/checkout">Checkout</Link>
+
         </p>
       )}
       <h2>End of Testing Component...</h2>
