@@ -63,8 +63,8 @@ export function CartCard() {
           JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         );
       })
-      .catch((error) => console.log(error))
-      .finally(localStorage.removeItem("cart"));
+      .catch((error) => console.log(error));
+    // .finally(localStorage.removeItem("cart"));
   }, []);
 
   // const image = `http://placeimg.com/128/128/tech/${Math.floor(

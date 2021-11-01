@@ -16,8 +16,8 @@ export function CartIcon() {
         const storage = JSON.parse(localStorage.getItem("cart"));
         storage === "" ? setCart() : setCart(storage);
       })
-      .catch((error) => console.log(error))
-      .finally(localStorage.removeItem("cart"));
+      .catch((error) => console.log(error));
+    // .finally(localStorage.removeItem("cart"));
   }, []);
 
   const badgeCount = cart == "" ? 0 : cart.length;
