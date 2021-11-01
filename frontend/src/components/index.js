@@ -10,7 +10,7 @@ export { PaymentDetails } from "./payment/PaymentDetails";
 export { UserPayment } from "./payment/UserPayment";
 export { CreateOrderDetails } from "./orders/CreateOrderDetails";
 export { CreateOrderItems } from "./orders/CreateOrderItems";
-export { CreatePaymentDetails } from "./payment/CreatePaymentDetails";
+// export { CreatePaymentDetails } from "./payment/CreatePaymentDetails";
 export { CreateUserPayment } from "./payment/CreateUserPayment";
 export { DeleteOrderDetails } from "./orders/DeleteOrderDetails";
 export { DeleteOrderItems } from "./orders/DeleteOrderItems";
@@ -35,3 +35,4 @@ export { DeleteCartItem } from "./cart/DeleteCartItem";
 export { EditCartItem } from "./cart/EditCartItem";
 export { CartSum } from "./cart/CartSum";
 export { CartItemTotal } from "./cart/CartItemTotal";
+export { Checkout } from "./checkout/Checkout"

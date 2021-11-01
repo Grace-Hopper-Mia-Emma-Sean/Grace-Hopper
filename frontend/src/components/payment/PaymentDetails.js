@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { DataGrid } from "../MUI";
 import { payment_details } from "../../api/";
 import { useState, useEffect } from "react";

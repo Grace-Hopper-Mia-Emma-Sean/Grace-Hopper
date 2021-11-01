@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
+
 import {
   Login,
   Navbar,
@@ -12,7 +13,7 @@ import {
   PaymentDetails,
   UserPayment,
   CreateOrderDetails,
-  CreatePaymentDetails,
+  // CreatePaymentDetails,
   CreateUserPayment,
   CreateOrderItems,
   DeleteOrderDetails,
@@ -32,6 +33,8 @@ import {
   CartCard,
   OpenDrawer,
 } from "./components";
+
+import { Checkout } from "./components/checkout/Checkout"
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -168,7 +171,7 @@ export default function App() {
 
         <Route exact path="/create_order_items" component={CreateOrderItems} />
         <Route exact path="/create_order_details" component={CreateOrderDetails}/>
-        <Route exact path="/create_payment_details" component={CreatePaymentDetails} />
+        {/* <Route exact path="/create_payment_details" component={CreatePaymentDetails} /> */}
 
         <Route exact path="/create_user_payment">
           <CreateUserPayment
@@ -233,9 +236,7 @@ export default function App() {
         userPaymentToEdit={userPaymentToEdit}
         setUserPaymentToEdit={setUserPaymentToEdit}
         /></Route>
-
-       
-
+        <Route exact path="/checkout" component={Checkout}></Route>
 
         <Route exact path="/cart" component={CartCard}></Route>
         <Route exact path="/admin" component={AdminTable}></Route>

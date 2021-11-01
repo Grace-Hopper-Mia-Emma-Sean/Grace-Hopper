@@ -112,7 +112,7 @@ export function CartCard() {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Typography>
-          <a href="/order_details">Go To Checkout </a>{" "}
+          <a href="/checkout">Go To Checkout </a>{" "}
         </Typography>
       </Box>
     </div>
