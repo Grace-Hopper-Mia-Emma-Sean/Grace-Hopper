@@ -58,8 +58,19 @@ export default function App() {
   const [orderDetailsToEdit, setOrderDetailsToEdit] = useState("")
   const [orderDetailsToDelete, setOrderDetailsToDelete] = useState("")
   const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState([])
-
+  const [total, setTotal] = useState([]);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('')
+  const [address1, setAddress1] = useState('')
+  const [address2, setAddress2] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const [zipcode, setZipcode] = useState('')
+  const [country, setCountry] = useState('')
+  const [cardName, setCardName]= useState('')
+  const [cardNumber, setCardNumber] = useState('')
+  const [expDate, setExpDate] = useState('')
+  const [cvv, setCVV] = useState('')
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -244,7 +255,34 @@ export default function App() {
         userPaymentToEdit={userPaymentToEdit}
         setUserPaymentToEdit={setUserPaymentToEdit}
         /></Route>
-        <Route exact path="/checkout" component={Checkout}></Route>
+        <Route exact path="/checkout">
+          <Checkout
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          address1={address1} 
+          setAddress1={setAddress1}
+          address2={address2}
+          setAddress2={setAddress2}
+          city={city}
+          setCity={setCity}
+          state={state}    
+          setState={setState}
+          zipcode={zipcode}
+          setZipcode={setZipcode}
+          country={country}
+          setCountry={setCountry}
+          cardName={cardName}
+          setCardName={setCardName}
+          cardNumber={cardNumber}
+          setCardNumber={setCardNumber}
+          expDate={expDate}
+          setExpDate={setExpDate}
+          cvv={cvv}
+          setCVV={setCVV}
+          
+          /></Route>
 
         <Route exact path="/financial_dashboard" component={Dashboard}></Route>
        

@@ -6,9 +6,33 @@ import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import { getCartItemsByUserId } from "../../api";
 import { useEffect, useState } from 'react';
-import { CartItemTotal } from '..';
 
-export default function Review() {
+export default function Review({
+    firstName, 
+    setFirstName, 
+    lastName, 
+    setLastName, 
+    address1, 
+    setAddress1, 
+    address2, 
+    setAddress2,
+    city, 
+    setCity,
+    state,
+    setState,
+    zipcode,
+    setZipcode,
+    country,
+    setCountry,
+    cardName,
+    setCardName,
+    cardNumber,
+    setCardNumber,
+    expDate,
+    setExpDate,
+    cvv,
+    setCVV
+}) {
     const [cartItems, setCartItems] = useState([]);
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("id");
@@ -26,12 +50,12 @@ export default function Review() {
     const products = [...cartItems];
     console.log(products)
       
-      const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+      const addresses = [address1, address2, city, state, zipcode, country];
       const payments = [
-        { name: 'Card type', detail: 'Visa' },
-        { name: 'Card holder', detail: 'Mr John Smith' },
-        { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-        { name: 'Expiry date', detail: '04/2024' },
+        { name: 'Card type', detail: cardName},
+        { name: 'Card holder', detail: firstName, lastName},
+        { name: 'Card number', detail: cardNumber },
+        { name: 'Expiry date', detail: expDate },
       ];
 
   return (
@@ -42,7 +66,7 @@ export default function Review() {
       <List disablePadding>
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
+            <ListItemText primary={product.name} secondary={product.quantity} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
@@ -54,17 +78,21 @@ export default function Review() {
           </Typography>
         </ListItem>
       </List>
+
+
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping Testing 
           </Typography>
-          <Typography gutterBottom>John Smith Testing</Typography>
+          <Typography gutterBottom>`{firstName} {lastName}`</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
+
+
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details Testing
+            Payment Details
           </Typography>
           <Grid container>
             {payments.map((payment) => (

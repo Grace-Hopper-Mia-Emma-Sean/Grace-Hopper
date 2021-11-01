@@ -16,24 +16,102 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+export function Checkout({
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    address1,
+    setAddress1,
+    address2,
+    setAddress2,
+    city,
+    setCity,
+    state, 
+    setState,  
+    zipcode,
+    setZipcode,
+    country,
+    setCountry,
+    cardName,
+    setCardName,
+    cardNumber,
+    setCardNumber,
+    expDate,
+    setExpDate,
+    cvv,
+    setCVV
+}) {
+
+    const steps = ['Shipping address', 'Payment details', 'Review your order'];
+
+    function getStepContent(step) {
+    switch (step) {
+        case 0:
+        return <AddressForm 
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            address1={address1} 
+            setAddress1={setAddress1}
+            address2={address2}
+            setAddress2={setAddress2}
+            city={city}
+            setCity={setCity}
+            state={state}    
+            setState={setState}
+            zipcode={zipcode}
+            setZipcode={setZipcode}
+            country={country}
+            setCountry={setCountry}
+        />;
+        case 1:
+        return <PaymentForm 
+            cardName={cardName}
+            setCardName={setCardName}
+            cardNumber={cardNumber}
+            setCardNumber={setCardNumber}
+            expDate={expDate}
+            setExpDate={setExpDate}
+            cvv={cvv}
+            setCVV={setCVV}
+        />;
+        case 2:
+        return <Review 
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            address1={address1} 
+            setAddress1={setAddress1}
+            address2={address2}
+            setAddress2={setAddress2}
+            city={city}
+            setCity={setCity}
+            state={state}    
+            setState={setState}
+            zipcode={zipcode}
+            setZipcode={setZipcode}
+            country={country}
+            setCountry={setCountry}
+            cardName={cardName}
+            setCardName={setCardName}
+            cardNumber={cardNumber}
+            setCardNumber={setCardNumber}
+            expDate={expDate}
+            setExpDate={setExpDate}
+            cvv={cvv}
+            setCVV={setCVV}
+        />;
+        default:
+        throw new Error('Unknown step');
+    }
+    }
 
 const theme = createTheme();
 
-export function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {

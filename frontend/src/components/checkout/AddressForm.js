@@ -5,7 +5,24 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function AddressForm() {
+export default function AddressForm(
+    {firstName, 
+    setFirstName, 
+    lastName, 
+    setLastName, 
+    address1, 
+    setAddress1, 
+    address2, 
+    setAddress2,
+    city, 
+    setCity,
+    state,
+    setState,
+    zipcode,
+    setZipcode,
+    country,
+    setCountry
+    }){
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -17,6 +34,8 @@ export default function AddressForm() {
             required
             id="firstName"
             name="firstName"
+            value={firstName}
+            onChange={(event)=> setFirstName(event.target.value)}
             label="First name"
             fullWidth
             autoComplete="given-name"
@@ -28,6 +47,8 @@ export default function AddressForm() {
             required
             id="lastName"
             name="lastName"
+            value={lastName}
+            onChange={(event)=> setLastName(event.target.value)}
             label="Last name"
             fullWidth
             autoComplete="family-name"
@@ -39,6 +60,8 @@ export default function AddressForm() {
             required
             id="address1"
             name="address1"
+            value={address1}
+            onChange={(event)=> setAddress1(event.target.value)}
             label="Address line 1"
             fullWidth
             autoComplete="shipping address-line1"
@@ -49,6 +72,8 @@ export default function AddressForm() {
           <TextField
             id="address2"
             name="address2"
+            value={address2}
+            onChange={(event)=> setAddress2(event.target.value)}
             label="Address line 2"
             fullWidth
             autoComplete="shipping address-line2"
@@ -60,6 +85,8 @@ export default function AddressForm() {
             required
             id="city"
             name="city"
+            value={city}
+            onChange={(event)=> setCity(event.target.value)}
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
@@ -70,6 +97,8 @@ export default function AddressForm() {
           <TextField
             id="state"
             name="state"
+            value={state}
+            onChange={(event)=> setState(event.target.value)}
             label="State/Province/Region"
             fullWidth
             variant="standard"
@@ -80,6 +109,8 @@ export default function AddressForm() {
             required
             id="zip"
             name="zip"
+            value={zipcode}
+            onChange={(event)=> setZipcode(event.target.value)}
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
@@ -91,6 +122,8 @@ export default function AddressForm() {
             required
             id="country"
             name="country"
+            value={country}
+            onChange={(event)=> setCountry(event.target.value)}
             label="Country"
             fullWidth
             autoComplete="shipping country"
