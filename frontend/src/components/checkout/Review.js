@@ -83,9 +83,9 @@ export default function Review({
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping Testing 
+            Shipping
           </Typography>
-          <Typography gutterBottom>`{firstName} {lastName}`</Typography>
+          <Typography gutterBottom>{firstName} {lastName}</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
 
