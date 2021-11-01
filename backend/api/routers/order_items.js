@@ -9,7 +9,7 @@ const {
   createOrderItems,
 } = require("../../db");
 
-const {authenticate, admin} = require('../utils')
+const { authenticate, admin } = require("../utils");
 
 orderItemsRouter.post("/", async (req, res, next) => {
   const { order_id, product_id, quantity } = req.body;
@@ -33,7 +33,6 @@ orderItemsRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
-//userLoggedIn, requiredNotSent({requiredParams: ["id", "order_id", "product_id", "quantity"], atLeastOne: true})
 
 orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
   const { order_id, product_id, quantity } = req.body;
@@ -62,7 +61,6 @@ orderItemsRouter.patch("/:orderItemsId", async (req, res, next) => {
   }
 });
 
-//userLoggedIn
 orderItemsRouter.delete("/:orderItemsId", async (req, res, next) => {
   const { orderItemsId } = req.params;
   try {

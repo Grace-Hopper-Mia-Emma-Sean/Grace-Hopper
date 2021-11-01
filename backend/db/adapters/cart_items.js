@@ -57,9 +57,18 @@ const updateCartItems = async (cartItemsId, userId, quantity) => {
     } = await client.query(
       `
       UPDATE cart_items
+<<<<<<< HEAD
       SET quantity = ${quantity}
       WHERE id=${cartItemsId}
       AND user_id=${userId}
+=======
+      SET quantity = ${fields}
+<<<<<<< HEAD
+      WHERE user_id=${id}
+=======
+      WHERE id=${id}
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
+>>>>>>> 4831aefefe28fca7cfad877ad03182d804511878
       RETURNING *
     `
     );
@@ -76,7 +85,11 @@ const deleteCartItems = async (id) => {
     } = await client.query(
       `
       DELETE FROM cart_items
+<<<<<<< HEAD
+      WHERE user_id=${id}
+=======
       WHERE id=${id}
+>>>>>>> 06e908a46c6a4153f157135b622af938c805f817
       RETURNING *;
     `
     );
