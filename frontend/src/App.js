@@ -32,7 +32,8 @@ import {
   CreateProduct,
   CartCard,
   OpenDrawer,
-  Dashboard
+  Dashboard,
+  Footer
 } from "./components";
 
 import { Checkout } from "./components/checkout/Checkout"
@@ -80,7 +81,9 @@ export default function App() {
         setSearchTerm={setSearchTerm}
       >
         <OpenDrawer loggedIn={loggedIn} admin={admin} />
+
       </Navbar>
+
       <Testing loggedIn={loggedIn} />
       <Switch>
         <Route path="/register">
@@ -240,6 +243,9 @@ export default function App() {
         <Route exact path="/checkout" component={Checkout}></Route>
         <Route exact path="/financial_dashboard" component={Dashboard}></Route>
 
+        {/* Testing Footer */}
+        <Route exact path="/footer" component={Footer}></Route>
+       
 
         <Route exact path="/cart" component={CartCard}></Route>
         <Route exact path="/admin" component={AdminTable}></Route>
@@ -261,7 +267,11 @@ export default function App() {
           <Products searchTerm={searchTerm} />
         </Route>
         <Route path="*" component={NotFound} />
+
       </Switch>
+
+      <Footer/>
+      
     </Router>
   );
 }

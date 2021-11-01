@@ -34,6 +34,8 @@ export function Testing({ loggedIn }) {
           <Link to="/checkout">Testing - Checkout</Link>
           <br />
           <Link to="/financial_dashboard">Testing - Financial Dashboard</Link>
+          <br />
+          <Link to="/footer">Testing - Footer (See bottom of page)</Link>
 
         </p>
       ) : (
@@ -55,6 +57,7 @@ export function Testing({ loggedIn }) {
           <Link to="/order_details">Order Details</Link>
           <br />
           <Link to="/checkout">Checkout</Link>
+      
 
         </p>
       )}

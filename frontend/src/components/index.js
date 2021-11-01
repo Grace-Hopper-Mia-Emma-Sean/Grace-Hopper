@@ -37,3 +37,4 @@ export { CartSum } from "./cart/CartSum";
 export { CartItemTotal } from "./cart/CartItemTotal";
 export { Checkout } from "./checkout/Checkout"
 export { Dashboard } from "./finance_dashboard/Dashboard"
+export { Footer } from "./footer/Footer"
