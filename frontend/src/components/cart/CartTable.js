@@ -13,8 +13,8 @@ export function CartTable() {
         console.log(localStorage.getItem("cart"));
         setCart(JSON.parse(localStorage.getItem("cart")));
       })
-      .catch((error) => console.log(error))
-      .finally(localStorage.removeItem("cart"));
+      .catch((error) => console.log(error));
+    // .finally(localStorage.removeItem("cart"));
   }, []);
 
   cart.forEach((cart, i) => Object.assign(cart, { id: i + 1 }));
