@@ -1,15 +1,13 @@
 import { Button, Box, FormControl, InputLabel, Select, MenuItem } from "../MUI";
-import { updateCartItem } from "../../api";
+import { updateCartItem, getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
 
-export function EditCartItem({ cart, setQuantity }) {
-  const editItem = async (e) => {
-    await updateCartItem(cart.id, e.target.value, localStorage.getItem("id"))
-      .then(() => {
-        setQuantity(e.target.value);
-      })
-      .catch((error) => console.log(error));
-  };
+export function EditCartItem({ cart }) {
+  const [quantity, setQuantity] = useState(cart.quantity);
+
+  useEffect(async () => {
+    await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
+  }, [quantity]);
 
   return (
     <div>
@@ -19,9 +17,11 @@ export function EditCartItem({ cart, setQuantity }) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={cart.quantity}
+            value={quantity}
             label="Quantity"
-            onChange={editItem}
+            onChange={(e) => {
+              setQuantity(e.target.value);
+            }}
           >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
               return <MenuItem value={number}>{number}</MenuItem>;

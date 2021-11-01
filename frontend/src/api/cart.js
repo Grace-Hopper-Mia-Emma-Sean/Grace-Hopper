@@ -43,7 +43,6 @@ const getCartItems = async (token) => {
 };
 
 const getCartItemsByUserId = async (token, id) => {
-  console.log(token, id);
   return axios({
     method: "GET",
     url: `/cart-items/${id}`,
@@ -74,12 +73,9 @@ const updateCartItem = async (cartItemsId, quantity, userId) => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   })
-    .catch((error) => console.error(error.response.data))
+    .catch((error) => console.error(error))
     .then((response) => {
       response.data.cartChanges;
-      console.log(response.data.cartChanges);
-      // find a way to avoid having to use alert
-      return alert("cart item successfully updated");
     });
 };
 

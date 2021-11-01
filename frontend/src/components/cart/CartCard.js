@@ -22,7 +22,7 @@ import {
 
 import { getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
-import { EditCartItem, DeleteCartItem, CartSum } from "..";
+import { EditCartItem, DeleteCartItem, CartSum, CartItemTotal } from "..";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,9 +67,11 @@ export function CartCard() {
       .finally(localStorage.removeItem("cart"));
   }, []);
 
-  const image = `http://placeimg.com/128/128/tech/${Math.floor(
-    Math.random() * 20 + 1
-  )}`;
+  // const image = `http://placeimg.com/128/128/tech/${Math.floor(
+  //   Math.random() * 20 + 1
+  // )}`;
+
+  const image = `http://placeimg.com/128/128/tech/1`;
 
   return (
     <div>
@@ -97,9 +99,7 @@ export function CartCard() {
                         <DeleteCartItem cart={cart} />
                       </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1">${cart.total}</Typography>
-                    </Grid>
+                    <CartItemTotal cart={cart} />
                   </Grid>
                 </Grid>
               </Paper>
@@ -118,41 +118,3 @@ export function CartCard() {
     </div>
   );
 }
-
-// [
-//   {
-//     user_id: 4,
-//     name: "iMac 24inch (8 core, M1 Chip, 500 GB SSD)",
-//     quantity: 2,
-//     price: "2000.00",
-//     total: "4000.00",
-//   },
-//   {
-//     user_id: 3,
-//     name: "ASUS ROG Gaming PC",
-//     quantity: 1,
-//     price: "1700.00",
-//     total: "1700.00",
-//   },
-//   {
-//     user_id: 6,
-//     name: "The Intel i7",
-//     quantity: 3,
-//     price: "700.00",
-//     total: "2100.00",
-//   },
-//   {
-//     user_id: 2,
-//     name: "The Apple M1 Chip (Recently Updated!)",
-//     quantity: 2,
-//     price: "749.99",
-//     total: "1499.98",
-//   },
-//   {
-//     user_id: 5,
-//     name: "NVIDIA Alienware X17 Gaming Laptop",
-//     quantity: 2,
-//     price: "2200.00",
-//     total: "4400.00",
-//   },
-// ];
