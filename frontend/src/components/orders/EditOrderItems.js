@@ -27,14 +27,15 @@ const useStyles = makeStyles((theme) => ({
 // quantity: quantity,
 // },
 
-export function EditOrderItems({orderItemsToEdit}){
+export function EditOrderItems({orderItemsToEdit, orderDetailsToEdit, productToEdit}){
     const classes = useStyles();
 
-    const [orderDetailId, setOrderDetailId] = useState('')
-    const [productId, setProductId] = useState('')
-    const [quantityOf, setQuantityOf] = useState('')
-    
+    const productId = productToEdit.id
+    console.log(productToEdit.id)
     const id = orderItemsToEdit.id
+    const orderId = orderDetailsToEdit.id
+    const [quantityOf, setQuantityOf] = useState('')
+
 
     return (
         <div className={classes.editOrderItems}>
@@ -42,17 +43,13 @@ export function EditOrderItems({orderItemsToEdit}){
                 Now Editing Order ID: {orderItemsToEdit.id}
                 <br/>
                 <br/>
-                Edit Order Detail ID: <TextField onChange={function(event) {setOrderDetailId(event.target.value)}}/>
+                Now Editing Detail ID: {orderDetailsToEdit.id}
             </div>
 
             <div className={classes.editItem}>
-                Now Product ID: {orderItemsToEdit.product_id}
-                <br/>
-                <br/>
-                Edit Order ID: <TextField onChange={function(event) {setProductId(event.target.value)}}/>
+                Product ID Editting: {productToEdit.id}
             </div>
 
-                <br/>
             <div className={classes.editItem}>
                 Current Quantity: {orderItemsToEdit.quantity}
                 <br/>
@@ -66,7 +63,7 @@ export function EditOrderItems({orderItemsToEdit}){
 
                 <Link to ="/order_items">
                 <button onClick={function()
-                    {edit_order_items(id, orderDetailId, productId, quantityOf)} 
+                    {edit_order_items(id, orderId, productId, quantityOf)} 
                     }>Edit Order Item</button>
                 </Link>
         </div>

@@ -48,7 +48,7 @@ export function OrderItems({
             console.log(item.row), setOrderItemsToDelete(item.row);
           }}
         >
-          Edit
+          Delete
         </button>
       </Link>
     );

@@ -68,13 +68,13 @@ const create_order_details = async (user_id, payment_id, total) => {
 
 //OrderItems
 
-const edit_order_items = async (id, orderDetailId, productId, quantityOf) => {
+const edit_order_items = async (id, orderId, productId, quantityOf) => {
 
   return axios({
       method: "PATCH",
       url: `/order-items/${id}`,
       data: {
-      order_id: orderDetailId,
+      order_id: orderId,
       product_id: productId,
       quantity: quantityOf,
       },
