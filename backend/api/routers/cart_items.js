@@ -63,48 +63,26 @@ cartItemsRouter.get(
   }
 );
 
-cartItemsRouter.patch("/:cartItemsId", authenticate, async (req, res, next) => {
-  // const role = await getUserById(req.user.id);
-  // if (role.isAdmin !== true) return res.sendStatus(403);
-  try {
-    // const user = await getUserById(req.params.user_id);
-    // if (!user)
-    //   return res.status(404).send({
-    //     name: "NoUserError",
-    //     message: `No user exists with id ${req.params.user_id}`,
-    //   });
-    // const session = await getShoppingSessionByUserId(req.params.user_id);
-    // if (!session)
-    //   return res.status(404).send({
-    //     name: "NoShoppingSessionError",
-    //     message: `User with id ${req.params.user_id} does not have a shopping session to which they can add cart items`,
-    //   });
-    const cartItems = await getCartItemsByUserId(req.params.user_id);
-    if (!cartItems)
-      return res.status(404).send({
-        name: "NoCartItemsError",
-        message: `User with id ${req.params.user_id} does not have any cart items to edit`,
+cartItemsRouter.patch(
+  "/:cartItemsId/:userId",
+  authenticate,
+  async (req, res, next) => {
+    try {
+      console.log(req.params.userId);
+      const cartChanges = await updateCartItems(
+        req.params.cartItemsId,
+        req.params.userId,
+        req.body.quantity
+      );
+      res.status(200).send({
+        message: "cart items were updated successfully",
+        cartChanges: cartChanges,
       });
-    const updateFields = { quantity: req.body.quantity };
-    // console.log(cartItems.quantity, updateFields.quantity);
-    if (cartItems.quantity === updateFields.quantity)
-      return res.status(404).send({
-        name: "NoUpdatesError",
-        message: "No items for this entry are being updated",
-      });
-    console.log(req.params.user_id, updateFields.quantity);
-    const cartChanges = await updateCartItems(
-      req.params.cartId,
-      updateFields.quantity
-    );
-    res.status(200).send({
-      message: "cart items were updated successfully",
-      cartChanges: cartChanges,
-    });
-  } catch (error) {
-    throw error;
+    } catch (error) {
+      throw error;
+    }
   }
-});
+);
 
 cartItemsRouter.delete(
   "/:cartItemsId",

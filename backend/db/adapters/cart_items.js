@@ -50,15 +50,16 @@ const getCartItemsByUserId = async (id) => {
   }
 };
 
-const updateCartItems = async (id, fields) => {
+const updateCartItems = async (cartItemsId, userId, quantity) => {
   try {
     const {
       rows: [cartItems],
     } = await client.query(
       `
       UPDATE cart_items
-      SET quantity = ${fields}
-      WHERE id=${id}
+      SET quantity = ${quantity}
+      WHERE id=${cartItemsId}
+      AND user_id=${userId}
       RETURNING *
     `
     );
