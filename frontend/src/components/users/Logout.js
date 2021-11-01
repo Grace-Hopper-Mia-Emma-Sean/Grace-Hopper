@@ -8,21 +8,21 @@ export function Logout({ setLoggedIn }) {
         underline="hover"
         onClick={() => {
           let keys = [
-          "username", 
-          "token", 
-          "admin", 
-          "userPayments", 
-          "userPaymentId",
-          "productId", 
-          "payment_details_Id", 
-          "payment_details",
-          "orderItems",
-          "orderDetails",
-          "orderDetailId",
-          "users",
-          "orderItemId"
-        
-        ];
+            "username",
+            "token",
+            "admin",
+            "userPayments",
+            "userPaymentId",
+            "payment_details_Id",
+            "payment_details",
+            "orderItems",
+            "orderDetails",
+            "orderDetailId",
+            "users",
+            "orderItemId",
+            "id",
+            "cart",
+          ];
           keys.forEach((k) => localStorage.removeItem(k));
           setLoggedIn(false);
         }}
