@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { DataGrid } from "../MUI";
+import { DataGrid } from "../../MUI";
 import { getCartItems } from "../../api/";
 import { useState, useEffect } from "react";
 
@@ -21,7 +21,6 @@ export function CartTable() {
 
   const rows = [...cart];
   console.log(rows);
-
 
   const columns = [
     {

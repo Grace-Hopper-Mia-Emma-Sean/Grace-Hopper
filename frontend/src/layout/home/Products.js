@@ -12,9 +12,9 @@ import {
   DeleteForeverIcon,
   Box,
   Stack,
-} from "../MUI";
+} from "../../MUI";
 
-import { CreateCartItem } from "..";
+import { CreateCartItem } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
   root: {

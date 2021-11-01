@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { DataGrid } from "../MUI";
+import { DataGrid } from "../../MUI";
 import { user_payment } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function UserPayment({ 
-  userPaymentToEdit, 
+export function UserPayment({
+  userPaymentToEdit,
   setUserPaymentToEdit,
   userPaymentToDelete,
-  setUserPaymentToDelete
+  setUserPaymentToDelete,
 }) {
   const [userPayment, setUserPayment] = useState([]);
 
@@ -22,7 +22,6 @@ export function UserPayment({
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("userPayments"));
   }, []);
-
 
   const rows = [...userPayment];
   console.log(rows);
@@ -83,29 +82,28 @@ export function UserPayment({
       align: "center",
     },
     {
-        field: "expiry",
-        headerName: "Expiration Date",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-      },
+      field: "expiry",
+      headerName: "Expiration Date",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+    },
     {
-        field: "edit",
-        headerName: "Edit",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-        renderCell: renderEditButton,
-      },
-      {
-        field: "delete",
-        headerName: "Delete",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-        renderCell: renderDeleteButton,
-      }
-   
+      field: "edit",
+      headerName: "Edit",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+      renderCell: renderEditButton,
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+      renderCell: renderDeleteButton,
+    },
   ];
   return (
     <div>

@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { DataGrid } from "../MUI";
+import { DataGrid } from "../../MUI";
 import { order_details } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function OrderDetails({ 
-  orderDetailsToEdit, 
+export function OrderDetails({
+  orderDetailsToEdit,
   setOrderDetailsToEdit,
   orderDetailsToDelete,
-  setOrderDetailsToDelete 
+  setOrderDetailsToDelete,
 }) {
   const [orderDetails, setOrderDetails] = useState([]);
 
@@ -22,7 +22,6 @@ export function OrderDetails({
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("orderDetails"));
   }, []);
-
 
   const rows = [...orderDetails];
   console.log(rows);
@@ -84,21 +83,21 @@ export function OrderDetails({
     },
 
     {
-        field: "edit",
-        headerName: "Edit",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-        renderCell: renderEditButton,
-      },
-      {
-        field: "delete",
-        headerName: "Delete",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-        renderCell: renderDeleteButton,
-      }
+      field: "edit",
+      headerName: "Edit",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+      renderCell: renderEditButton,
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+      renderCell: renderDeleteButton,
+    },
   ];
   return (
     <div>

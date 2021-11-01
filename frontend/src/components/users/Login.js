@@ -14,7 +14,7 @@ import {
   TextField,
   ThemeProvider,
   Typography,
-} from "../MUI";
+} from "../../MUI";
 
 export function Login({
   loggedIn,

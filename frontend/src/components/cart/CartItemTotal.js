@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Grid, Typography } from "../MUI";
+import { Grid, Typography } from "../../MUI";
 import { getCartItems, getCartItemsByUserId } from "../../api";
 
 export function CartItemTotal({ cart }) {

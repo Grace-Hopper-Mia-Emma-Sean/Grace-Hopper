@@ -16,7 +16,7 @@ import {
   makeStyles,
   Paper,
   ButtonBase,
-} from "../MUI";
+} from "../../MUI";
 
 export function CartSum({ cart }) {
   const [sum, setSum] = useState();
@@ -38,7 +38,6 @@ export function CartSum({ cart }) {
     >
       <Typography sx={{ fontSize: 36 }}>Total: {sum}</Typography>
       {localStorage.setItem("Cart Total", sum)}
-
     </Box>
   );
 }

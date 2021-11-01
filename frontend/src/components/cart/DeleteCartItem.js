@@ -1,4 +1,4 @@
-import { Button } from "../MUI";
+import { Button } from "../../MUI";
 import { deleteCartItem } from "../../api";
 import { useState, useEffect } from "react";
 

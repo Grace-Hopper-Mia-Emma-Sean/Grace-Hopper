@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { DataGrid } from "../MUI";
+import { DataGrid } from "../../MUI";
 import { order_items } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function OrderItems({ 
-  orderItemsToEdit, 
+export function OrderItems({
+  orderItemsToEdit,
   setOrderItemsToEdit,
   orderItemsToDelete,
-  setOrderItemsToDelete 
+  setOrderItemsToDelete,
 }) {
   const [orderItems, setOrderItems] = useState([]);
 
@@ -22,7 +22,6 @@ export function OrderItems({
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("orderItems"));
   }, []);
-
 
   const rows = [...orderItems];
   console.log(rows);
@@ -53,7 +52,6 @@ export function OrderItems({
       </Link>
     );
   };
-
 
   const columns = [
     {
@@ -98,7 +96,7 @@ export function OrderItems({
       width: 100,
       align: "center",
       renderCell: renderDeleteButton,
-    }
+    },
   ];
   return (
     <div>

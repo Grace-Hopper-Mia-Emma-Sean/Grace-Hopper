@@ -1,4 +1,4 @@
-import { LogoutIcon, IconButton, Button } from "../MUI";
+import { LogoutIcon, IconButton, Button } from "../../MUI";
 import { Link } from "react-router-dom";
 
 export function Logout({ setLoggedIn }) {

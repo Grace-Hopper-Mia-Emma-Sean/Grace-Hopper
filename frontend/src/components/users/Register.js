@@ -11,7 +11,7 @@ import {
   TextField,
   ThemeProvider,
   Typography,
-} from "../MUI";
+} from "../../MUI";
 
 import { Redirect } from "react-router";
 import { register } from "../../api";

@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { createTheme, ThemeProvider, Typography } from "../MUI";
-import { 
-  UsersTable, 
-  CartTable, 
+import { createTheme, ThemeProvider, Typography } from "../../MUI";
+import {
+  UsersTable,
+  CartTable,
   ProductsTable,
   UserPayment,
   PaymentDetails,
   OrderItems,
-  OrderDetails
- } from "..";
+  OrderDetails,
+} from "..";
 
 const theme = createTheme();
 
@@ -60,7 +60,6 @@ export function AdminTable() {
           Products
           <OrderDetails />
         </Typography>
-        
       </ThemeProvider>
     </div>
   );

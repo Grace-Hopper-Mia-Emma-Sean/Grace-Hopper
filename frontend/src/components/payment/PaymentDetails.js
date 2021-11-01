@@ -1,14 +1,14 @@
 import * as React from "react";
-import { DataGrid } from "../MUI";
+import { DataGrid } from "../../MUI";
 import { payment_details } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function PaymentDetails({ 
-  paymentToEdit, 
-  setPaymentToEdit, 
-  paymentToDelete, 
-  setPaymentToDelete 
+export function PaymentDetails({
+  paymentToEdit,
+  setPaymentToEdit,
+  paymentToDelete,
+  setPaymentToDelete,
 }) {
   const [payment, setPayment] = useState([]);
 
@@ -55,7 +55,6 @@ export function PaymentDetails({
     );
   };
 
-
   const columns = [
     {
       field: "id",
@@ -90,22 +89,21 @@ export function PaymentDetails({
       align: "center",
     },
     {
-        field: "edit",
-        headerName: "Edit",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-        renderCell: renderEditButton,
-      },
-      {
-        field: "delete",
-        headerName: "Delete",
-        headerAlign: "center",
-        width: 100,
-        align: "center",
-        renderCell: renderDeleteButton,
-      }
-   
+      field: "edit",
+      headerName: "Edit",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+      renderCell: renderEditButton,
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      headerAlign: "center",
+      width: 100,
+      align: "center",
+      renderCell: renderDeleteButton,
+    },
   ];
   return (
     <div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { DataGrid } from "../MUI";
+import { DataGrid } from "../../MUI";
 import { getUsers } from "../../api/";
 import { useState, useEffect } from "react";
 

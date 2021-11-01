@@ -10,7 +10,7 @@ import {
   ListItemText,
   makeStyles,
   MenuIcon,
-} from "../MUI";
+} from "../../MUI";
 
 export function OpenDrawer({ loggedIn, admin }) {
   const [openDrawer, setOpenDrawer] = useState(false);

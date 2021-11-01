@@ -18,7 +18,7 @@ import {
   makeStyles,
   Paper,
   ButtonBase,
-} from "../MUI";
+} from "../../MUI";
 
 import { getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
@@ -48,10 +48,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function CartCard({cart, setCart}) {
+export function CartCard({ cart, setCart }) {
   // const [cart, setCart] = useState([]);
   //making it global to be accessible to CartTotal and Checkout
-
 
   const classes = useStyles();
 

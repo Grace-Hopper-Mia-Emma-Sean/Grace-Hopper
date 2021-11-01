@@ -1,6 +1,6 @@
 export { Login } from "./users/Login";
 export { Logout } from "./users/Logout";
-export { Navbar } from "./misc/Navbar";
+export { Navbar } from "../layout/navbar/Navbar";
 export { NotFound } from "./misc/Error";
 export { Register } from "./users/Register";
 export { Testing } from "./misc/Testing";
@@ -21,7 +21,7 @@ export { EditOrderItems } from "./orders/EditOrderItems";
 export { EditPaymentDetails } from "./payment/EditPaymentDetails";
 export { EditUserPayment } from "./payment/EditUserPayment";
 export { UsersTable } from "./users/UsersTable";
-export { Products } from "./home/Product";
+export { Products } from "../layout/home/Products";
 export { CartTable } from "./cart/CartTable";
 export { AdminTable } from "./misc/AdminTable";
 export { ProductsTable } from "./products/ProductsTable";
@@ -30,11 +30,11 @@ export { CreateProduct } from "./products/CreateProduct";
 export { CreateCartItem } from "./cart/CreateCartItem";
 export { CartIcon } from "./cart/CartIcon";
 export { CartCard } from "./cart/CartCard";
-export { OpenDrawer } from "./misc/OpenDrawer";
+export { OpenDrawer } from "../layout/navbar/OpenDrawer";
 export { DeleteCartItem } from "./cart/DeleteCartItem";
 export { EditCartItem } from "./cart/EditCartItem";
 export { CartSum } from "./cart/CartSum";
 export { CartItemTotal } from "./cart/CartItemTotal";
-export { Checkout } from "./checkout/Checkout"
-export { Dashboard } from "./finance_dashboard/Dashboard"
-export { Footer } from "./footer/Footer"
+export { Checkout } from "./checkout/Checkout";
+export { Dashboard } from "./finance_dashboard/Dashboard";
+export { Footer } from "../layout/footer/Footer";

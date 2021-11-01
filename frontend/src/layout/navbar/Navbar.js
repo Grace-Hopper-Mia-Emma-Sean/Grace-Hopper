@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Logout, CartIcon, OpenDrawer } from "..";
+import { Logout, CartIcon, OpenDrawer } from "../../components";
 
 import {
   styled,
@@ -22,7 +22,7 @@ import {
   NotificationsIcon,
   MoreIcon,
   ShoppingCartIcon,
-} from "../MUI";
+} from "../../MUI";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
