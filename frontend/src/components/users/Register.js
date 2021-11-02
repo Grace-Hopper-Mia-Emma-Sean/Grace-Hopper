@@ -164,7 +164,7 @@ export function Register({
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="/register" variant="body2" color="#E63946">
+                  <Link href="/login" variant="body2" color="#E63946">
                     Already have an account? Sign in
                   </Link>
                 </Grid>
