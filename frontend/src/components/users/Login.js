@@ -1,5 +1,6 @@
 import { login } from "../../api";
 import { Redirect } from "react-router";
+import { createCartItem } from "../../api";
 
 import {
   Avatar,
@@ -25,6 +26,17 @@ export function Login({
   setPassword,
 }) {
   const theme = createTheme();
+  const quantity = 1;
+  const userId = JSON.parse(localStorage.getItem("id"));
+
+  const user = async () => {
+    await createCartItem(product.id, quantity, userId)
+      .then(() => {
+        console.log(product.id, quantity, userId);
+      })
+      .catch((error) => console.log(error));
+    // .finally(localStorage.removeItem("cart"));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +59,10 @@ export function Login({
       KVPs.forEach((KVP) =>
         localStorage.setItem(Object.keys(KVP), Object.values(KVP))
       );
+
+      const cart = [localStorage.getItem("cart")];
+
+      if (cart) return cart.map((obj) => createCartItem(obj));
     } catch (error) {
       console.error(error);
       setLoggedIn(false);

@@ -1,6 +1,5 @@
 import { AddShoppingCartIcon, Button } from "../../MUI";
 import { createCartItem } from "../../api";
-import { useState, useEffect } from "react";
 
 export function CreateCartItem({ product }) {
   const quantity = 1;
