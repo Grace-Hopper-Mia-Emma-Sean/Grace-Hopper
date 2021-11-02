@@ -1,33 +1,45 @@
 import * as React from "react";
 
-import { CssBaseline, Box, Typography, Container, Link } from "../../MUI";
+import {
+  CssBaseline,
+  Box,
+  Typography,
+  Container,
+  Link,
+  Paper,
+  BottomNavigation,
+  BottomNavigationAction,
+  makeStyles,
+  Theme,
+  GitHubIcon,
+} from "../../MUI";
+
+const useStyles = makeStyles((theme) => ({
+  footer: {
+    background: "#1D3557",
+    color: "white",
+    padding: theme.spacing(2),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  // typography: {
+  //   color: "#F1FAEE",
+  //   textDecoration: "none",
+  //   fontSize: "h6",
+  // },
+}));
 
 export function Footer() {
+  const classes = useStyles();
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "30vh",
-      }}
-    >
-      <CssBaseline />
-      <Box
-        component="footer"
-        sx={{
-          py: 3,
-          px: 2,
-          mt: "auto",
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[200]
-              : theme.palette.grey[800],
-        }}
+    <div className={classes.footer}>
+      <Link
+        href="https://github.com/Grace-Hopper-Mia-Emma-Sean/Grace-Hopper"
+        sx={{ textDecoration: "none", color: "#F1FAEE", fontSize: "1rem" }}
       >
-        <Container maxWidth="sm">
-          <Typography variant="body1">MESS Electronics, Inc.</Typography>
-        </Container>
-      </Box>
-    </Box>
+        Created 2021 by Mia Dao, Emma Crane, and Sean Conte <GitHubIcon />
+      </Link>
+    </div>
   );
 }

@@ -9,6 +9,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Backdrop from "@material-ui/core/Backdrop";
 import Badge from "@mui/material/Badge";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
 import Button from "@material-ui/core/Button";
 import ButtonBase from "@mui/material/ButtonBase";
@@ -36,6 +38,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Fade from "@material-ui/core/Fade";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import GitHubIcon from "@material-ui/icons/GitHub";
 import Grid from "@mui/material/Grid";
 import { IconButton } from "@material-ui/core";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
@@ -85,6 +88,8 @@ export {
   Avatar,
   Backdrop,
   Badge,
+  BottomNavigation,
+  BottomNavigationAction,
   Box,
   Button,
   ButtonBase,
@@ -112,6 +117,7 @@ export {
   Fade,
   FormControl,
   FormControlLabel,
+  GitHubIcon,
   Grid,
   IconButton,
   InboxIcon,
