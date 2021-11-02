@@ -29,24 +29,10 @@ export function Logout({ setLoggedIn }) {
         style={{
           textDecoration: "none",
           color: "white",
-          fontFamily: "Arvo",
         }}
       >
         <LogoutIcon></LogoutIcon>
       </IconButton>
     </Link>
   );
-}
-
-{
-  /* <IconButton
-  size="large"
-  edge="end"
-  aria-label="logout of current user"
-  aria-haspopup="true"
-  // onClick={handleProfileMenuOpen}
-  color="inherit"
->
-  <Logout />
-</IconButton>; */
 }

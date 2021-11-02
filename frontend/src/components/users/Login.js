@@ -65,7 +65,7 @@ export function Login({
       console.error(error);
       setLoggedIn(false);
     } finally {
-      const cart = JSON.parse(localStorage.getItem("cart"));
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
       console.log(cart);
       cart.forEach((item) =>
         createCartItem(item.id, item.quantity, localStorage.getItem("id"))

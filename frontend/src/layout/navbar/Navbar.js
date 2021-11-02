@@ -222,11 +222,10 @@ export function Navbar({
                 Admin
               </Button>
             ) : null}
-            <Button
-              to="/cart"
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              <CartIcon />
+            <Button>
+              <Link to="/cart">
+                <CartIcon />
+              </Link>
             </Button>
             {loggedIn ? (
               <IconButton
@@ -244,7 +243,7 @@ export function Navbar({
             ) : null}
             {loggedIn ? (
               <Button>
-                <Logout setLoggedIn={setLoggedIn} />{" "}
+                <Logout setLoggedIn={setLoggedIn} />
               </Button>
             ) : null}
           </Box>
