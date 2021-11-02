@@ -35,6 +35,12 @@ import {
   Dashboard,
   Footer,
   CartItemTotal,
+  Categories,
+  EditCategory,
+  CreateCategory,
+  Discounts,
+  EditDiscount,
+  CreateDiscount
 } from "./components";
 
 import { Checkout } from "./components/checkout/Checkout"
@@ -71,6 +77,10 @@ export default function App() {
   const [cardNumber, setCardNumber] = useState('')
   const [expDate, setExpDate] = useState('')
   const [cvv, setCVV] = useState('')
+  const [productCategory, setProductCategory] = useState("")
+  const [selectProductCategory, setSelectProductCategory] = useState(false)
+  const [categoryToEdit, setCategoryToEdit] = useState("")
+  const [discountToEdit, setDiscountToEdit] = useState("")
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -94,6 +104,10 @@ export default function App() {
         setLoggedIn={setLoggedIn}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        productCategory={productCategory}
+        setProductCategory={setProductCategory}
+        selectProductCategory={selectProductCategory}
+        setSelectProductCategory={setSelectProductCategory}
       >
         <OpenDrawer loggedIn={loggedIn} admin={admin} />
 
@@ -316,9 +330,28 @@ export default function App() {
         <Route exact path="/createProduct">
           <CreateProduct />
         </Route>
-        <Route exact path="/">
-          <Products searchTerm={searchTerm} />
+        <Route exact path="/categories">
+          <Categories categoryToEdit={categoryToEdit} setCategoryToEdit={setCategoryToEdit}/>
         </Route>
+        <Route exact path ="/editcategory">
+          <EditCategory categoryToEdit={categoryToEdit}/>
+        </Route>
+        <Route exact path = "/createcategory">
+          <CreateCategory />
+        </Route>
+        <Route exact path = "/discounts">
+          <Discounts discountToEdit={discountToEdit} setDiscountToEdit={setDiscountToEdit}/>
+        </Route>
+        <Route exact path ="/editdiscount">
+          <EditDiscount discountToEdit={discountToEdit} />
+        </Route>
+        <Route exact path="/creatediscount">
+          <CreateDiscount />
+        </Route>
+        <Route exact path="/">
+          <Products searchTerm={searchTerm} productCategory={productCategory} selectProductCategory={selectProductCategory} />
+        </Route>
+
         <Route path="*" component={NotFound} />
 
       </Switch>

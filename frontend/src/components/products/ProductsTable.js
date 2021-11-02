@@ -21,14 +21,13 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
   // product.forEach((product, i) => Object.assign(product, { id: i + 1 }));
 
   const rows = [...product];
-  console.log(rows);
 
   const renderEditButton = (item) => {
     return (
       <Link to="/editProduct">
         <button
           onClick={function () {
-            console.log(item.row), setProductToEdit(item.row);
+            setProductToEdit(item.row);
           }}
         >
           Edit
@@ -86,6 +85,13 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
       align: "center",
     },
     {
+      field: "discount_id",
+      headerName: "Discount",
+      headerAlign: "center",
+      width: 100,
+      align: "center"
+    },
+    {
       field: "edit",
       headerName: "Edit",
       headerAlign: "center",
@@ -100,6 +106,13 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
         <DataGrid rows={rows} columns={columns} pageSize={10} />
         <Link to="/createProduct">
           <button>Add a New Product</button>
+        </Link>
+        <Link to="/Categories">
+          <button>View, Edit, or Add Categories</button>
+        </Link>
+
+        <Link to="/Discounts">
+        <button>View, Edit, or Add Discounts</button>
         </Link>
       </div>
     </div>

@@ -37,7 +37,7 @@ export function CreateProduct() {
       Name:{" "}
       <TextField
         onChange={function (event) {
-          setName(event.target.value), console.log(name);
+          setName(event.target.value);
         }}
       />
       <br />
@@ -45,7 +45,7 @@ export function CreateProduct() {
         Category:{" "}
         <TextField
           onChange={function (event) {
-            setCategory(event.target.value), console.log(category);
+            setCategory(event.target.value);
           }}
         />
       </div>
@@ -54,7 +54,7 @@ export function CreateProduct() {
         Description:{" "}
         <TextField
           onChange={function (event) {
-            setDescription(event.target.value), console.log(description);
+            setDescription(event.target.value);
           }}
         />
       </div>
@@ -63,7 +63,7 @@ export function CreateProduct() {
         Discount:{" "}
         <TextField
           onChange={function (event) {
-            setDiscount(event.target.value), console.log(discount);
+            setDiscount(event.target.value);
           }}
         />
       </div>
@@ -72,7 +72,7 @@ export function CreateProduct() {
         Price:{" "}
         <TextField
           onChange={function (event) {
-            setPrice(event.target.value), console.log(price);
+            setPrice(event.target.value);
           }}
         />
       </div>
@@ -81,7 +81,7 @@ export function CreateProduct() {
         Quantity:{" "}
         <TextField
           onChange={function (event) {
-            setQuantity(event.target.value), console.log(quantity);
+            setQuantity(event.target.value);
           }}
         />
       </div>
@@ -90,7 +90,7 @@ export function CreateProduct() {
         SKU:{" "}
         <TextField
           onChange={function (event) {
-            setSku(event.target.value), console.log(sku);
+            setSku(event.target.value);
           }}
         />
       </div>

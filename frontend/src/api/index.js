@@ -1,6 +1,24 @@
 import { login, register, getUsers, getUserById } from "./users";
 
-import { getProducts, editProduct, createProduct } from "./products.js";
+import { 
+  getProducts, 
+  editProduct, 
+  createProduct, 
+  getProductsByCategory, 
+  getProductCategories, 
+  deleteProduct, 
+  getProductDiscounts } from "./products.js";
+
+import { 
+  editCategory, 
+  createCategory, 
+  deleteCategory } from "./categories"
+
+import { 
+  editDiscount, 
+  createDiscount, 
+  deleteDiscount } from "./discounts"
+
 
 import {
   createCartItem,
@@ -61,4 +79,14 @@ export {
   getProducts,
   editProduct,
   createProduct,
+  getProductsByCategory,
+  getProductCategories,
+  deleteProduct,
+  getProductDiscounts,
+  editCategory,
+  createCategory,
+  deleteCategory,
+  editDiscount,
+  createDiscount,
+  deleteDiscount
 };

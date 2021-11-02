@@ -1,6 +1,9 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Logout, CartIcon, OpenDrawer } from "../../components";
+
+import {getProductCategories} from '../../api'
 
 import {
   styled,
@@ -72,7 +75,31 @@ export function Navbar({
   searchTerm,
   setSearchTerm,
   admin,
+  productCategory,
+  setProductCategory,
+  selectProductCategory,
+  setSelectProductCategory
 }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  }
+  const [categoryList, setCategoryList] = useState([])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await getProductCategories()
+      const categories = response
+      setCategoryList(categories)
+    }
+    fetchCategories()
+  }, [])
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -102,6 +129,49 @@ export function Navbar({
               }}
             />
           </Search>
+          <Button
+        id="basic-button"
+        aria-controls="basic-menu"
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined }
+        style={{
+          color: 'white'
+        }}
+        onClick={handleClick}
+        >
+        Shop By Category
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        >
+          {categoryList.map(category => {
+            return (
+              <MenuItem  onClick={function (){
+                handleClose,
+                setProductCategory(category.id),
+                setSelectProductCategory(true)
+              }}
+              >{category.name}</MenuItem>
+            )
+          })}   
+        </Menu>
+        <Button 
+        style={{
+          color: 'white'
+        }}
+        onClick={function (){
+          setSelectProductCategory(false)
+        }}>
+          See All
+        </Button>
+
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {!loggedIn ? (
