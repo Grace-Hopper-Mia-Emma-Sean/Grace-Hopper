@@ -15,8 +15,36 @@ import {
   TextField,
   ThemeProvider,
   Typography,
+  makeStyles,
 } from "../../MUI";
+
 import { useEffect } from "react";
+
+const useStyles = makeStyles((theme) => ({
+  body: { backgroundColor: "#457B9D" },
+  root: {
+    flexGrow: 7,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: "1rem",
+    maxWidth: 500,
+    backgroundColor: "#A8DADC",
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  columns: {
+    columns: "2 auto",
+  },
+}));
 
 export function Login({
   loggedIn,
@@ -26,7 +54,7 @@ export function Login({
   setUsername,
   setPassword,
 }) {
-  const theme = createTheme();
+  const classes = useStyles();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +96,8 @@ export function Login({
   // }, [userId]);
 
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
+    <div className={classes.body}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -142,6 +171,8 @@ export function Login({
         </Box>
         {loggedIn ? <Redirect to="/" /> : null}
       </Container>
-    </ThemeProvider>
+    </div>
+
+    // </ThemeProvider>
   );
 }
