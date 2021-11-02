@@ -13,7 +13,9 @@ export function EditCartItem({ cart }) {
   const [quantity, setQuantity] = useState(cart.quantity);
 
   useEffect(async () => {
-    await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
+    !localStorage.getItem("id")
+      ? null
+      : await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
   }, [quantity]);
 
   return (
