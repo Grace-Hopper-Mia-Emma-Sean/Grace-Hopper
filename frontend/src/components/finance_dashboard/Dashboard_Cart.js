@@ -18,41 +18,35 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from './listItems';
-import Chart from './Chart';
-import Orders from './Orders';
-import Revenue from './Revenue';
 
 import {
-    UsersTable,
-    CartTable,
-    ProductsTable
+    CartTable
   } from "..";
-import { brown } from '@mui/material/colors';
 
 const mdTheme = createTheme();
 
-export function Dashboard() {
+export function Dashboard_Cart() {
   
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={
-          { display: 'flex',
-            minHeight: '100vh',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-        <CssBaseline />
-         
-        <Divider sx={{
-            width: '1%',
-        }}/>
-        <List sx={{
-            width: '10%'
-        }}
-        >{mainListItems}</List>
+    <Box sx={
+        { display: 'flex',
+          minHeight: '100%',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+      <CssBaseline />
+       
+      <Divider sx={{
+          width: '1%',
+      }}/>
+      <List sx={{
+          width: '10%'
+      }}
+      >{mainListItems}</List>
 
-        <Divider />
+      <Divider />
 
         <Box
           component="main"
@@ -67,52 +61,24 @@ export function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-             Dashboard
-            <Grid container spacing={3}>
-
-           
-
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+          <Container >
+            <Grid >
+                        
+            <Grid sx={{
+              height: '60vh',
+              width: '85vh',
+            }}>
                 <Paper
                   sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 300,
+                    height: '100%',
+                    width: '100%'
                   }}
                 >
-                  <Chart />
+                  <CartTable />
                 </Paper>
               </Grid>
 
-
-              {/* Revenue */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 300,
-                  }}
-                >
-                  <Revenue />
-
-                </Paper>
-              </Grid>
-
-
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
             </Grid>
-
-
           </Container>
         </Box>
       </Box>

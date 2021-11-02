@@ -40,7 +40,11 @@ import {
   CreateCategory,
   Discounts,
   EditDiscount,
-  CreateDiscount
+  CreateDiscount,
+  Dashboard_Users,
+  Dashboard_Products,
+  Dashboard_Cart
+
 } from "./components";
 
 import { Checkout } from "./components/checkout/Checkout"
@@ -297,8 +301,11 @@ export default function App() {
           setCVV={setCVV}
           
           /></Route>
-
+        
         <Route exact path="/financial_dashboard" component={Dashboard}></Route>
+        <Route exact path="/dashboard_users" component={Dashboard_Users}></Route>
+        <Route exact path="/dashboard_products" component={Dashboard_Products}></Route>
+        <Route exact path="/dashboard_cart" component={Dashboard_Cart}></Route>
        
         <Route exact path="/cart"> 
         <CartCard

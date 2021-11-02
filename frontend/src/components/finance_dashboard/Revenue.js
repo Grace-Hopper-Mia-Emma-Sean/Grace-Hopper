@@ -12,15 +12,13 @@ export default function Revenue() {
     <React.Fragment>
       <Title>Revenue</Title>
       <Typography component="p" variant="h4">
-        $3,024.00 Testing
+       Testing $$
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on  October 31, 2021 Testing
+       Current Revenue
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
-        </Link>
+        
       </div>
     </React.Fragment>
   );

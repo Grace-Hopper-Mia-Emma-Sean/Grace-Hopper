@@ -63,7 +63,7 @@ export function UsersTable() {
 
   return (
     <div>
-      <div style={{ height: 650, width: "70%" }}>
+      <div style={{ height: 650, width: "100%"}}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
       </div>
     </div>
