@@ -38,7 +38,8 @@ export function Footer() {
         href="https://github.com/Grace-Hopper-Mia-Emma-Sean/Grace-Hopper"
         sx={{ textDecoration: "none", color: "#F1FAEE", fontSize: "1rem" }}
       >
-        Created 2021 by Mia Dao, Emma Crane, and Sean Conte <GitHubIcon />
+        Created 2021 by the "MESS" Team: Mia Dao, Emma Crane, Sean Conte{" "}
+        <GitHubIcon />
       </Link>
     </div>
   );
