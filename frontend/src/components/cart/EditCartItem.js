@@ -9,8 +9,23 @@ import {
 import { updateCartItem, getCartItemsByUserId } from "../../api";
 import { useState, useEffect } from "react";
 
-export function EditCartItem({ cart }) {
+export function EditCartItem({ cart, product }) {
   const [quantity, setQuantity] = useState(cart.quantity);
+
+  const item = {
+    id: product.id,
+    user_id: null,
+    name: product.name,
+    quantity: quantity,
+    price: product.price,
+    total: quantity * product.price,
+  };
+  const guest = ({ fields }) => {
+    fields = item;
+    const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
+    oldItems.push(fields);
+    localStorage.setItem("cart", JSON.stringify(oldItems));
+  };
 
   useEffect(async () => {
     await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
