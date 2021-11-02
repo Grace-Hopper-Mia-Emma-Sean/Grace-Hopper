@@ -28,7 +28,9 @@ export function EditCartItem({ cart, product }) {
   };
 
   useEffect(async () => {
-    await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
+    !localStorage.getItem("id")
+      ? null
+      : await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
   }, [quantity]);
 
   return (

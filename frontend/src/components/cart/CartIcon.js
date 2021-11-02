@@ -4,7 +4,7 @@ import { Link } from "react";
 import { getCartItems, getCartItemsByUserId } from "../../api";
 import { useHistory } from "react-router-dom";
 
-export function CartIcon() {
+export function CartIcon({ loggedIn }) {
   const [cart, setCart] = useState([]);
 
   const token = localStorage.getItem("token");
@@ -18,21 +18,32 @@ export function CartIcon() {
       })
       .catch((error) => console.log(error));
     // .finally(localStorage.removeItem("cart"));
-  }, []);
+  }, [loggedIn]);
 
   const badgeCount = cart == "" ? 0 : cart.length;
 
   return (
+    // <div to="/cart">
     <div>
       {badgeCount > 0 ? (
-        <IconButton size="large" color="inherit" textDecoration="none">
+        <IconButton
+          style={{
+            textDecoration: "none",
+            color: "white",
+          }}
+        >
           <Badge badgeContent={badgeCount} color="error">
-            <ShoppingCartIcon />
+            <ShoppingCartIcon></ShoppingCartIcon>
           </Badge>
         </IconButton>
       ) : (
-        <IconButton size="large" color="inherit" textDecoration="none">
-          <ShoppingCartIcon />
+        <IconButton
+          style={{
+            textDecoration: "none",
+            color: "white",
+          }}
+        >
+          <ShoppingCartIcon></ShoppingCartIcon>
         </IconButton>
       )}
     </div>

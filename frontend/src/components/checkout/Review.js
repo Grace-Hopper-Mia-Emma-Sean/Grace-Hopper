@@ -31,7 +31,11 @@ export default function Review({
     expDate,
     setExpDate,
     cvv,
-    setCVV
+    setCVV,
+    email, 
+    setEmail,
+    phoneNumber,
+    setPhoneNumber
 }) {
     const [cartItems, setCartItems] = useState([]);
     const token = localStorage.getItem("token");
@@ -57,6 +61,7 @@ export default function Review({
         { name: 'Card number', detail: cardNumber },
         { name: 'Expiry date', detail: expDate },
       ];
+      const contact = [email, phoneNumber]
 
   return (
     <React.Fragment>
@@ -90,10 +95,17 @@ export default function Review({
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
+            Shipping Details
           </Typography>
           <Typography gutterBottom>{firstName} {lastName}</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
+
+          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+            Contact 
+          </Typography>
+            Email: <Typography gutterBottom>{email}</Typography>
+            Phone: <Typography gutterBottom>{phoneNumber}</Typography>
+
         </Grid>
 
 
@@ -114,6 +126,7 @@ export default function Review({
             ))}
           </Grid>
         </Grid>
+
       </Grid>
     </React.Fragment>
   );

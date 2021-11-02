@@ -40,7 +40,12 @@ import {
   CreateCategory,
   Discounts,
   EditDiscount,
-  CreateDiscount
+  CreateDiscount,
+  Dashboard_Users,
+  Dashboard_Products,
+  Dashboard_Cart,
+  ContactUs
+
 } from "./components";
 
 import { Checkout } from "./components/checkout/Checkout"
@@ -81,6 +86,8 @@ export default function App() {
   const [selectProductCategory, setSelectProductCategory] = useState(false)
   const [categoryToEdit, setCategoryToEdit] = useState("")
   const [discountToEdit, setDiscountToEdit] = useState("")
+  const [email, setEmail] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -295,10 +302,19 @@ export default function App() {
           setExpDate={setExpDate}
           cvv={cvv}
           setCVV={setCVV}
+          email={email}
+          setEmail={setEmail}
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
           
           /></Route>
-
+        
         <Route exact path="/financial_dashboard" component={Dashboard}></Route>
+        <Route exact path="/dashboard_users" component={Dashboard_Users}></Route>
+        <Route exact path="/dashboard_products" component={Dashboard_Products}></Route>
+        <Route exact path="/dashboard_cart" component={Dashboard_Cart}></Route>
+        <Route exact path="/contact_us" component={ContactUs}></Route>
+
        
         <Route exact path="/cart"> 
         <CartCard

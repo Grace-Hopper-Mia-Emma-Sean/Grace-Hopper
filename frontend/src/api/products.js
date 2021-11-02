@@ -13,11 +13,13 @@ const getProducts = async () => {
     })
     .then((response) => {
       const products = response.data;
-      
+
       localStorage.setItem("product", JSON.stringify(products));
 
-      localStorage.setItem("productId", JSON.stringify(products.map (product => product.id)));
-
+      localStorage.setItem(
+        "productId",
+        JSON.stringify(products.map((product) => product.id))
+      );
     });
 };
 
@@ -26,7 +28,7 @@ const getProductsByCategory = async (categoryId) => {
     method: "GET",
     url: `/products/category/${categoryId}`,
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
   })
     .catch((error) => {
@@ -35,49 +37,58 @@ const getProductsByCategory = async (categoryId) => {
     .then((response) => {
       response.data;
     });
-}
+};
 
 const getProductCategories = async () => {
-  return axios ({
+  return axios({
     method: "GET",
-    url:  '/product-category',
+    url: "/product-category",
     headers: {
       "Content-Type": "application/json",
     },
   })
-  .catch((error) => {
-    console.error(error.response.data);
-  })
-  .then((response) => {
-    return response.data
-  })
-}
+    .catch((error) => {
+      console.error(error.response.data);
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
 
 const getProductDiscounts = async () => {
-  return axios ({
+  return axios({
     method: "GET",
-    url: '/product-discount',
+    url: "/product-discount",
     headers: {
       "Content-Type": "application/json",
     },
   })
-  .catch((error)=> {
-    console.error(error.response.data);
-  })
-  .then((response)=> {
-    return response.data
-  })
-}
+    .catch((error) => {
+      console.error(error.response.data);
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
 
-const editProduct = async(id, name, description, sku, category, price, discount, quantity) => {
-  const token = localStorage.getItem("token")
-  console.log(token)
+const editProduct = async (
+  id,
+  name,
+  description,
+  sku,
+  category,
+  price,
+  discount,
+  quantity
+) => {
+  const token = localStorage.getItem("token");
+  console.log(token);
   return axios({
     method: "PATCH",
     url: `/products/${id}`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + token
+      Authorization: "Bearer " + token,
     },
     data: JSON.stringify({
       name: name,
@@ -86,26 +97,46 @@ const editProduct = async(id, name, description, sku, category, price, discount,
       category_id: category,
       price: price,
       discount_id: discount,
-      quantity: quantity
+      quantity: quantity,
+    }),
+  })
+    .catch((error) => {
+      console.error(error.response.data);
     })
-  }).catch((error)=>  {
-    console.error(error.response.data)
-  })
-  .then((response) => {
-    response.data;
-    window.location.reload(true)
-  })
-}
+    .then((response) => {
+      response.data;
+      window.location.reload(true);
+    });
+};
 
-const createProduct = async(name, description, sku, category, price, discount, quantity ) => {
-  const token = localStorage.getItem("token")
-  console.log(token)
-  return axios ({
+const obj = {
+  name: "Microsoft Surface Mobile Mouse",
+  description:
+    "The Microsoft Surface Mobile Mouse is a well-engineered peripheral with long battery life, a stylish design, and cutting-edge wireless connectivity.",
+  sku: 6261287,
+  category_id: 4,
+  price: 34.99,
+  discount_id: 1,
+  quantity: 30,
+};
+
+const createProduct = async (
+  name,
+  description,
+  sku,
+  category,
+  price,
+  discount,
+  quantity
+) => {
+  const token = localStorage.getItem("token");
+  console.log(token);
+  return axios({
     method: "POST",
-    url: '/products',
+    url: "/products",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + token
+      Authorization: "Bearer " + token,
     },
     data: JSON.stringify({
       name: name,
@@ -114,33 +145,43 @@ const createProduct = async(name, description, sku, category, price, discount, q
       category_id: category,
       price: price,
       discount_id: discount,
-      quantity: quantity
+      quantity: quantity,
+    }),
+  })
+    .catch((error) => {
+      console.error(error.response.data);
     })
-  }).catch((error)=>  {
-    console.error(error.response.data)
-  })
-  .then((response) => {
-    response.data;
-    window.location.reload(true)
-  })
-}
+    .then((response) => {
+      response.data;
+      window.location.reload(true);
+    });
+};
 
-const deleteProduct = async(id) => {
-  const token = localStorage.getItem("token")
+const deleteProduct = async (id) => {
+  const token = localStorage.getItem("token");
   return axios({
     method: "DELETE",
     url: `/products/${id}`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + token
-    }
-  }).catch((error) => {
-    console.error(error.response.data)
+      Authorization: "Bearer " + token,
+    },
   })
-  .then((response) => {
-    response.data
-    window.location.reload(true)
-  })
-}
+    .catch((error) => {
+      console.error(error.response.data);
+    })
+    .then((response) => {
+      response.data;
+      window.location.reload(true);
+    });
+};
 
-export { getProducts, editProduct, createProduct, getProductsByCategory, getProductCategories, deleteProduct, getProductDiscounts };
+export {
+  getProducts,
+  editProduct,
+  createProduct,
+  getProductsByCategory,
+  getProductCategories,
+  deleteProduct,
+  getProductDiscounts,
+};

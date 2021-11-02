@@ -6,16 +6,28 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  Link,
   LockOutlinedIcon,
   TextField,
   ThemeProvider,
   Typography,
+  makeStyles,
 } from "../../MUI";
 
 import { Redirect } from "react-router";
 import { register } from "../../api";
 import { createCartItem } from "../../api";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  body: {
+    backgroundColor: "#457B9D",
+    height: "90vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: { backgroundColor: "#A8DADC", borderRadius: "2.5%" },
+}));
 
 export function Register({
   username,
@@ -28,7 +40,7 @@ export function Register({
   loggedIn,
   setLoggedIn,
 }) {
-  const theme = createTheme();
+  const classes = useStyles();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,94 +85,97 @@ export function Register({
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "#F18D9E" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography
-            component="h1"
-            variant="h5"
-            style={{ color: "#15909f", fontWeight: "bold" }}
-          >
-            Sign up
-          </Typography>
+    <div className={classes.body}>
+      <div className={classes.card}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  minLength="8"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="new-password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  minLength="8"
-                />
-              </Grid>
-              <Grid item xs={12}></Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              style={{ backgroundColor: "rgb(86, 193, 196)", color: "white" }}
+            <Avatar sx={{ m: 1, bgcolor: "#E63946" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography
+              component="h1"
+              variant="h5"
+              style={{ color: "#1D3557", fontWeight: "bold" }}
             >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2" color="#98DBC6">
-                  Already have an account? Sign in
-                </Link>
+              Register
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    minLength="8"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="new-password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    minLength="8"
+                  />
+                </Grid>
+                <Grid item xs={12}></Grid>
               </Grid>
-            </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                style={{ backgroundColor: "#1D3557", color: "white" }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link to="/login">
+                    <Typography textDecoration="none" color="#E63946">
+                      Already have an account? Sign in
+                    </Typography>
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
-        {loggedIn ? <Redirect to="/" /> : null}
-      </Container>
-    </ThemeProvider>
+          {loggedIn ? <Redirect to="/" /> : null}
+        </Container>
+      </div>
+    </div>
   );
 }

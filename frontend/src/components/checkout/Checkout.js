@@ -1,74 +1,79 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
-
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Toolbar from "@mui/material/Toolbar";
+import Paper from "@mui/material/Paper";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AddressForm from "./AddressForm";
+import PaymentForm from "./PaymentForm";
+import Review from "./Review";
+// const nodemailer = require("nodemailer");
 
 export function Checkout({
-    firstName,
-    setFirstName,
-    lastName,
-    setLastName,
-    address1,
-    setAddress1,
-    address2,
-    setAddress2,
-    city,
-    setCity,
-    state, 
-    setState,  
-    zipcode,
-    setZipcode,
-    country,
-    setCountry,
-    cardName,
-    setCardName,
-    cardNumber,
-    setCardNumber,
-    expDate,
-    setExpDate,
-    cvv,
-    setCVV
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  address1,
+  setAddress1,
+  address2,
+  setAddress2,
+  city,
+  setCity,
+  state,
+  setState,
+  zipcode,
+  setZipcode,
+  country,
+  setCountry,
+  cardName,
+  setCardName,
+  cardNumber,
+  setCardNumber,
+  expDate,
+  setExpDate,
+  cvv,
+  setCVV,
+  email,
+  setEmail,
+  phoneNumber,
+  setPhoneNumber,
 }) {
+  const steps = ["Shipping address", "Payment details", "Review your order"];
 
-    const steps = ['Shipping address', 'Payment details', 'Review your order'];
-
-    function getStepContent(step) {
+  function getStepContent(step) {
     switch (step) {
-        case 0:
-        return <AddressForm 
+      case 0:
+        return (
+          <AddressForm
             firstName={firstName}
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
-            address1={address1} 
+            address1={address1}
             setAddress1={setAddress1}
             address2={address2}
             setAddress2={setAddress2}
             city={city}
             setCity={setCity}
-            state={state}    
+            state={state}
             setState={setState}
             zipcode={zipcode}
             setZipcode={setZipcode}
             country={country}
             setCountry={setCountry}
-        />;
-        case 1:
-        return <PaymentForm 
+          />
+        );
+      case 1:
+        return (
+          <PaymentForm
             cardName={cardName}
             setCardName={setCardName}
             cardNumber={cardNumber}
@@ -77,20 +82,26 @@ export function Checkout({
             setExpDate={setExpDate}
             cvv={cvv}
             setCVV={setCVV}
-        />;
-        case 2:
-        return <Review 
+            email={email}
+            setEmail={setEmail}
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+          />
+        );
+      case 2:
+        return (
+          <Review
             firstName={firstName}
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
-            address1={address1} 
+            address1={address1}
             setAddress1={setAddress1}
             address2={address2}
             setAddress2={setAddress2}
             city={city}
             setCity={setCity}
-            state={state}    
+            state={state}
             setState={setState}
             zipcode={zipcode}
             setZipcode={setZipcode}
@@ -104,13 +115,22 @@ export function Checkout({
             setExpDate={setExpDate}
             cvv={cvv}
             setCVV={setCVV}
-        />;
-        default:
-        throw new Error('Unknown step');
+            email={email}
+            setEmail={setEmail}
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+          />
+        );
+      default:
+        throw new Error("Unknown step");
     }
-    }
+  }
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  const randomOrderId = getRandomInt(1000000000);
 
-const theme = createTheme();
+  const theme = createTheme();
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -122,26 +142,41 @@ const theme = createTheme();
     setActiveStep(activeStep - 1);
   };
 
+  //TESTING Nodemailer.
+  //NOTE: However, this require more server work.
+
+  // let transport = nodemailer.createTransport({
+  //   host: "smtp.mailtrap.io",
+  //   port: 2525,
+  //   auth: {
+  //     user: "63836552d3a12d",
+  //     pass: "7401c39c4e850e"
+  //   }
+  // });
+
+  // let mailOptions = {
+  //   from: 'MESSElectronics@gmail.com',
+  //   to: email,
+  //   subject: 'Thank you for your order!',
+  //   text: `Thank you for your recent order on the MESS Electronics store!
+  //   We truly appreciate your business, and hope you will come back!
+
+  //   Sincerely,
+  //   - Your MESS Electronics Care Team`,
+  //   list: {
+  //     'Care Team': 'MESSElectronics@gmail.com'
+  //   }
+  // }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            MESS Electronics
-          </Typography>
-        </Toolbar>
-      </AppBar>
+
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
@@ -159,15 +194,15 @@ const theme = createTheme();
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Your order number is #{randomOrderId}. We have emailed your
+                  order confirmation, and will send you an update when your
+                  order has shipped.
                 </Typography>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                       Back
@@ -179,7 +214,7 @@ const theme = createTheme();
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
                   </Button>
                 </Box>
               </React.Fragment>

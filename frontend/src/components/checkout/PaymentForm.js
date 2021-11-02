@@ -13,7 +13,11 @@ export default function PaymentForm({
     expDate,
     setExpDate,
     cvv,
-    setCVV
+    setCVV,
+    email, 
+    setEmail,
+    phoneNumber,
+    setPhoneNumber
 }) {
   return (
     <React.Fragment>
@@ -57,6 +61,7 @@ export default function PaymentForm({
             variant="standard"
           />
         </Grid>
+
         <Grid item xs={12} md={6}>
           <TextField
             required
@@ -70,6 +75,36 @@ export default function PaymentForm({
             variant="standard"
           />
         </Grid>
+
+        <Grid item xs={12} md={6}>
+          <TextField
+            required
+            id="email"
+            label="Email Address"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            helperText="Enter Email Address"
+            fullWidth
+            autoComplete="cc-csc"
+            variant="standard"
+          />
+        </Grid>
+
+
+        <Grid item xs={12} md={6}>
+          <TextField
+            required
+            id="phoneNumber"
+            label="Phone Number"
+            value={phoneNumber}
+            onChange={(event)=> setPhoneNumber(event.target.value)}
+            helperText="Enter Phone Number"
+            fullWidth
+            autoComplete="cc-csc"
+            variant="standard"
+          />
+        </Grid>
+
         <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox color="secondary" name="saveCard" value="yes" />}

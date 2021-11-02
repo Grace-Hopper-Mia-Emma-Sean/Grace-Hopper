@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Logout, CartIcon, OpenDrawer } from "../../components";
 
-import {getProductCategories} from '../../api'
+import { getProductCategories } from "../../api";
 
 import {
   styled,
@@ -78,32 +78,32 @@ export function Navbar({
   productCategory,
   setProductCategory,
   selectProductCategory,
-  setSelectProductCategory
+  setSelectProductCategory,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-  }
+  };
   const handleClose = () => {
     setAnchorEl(null);
-  }
-  const [categoryList, setCategoryList] = useState([])
+  };
+  const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await getProductCategories()
-      const categories = response
-      setCategoryList(categories)
-    }
-    fetchCategories()
-  }, [])
+      const response = await getProductCategories();
+      const categories = response;
+      setCategoryList(categories);
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ backgroundColor: "#1D3557" }}>
           <OpenDrawer loggedIn={loggedIn} admin={admin} />
           <Button
             component={Link}
@@ -111,13 +111,14 @@ export function Navbar({
             underline="hover"
             style={{
               textDecoration: "none",
-              color: "white",
-              fontFamily: "Lato",
+              color: "#F1FAEE",
+              fontSize: "24px",
+              fontFamily: "Architects Daughter",
             }}
           >
             MESS Electronics
           </Button>
-          <Search>
+          <Search sx={{ flexGrow: 3 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -129,50 +130,55 @@ export function Navbar({
               }}
             />
           </Search>
-          <Button
-        id="basic-button"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined }
-        style={{
-          color: 'white'
-        }}
-        onClick={handleClick}
-        >
-        Shop By Category
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-        >
-          {categoryList.map(category => {
-            return (
-              <MenuItem  onClick={function (){
-                handleClose,
-                setProductCategory(category.id),
-                setSelectProductCategory(true)
-              }}
-              >{category.name}</MenuItem>
-            )
-          })}   
-        </Menu>
-        <Button 
-        style={{
-          color: 'white'
-        }}
-        onClick={function (){
-          setSelectProductCategory(false)
-        }}>
-          See All
-        </Button>
-
 
           <Box sx={{ flexGrow: 1 }} />
+          <Button
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            style={{
+              color: "white",
+              font: "Arvo",
+            }}
+            onClick={handleClick}
+          >
+            Shop By Category
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {categoryList.map((category) => {
+              return (
+                <MenuItem
+                  onClick={function () {
+                    handleClose,
+                      setProductCategory(category.id),
+                      setSelectProductCategory(true);
+                  }}
+                >
+                  {category.name}
+                </MenuItem>
+              );
+            })}
+          </Menu>
+          <Button
+            style={{
+              color: "white",
+              font: "Arvo",
+            }}
+            onClick={function () {
+              setSelectProductCategory(false);
+            }}
+          >
+            See All
+          </Button>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {!loggedIn ? (
               <Button
@@ -182,7 +188,7 @@ export function Navbar({
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontFamily: "Lato",
+                  font: "Arvo",
                 }}
               >
                 Login
@@ -196,7 +202,7 @@ export function Navbar({
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontFamily: "Lato",
+                  font: "Arvo",
                 }}
               >
                 Register
@@ -210,15 +216,17 @@ export function Navbar({
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontFamily: "Lato",
+                  font: "Arvo",
                 }}
               >
                 Admin
               </Button>
             ) : null}
-            <Link to="/cart">
-              <CartIcon />
-            </Link>
+            <Button>
+              <Link to="/cart">
+                <CartIcon />
+              </Link>
+            </Button>
             {loggedIn ? (
               <IconButton
                 size="large"
@@ -228,11 +236,16 @@ export function Navbar({
                 aria-haspopup="true"
                 // onClick={handleProfileMenuOpen}
                 color="inherit"
+                textDecoration="none"
               >
                 <AccountCircle />
               </IconButton>
             ) : null}
-            {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
+            {loggedIn ? (
+              <Button>
+                <Logout setLoggedIn={setLoggedIn} />
+              </Button>
+            ) : null}
           </Box>
         </Toolbar>
       </AppBar>
