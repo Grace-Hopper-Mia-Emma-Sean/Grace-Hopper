@@ -35,24 +35,18 @@ export default function Review({
     email, 
     setEmail,
     phoneNumber,
-    setPhoneNumber
+    setPhoneNumber,
+    cart,
+    setCart
 }) {
-    const [cartItems, setCartItems] = useState([]);
-    const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
 
     useEffect(async () => {
-        await getCartItemsByUserId(token, id)
-          .then(() => {
-            console.log(localStorage.getItem("cart"))
-            setCartItems(JSON.parse(localStorage.getItem("cart")))
-          })
-          .catch((error) => console.log(error))
-          .finally(localStorage.removeItem("cart"))
+      setCart(JSON.parse(localStorage.getItem("cart")))
       }, []);
 
-    const products = [...cartItems];
-    console.log(products)
+      const products = [...cart]
+      console.log(cart)
+      console.log(products)
       
       const addresses = [address1, address2, city, state, zipcode, country];
       const payments = [

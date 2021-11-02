@@ -45,6 +45,8 @@ export function Checkout({
   setEmail,
   phoneNumber,
   setPhoneNumber,
+  cart,
+  setCart
 }) {
   const steps = ["Shipping address", "Payment details", "Review your order"];
 
@@ -119,6 +121,8 @@ export function Checkout({
             setEmail={setEmail}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            cart={cart}
+            setCart={setCart}
           />
         );
       default:

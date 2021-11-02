@@ -306,6 +306,8 @@ export default function App() {
           setEmail={setEmail}
           phoneNumber={phoneNumber}
           setPhoneNumber={setPhoneNumber}
+          cart={cart}
+          setCart={setCart}
           
           /></Route>
         
