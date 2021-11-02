@@ -29,7 +29,7 @@ export function Logout({ setLoggedIn }) {
         style={{
           textDecoration: "none",
           color: "white",
-          fontFamily: "Lato",
+          fontFamily: "Arvo",
         }}
       >
         <LogoutIcon></LogoutIcon>

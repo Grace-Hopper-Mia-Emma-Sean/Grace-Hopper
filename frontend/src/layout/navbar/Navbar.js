@@ -112,7 +112,8 @@ export function Navbar({
             style={{
               textDecoration: "none",
               color: "#F1FAEE",
-              fontFamily: "Lato",
+              fontSize: "24px",
+              fontFamily: "Architects Daughter",
             }}
           >
             MESS Electronics
@@ -138,6 +139,7 @@ export function Navbar({
             aria-expanded={open ? "true" : undefined}
             style={{
               color: "white",
+              font: "Arvo",
             }}
             onClick={handleClick}
           >
@@ -169,6 +171,7 @@ export function Navbar({
           <Button
             style={{
               color: "white",
+              font: "Arvo",
             }}
             onClick={function () {
               setSelectProductCategory(false);
@@ -185,7 +188,7 @@ export function Navbar({
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontFamily: "Lato",
+                  font: "Arvo",
                 }}
               >
                 Login
@@ -199,7 +202,7 @@ export function Navbar({
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontFamily: "Lato",
+                  font: "Arvo",
                 }}
               >
                 Register
@@ -213,15 +216,18 @@ export function Navbar({
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontFamily: "Lato",
+                  font: "Arvo",
                 }}
               >
                 Admin
               </Button>
             ) : null}
-            <Link to="/cart">
+            <Button
+              to="/cart"
+              style={{ textDecoration: "none", color: "white" }}
+            >
               <CartIcon />
-            </Link>
+            </Button>
             {loggedIn ? (
               <IconButton
                 size="large"
@@ -231,11 +237,16 @@ export function Navbar({
                 aria-haspopup="true"
                 // onClick={handleProfileMenuOpen}
                 color="inherit"
+                textDecoration="none"
               >
                 <AccountCircle />
               </IconButton>
             ) : null}
-            {loggedIn ? <Logout setLoggedIn={setLoggedIn} /> : null}
+            {loggedIn ? (
+              <Button>
+                <Logout setLoggedIn={setLoggedIn} />{" "}
+              </Button>
+            ) : null}
           </Box>
         </Toolbar>
       </AppBar>
