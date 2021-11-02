@@ -47,3 +47,4 @@ export { CreateDiscount } from "./products/CreateDiscount";
 export { Dashboard_Users } from "./finance_dashboard/Dashboard_Users"
 export { Dashboard_Products } from "./finance_dashboard/Dashboard_Products"
 export { Dashboard_Cart } from "./finance_dashboard/Dashboard_Cart"
+export { ContactUs } from "./contact_us/contact_us"

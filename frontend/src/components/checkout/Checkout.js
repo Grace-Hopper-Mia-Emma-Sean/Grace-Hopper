@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-
+const nodemailer = require("nodemailer");
 
 export function Checkout({
     firstName,
@@ -40,10 +40,14 @@ export function Checkout({
     expDate,
     setExpDate,
     cvv,
-    setCVV
+    setCVV,
+    email, 
+    setEmail,
+    phoneNumber,
+    setPhoneNumber
 }) {
 
-    const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
 switch (step) {
@@ -76,6 +80,10 @@ switch (step) {
         setExpDate={setExpDate}
         cvv={cvv}
         setCVV={setCVV}
+        email={email}
+        setEmail={setEmail}
+        phoneNumber={phoneNumber}
+        setPhoneNumber={setPhoneNumber}
     />;
     case 2:
     return <Review 
@@ -103,6 +111,10 @@ switch (step) {
         setExpDate={setExpDate}
         cvv={cvv}
         setCVV={setCVV}
+        email={email}
+        setEmail={setEmail}
+        phoneNumber={phoneNumber}
+        setPhoneNumber={setPhoneNumber}
     />;
     default:
     throw new Error('Unknown step');
@@ -111,9 +123,9 @@ switch (step) {
 function getRandomInt(max) {
   return Math.floor(Math.random()* max)
 }
-const randomOrderId = getRandomInt(10000000);
+  const randomOrderId = getRandomInt(1000000000);
 
-const theme = createTheme();
+  const theme = createTheme();
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -124,6 +136,35 @@ const theme = createTheme();
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+
+
+//TESTING Nodemailer. 
+//NOTE: However, this require more server work.
+
+// let transport = nodemailer.createTransport({
+//   host: "smtp.mailtrap.io",
+//   port: 2525,
+//   auth: {
+//     user: "63836552d3a12d",
+//     pass: "7401c39c4e850e"
+//   }
+// });
+
+// let mailOptions = {
+//   from: 'MESSElectronics@gmail.com',
+//   to: email,
+//   subject: 'Thank you for your order!',
+//   text: `Thank you for your recent order on the MESS Electronics store!
+//   We truly appreciate your business, and hope you will come back!
+  
+//   Sincerely, 
+//   - Your MESS Electronics Care Team`,
+//   list: {
+//     'Care Team': 'MESSElectronics@gmail.com'
+//   }
+// }
+
 
 
   return (
@@ -146,7 +187,10 @@ const theme = createTheme();
           <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant="h5" gutterBottom>
+               
+              
+
+                <Typography variant="h5" gutterBottom >
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
@@ -171,7 +215,10 @@ const theme = createTheme();
                     sx={{ mt: 3, ml: 1 }}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+
                   </Button>
+
+
                 </Box>
               </React.Fragment>
             )}

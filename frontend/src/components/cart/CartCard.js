@@ -113,7 +113,13 @@ export function CartCard({ cart, setCart }) {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Typography>
-          <a href="/checkout">Go To Checkout </a>{" "}
+          
+          <Button
+            variant="contained"
+            sx={{ mt: 3, ml: 1,
+            margin: '5%'}}>
+            <a href="/checkout"> Go To Checkout </a>
+            </Button>
         </Typography>
       </Box>
     </div>

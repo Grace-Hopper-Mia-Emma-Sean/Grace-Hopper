@@ -43,7 +43,8 @@ import {
   CreateDiscount,
   Dashboard_Users,
   Dashboard_Products,
-  Dashboard_Cart
+  Dashboard_Cart,
+  ContactUs
 
 } from "./components";
 
@@ -85,6 +86,8 @@ export default function App() {
   const [selectProductCategory, setSelectProductCategory] = useState(false)
   const [categoryToEdit, setCategoryToEdit] = useState("")
   const [discountToEdit, setDiscountToEdit] = useState("")
+  const [email, setEmail] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -299,6 +302,10 @@ export default function App() {
           setExpDate={setExpDate}
           cvv={cvv}
           setCVV={setCVV}
+          email={email}
+          setEmail={setEmail}
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
           
           /></Route>
         
@@ -306,6 +313,8 @@ export default function App() {
         <Route exact path="/dashboard_users" component={Dashboard_Users}></Route>
         <Route exact path="/dashboard_products" component={Dashboard_Products}></Route>
         <Route exact path="/dashboard_cart" component={Dashboard_Cart}></Route>
+        <Route exact path="/contact_us" component={ContactUs}></Route>
+
        
         <Route exact path="/cart"> 
         <CartCard

@@ -97,6 +97,13 @@ export function OpenDrawer({ loggedIn, admin }) {
             </ListItem>
           ) : null}
           <Divider />
+          <ListItem onClick={() => setOpenDrawer(false)}>
+              <ListItemText>
+                <Link to="/contact_us" className={classes.link}>
+                  Contact Us
+                </Link>
+              </ListItemText>
+            </ListItem>
         </List>
       </Drawer>
     </>
