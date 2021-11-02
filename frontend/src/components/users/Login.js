@@ -16,6 +16,7 @@ import {
   ThemeProvider,
   Typography,
 } from "../../MUI";
+import { useEffect } from "react";
 
 export function Login({
   loggedIn,
@@ -26,22 +27,9 @@ export function Login({
   setPassword,
 }) {
   const theme = createTheme();
-  const quantity = 1;
-  const userId = JSON.parse(localStorage.getItem("id"));
-
-  const user = async () => {
-    await createCartItem(product.id, quantity, userId)
-      .then(() => {
-        console.log(product.id, quantity, userId);
-      })
-      .catch((error) => console.log(error));
-    // .finally(localStorage.removeItem("cart"));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const data = new FormData(e.currentTarget);
-
     try {
       const loginUser = await login(username, password);
       setLoggedIn(true);
@@ -59,15 +47,25 @@ export function Login({
       KVPs.forEach((KVP) =>
         localStorage.setItem(Object.keys(KVP), Object.values(KVP))
       );
-
-      const cart = [localStorage.getItem("cart")];
-
-      if (cart) return cart.map((obj) => createCartItem(obj));
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
+    } finally {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      console.log(cart);
+      cart.forEach((item) =>
+        createCartItem(item.id, item.quantity, localStorage.getItem("id"))
+      );
     }
   };
+
+  // useEffect(() => {
+  //   const cart = JSON.parse(localStorage.getItem("cart"));
+  //   console.log(cart);
+  //   cart.forEach((item) =>
+  //     createCartItem(item.id, item.quantity, item.user_id)
+  //   );
+  // }, [userId]);
 
   return (
     <ThemeProvider theme={theme}>

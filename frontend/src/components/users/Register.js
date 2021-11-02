@@ -15,6 +15,7 @@ import {
 
 import { Redirect } from "react-router";
 import { register } from "../../api";
+import { createCartItem } from "../../api";
 
 export function Register({
   username,
@@ -62,6 +63,12 @@ export function Register({
         return alert(
           "So, this is awkward... that username is already taken. Mind picking another one?"
         );
+    } finally {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      console.log(cart);
+      cart.forEach((item) =>
+        createCartItem(item.id, item.quantity, localStorage.getItem("id"))
+      );
     }
   };
 
