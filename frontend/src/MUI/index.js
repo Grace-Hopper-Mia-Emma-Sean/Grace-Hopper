@@ -1,3 +1,6 @@
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Alert } from "@mui/material";
@@ -29,6 +32,7 @@ import { Divider } from "@material-ui/core";
 import { Drawer } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Fade from "@material-ui/core/Fade";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -70,6 +74,9 @@ import useRadioGroup from "@mui/material/RadioGroup";
 import { useTheme } from "@material-ui/core/styles";
 
 export {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AccountCircle,
   AddShoppingCartIcon,
   Alert,
@@ -101,6 +108,7 @@ export {
   Drawer,
   EditIcon,
   EditOutlinedIcon,
+  ExpandMoreIcon,
   Fade,
   FormControl,
   FormControlLabel,
