@@ -6,7 +6,6 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  Link,
   LockOutlinedIcon,
   TextField,
   ThemeProvider,
@@ -17,6 +16,7 @@ import {
 import { Redirect } from "react-router";
 import { register } from "../../api";
 import { createCartItem } from "../../api";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -164,8 +164,10 @@ export function Register({
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="/login" variant="body2" color="#E63946">
-                    Already have an account? Sign in
+                  <Link to="/login">
+                    <Typography textDecoration="none" color="#E63946">
+                      Already have an account? Sign in
+                    </Typography>
                   </Link>
                 </Grid>
               </Grid>

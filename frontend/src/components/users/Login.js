@@ -10,7 +10,6 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  Link,
   LockOutlinedIcon,
   TextField,
   ThemeProvider,
@@ -19,6 +18,8 @@ import {
 } from "../../MUI";
 
 import { useEffect } from "react";
+
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -139,15 +140,19 @@ export function Login({
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="/register" variant="body2" color="#E63946">
-                    No account yet? Create an account.
+                  <Link to="/register">
+                    <Typography textDecoration="none" color="#E63946">
+                      No account yet? Create an account
+                    </Typography>
                   </Link>
                 </Grid>
               </Grid>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="/deadlink" variant="body2" color="#E63946">
-                    Reset password
+                  <Link to="/deadlink">
+                    <Typography textDecoration="none" color="#E63946">
+                      Reset your password
+                    </Typography>
                   </Link>
                 </Grid>
               </Grid>
