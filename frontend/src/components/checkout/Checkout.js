@@ -1,6 +1,5 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -46,69 +45,73 @@ export function Checkout({
 
     const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-    function getStepContent(step) {
-    switch (step) {
-        case 0:
-        return <AddressForm 
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            address1={address1} 
-            setAddress1={setAddress1}
-            address2={address2}
-            setAddress2={setAddress2}
-            city={city}
-            setCity={setCity}
-            state={state}    
-            setState={setState}
-            zipcode={zipcode}
-            setZipcode={setZipcode}
-            country={country}
-            setCountry={setCountry}
-        />;
-        case 1:
-        return <PaymentForm 
-            cardName={cardName}
-            setCardName={setCardName}
-            cardNumber={cardNumber}
-            setCardNumber={setCardNumber}
-            expDate={expDate}
-            setExpDate={setExpDate}
-            cvv={cvv}
-            setCVV={setCVV}
-        />;
-        case 2:
-        return <Review 
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            address1={address1} 
-            setAddress1={setAddress1}
-            address2={address2}
-            setAddress2={setAddress2}
-            city={city}
-            setCity={setCity}
-            state={state}    
-            setState={setState}
-            zipcode={zipcode}
-            setZipcode={setZipcode}
-            country={country}
-            setCountry={setCountry}
-            cardName={cardName}
-            setCardName={setCardName}
-            cardNumber={cardNumber}
-            setCardNumber={setCardNumber}
-            expDate={expDate}
-            setExpDate={setExpDate}
-            cvv={cvv}
-            setCVV={setCVV}
-        />;
-        default:
-        throw new Error('Unknown step');
-    }
-    }
+function getStepContent(step) {
+switch (step) {
+    case 0:
+    return <AddressForm 
+        firstName={firstName}
+        setFirstName={setFirstName}
+        lastName={lastName}
+        setLastName={setLastName}
+        address1={address1} 
+        setAddress1={setAddress1}
+        address2={address2}
+        setAddress2={setAddress2}
+        city={city}
+        setCity={setCity}
+        state={state}    
+        setState={setState}
+        zipcode={zipcode}
+        setZipcode={setZipcode}
+        country={country}
+        setCountry={setCountry}
+    />;
+    case 1:
+    return <PaymentForm 
+        cardName={cardName}
+        setCardName={setCardName}
+        cardNumber={cardNumber}
+        setCardNumber={setCardNumber}
+        expDate={expDate}
+        setExpDate={setExpDate}
+        cvv={cvv}
+        setCVV={setCVV}
+    />;
+    case 2:
+    return <Review 
+        firstName={firstName}
+        setFirstName={setFirstName}
+        lastName={lastName}
+        setLastName={setLastName}
+        address1={address1} 
+        setAddress1={setAddress1}
+        address2={address2}
+        setAddress2={setAddress2}
+        city={city}
+        setCity={setCity}
+        state={state}    
+        setState={setState}
+        zipcode={zipcode}
+        setZipcode={setZipcode}
+        country={country}
+        setCountry={setCountry}
+        cardName={cardName}
+        setCardName={setCardName}
+        cardNumber={cardNumber}
+        setCardNumber={setCardNumber}
+        expDate={expDate}
+        setExpDate={setExpDate}
+        cvv={cvv}
+        setCVV={setCVV}
+    />;
+    default:
+    throw new Error('Unknown step');
+  }
+}
+function getRandomInt(max) {
+  return Math.floor(Math.random()* max)
+}
+const randomOrderId = getRandomInt(10000000);
 
 const theme = createTheme();
 
@@ -122,24 +125,12 @@ const theme = createTheme();
     setActiveStep(activeStep - 1);
   };
 
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            MESS Electronics
-          </Typography>
-        </Toolbar>
-      </AppBar>
+
+
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
@@ -159,7 +150,7 @@ const theme = createTheme();
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
+                  Your order number is #{randomOrderId}. We have emailed your order
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
