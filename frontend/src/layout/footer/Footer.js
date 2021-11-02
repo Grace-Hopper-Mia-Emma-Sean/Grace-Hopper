@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    position: "relative",
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   // typography: {
   //   color: "#F1FAEE",

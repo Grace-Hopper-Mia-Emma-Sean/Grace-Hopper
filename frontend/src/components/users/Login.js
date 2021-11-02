@@ -21,29 +21,14 @@ import {
 import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
-  body: { backgroundColor: "#457B9D" },
-  root: {
-    flexGrow: 7,
+  body: {
+    backgroundColor: "#457B9D",
+    height: "90vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  paper: {
-    padding: theme.spacing(2),
-    margin: "1rem",
-    maxWidth: 500,
-    backgroundColor: "#A8DADC",
-  },
-  image: {
-    width: 128,
-    height: 128,
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  columns: {
-    columns: "2 auto",
-  },
+  card: { backgroundColor: "#A8DADC", borderRadius: "2.5%" },
 }));
 
 export function Login({
@@ -87,92 +72,90 @@ export function Login({
     }
   };
 
-  // useEffect(() => {
-  //   const cart = JSON.parse(localStorage.getItem("cart"));
-  //   console.log(cart);
-  //   cart.forEach((item) =>
-  //     createCartItem(item.id, item.quantity, item.user_id)
-  //   );
-  // }, [userId]);
-
   return (
-    // <ThemeProvider theme={theme}>
     <div className={classes.body}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "#F18D9E" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography
-            component="h1"
-            variant="h5"
-            style={{ color: "#15909f", fontWeight: "bold" }}
-          >
-            Log In
-          </Typography>
+      <div className={classes.card}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  minLength="8"
-                />
-              </Grid>
-              <Grid item xs={12}></Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              style={{ backgroundColor: "rgb(86, 193, 196)", color: "white" }}
+            <Avatar sx={{ m: 1, bgcolor: "#E63946" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography
+              component="h1"
+              variant="h5"
+              style={{ color: "#1D3557", fontWeight: "bold" }}
             >
               Log In
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/register" variant="body2" color="#98DBC6">
-                  No account yet? Create an account.
-                </Link>
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    minLength="8"
+                  />
+                </Grid>
+                <Grid item xs={12}></Grid>
               </Grid>
-            </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                style={{ backgroundColor: "#1D3557", color: "white" }}
+              >
+                Log In
+              </Button>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link href="/register" variant="body2" color="#E63946">
+                    No account yet? Create an account.
+                  </Link>
+                </Grid>
+              </Grid>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link href="/deadlink" variant="body2" color="#E63946">
+                    Reset password
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
-        {loggedIn ? <Redirect to="/" /> : null}
-      </Container>
+          {loggedIn ? <Redirect to="/" /> : null}
+        </Container>
+      </div>
     </div>
-
-    // </ThemeProvider>
   );
 }
