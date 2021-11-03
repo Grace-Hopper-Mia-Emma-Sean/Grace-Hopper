@@ -222,11 +222,13 @@ export function Navbar({
                 Admin
               </Button>
             ) : null}
+
             <Button>
               <Link to="/cart">
                 <CartIcon />
               </Link>
             </Button>
+
             {loggedIn ? (
               <IconButton
                 size="large"
@@ -238,8 +240,12 @@ export function Navbar({
                 color="inherit"
                 textDecoration="none"
               >
-                <AccountCircle />
+                <Link to="/my_order"> 
+                  <AccountCircle />
+                </Link>
+                
               </IconButton>
+
             ) : null}
             {loggedIn ? (
               <Button>

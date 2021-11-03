@@ -44,7 +44,8 @@ import {
   Dashboard_Users,
   Dashboard_Products,
   Dashboard_Cart,
-  ContactUs
+  ContactUs,
+  MyOrder
 
 } from "./components";
 
@@ -90,6 +91,7 @@ export default function App() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [currentRevenue, setCurrentRevenue] = useState(0)
   const [currentTotal, setCurrentTotal] = useState(0)
+  const [myOrder, setMyOrder] = useState([])
 
 
   useEffect(() => {
@@ -197,6 +199,12 @@ export default function App() {
             orderDetailsToDelete={orderDetailsToDelete}
             setOrderDetailsToDelete={setOrderDetailsToDelete}
           />
+        </Route>
+
+        <Route exact path="/my_order">
+          <MyOrder />
+            myOrder={myOrder}
+            setMyOrder={setMyOrder}
         </Route>
 
         <Route exact path="/order_items">

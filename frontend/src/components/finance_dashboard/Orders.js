@@ -6,7 +6,8 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-
+import { OrderDetails } from '..';
+import { Container } from '@mui/material';
 
 // Generate Order Data
 // function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -71,34 +72,37 @@ export default function Orders({
   // function createData(id, date, name, shipTo, paymentMethod, amount) {
   //   return { id, date, name, shipTo, paymentMethod, amount };
   // }
-  const rows = [{firstName, lastName, cardNumber, city, state, currentTotal}];
+  // const rows = [{firstName, lastName, cardNumber, city, state, currentTotal}];
   
   return (
-    <React.Fragment>
-      <Title>Recent Orders</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            {/* <TableCell>Date</TableCell> */}
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Card on File</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow>
-              {/* <TableCell>{row.date}</TableCell> */}
-              <TableCell>{row.firstName} {row.lastName} </TableCell>
-              <TableCell>{row.city}, {row.state}</TableCell>
-              <TableCell>{row.cardNumber}</TableCell>
-              <TableCell align="right">{`$${row.currentTotal}`}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-     
-    </React.Fragment>
+    // <React.Fragment>
+    //   <Title>Recent Orders</Title>
+    //   <Table size="small">
+    //     <TableHead>
+    //       <TableRow>
+    //         {/* <TableCell>Date</TableCell> */}
+    //         <TableCell>Name</TableCell>
+    //         <TableCell>Ship To</TableCell>
+    //         <TableCell>Card on File</TableCell>
+    //         <TableCell align="right">Sale Amount</TableCell>
+    //       </TableRow>
+    //     </TableHead>
+    //     <TableBody>
+    //       {rows.map((row) => (
+    //         <TableRow>
+    //           {/* <TableCell>{row.date}</TableCell> */}
+    //           <TableCell>{row.firstName} {row.lastName} </TableCell>
+    //           <TableCell>{row.city}, {row.state}</TableCell>
+    //           <TableCell>{row.cardNumber}</TableCell>
+    //           <TableCell align="right">{`$${row.currentTotal}`}</TableCell>
+    //         </TableRow>
+    //       ))}
+    //     </TableBody>
+    //   </Table>
+    // </React.Fragment>
+
+    <Container> 
+      <OrderDetails/>
+    </Container>
   );
 }

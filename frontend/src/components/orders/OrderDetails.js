@@ -103,9 +103,9 @@ export function OrderDetails({
     <div>
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
-        <Link to="/create_order_details">
+        {/* <Link to="/create_order_details">
           <button>Add Order Details </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
