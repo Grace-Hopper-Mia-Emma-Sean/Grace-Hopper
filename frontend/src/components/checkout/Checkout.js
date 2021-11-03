@@ -14,7 +14,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-// const nodemailer = require("nodemailer");
+import { useState, useEffect } from "react";
+import { Redirect } from "react-router";
+
 
 export function Checkout({
   firstName,
@@ -46,9 +48,13 @@ export function Checkout({
   phoneNumber,
   setPhoneNumber,
   cart,
-  setCart
+  setCart,
+  currentRevenue,
+  setCurrentRevenue,
+  currentTotal, 
+  setCurrentTotal
+  
 }) {
-  const steps = ["Shipping address", "Payment details", "Review your order"];
 
   function getStepContent(step) {
     switch (step) {
@@ -123,6 +129,8 @@ export function Checkout({
             setPhoneNumber={setPhoneNumber}
             cart={cart}
             setCart={setCart}
+            currentTotal={currentTotal}
+            setCurrentTotal={setCurrentTotal}
           />
         );
       default:
@@ -133,10 +141,47 @@ export function Checkout({
     return Math.floor(Math.random() * max);
   }
   const randomOrderId = getRandomInt(1000000000);
-
   const theme = createTheme();
-
   const [activeStep, setActiveStep] = React.useState(0);
+  const steps = ["Shipping address", "Payment details", "Review your order"];
+
+
+  // function newRev (currentTotal, currentRevenue) {
+  //   const newSum = (currentTotal + currentRevenue)
+  //   return newSum;
+  // }
+
+  // function currentRev(currentTotal, currentRevenue) {
+    //   console.log(currentRevenue)
+    //   console.log(currentTotal)
+  
+    //   const current = newRev(currentTotal, currentRevenue)
+  
+    //   // console.log(newRev())
+    //   console.log(current)
+  
+    //   return setCurrentRevenue(current)
+  
+    // }
+  
+
+  useEffect(() => {
+    if (currentRevenue > 0) {
+      setCurrentRevenue(0)
+      const newRev = (currentTotal + currentRevenue)
+      setCurrentRevenue(newRev)
+
+      console.log(currentTotal)
+      console.log(setCurrentRevenue)
+      console.log(newRev)
+
+    } else {
+      setCurrentRevenue(currentTotal)
+    }
+
+  },[])
+
+  //Also need to reset Cart to 0, clear cart after it is purchased
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -146,31 +191,6 @@ export function Checkout({
     setActiveStep(activeStep - 1);
   };
 
-  //TESTING Nodemailer.
-  //NOTE: However, this require more server work.
-
-  // let transport = nodemailer.createTransport({
-  //   host: "smtp.mailtrap.io",
-  //   port: 2525,
-  //   auth: {
-  //     user: "63836552d3a12d",
-  //     pass: "7401c39c4e850e"
-  //   }
-  // });
-
-  // let mailOptions = {
-  //   from: 'MESSElectronics@gmail.com',
-  //   to: email,
-  //   subject: 'Thank you for your order!',
-  //   text: `Thank you for your recent order on the MESS Electronics store!
-  //   We truly appreciate your business, and hope you will come back!
-
-  //   Sincerely,
-  //   - Your MESS Electronics Care Team`,
-  //   list: {
-  //     'Care Team': 'MESSElectronics@gmail.com'
-  //   }
-  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -193,7 +213,11 @@ export function Checkout({
           </Stepper>
           <React.Fragment>
             {activeStep === steps.length ? (
+    
               <React.Fragment>
+                  {/* {setCurrentRevenue(currentTotal)} */}
+                  {localStorage.removeItem("Cart Total")}
+
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>

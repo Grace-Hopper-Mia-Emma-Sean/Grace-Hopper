@@ -37,16 +37,23 @@ export default function Review({
     phoneNumber,
     setPhoneNumber,
     cart,
-    setCart
+    setCart,
+    currentTotal, 
+    setCurrentTotal
 }) {
 
     useEffect(async () => {
       setCart(JSON.parse(localStorage.getItem("cart")))
+      setCurrentTotal(total)
       }, []);
 
+      const orderTotal = (localStorage.getItem("Cart Total"))
+      const total = parseFloat(orderTotal.replace(/,/, ''))
+      
+
       const products = [...cart]
-      console.log(cart)
       console.log(products)
+      
       
       const addresses = [address1, address2, city, state, zipcode, country];
       const payments = [
@@ -56,6 +63,7 @@ export default function Review({
         { name: 'Expiry date', detail: expDate },
       ];
       const contact = [email, phoneNumber]
+
 
   return (
     <React.Fragment>
@@ -80,7 +88,9 @@ export default function Review({
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            Total: {localStorage.getItem("Cart Total")}
+
+            Total: ${currentTotal}
+
           </Typography>
         </ListItem>
       </List>

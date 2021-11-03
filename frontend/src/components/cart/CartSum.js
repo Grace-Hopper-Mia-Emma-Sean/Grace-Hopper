@@ -36,7 +36,7 @@ export function CartSum({ cart }) {
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      <Typography sx={{ fontSize: 36 }}>Total: {sum}</Typography>
+      <Typography sx={{ fontSize: 36 }}>Total: ${sum}</Typography>
       {localStorage.setItem("Cart Total", sum)}
     </Box>
   );

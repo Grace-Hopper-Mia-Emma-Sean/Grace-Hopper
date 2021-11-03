@@ -21,17 +21,29 @@ import { mainListItems } from './listItems';
 import Chart from './Chart';
 import Orders from './Orders';
 import Revenue from './Revenue';
-
-import {
-    UsersTable,
-    CartTable,
-    ProductsTable
-  } from "..";
-import { brown } from '@mui/material/colors';
+import { useState } from 'react';
 
 const mdTheme = createTheme();
 
-export function Dashboard() {
+
+export function Dashboard({
+  currentRevenue, 
+  setCurrentRevenue,
+  cardNumber,
+  setCardNumber,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  city,
+  setCity,
+  state,
+  setState,
+  currentTotal,
+  setCurrentTotal
+
+}) {
+
   
   return (
     <ThemeProvider theme={mdTheme}>
@@ -98,7 +110,10 @@ export function Dashboard() {
                     height: 300,
                   }}
                 >
-                  <Revenue />
+                  <Revenue 
+                  currentRevenue={currentRevenue}
+                  setCurrentRevenue={setCurrentRevenue}
+                  />
 
                 </Paper>
               </Grid>
@@ -107,7 +122,22 @@ export function Dashboard() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <Orders 
+                  currentRevenue={currentRevenue}
+                  setCurrentRevenue={setCurrentRevenue}
+                  cardNumber={cardNumber}
+                  setCardNumber={setCardNumber}
+                  firstName={firstName}
+                  setFirstName={setFirstName}
+                  lastName={lastName}
+                  setLastName={setLastName}
+                  city={city}
+                  setCity={setCity}
+                  state={state}
+                  setState={setState}
+                  currentTotal={currentTotal}
+                  setCurrentTotal={setCurrentTotal}
+                  />
                 </Paper>
               </Grid>
             </Grid>

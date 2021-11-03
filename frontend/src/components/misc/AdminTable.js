@@ -22,12 +22,15 @@ theme.typography.h3 = {
   },
 };
 
-export function AdminTable() {
+export function AdminTable({ currentRevenue, setCurrentRevenue}){
   return (
     <div>
 
       <Typography variant="h3">
-          <Dashboard />
+          <Dashboard 
+          currentRevenue={currentRevenue}
+          setCurrentRevenue={setCurrentRevenue}
+          />
       </Typography>
 
       {/* <ThemeProvider theme={theme}>

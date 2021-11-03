@@ -88,6 +88,9 @@ export default function App() {
   const [discountToEdit, setDiscountToEdit] = useState("")
   const [email, setEmail] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [currentRevenue, setCurrentRevenue] = useState(0)
+  const [currentTotal, setCurrentTotal] = useState(0)
+
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -308,10 +311,33 @@ export default function App() {
           setPhoneNumber={setPhoneNumber}
           cart={cart}
           setCart={setCart}
+          currentRevenue={currentRevenue}
+          setCurrentRevenue={setCurrentRevenue}
+          currentTotal={currentTotal}
+          setCurrentTotal={setCurrentTotal}
           
           /></Route>
         
-        <Route exact path="/financial_dashboard" component={Dashboard}></Route>
+        <Route exact path="/admin">
+          <Dashboard
+          currentRevenue={currentRevenue}
+          setCurrentRevenue={setCurrentRevenue}
+          cardNumber={cardNumber}
+          setCardNumber={setCardNumber}
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          city={city}
+          setCity={setCity}
+          state={state}
+          setState={setState}
+          currentTotal={currentTotal}
+          setCurrentTotal={setCurrentTotal}
+          />
+       </Route>
+
+
         <Route exact path="/dashboard_users" component={Dashboard_Users}></Route>
         <Route exact path="/dashboard_products" component={Dashboard_Products}></Route>
         <Route exact path="/dashboard_cart" component={Dashboard_Cart}></Route>
@@ -333,7 +359,13 @@ export default function App() {
         /></Route>
 
 
-        <Route exact path="/admin" component={AdminTable}></Route>
+        {/* <Route exact path="/admin">
+          <AdminTable
+          currentRevenue={currentRevenue}
+          setCurrentRevenue={setCurrentRevenue}
+          />
+       </Route> */}
+
         <Route exact path="/admin/users" component={UsersTable}></Route>
         <Route exact path="/admin/cart" component={CartTable}></Route>
         <Route exact path="/admin/products">
