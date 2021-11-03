@@ -18,7 +18,7 @@ export function ContactUs() {
 
 
     const form = useRef();
-    const sendEmail = (e, firstname, lastName, email, message) => {
+    const sendEmail = (e) => {
 
         e.preventDefault();
         // emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, USER_ID)
@@ -27,8 +27,10 @@ export function ContactUs() {
         // console.log(result.text)
         // },
 
-        emailjs.send("service_287i34a", "template_i7qavvz", {
-            Subject: "Customer Inquiry",
+        emailjs.send("service_287i34a", 
+        "template_i7qavvz", {
+
+            Subject: `Customer Inquiry from Customer: ${firstname} ${lastName}`,
             firstname: firstname,
             lastname: lastName,
             email: email,
@@ -104,7 +106,7 @@ export function ContactUs() {
                                 <TextField
                                     fullWidth label=" Message"
                                     multiline rows={10}
-                                    placeholder="Enter Email"
+                                    placeholder="Please include your order number in your message."
                                     onChange={function (event) {
                                         setMessage(event.target.value)
                                     }}
