@@ -56,6 +56,7 @@ export function CartCard({ cart, setCart }) {
 
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("id");
+  console.log(cart.length);
 
   useEffect(async () => {
     !userId
@@ -71,7 +72,6 @@ export function CartCard({ cart, setCart }) {
             );
           })
           .catch((error) => console.log(error));
-    // .finally(localStorage.removeItem("cart"));
   }, []);
 
   // const image = `http://placeimg.com/128/128/tech/${Math.floor(

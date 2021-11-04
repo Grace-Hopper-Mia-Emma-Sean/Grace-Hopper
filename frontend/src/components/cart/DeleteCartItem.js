@@ -25,7 +25,7 @@ export function DeleteCartItem({ cart }) {
   return (
     <div>
       <Button variant="contained" onClick={removeItem}>
-        REMOVE FROM CART
+        Remove from Cart
       </Button>
     </div>
   );

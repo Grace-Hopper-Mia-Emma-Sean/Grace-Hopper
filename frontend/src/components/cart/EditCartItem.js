@@ -11,13 +11,8 @@ import { useState, useEffect } from "react";
 
 export function EditCartItem({ cart, product }) {
   const [quantity, setQuantity] = useState(cart.quantity);
-  // const localCart = JSON.parse(localStorage.getItem("cart"));
-  // const [localQuantity, setLocalQuantity] = useState(localCart.quantity);
-  const userId = localStorage.getItem("id");
-
-  console.log(cart);
-  console.log(cart.quantity);
-  // ! work on
+  const localCart = JSON.parse(localStorage.cart);
+  const userId = localStorage.id;
 
   const item = {
     id: cart.id,
@@ -28,19 +23,16 @@ export function EditCartItem({ cart, product }) {
     total: cart * cart.price,
   };
 
-  const guest = (item) => {
-    console.log("guest hit");
-    const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
-    const newItems = [];
-    // newItems.unshift(Object.entries(oldItems));
-    newItems.unshift(...oldItems);
-    localStorage.setItem("cart", JSON.stringify(item));
+  const guest = ({ item }) => {
+    const changeItem = localCart.find(({ id }) => id === item.id);
+    changeItem.quantity = quantity;
+    localStorage.setItem("cart", JSON.stringify(localCart));
   };
 
   useEffect(async () => {
-    userId
-      ? await updateCartItem(cart.id, quantity, localStorage.getItem("id"))
-      : null;
+    !userId
+      ? guest({ item })
+      : await updateCartItem(cart.id, quantity, localStorage.getItem("id"));
   }, [quantity]);
 
   // useEffect(async () => {
@@ -57,7 +49,7 @@ export function EditCartItem({ cart, product }) {
             id="demo-simple-select"
             value={quantity}
             label="Quantity"
-            onClick={(e) => {
+            onChange={(e) => {
               setQuantity(e.target.value);
             }}
           >

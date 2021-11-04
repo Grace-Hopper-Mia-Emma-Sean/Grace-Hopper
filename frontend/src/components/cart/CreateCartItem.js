@@ -15,20 +15,7 @@ export function CreateCartItem({ product }) {
       total: quantity * product.price,
     };
     const guest = (item) => {
-      // fields = item;
-      // const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
-      // console.log(oldItems);
-      // if (!oldItems.length) {
-      //   console.log("scenario 1 hit");
-      //   oldItems.push(item);
-      //   localStorage.setItem("cart", JSON.stringify(oldItems));
-      // } else {
-      //   console.log("scenario 2 hit");
-      //   const newItems = [Object.entries(oldItems), item];
-      //   localStorage.setItem("cart", JSON.stringify(newItems));
-      // }
       const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
-      // const newItems = [];
       if (!oldItems.some((obj) => obj.id)) {
         oldItems.push(item);
         localStorage.setItem("cart", JSON.stringify(oldItems));
@@ -43,7 +30,6 @@ export function CreateCartItem({ product }) {
           console.log(product.id, quantity, userId);
         })
         .catch((error) => console.log(error));
-      // .finally(localStorage.removeItem("cart"));
     };
     !userId ? guest(item) : user();
   };
