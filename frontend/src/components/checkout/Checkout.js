@@ -177,14 +177,14 @@ export function Checkout({
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("id"));
-    const paymentID = getRandomInt(100);
+    const paymentId = getRandomInt(100);
     const orderTotal = (localStorage.getItem("Cart Total"))
     const total = parseFloat(orderTotal.replace(/,/, ''))
 
     const CreateOrder = async () => {
-      const resp = await create_order_details(userId, paymentID, total);
+      const resp = await create_order_details(userId, paymentId, total);
       console.log(resp)
-      console.log(userId, paymentID, total)
+      console.log(userId, paymentId, total)
     };
     CreateOrder()
   }, [])
