@@ -43,10 +43,12 @@ const [ orderDetails, setOrderDetails] = useState([])
     
   ];
   return (
+      
     <div>
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
       </div>
     </div>
+   
   );
 }

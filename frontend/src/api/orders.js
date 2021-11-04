@@ -51,13 +51,13 @@ const delete_order_details = async (id) => {
   });
 };
 
-const create_order_details = async (user_id, payment_id, total) => {
+const create_order_details = async (userId, paymentID, total) => {
   return axios({
     method: "POST",
     url: "/order-details",
     data: {
-      user_id: user_id,
-      payment_id: payment_id,
+      user_id: userId,
+      payment_id: paymentID,
       total: total,
     },
     headers: {

@@ -186,9 +186,9 @@ const createTables = async () => {
                         await client.query(`
                           CREATE TABLE order_details (
                             id SERIAL PRIMARY KEY,
-                            user_id INTEGER CHECK (user_id>0),
+                            user_id INTEGER NOT NULL,
                             total DECIMAL(19,2) CHECK (total>0),
-                            payment_id INTEGER CHECK (payment_id>0)
+                            payment_id INTEGER NOT NULL
                             );
                         `);
                         // "user_id" INTEGER REFERENCES users(id) - EDITTED
