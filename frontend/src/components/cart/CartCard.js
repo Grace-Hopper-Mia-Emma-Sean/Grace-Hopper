@@ -54,12 +54,12 @@ export function CartCard({ cart, setCart }) {
 
   const classes = useStyles();
 
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("id");
-  console.log(cart.length);
+  const token = localStorage.token;
+  const id = localStorage.id;
+  console.log(userId);
 
   useEffect(async () => {
-    !userId
+    !localStorage.id
       ? setCart(
           JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         )
@@ -73,10 +73,6 @@ export function CartCard({ cart, setCart }) {
           })
           .catch((error) => console.log(error));
   }, []);
-
-  // const image = `http://placeimg.com/128/128/tech/${Math.floor(
-  //   Math.random() * 20 + 1
-  // )}`;
 
   const image = `http://placeimg.com/128/128/tech/1`;
 

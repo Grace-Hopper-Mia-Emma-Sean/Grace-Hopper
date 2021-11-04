@@ -22,6 +22,7 @@ export function Logout({ setLoggedIn }) {
             "orderItemId",
             "id",
             "cart",
+            "cart total",
           ];
           keys.forEach((k) => localStorage.removeItem(k));
           setLoggedIn(false);

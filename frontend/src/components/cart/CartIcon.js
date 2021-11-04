@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom";
 export function CartIcon({ loggedIn }) {
   const [cart, setCart] = useState([]);
 
-  const token = localStorage.getItem("token");
-  const id = localStorage.getItem("id");
+  const token = localStorage.token;
+  const id = localStorage.id;
 
   useEffect(async () => {
     await getCartItemsByUserId(token, id)
