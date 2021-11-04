@@ -33,7 +33,7 @@ export function CartIcon({ loggedIn }) {
     // <div to="/cart">
  
     <div>
-      {cart && badgeCount > 0 ? (
+      {badgeCount > 0 ? (
         <IconButton
           style={{
             textDecoration: "none",
@@ -41,7 +41,9 @@ export function CartIcon({ loggedIn }) {
           }}
         >
           <Badge badgeContent={badgeCount} color="error">
+            <Link to="/cart">
             <ShoppingCartIcon> </ShoppingCartIcon>
+            </Link>
           </Badge>
         </IconButton>
       ) : (
@@ -50,12 +52,11 @@ export function CartIcon({ loggedIn }) {
             textDecoration: "none",
             color: "white",
           }}
-          component={Link} to="/"
         >
-        <Link to="/">
+       
           <ShoppingCartIcon
           />
-        </Link>
+       
 
         </IconButton>
       )}

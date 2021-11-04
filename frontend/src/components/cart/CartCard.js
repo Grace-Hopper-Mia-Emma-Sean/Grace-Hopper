@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function CartCard({ cart, setCart }) {
+export function CartCard ({ cart, setCart }) {
   // const [cart, setCart] = useState([]);
   //making it global to be accessible to CartTotal and Checkout
 
@@ -57,7 +57,7 @@ export function CartCard({ cart, setCart }) {
 
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
-  const currentCart = localStorage.getItem("cart");
+  const currentCart = JSON.parse(localStorage.getItem("cart"));
 
   useEffect(async () => {
     !id && currentCart
@@ -67,7 +67,7 @@ export function CartCard({ cart, setCart }) {
           JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         )
 
-      : (currentCart ? 
+      : 
         await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
@@ -77,8 +77,7 @@ export function CartCard({ cart, setCart }) {
             );
           })
           .catch((error) => console.log(error))
-        :
-        <Redirect to="/home"/> )
+        
     // .finally(localStorage.removeItem("cart"));
   }, []);
 
@@ -139,6 +138,9 @@ export function CartCard({ cart, setCart }) {
       </Box>
     </div>
     :
-    <Redirect to="/home"/>
-  );
+    <div>
+      Please Add Items to Cart to Proceed
+    </div>
+    
+  )
 }

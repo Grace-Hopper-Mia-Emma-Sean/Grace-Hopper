@@ -329,6 +329,8 @@ export default function App() {
           setCurrentRevenue={setCurrentRevenue}
           currentTotal={currentTotal}
           setCurrentTotal={setCurrentTotal}
+          loggedIn={loggedIn}
+          setLoggedIn={setLoggedIn}
           
           /></Route>
         

@@ -91,7 +91,7 @@ export function Navbar({
   };
   const [categoryList, setCategoryList] = useState([]);
 
-  const cart = localStorage.getItem("cart")
+  const cart = JSON.parse(localStorage.getItem("cart"))
 
   useEffect(() => {
     const fetchCategories = async () => {
