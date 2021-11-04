@@ -20,6 +20,7 @@ import { deleteCartItem } from "../../api";
 import { create_order_details } from "../../api";
 
 
+
 export function Checkout({
   firstName,
   setFirstName,
@@ -147,8 +148,12 @@ export function Checkout({
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = ["Shipping address", "Payment details", "Review your order"];
   const cartItems = JSON.parse(localStorage.getItem("cart"))
-  const cartTotal = parseFloat(localStorage.getItem("Cart Total"))
 
+  const orderTotal = (localStorage.getItem("Cart Total"))
+  const total = parseFloat(orderTotal.replace(/,/, ''))
+
+  const userId = JSON.parse(localStorage.getItem("id"));
+  const payment = getRandomInt(100);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -175,19 +180,14 @@ export function Checkout({
    
   }
 
-  useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("id"));
-    const paymentId = getRandomInt(100);
-    const orderTotal = (localStorage.getItem("Cart Total"))
-    const total = parseFloat(orderTotal.replace(/,/, ''))
+  console.log(userId, payment, total)
 
-    const CreateOrder = async () => {
-      const resp = await create_order_details(userId, paymentId, total);
-      console.log(resp)
-      console.log(userId, paymentId, total)
-    };
-    CreateOrder()
-  }, [])
+  const CreateOrder = async (userId, payment, total) => {
+    const resp = await create_order_details(userId, payment, total);
+    console.log(resp)
+    console.log(userId, payment, total)
+  };
+    
 
   // function CreateOrder(userId, randomOrderId, currentTotal) {
   //   const resp = create_order_details(userId, randomOrderId, currentTotal) 
@@ -197,7 +197,7 @@ export function Checkout({
 
 
   return (
-  cartItems && cartTotal>0 ? 
+  cartItems && total>0 ? 
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
@@ -220,8 +220,8 @@ export function Checkout({
             {activeStep === steps.length ? (
     
               <React.Fragment>
+                  {CreateOrder(userId, payment, total)}
                   {emptyCart()}
-                  {/* {CreateOrder(userId, randomOrderId, currentTotal)} */}
 
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
