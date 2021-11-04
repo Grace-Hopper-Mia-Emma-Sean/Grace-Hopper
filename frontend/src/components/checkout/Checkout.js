@@ -53,8 +53,10 @@ export function Checkout({
   currentRevenue,
   setCurrentRevenue,
   currentTotal, 
-  setCurrentTotal
-  
+  setCurrentTotal,
+  loggedIn,
+  setLoggedIn
+
 }) {
 
   function getStepContent(step) {
@@ -151,6 +153,7 @@ export function Checkout({
 
     localStorage.removeItem("Cart Total")
     localStorage.removeItem("cart")
+   
   }
 
 
@@ -158,6 +161,10 @@ export function Checkout({
   const theme = createTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = ["Shipping address", "Payment details", "Review your order"];
+  const cartItems = JSON.parse(localStorage.getItem("cart"))
+  const cartTotal = parseFloat(localStorage.getItem("Cart Total"))
+
+
 
 
   const handleNext = () => {
@@ -170,6 +177,7 @@ export function Checkout({
 
 
   return (
+  cartItems && cartTotal>0 ? 
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
@@ -202,6 +210,7 @@ export function Checkout({
                   order confirmation, and will send you an update when your
                   order has shipped.
                 </Typography>
+                   
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -227,5 +236,8 @@ export function Checkout({
         </Paper>
       </Container>
     </ThemeProvider>
+    :
+    
+    <Redirect to="/"/>
   );
 }

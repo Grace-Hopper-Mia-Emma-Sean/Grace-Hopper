@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 
 import {
   Card,
@@ -60,10 +61,14 @@ export function CartCard({ cart, setCart }) {
 
   useEffect(async () => {
     !id && currentCart
-      ? setCart(
+      ? 
+      
+      setCart(
           JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         )
-      : await getCartItemsByUserId(token, id)
+
+      : (currentCart ? 
+        await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
               JSON.parse(localStorage.getItem("cart")).sort(
@@ -71,7 +76,9 @@ export function CartCard({ cart, setCart }) {
               )
             );
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error))
+        :
+        <Redirect to="/home"/> )
     // .finally(localStorage.removeItem("cart"));
   }, []);
 
@@ -82,6 +89,7 @@ export function CartCard({ cart, setCart }) {
   const image = `http://placeimg.com/128/128/tech/1`;
 
   return (
+    currentCart ? 
     <div>
       <div>
         {cart.map((cart) => {
@@ -130,5 +138,7 @@ export function CartCard({ cart, setCart }) {
         </Typography>
       </Box>
     </div>
+    :
+    <Redirect to="/home"/>
   );
 }

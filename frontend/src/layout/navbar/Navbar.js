@@ -91,6 +91,8 @@ export function Navbar({
   };
   const [categoryList, setCategoryList] = useState([]);
 
+  const cart = localStorage.getItem("cart")
+
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await getProductCategories();
@@ -224,9 +226,17 @@ export function Navbar({
             ) : null}
 
             <Button>
+              {cart ? 
               <Link to="/cart">
                 <CartIcon />
               </Link>
+              :
+              <Link to="/">
+                <CartIcon />
+              </Link>
+              
+              }
+              
             </Button>
 
             {loggedIn ? (
