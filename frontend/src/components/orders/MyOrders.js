@@ -6,9 +6,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export function MyOrder({
+    loggedIn,
+    setLoggedIn,
+    myOrder,
+    setMyOrder,
 }) {
-  const [orderDetails, setOrderDetails] = useState([]);
-
+const [ orderDetails, setOrderDetails] = useState([])
   useEffect(async () => {
     await order_details(localStorage.getItem("token"))
       .then(() => {

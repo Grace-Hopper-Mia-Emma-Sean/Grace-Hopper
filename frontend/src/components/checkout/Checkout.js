@@ -16,6 +16,7 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { useState, useEffect } from "react";
 import { Redirect } from "react-router";
+import { deleteCartItem } from "../../api";
 
 
 export function Checkout({
@@ -140,48 +141,24 @@ export function Checkout({
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
+
+  function emptyCart () {
+    const currentCart = JSON.parse(localStorage.getItem("cart"))
+    console.log(currentCart)
+    currentCart.forEach((cart) => {
+      deleteCartItem(cart.id)
+    })
+
+    localStorage.removeItem("Cart Total")
+    localStorage.removeItem("cart")
+  }
+
+
   const randomOrderId = getRandomInt(1000000000);
   const theme = createTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = ["Shipping address", "Payment details", "Review your order"];
 
-
-  // function newRev (currentTotal, currentRevenue) {
-  //   const newSum = (currentTotal + currentRevenue)
-  //   return newSum;
-  // }
-
-  // function currentRev(currentTotal, currentRevenue) {
-    //   console.log(currentRevenue)
-    //   console.log(currentTotal)
-  
-    //   const current = newRev(currentTotal, currentRevenue)
-  
-    //   // console.log(newRev())
-    //   console.log(current)
-  
-    //   return setCurrentRevenue(current)
-  
-    // }
-  
-
-  useEffect(() => {
-    if (currentRevenue > 0) {
-      setCurrentRevenue(0)
-      const newRev = (currentTotal + currentRevenue)
-      setCurrentRevenue(newRev)
-
-      console.log(currentTotal)
-      console.log(setCurrentRevenue)
-      console.log(newRev)
-
-    } else {
-      setCurrentRevenue(currentTotal)
-    }
-
-  },[])
-
-  //Also need to reset Cart to 0, clear cart after it is purchased
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -215,8 +192,7 @@ export function Checkout({
             {activeStep === steps.length ? (
     
               <React.Fragment>
-                  {/* {setCurrentRevenue(currentTotal)} */}
-                  {localStorage.removeItem("Cart Total")}
+                  {emptyCart()}
 
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.

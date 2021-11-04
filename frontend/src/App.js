@@ -91,6 +91,7 @@ export default function App() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [currentRevenue, setCurrentRevenue] = useState(0)
   const [currentTotal, setCurrentTotal] = useState(0)
+  const [orderDetails, setOrderDetails] = useState([]);
   const [myOrder, setMyOrder] = useState([])
 
 
@@ -198,6 +199,8 @@ export default function App() {
             setOrderDetailsToEdit={setOrderDetailsToEdit}
             orderDetailsToDelete={orderDetailsToDelete}
             setOrderDetailsToDelete={setOrderDetailsToDelete}
+            orderDetails={orderDetails}
+            setOrderDetails={setOrderDetails}
           />
         </Route>
 
@@ -205,6 +208,9 @@ export default function App() {
           <MyOrder />
             myOrder={myOrder}
             setMyOrder={setMyOrder}
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+
         </Route>
 
         <Route exact path="/order_items">
@@ -407,7 +413,10 @@ export default function App() {
           <CreateDiscount />
         </Route>
         <Route exact path="/">
-          <Products searchTerm={searchTerm} productCategory={productCategory} selectProductCategory={selectProductCategory} />
+          <Products 
+          searchTerm={searchTerm} 
+          productCategory={productCategory} 
+          selectProductCategory={selectProductCategory} />
         </Route>
 
         <Route path="*" component={NotFound} />

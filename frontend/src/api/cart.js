@@ -93,7 +93,7 @@ const deleteCartItem = async (cartId) => {
     .then((response) => {
       response.data;
       // find a way to avoid having to use alert
-      return alert("cart item successfully deleted");
+      // return alert("cart item successfully deleted");
     });
 };
 

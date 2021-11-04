@@ -10,8 +10,10 @@ export function OrderDetails({
   setOrderDetailsToEdit,
   orderDetailsToDelete,
   setOrderDetailsToDelete,
+ 
 }) {
-  const [orderDetails, setOrderDetails] = useState([]);
+
+  const [  orderDetails, setOrderDetails] = useState([])
 
   useEffect(async () => {
     await order_details(localStorage.getItem("token"))

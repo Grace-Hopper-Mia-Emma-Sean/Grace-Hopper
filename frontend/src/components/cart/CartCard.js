@@ -56,9 +56,10 @@ export function CartCard({ cart, setCart }) {
 
   const token = localStorage.getItem("token");
   const id = localStorage.getItem("id");
+  const currentCart = localStorage.getItem("cart");
 
   useEffect(async () => {
-    !id
+    !id && currentCart
       ? setCart(
           JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         )
