@@ -355,7 +355,7 @@ export default function App() {
 
 
         <Route exact path="/dashboard_users" component={Dashboard_Users}></Route>
-        <Route exact path="/dashboard_products" component={Dashboard_Products}></Route>
+        <Route exact path="/dashboard_products"> <Dashboard_Products  setProductToEdit={setProductToEdit} productToEdit={setProductToEdit}/></Route>
         <Route exact path="/dashboard_cart" component={Dashboard_Cart}></Route>
         <Route exact path="/contact_us" component={ContactUs}></Route>
 

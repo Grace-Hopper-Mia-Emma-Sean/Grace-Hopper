@@ -17,34 +17,79 @@ import {
 import { CreateCartItem } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
-  body: { backgroundColor: "#457B9D",
-  columns: '2 auto',
-  width: '100%',
+
+  // body : { 
+  //   backgroundColor: "#457B9D"
+  // },
+
+  body: {
+    backgroundColor: "#457B9D",
+    // flexGrow: 7,
+    // display: 'inline-block',
+    // display: 'table',
+    // top: '0',
+    
+    // height: '100%',
+    // width: '100%',
+    columns: '2 auto',
+  },
+  root: {
+    // display:'inline-block',
+    // paddingTop: '10%',
   },
   paper: {
     padding: theme.spacing(2),
-    margin: "1rem",
-    maxWidth: 500,
-    backgroundColor: "#A8DADC",
-    display:'inline-block',
+    display: 'inline-block',
+    width: '500px',
+    // width: 'max-content',
+    // height: 'relative',
+    marginTop: '20px',
+    marginLeft: '30%',
+    marginBottom: '20px',
+    // marginRight: '30%',
+    // backgroundColor: "#A8DADC",
+    // marginBottom: '20px',
     
   },
-  image: {
-    width: 128,
-    height: 128,
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  },
-  center: {
-    // marginLeft: 'auto',
-    // marginRight: 'auto',
-    width: '100%',
-    justifyItems: 'center'
+  columns: {
+    // backgroundColor: 'red'
   }
+
+  // body: { 
+  // backgroundColor: "#457B9D",
+  // // columns: '2 auto',
+  // width: '100%',
+  // },
+  // paper: {
+  //   padding: theme.spacing(2),
+  //   margin: "1rem",
+  //   maxWidth: 500,
+  //   backgroundColor: "#A8DADC",
+  //   display:'inline-block', 
+  // },
+  // image: {
+  //   width: 128,
+  //   height: 128,
+  // },
+  // img: {
+  //   margin: "auto",
+  //   display: "block",
+  //   maxWidth: "100%",
+  //   maxHeight: "100%",
+  // },
+  // center: {
+    
+  //   // width: '100%',
+  //   // justifyContent: 'center'
+  // },
+  // root: {
+  //   // display: 'inline-block'
+  //   marginLeft: 'auto',
+  //   marginRight: 'auto',
+  //   display: 'inline',
+  //   columns: '2 auto'
+    
+  // }
 }));
 
 export function Products({
@@ -86,7 +131,7 @@ export function Products({
 
   return (
     <>
-    <div className={classes.center}>
+    
       <div className={classes.body}>
           {!selectProductCategory ? (
             <>
@@ -152,9 +197,13 @@ export function Products({
                                 </Box>
                               ) : null}
                             </Grid>
+                            
                           </Grid>
+
                         </Paper>
                       </div>
+                      
+
                     </>
                   );
                 })}
@@ -233,7 +282,7 @@ export function Products({
             )}
           
         </div>
-      </div>
+      
     </>
   );
 }

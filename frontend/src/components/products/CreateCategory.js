@@ -5,16 +5,39 @@ import {Link, Redirect} from "react-router-dom"
 
 import {createCategory} from '../../api'
 
-import {TextField, makeStyles} from '../../MUI'
+import {TextField, makeStyles, Button} from '../../MUI'
 
 const useStyles = makeStyles((theme) => ({
-    addcategoryform: {
-        align: "center"
+    body: {
+      backgroundColor: "white",
+      height: "90vh",
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+  
+    },
+    title: {
+      backgroundColor: "white",
+      paddingTop: '10px',
+      // paddingBottom: '20px',
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+    },
+    form: {
+      paddingTop: '10%',
+      
+      height: '90vh',
+      // width: '50%',
+      display: 'flex',
+      flexDirection: 'column',
+      // justifyContent: "center",
+      alignContentItems: "center"
     },
     addItem: {
-        marginBottom: '10'
-    }
-}))
+      marginBottom: "10",
+    },
+  }));
 
 export function CreateCategory(){
     const classes = useStyles();
@@ -24,26 +47,37 @@ export function CreateCategory(){
     
 
     return (
-        <div className={classes.addcategoryform}>
-            <div className={classes.addItem}>
-                Add a New Category
-                <br/>
-                <br/>
+        <>
+            <div className={classes.title}>
+                <h1>Add a New Category</h1>
             </div>
-                Name: <TextField onChange={function(event) {setName(event.target.value)}}/>
-                <br/>
-            <div className={classes.addItem}>
-                Description: <TextField onChange={function(event) {setDescription(event.target.value)}} />
+            <div className={classes.body}>
+                <div className={classes.form}>
+                    <div className={classes.addItem}>
+                    <TextField 
+                    variant="outlined"
+                    label="Enter Name"
+                    onChange={function(event) {setName(event.target.value)}}/>  
+                    </div>
+                    <br />
+                    <div className={classes.addItem}>
+                    <TextField 
+                    variant="outlined"
+                    label="Enter Description..."
+                    onChange={function(event) {setDescription(event.target.value)}} />
+                    </div>
+                    <br />
+                    <br />
+                    <Link to ="/Categories">
+                        <Button onClick={function(){createCategory(name, description)}}>Create Category</Button>
+                    </Link>
+                    <br />
+                    <Link to ="/Categories">
+                        <Button>Cancel</Button>
+                    </Link>
+                    
+                    </div>
             </div>
-                <br/>
-                <br/>
-                <Link to ="/Categories">
-                <button>Cancel</button>
-                </Link>
-
-                <Link to ="/Categories">
-                <button onClick={function(){createCategory(name, description)}}>Create Category</button>
-                </Link>
-        </div>
+        </>
     )
 }

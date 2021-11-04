@@ -3,16 +3,39 @@ import React, {useState, useEffect} from "react";
 
 import {editCategory, deleteCategory} from '../../api'
 
-import {TextField, makeStyles} from '../../MUI'
+import {TextField, makeStyles, Button} from '../../MUI'
 
 const useStyles = makeStyles((theme) => ({
-    editcategoryform: {
-        align: "center"
+    body: {
+      backgroundColor: "white",
+      height: "90vh",
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+  
     },
-    editItem: {
-        marginBottom: '10'
-    }
-}))
+    title: {
+      backgroundColor: "white",
+      paddingTop: '10px',
+      // paddingBottom: '20px',
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+    },
+    form: {
+      paddingTop: '10%',
+      
+      height: '90vh',
+      // width: '50%',
+      display: 'flex',
+      flexDirection: 'column',
+      // justifyContent: "center",
+      alignContentItems: "center"
+    },
+    addItem: {
+      marginBottom: "10",
+    },
+  }));
 
 
 export function EditCategory({categoryToEdit}){
@@ -25,33 +48,46 @@ export function EditCategory({categoryToEdit}){
     const id = categoryToEdit.id
 
     return (
-        <div className={classes.editcategoryform}>
-            <div className={classes.editItem}>
-                Now Editing: {categoryToEdit.name} | ID: {categoryToEdit.id}
-                <br/>
-                <br/>
-                Edit Name: <TextField onChange={function(event) {setName(event.target.value), console.log(name)}}/>
+        <>
+            <div className={classes.title}>
+            <h1>Now Editing: {categoryToEdit.name} | ID: {categoryToEdit.id} </h1>
             </div>
-                <br/>
-            <div className={classes.editItem}>
-                Current Description: {categoryToEdit.description}
-                <br/>
-                Edit Description: <TextField onChange={function(event) {setDescription(event.target.value), console.log(description)}} />
+            <div className={classes.body}>
+                <div className={classes.form}>
+                    <div className={classes.editItem}>
+                        Current Name: {categoryToEdit.name}
+                        <br />
+                        <br />
+                        <TextField 
+                        variant="outlined"
+                        label="Edit Name"
+                        onChange={function(event) {setName(event.target.value), console.log(name)}}/>
+                    </div>
+                        <br/>
+                    <div className={classes.editItem}>
+                        Current Description: {categoryToEdit.description}
+                        <br/>
+                        <br />
+                        <TextField 
+                        variant="outlined"
+                        label="Edit Description..."
+                        onChange={function(event) {setDescription(event.target.value), console.log(description)}} />
+                    </div>
+                        <br/>
+                        <br/>
+                        <Link to ="/categories">
+                        <Button onClick={function(){editCategory(id, name, description),console.log(id)}}>Send Edit</Button>
+                        </Link>
+                        <Link to ="/categories">
+                        <Button>Cancel</Button>
+                        </Link>
+                        <br />
+                        <br />
+                        <Link to="/categories">
+                        <Button onClick={function(){deleteCategory(id)}}>Delete This Category</Button>
+                        </Link>
+                </div>
             </div>
-                <br/>
-                <br/>
-                <Link to ="/categories">
-                <button>Cancel</button>
-                </Link>
-
-                <Link to ="/categories">
-                <button onClick={function(){editCategory(id, name, description),console.log(id)}}>Send</button>
-                </Link>
-                <br />
-                <br />
-                <Link to="/categories">
-                <button onClick={function(){deleteCategory(id)}}>Delete This Category</button>
-                </Link>
-        </div>
+        </>
     )
 }

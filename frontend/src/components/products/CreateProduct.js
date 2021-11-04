@@ -5,11 +5,34 @@ import { Link, Redirect } from "react-router-dom";
 
 import { createProduct } from "../../api";
 
-import { TextField, makeStyles } from "../../MUI";
+import { TextField, makeStyles, Button } from "../../MUI";
 
 const useStyles = makeStyles((theme) => ({
-  addproductform: {
-    align: "center",
+  body: {
+    backgroundColor: "white",
+    height: "90vh",
+    display: 'flex',
+    justifyContent: "center",
+    alignContentItems: "center"
+
+  },
+  title: {
+    backgroundColor: "white",
+    paddingTop: '10px',
+    // paddingBottom: '20px',
+    display: 'flex',
+    justifyContent: "center",
+    alignContentItems: "center"
+  },
+  form: {
+    paddingTop: '10%',
+    
+    height: '90vh',
+    // width: '50%',
+    display: 'flex',
+    flexDirection: 'column',
+    // justifyContent: "center",
+    alignContentItems: "center"
   },
   addItem: {
     marginBottom: "10",
@@ -28,93 +51,97 @@ export function CreateProduct() {
   const [sku, setSku] = useState("");
 
   return (
-    <div className={classes.addproductform}>
-      <div className={classes.addItem}>
-        Add a New Product
-        <br />
-        <br />
+    <>
+      <div className={classes.title}>
+        <h1>Create a New Product</h1>
       </div>
-      Name:{" "}
-      <TextField
-        onChange={function (event) {
-          setName(event.target.value);
-        }}
-      />
-      <br />
-      <div className={classes.addItem}>
-        Category:{" "}
-        <TextField
-          onChange={function (event) {
-            setCategory(event.target.value);
-          }}
-        />
+      <div className={classes.body}>
+        
+          <div className={classes.form}>
+          
+            <div className={classes.addItem}>
+              <TextField variant="outlined" label="Enter Name..."
+                onChange={function (event) {
+                  setName(event.target.value);
+                }}
+              />
+            </div>
+              <br />
+            <div className={classes.addItem}>
+                <TextField variant="outlined" label="Enter Category..."
+                  onChange={function (event) {
+                    setCategory(event.target.value);
+                  }}
+                />
+            </div>
+              <br />
+            <div className={classes.addItem}>
+                <TextField variant="outlined" label="Enter Description..."
+                  onChange={function (event) {
+                    setDescription(event.target.value);
+                  }}
+                />
+            </div>
+              <br />
+            <div className={classes.addItem}>
+                <TextField variant="outlined" label="Enter Disc. Category..."
+                  onChange={function (event) {
+                    setDiscount(event.target.value);
+                  }}
+                />
+            </div>
+              <br />
+            <div className={classes.addItem}> 
+                <TextField variant="outlined" label="Enter Price..."
+                  onChange={function (event) {
+                    setPrice(event.target.value);
+                  }}
+                />
+            </div>
+              <br />
+            <div className={classes.addItem}>
+                <TextField variant="outlined" label="Enter Quantity..."
+                  onChange={function (event) {
+                    setQuantity(event.target.value);
+                  }}
+                />
+            </div>
+              <br />
+            <div className={classes.addItem}>
+                <TextField variant="outlined" label = "Enter SKU..."
+                  onChange={function (event) {
+                    setSku(event.target.value);
+                  }}
+                />
+            </div>
+          
+            <br />
+            <Link to="/admin/products">
+            <Button
+              onClick={function () {
+                createProduct(
+                  name,
+                  description,
+                  sku,
+                  category,
+                  price,
+                  discount,
+                  quantity
+                );
+              }}
+            >
+              Create Product
+            </Button>
+          </Link>
+          <br />
+          <Link to="/admin/products">
+            <Button>Return To Products Table</Button>
+          </Link>
+          
+          
+        </div>
+          
       </div>
-      <br />
-      <div className={classes.addItem}>
-        Description:{" "}
-        <TextField
-          onChange={function (event) {
-            setDescription(event.target.value);
-          }}
-        />
-      </div>
-      <br />
-      <div className={classes.addItem}>
-        Discount:{" "}
-        <TextField
-          onChange={function (event) {
-            setDiscount(event.target.value);
-          }}
-        />
-      </div>
-      <br />
-      <div className={classes.addItem}>
-        Price:{" "}
-        <TextField
-          onChange={function (event) {
-            setPrice(event.target.value);
-          }}
-        />
-      </div>
-      <br />
-      <div className={classes.addItem}>
-        Quantity:{" "}
-        <TextField
-          onChange={function (event) {
-            setQuantity(event.target.value);
-          }}
-        />
-      </div>
-      <br />
-      <div className={classes.addItem}>
-        SKU:{" "}
-        <TextField
-          onChange={function (event) {
-            setSku(event.target.value);
-          }}
-        />
-      </div>
-      <br />
-      <Link to="/admin/products">
-        <button>Cancel</button>
-      </Link>
-      <Link to="/admin/products">
-        <button
-          onClick={function () {
-            createProduct(
-              name,
-              description,
-              sku,
-              category,
-              price,
-              discount,
-              quantity
-            );
-          }}
-        >
-          Create Product
-        </button>
-      </Link>
-    </div>
+    </>
   );
 }
