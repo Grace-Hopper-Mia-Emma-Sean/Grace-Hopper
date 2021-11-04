@@ -53,11 +53,11 @@ export function CartIcon({ loggedIn }) {
             color: "white",
           }}
         >
-       
+        <Link to="/cart">
           <ShoppingCartIcon
           />
-       
-
+        </Link>
+      
         </IconButton>
       )}
     </div>
