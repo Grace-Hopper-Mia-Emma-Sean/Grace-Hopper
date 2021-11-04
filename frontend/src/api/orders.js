@@ -45,18 +45,18 @@ const delete_order_details = async (id) => {
       "Content-Type": "application/json",
     },
   }).catch((error) => {
-    console.error(error.response.data);
+    console.error(error.response);
   });
 };
 
-const create_order_details = async (user_id, payment_id, total) => {
+const create_order_details = async (userId, randomOrderId, cartTotal) => {
   return axios({
     method: "POST",
     url: "/order-details",
     data: {
-      user_id: user_id,
-      payment_id: payment_id,
-      total: total,
+      user_id: userId,
+      payment_id: randomOrderId,
+      total: cartTotal,
     },
     headers: {
       "Content-Type": "application/json",

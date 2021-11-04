@@ -9,7 +9,7 @@ import { delete_order_details } from "../../api";
 import { makeStyles } from "../../MUI";
 
 const useStyles = makeStyles((theme) => ({
-  deleteOrderDetails: {
+  orderToDelete: {
     align: "center",
   },
   editItem: {
@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function DeleteOrderDetails({ orderDetailsToDelete }) {
+export function DeleteOrderDetails({ orderToDelete }) {
   const classes = useStyles();
-  const id = orderDetailsToDelete.id;
+  const id = orderToDelete.id;
 
   return (
-    <div className={classes.deleteOrderDetails}>
+    <div className={classes.orderToDelete}>
       <div className={classes.editItem}>
-        Deleting Order Detail ID: {orderDetailsToDelete.id}
+        Deleting Order Detail ID: {orderToDelete.id}
         <br />
         <br />
       </div>

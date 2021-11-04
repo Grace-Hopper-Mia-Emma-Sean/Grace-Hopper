@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 export function OrderDetails({
   orderDetailsToEdit,
   setOrderDetailsToEdit,
-  orderDetailsToDelete,
-  setOrderDetailsToDelete,
+  orderToDelete,
+  setOrderToDelete,
  
 }) {
 
@@ -28,26 +28,14 @@ export function OrderDetails({
   const rows = [...orderDetails];
   console.log(rows);
 
-  const renderEditButton = (item) => {
-    return (
-      <Link to="/edit_order_details">
-        <button
-          onClick={function () {
-            console.log(item.row), setOrderDetailsToEdit(item.row);
-          }}
-        >
-          Edit
-        </button>
-      </Link>
-    );
-  };
 
   const renderDeleteButton = (item) => {
     return (
       <Link to="/delete_order_details">
         <button
           onClick={function () {
-            console.log(item.row), setOrderDetailsToDelete(item.row);
+            console.log("1",item.row),
+            setOrderToDelete(item.row)
           }}
         >
           Delete
@@ -82,15 +70,6 @@ export function OrderDetails({
       headerAlign: "center",
       width: 100,
       align: "center",
-    },
-
-    {
-      field: "edit",
-      headerName: "Edit",
-      headerAlign: "center",
-      width: 100,
-      align: "center",
-      renderCell: renderEditButton,
     },
     {
       field: "delete",

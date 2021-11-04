@@ -63,12 +63,12 @@ export default function App() {
   const [productToEdit, setProductToEdit] = useState("");
   const [paymentToEdit, setPaymentToEdit] = useState("");
   const [paymentToDelete, setPaymentToDelete ] = useState("");
-  const [userPaymentToEdit, setUserPaymentToEdit] = useState("")
-  const [userPaymentToDelete, setUserPaymentToDelete] = useState("")
-  const [orderItemsToEdit, setOrderItemsToEdit] = useState("")
-  const [orderItemsToDelete, setOrderItemsToDelete] = useState("")
-  const [orderDetailsToEdit, setOrderDetailsToEdit] = useState("")
-  const [orderDetailsToDelete, setOrderDetailsToDelete] = useState("")
+  const [userPaymentToEdit, setUserPaymentToEdit] = useState("");
+  const [userPaymentToDelete, setUserPaymentToDelete] = useState("");
+  const [orderItemsToEdit, setOrderItemsToEdit] = useState("");
+  const [orderItemsToDelete, setOrderItemsToDelete] = useState("");
+  const [orderDetailsToEdit, setOrderDetailsToEdit] = useState("");
+  const [orderToDelete, setOrderToDelete] = useState("");
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState([]);
   const [firstName, setFirstName] = useState('');
@@ -197,8 +197,8 @@ export default function App() {
             setToken={setToken}
             orderDetailsToEdit={orderDetailsToEdit}
             setOrderDetailsToEdit={setOrderDetailsToEdit}
-            orderDetailsToDelete={orderDetailsToDelete}
-            setOrderDetailsToDelete={setOrderDetailsToDelete}
+            orderToDelete={orderToDelete}
+            setOrderToDelete={setOrderToDelete}
             orderDetails={orderDetails}
             setOrderDetails={setOrderDetails}
           />
@@ -238,8 +238,8 @@ export default function App() {
 
         <Route exact path="/delete_order_details" >
           <DeleteOrderDetails
-          orderDetailsToDelete={orderDetailsToDelete}
-          setOrderDetailsToDelete={setOrderDetailsToDelete}
+          orderToDelete={orderToDelete}
+          setOrderToDelete={setOrderToDelete}
           /></Route>
       
 

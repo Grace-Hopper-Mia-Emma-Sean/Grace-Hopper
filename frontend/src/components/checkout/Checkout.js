@@ -17,6 +17,7 @@ import Review from "./Review";
 import { useState, useEffect } from "react";
 import { Redirect } from "react-router";
 import { deleteCartItem } from "../../api";
+import { create_order_details } from "../../api";
 
 
 export function Checkout({
@@ -140,6 +141,25 @@ export function Checkout({
         throw new Error("Unknown step");
     }
   }
+
+  const randomOrderId = getRandomInt(1000000000);
+  const theme = createTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const steps = ["Shipping address", "Payment details", "Review your order"];
+  const cartItems = JSON.parse(localStorage.getItem("cart"))
+  const cartTotal = parseFloat(localStorage.getItem("Cart Total"))
+  const userId = JSON.parse(localStorage.getItem("id"))
+
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -156,24 +176,11 @@ export function Checkout({
    
   }
 
+  function CreateOrderDetails() {
 
-  const randomOrderId = getRandomInt(1000000000);
-  const theme = createTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = ["Shipping address", "Payment details", "Review your order"];
-  const cartItems = JSON.parse(localStorage.getItem("cart"))
-  const cartTotal = parseFloat(localStorage.getItem("Cart Total"))
-
-
-
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+    const resp = create_order_details(userId, randomOrderId, cartTotal) 
+    console.log(resp)
+  }
 
 
   return (
@@ -201,6 +208,7 @@ export function Checkout({
     
               <React.Fragment>
                   {emptyCart()}
+                  {CreateOrderDetails(userId, randomOrderId, cartTotal)}
 
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
