@@ -1,7 +1,7 @@
 import { getProductCategories } from "../../api";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DataGrid } from "../../MUI";
+import { DataGrid, makeStyles, Button } from "../../MUI";
 
 export function Categories({ categoryToEdit, setCategoryToEdit }) {
   const [categories, setCategories] = useState([]);
@@ -62,19 +62,33 @@ export function Categories({ categoryToEdit, setCategoryToEdit }) {
     },
   ];
 
+  const useStyles = makeStyles((theme) => ({
+    body: { backgroundColor: "#457B9D" },
+    buttoncontainer: {
+      display: 'flex',
+      justifyContent: 'space-evenly'
+    },
+    button :{
+      height: '40px'
+    }
+  }));
+  
+  const classes = useStyles()
+
   return (
     <>
       <div>
         <div style={{ height: 650, width: "100%" }}>
           <DataGrid rows={rows} columns={columns} pageSize={10}></DataGrid>
-
-          <Link to="/createcategory">
-            <button>Create a New Category</button>
-          </Link>
-          <Link to="/admin/products">
-            <button>Return To Products Table</button>
-          </Link>
         </div>
+          <div className={classes.buttoncontainer}>
+            <Link to="/createcategory">
+                <Button className={classes.button}>Create a New Category</Button>
+            </Link>
+            <Link to="/admin/products">
+                <Button className={classes.button}>Return To Products Table</Button>
+            </Link>
+          </div>
       </div>
     </>
   );
