@@ -55,10 +55,10 @@ export function CartCard({ cart, setCart }) {
   const classes = useStyles();
 
   const token = localStorage.getItem("token");
-  const id = localStorage.getItem("id");
+  const userId = localStorage.getItem("id");
 
   useEffect(async () => {
-    !id
+    !userId
       ? setCart(
           JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
         )
@@ -119,13 +119,9 @@ export function CartCard({ cart, setCart }) {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Typography>
-          
-          <Button
-            variant="contained"
-            sx={{ mt: 3, ml: 1,
-            margin: '5%'}}>
+          <Button variant="contained" sx={{ mt: 3, ml: 1, margin: "5%" }}>
             <a href="/checkout"> Go To Checkout </a>
-            </Button>
+          </Button>
         </Typography>
       </Box>
     </div>

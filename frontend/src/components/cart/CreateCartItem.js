@@ -14,11 +14,28 @@ export function CreateCartItem({ product }) {
       price: product.price,
       total: quantity * product.price,
     };
-    const guest = ({ fields }) => {
-      fields = item;
+    const guest = (item) => {
+      // fields = item;
+      // const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
+      // console.log(oldItems);
+      // if (!oldItems.length) {
+      //   console.log("scenario 1 hit");
+      //   oldItems.push(item);
+      //   localStorage.setItem("cart", JSON.stringify(oldItems));
+      // } else {
+      //   console.log("scenario 2 hit");
+      //   const newItems = [Object.entries(oldItems), item];
+      //   localStorage.setItem("cart", JSON.stringify(newItems));
+      // }
       const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
-      oldItems.push(fields);
-      localStorage.setItem("cart", JSON.stringify(oldItems));
+      // const newItems = [];
+      if (!oldItems.some((obj) => obj.id)) {
+        oldItems.push(item);
+        localStorage.setItem("cart", JSON.stringify(oldItems));
+      } else {
+        const newItems = [...oldItems, item];
+        localStorage.setItem("cart", JSON.stringify(newItems));
+      }
     };
     const user = async () => {
       await createCartItem(product.id, quantity, userId)
@@ -28,7 +45,7 @@ export function CreateCartItem({ product }) {
         .catch((error) => console.log(error));
       // .finally(localStorage.removeItem("cart"));
     };
-    !userId ? guest({ item }) : user();
+    !userId ? guest(item) : user();
   };
 
   return (
