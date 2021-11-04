@@ -28,14 +28,16 @@ export function OrderDetails({
   const rows = [...orderDetails];
   console.log(rows);
 
+ 
 
   const renderDeleteButton = (item) => {
     return (
       <Link to="/delete_order_details">
         <button
           onClick={function () {
-            console.log("1",item.row),
-            setOrderToDelete(item.row)
+            console.log("1",item.row.id),
+            // setOrderToDelete(item.row)
+            localStorage.setItem("Order To Delete", item.row.id)
           }}
         >
           Delete
@@ -78,7 +80,7 @@ export function OrderDetails({
       width: 100,
       align: "center",
       renderCell: renderDeleteButton,
-    },
+    }
   ];
   return (
     <div>

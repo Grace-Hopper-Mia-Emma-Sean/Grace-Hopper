@@ -148,7 +148,6 @@ export function Checkout({
   const steps = ["Shipping address", "Payment details", "Review your order"];
   const cartItems = JSON.parse(localStorage.getItem("cart"))
   const cartTotal = parseFloat(localStorage.getItem("Cart Total"))
-  const userId = JSON.parse(localStorage.getItem("id"))
 
 
   const handleNext = () => {
@@ -176,11 +175,25 @@ export function Checkout({
    
   }
 
-  function CreateOrderDetails() {
+  useEffect(() => {
+    const userId = JSON.parse(localStorage.getItem("id"));
+    const randomOrderId = getRandomInt(100);
+    const orderTotal = (localStorage.getItem("Cart Total"))
+    const total = parseFloat(orderTotal.replace(/,/, ''))
 
-    const resp = create_order_details(userId, randomOrderId, cartTotal) 
-    console.log(resp)
-  }
+    const CreateOrder = async () => {
+      const resp = await create_order_details(userId, randomOrderId, total);
+      console.log(resp)
+      console.log(userId, randomOrderId, total)
+    };
+    CreateOrder()
+  }, [])
+
+  // function CreateOrder(userId, randomOrderId, currentTotal) {
+  //   const resp = create_order_details(userId, randomOrderId, currentTotal) 
+  //   console.log(resp)
+  //   console.log(userId,randomOrderId, currentTotal)
+  // }
 
 
   return (
@@ -208,7 +221,7 @@ export function Checkout({
     
               <React.Fragment>
                   {emptyCart()}
-                  {CreateOrderDetails(userId, randomOrderId, cartTotal)}
+                  {/* {CreateOrder(userId, randomOrderId, currentTotal)} */}
 
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.

@@ -19,12 +19,14 @@ const useStyles = makeStyles((theme) => ({
 
 export function DeleteOrderDetails({ orderToDelete }) {
   const classes = useStyles();
-  const id = orderToDelete.id;
+  // const id = orderToDelete.id;
+  const id = JSON.parse(localStorage.getItem("Order To Delete"))
 
   return (
     <div className={classes.orderToDelete}>
       <div className={classes.editItem}>
-        Deleting Order Detail ID: {orderToDelete.id}
+        Deleting Order Detail ID: {id}
+
         <br />
         <br />
       </div>
@@ -36,6 +38,7 @@ export function DeleteOrderDetails({ orderToDelete }) {
         <button
           onClick={function () {
             delete_order_details(id);
+            localStorage.removeItem("Order To Delete")
           }}
         >
           Delete
