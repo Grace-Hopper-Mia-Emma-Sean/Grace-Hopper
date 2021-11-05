@@ -186,11 +186,15 @@ const createTables = async () => {
                         await client.query(`
                           CREATE TABLE order_details (
                             id SERIAL PRIMARY KEY,
-                            "user_id" INTEGER REFERENCES users(id),
-                            total DECIMAL(19,2) CHECK (total>0),
-                            "payment_id" INTEGER REFERENCES payment_details(id)
+                            user_id INTEGER NOT NULL,
+                            total VARCHAR(255) NOT NULL,
+                            payment_id INTEGER NOT NULL
                             );
                         `);
+                        // "user_id" INTEGER REFERENCES users(id) - EDITTED
+                        // "payment_id" INTEGER REFERENCES payment_details(id) - EDITTED
+
+
                         try {
                           console.log("creating cart_items");
                           // cart_items is being archived, but it's staying as part of the seed to avoid complications downstream; will entirely remove time permitting after MVP met

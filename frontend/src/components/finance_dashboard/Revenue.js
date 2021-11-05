@@ -3,16 +3,14 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-export default function Revenue() {
+export default function Revenue({currentRevenue, setCurrentRevenue}) {
   return (
     <React.Fragment>
       <Title>Revenue</Title>
+
+      $ 150,789.00
+
       <Typography component="p" variant="h4">
-       Testing $$
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
        Current Revenue

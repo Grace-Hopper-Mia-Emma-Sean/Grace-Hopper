@@ -21,17 +21,29 @@ import { mainListItems } from './listItems';
 import Chart from './Chart';
 import Orders from './Orders';
 import Revenue from './Revenue';
-
-import {
-    UsersTable,
-    CartTable,
-    ProductsTable
-  } from "..";
-import { brown } from '@mui/material/colors';
+import { useState } from 'react';
 
 const mdTheme = createTheme();
 
-export function Dashboard() {
+
+export function Dashboard({
+  currentRevenue, 
+  setCurrentRevenue,
+  cardNumber,
+  setCardNumber,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  city,
+  setCity,
+  state,
+  setState,
+  currentTotal,
+  setCurrentTotal
+
+}) {
+
   
   return (
     <ThemeProvider theme={mdTheme}>
@@ -57,9 +69,9 @@ export function Dashboard() {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
+            backgroundColor:(theme) =>
               theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
+                ? '#e3f2fd'
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
@@ -67,11 +79,12 @@ export function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-             Dashboard
-            <Grid container spacing={3}>
 
-           
+          <Container 
+          maxWidth="lg" 
+          sx={{ mt: 4, mb: 4 }}
+           >
+            <Grid container spacing={3}>
 
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
@@ -95,10 +108,13 @@ export function Dashboard() {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 300
                   }}
                 >
-                  <Revenue />
+                  <Revenue 
+                  currentRevenue={currentRevenue}
+                  setCurrentRevenue={setCurrentRevenue}
+                  />
 
                 </Paper>
               </Grid>
@@ -107,7 +123,24 @@ export function Dashboard() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                All Recent Orders
+
+                  <Orders 
+                  currentRevenue={currentRevenue}
+                  setCurrentRevenue={setCurrentRevenue}
+                  cardNumber={cardNumber}
+                  setCardNumber={setCardNumber}
+                  firstName={firstName}
+                  setFirstName={setFirstName}
+                  lastName={lastName}
+                  setLastName={setLastName}
+                  city={city}
+                  setCity={setCity}
+                  state={state}
+                  setState={setState}
+                  currentTotal={currentTotal}
+                  setCurrentTotal={setCurrentTotal}
+                  />
                 </Paper>
               </Grid>
             </Grid>

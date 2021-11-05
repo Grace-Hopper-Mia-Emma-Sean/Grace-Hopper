@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { DataGrid } from "../../MUI";
+import { DataGrid, makeStyles, Button } from "../../MUI";
 import { getProducts } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -100,21 +100,39 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
       renderCell: renderEditButton,
     },
   ];
-  return (
-    <div>
-      <div style={{ height: 650, width: "100%" }}>
-        <DataGrid rows={rows} columns={columns} pageSize={10} />
-        <Link to="/createProduct">
-          <button>Add a New Product</button>
-        </Link>
-        <Link to="/Categories">
-          <button>View, Edit, or Add Categories</button>
-        </Link>
 
-        <Link to="/Discounts">
-        <button>View, Edit, or Add Discounts</button>
-        </Link>
+  const useStyles = makeStyles((theme) => ({
+    body: { backgroundColor: "#cfd8dc" },
+    buttoncontainer: {
+      display: 'flex',
+      justifyContent: 'space-evenly'
+      
+    },
+    button :{
+      height: '40px',
+    }
+  }));
+  
+  const classes = useStyles() 
+  return (
+    <>  
+      <div>
+        <div style={{ height: 650, width: "100%"}}>
+          <DataGrid rows={rows} columns={columns} pageSize={10}/>  
+        </div>
+          <div className={classes.buttoncontainer}>
+            <Link to="/CreateProduct">
+                <Button>Add a New Product</Button>
+            </Link>
+            <Link to="/Categories">
+                <Button>View, Edit, or Add Categories</Button>
+            </Link>
+          
+            <Link to="/Discounts">
+              <Button>View, Edit, or Add Discounts</Button>
+            </Link>
+            </div>
       </div>
-    </div>
-  );
+    </>
+    );
 }

@@ -1,27 +1,17 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 
 import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
   Box,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  Stack,
+  Button,
+  ButtonBase,
   Grid,
   makeStyles,
+  Typography,
   Paper,
-  ButtonBase,
 } from "../../MUI";
 
 import { getCartItemsByUserId } from "../../api";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { EditCartItem, DeleteCartItem, CartSum, CartItemTotal } from "..";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,20 +39,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function CartCard({ cart, setCart }) {
-  // const [cart, setCart] = useState([]);
-  //making it global to be accessible to CartTotal and Checkout
-
   const classes = useStyles();
 
   const token = localStorage.token;
   const id = localStorage.id;
-  console.log(userId);
+  const currentCart = JSON.parse(localStorage.cart);
 
   useEffect(async () => {
     !localStorage.id
-      ? setCart(
-          JSON.parse(localStorage.getItem("cart")).sort((x, y) => x.id - y.id)
-        )
+      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
       : await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
@@ -72,12 +57,13 @@ export function CartCard({ cart, setCart }) {
             );
           })
           .catch((error) => console.log(error));
-  }, []);
+  }, [cart]);
 
   const image = `http://placeimg.com/128/128/tech/1`;
 
-  return (
+  return currentCart ? (
     <div>
+      {console.log(cart)}
       <div>
         {cart.map((cart) => {
           return (
@@ -95,11 +81,8 @@ export function CartCard({ cart, setCart }) {
                         <Typography gutterBottom variant="subtitle1">
                           {cart.name}
                         </Typography>
-                        {/* <Typography variant="body2" gutterBottom>
-                        Spacing
-                      </Typography> */}
-                        <EditCartItem cart={cart} />
-                        <DeleteCartItem cart={cart} />
+                        <EditCartItem cart={cart} setCart={setCart} />
+                        <DeleteCartItem cart={cart} setCart={setCart} />
                       </Grid>
                     </Grid>
                     <CartItemTotal cart={cart} />
@@ -121,5 +104,7 @@ export function CartCard({ cart, setCart }) {
         </Typography>
       </Box>
     </div>
+  ) : (
+    <div>Please Add Items to Cart to Proceed</div>
   );
 }

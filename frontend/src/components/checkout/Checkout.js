@@ -14,7 +14,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-// const nodemailer = require("nodemailer");
+import { useState, useEffect } from "react";
+import { Redirect } from "react-router";
+import { deleteCartItem } from "../../api";
+import { create_order_details } from "../../api";
+
+
 
 export function Checkout({
   firstName,
@@ -45,8 +50,16 @@ export function Checkout({
   setEmail,
   phoneNumber,
   setPhoneNumber,
+  cart,
+  setCart,
+  currentRevenue,
+  setCurrentRevenue,
+  currentTotal, 
+  setCurrentTotal,
+  loggedIn,
+  setLoggedIn
+
 }) {
-  const steps = ["Shipping address", "Payment details", "Review your order"];
 
   function getStepContent(step) {
     switch (step) {
@@ -119,20 +132,28 @@ export function Checkout({
             setEmail={setEmail}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            cart={cart}
+            setCart={setCart}
+            currentTotal={currentTotal}
+            setCurrentTotal={setCurrentTotal}
           />
         );
       default:
         throw new Error("Unknown step");
     }
   }
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
+
   const randomOrderId = getRandomInt(1000000000);
-
   const theme = createTheme();
-
   const [activeStep, setActiveStep] = React.useState(0);
+  const steps = ["Shipping address", "Payment details", "Review your order"];
+  const cartItems = JSON.parse(localStorage.getItem("cart"))
+
+  const orderTotal = (localStorage.getItem("Cart Total"))
+  const total = parseFloat(orderTotal.replace(/,/, ''))
+
+  const userId = JSON.parse(localStorage.getItem("id"));
+  const payment = getRandomInt(100);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -142,33 +163,38 @@ export function Checkout({
     setActiveStep(activeStep - 1);
   };
 
-  //TESTING Nodemailer.
-  //NOTE: However, this require more server work.
 
-  // let transport = nodemailer.createTransport({
-  //   host: "smtp.mailtrap.io",
-  //   port: 2525,
-  //   auth: {
-  //     user: "63836552d3a12d",
-  //     pass: "7401c39c4e850e"
-  //   }
-  // });
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
-  // let mailOptions = {
-  //   from: 'MESSElectronics@gmail.com',
-  //   to: email,
-  //   subject: 'Thank you for your order!',
-  //   text: `Thank you for your recent order on the MESS Electronics store!
-  //   We truly appreciate your business, and hope you will come back!
+  function emptyCart () {
+    const currentCart = JSON.parse(localStorage.getItem("cart"))
+    console.log(currentCart)
+    currentCart.forEach((cart) => {
+      deleteCartItem(cart.id)
+    })
 
-  //   Sincerely,
-  //   - Your MESS Electronics Care Team`,
-  //   list: {
-  //     'Care Team': 'MESSElectronics@gmail.com'
-  //   }
-  // }
+    localStorage.removeItem("Cart Total")
+    localStorage.removeItem("cart")
+   
+  }
+
+  function CreateOrder (userId, payment, total) {
+      userId = JSON.parse(localStorage.getItem("id"));
+      payment = getRandomInt(100);
+      total = localStorage.getItem("Cart Total")
+
+      console.log(userId, payment, total)
+
+      return create_order_details(userId, payment, total);
+    };
+
+  
+
 
   return (
+  cartItems && total>0 ? 
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
@@ -188,8 +214,15 @@ export function Checkout({
             ))}
           </Stepper>
           <React.Fragment>
+              
+
             {activeStep === steps.length ? (
+                  
               <React.Fragment>
+                 
+                  {CreateOrder()}
+                  {emptyCart()}
+                 
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
@@ -223,5 +256,8 @@ export function Checkout({
         </Paper>
       </Container>
     </ThemeProvider>
+    :
+    
+    <Redirect to="/"/>
   );
 }

@@ -9,7 +9,7 @@ import { delete_order_details } from "../../api";
 import { makeStyles } from "../../MUI";
 
 const useStyles = makeStyles((theme) => ({
-  deleteOrderDetails: {
+  orderToDelete: {
     align: "center",
   },
   editItem: {
@@ -17,14 +17,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function DeleteOrderDetails({ orderDetailsToDelete }) {
+export function DeleteOrderDetails({ orderToDelete }) {
   const classes = useStyles();
-  const id = orderDetailsToDelete.id;
+  // const id = orderToDelete.id;
+  const id = JSON.parse(localStorage.getItem("Order To Delete"))
 
   return (
-    <div className={classes.deleteOrderDetails}>
+    <div className={classes.orderToDelete}>
       <div className={classes.editItem}>
-        Deleting Order Detail ID: {orderDetailsToDelete.id}
+        Deleting Order Detail ID: {id}
+
         <br />
         <br />
       </div>
@@ -36,6 +38,7 @@ export function DeleteOrderDetails({ orderDetailsToDelete }) {
         <button
           onClick={function () {
             delete_order_details(id);
+            localStorage.removeItem("Order To Delete")
           }}
         >
           Delete

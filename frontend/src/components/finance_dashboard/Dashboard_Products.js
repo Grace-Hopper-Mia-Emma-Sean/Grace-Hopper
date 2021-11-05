@@ -25,7 +25,7 @@ import {
 
 const mdTheme = createTheme();
 
-export function Dashboard_Products() {
+export function Dashboard_Products({setProductToEdit}) {
   
   return (
     <ThemeProvider theme={mdTheme}>
@@ -53,7 +53,7 @@ export function Dashboard_Products() {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
+                ? '#e3f2fd'
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
@@ -74,7 +74,7 @@ export function Dashboard_Products() {
                     width: '100%'
                   }}
                 >
-                  <ProductsTable />
+                  <ProductsTable setProductToEdit={setProductToEdit}/>
                 </Paper>
               </Grid>
 

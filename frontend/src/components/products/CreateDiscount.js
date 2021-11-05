@@ -5,16 +5,39 @@ import {Link, Redirect} from "react-router-dom"
 
 import {createDiscount} from '../../api'
 
-import {TextField, makeStyles} from '../../MUI'
+import {TextField, makeStyles, Button} from '../../MUI'
 
 const useStyles = makeStyles((theme) => ({
-    adddiscountform: {
-        align: "center"
+    body: {
+      backgroundColor: "white",
+      height: "90vh",
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+  
+    },
+    title: {
+      backgroundColor: "white",
+      paddingTop: '10px',
+      // paddingBottom: '20px',
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+    },
+    form: {
+      paddingTop: '10%',
+      
+      height: '90vh',
+      // width: '50%',
+      display: 'flex',
+      flexDirection: 'column',
+      // justifyContent: "center",
+      alignContentItems: "center"
     },
     addItem: {
-        marginBottom: '10'
-    }
-}))
+      marginBottom: "10",
+    },
+  }));
 
 export function CreateDiscount(){
     const classes = useStyles();
@@ -25,29 +48,46 @@ export function CreateDiscount(){
     
 
     return (
-        <div className={classes.adddiscountform}>
-            <div className={classes.addItem}>
-                Add a New Discount
-                <br/>
-                <br/>
+        <>
+            <div className={classes.title}>
+                <h1>Add a New Discount</h1>
             </div>
-                Name: <TextField onChange={function(event) {setName(event.target.value)}}/>
-                <br/>
-            <div className={classes.addItem}>
-                Description: <TextField onChange={function(event) {setDescription(event.target.value)}} />
-            </div>
-            <div className={classes.addItem}>
-                Discount Percent: <TextField onChange={function(event) {setDiscountPercent(event.target.value)}} />
-            </div>
-                <br/>
-                <br/>
-                <Link to ="/Discounts">
-                <button>Cancel</button>
-                </Link>
+                <div className={classes.body}>
+                    <div className={classes.form}>
+                    <div className={classes.addItem}>
+                        <TextField 
+                        variant="outlined"
+                        label="Enter Name"
+                        onChange={function(event) {setName(event.target.value)}}/>
+                    </div>
+                        <br/>
+                        <div className={classes.addItem}>
+                        <TextField 
+                        variant="outlined"
+                        label="Enter Description..."
+                        onChange={function(event) {setDescription(event.target.value)}} />
+                        </div>
+                        <br />
+                        <div className={classes.addItem}>
+                        <TextField 
+                        variant="outlined"
+                        label="Enter Disc. %"
+                        onChange={function(event) {setDiscountPercent(event.target.value)}} />
+                        </div>
+                            <br/>
+                            <br/>
+                            <Link to ="/Discounts">
+                            <Button onClick={function(){createDiscount(name, description, discountPercent)}}>Create Discount</Button>
+                            </Link>
+                            <br/>
+                            <Link to ="/Discounts">
+                            <Button>Cancel</Button>
+                            </Link>
 
-                <Link to ="/Discounts">
-                <button onClick={function(){createDiscount(name, description, discountPercent)}}>Create Discount</button>
-                </Link>
-        </div>
+                           
+                    </div>
+                </div>
+
+        </>
     )
 }

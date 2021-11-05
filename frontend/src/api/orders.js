@@ -45,17 +45,19 @@ const delete_order_details = async (id) => {
       "Content-Type": "application/json",
     },
   }).catch((error) => {
-    console.error(error.response.data);
+    console.error(error.response);
+  }).then((response) => {
+    console.log("Order Deleted", response)
   });
 };
 
-const create_order_details = async (user_id, payment_id, total) => {
+const create_order_details = async (userId, payment, total) => {
   return axios({
     method: "POST",
     url: "/order-details",
     data: {
-      user_id: user_id,
-      payment_id: payment_id,
+      user_id: userId,
+      payment_id: payment,
       total: total,
     },
     headers: {
@@ -63,6 +65,8 @@ const create_order_details = async (user_id, payment_id, total) => {
     },
   }).catch((error) => {
     console.error(error.response.data);
+  }).then((response) => {
+    console.log("Order Created",response)
   });
 };
 

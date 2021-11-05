@@ -4,6 +4,8 @@ import { DataGrid } from "../../MUI";
 import { order_items } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { DeleteOrderDetails } from "..";
+
 
 export function OrderItems({
   orderItemsToEdit,

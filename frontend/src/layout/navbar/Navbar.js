@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Logout, CartIcon, OpenDrawer } from "../../components";
+import { Logout, CartIcon, OpenDrawer, MyOrdersIcon } from "../../components";
 
 import { getProductCategories } from "../../api";
 
@@ -79,6 +79,7 @@ export function Navbar({
   setProductCategory,
   selectProductCategory,
   setSelectProductCategory,
+  cart,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -222,25 +223,25 @@ export function Navbar({
                 Admin
               </Button>
             ) : null}
+
             <Button>
-              <Link to="/cart">
-                <CartIcon />
-              </Link>
+              {cart ? (
+                <Link to="/cart">
+                  <CartIcon cart={cart} />
+                </Link>
+              ) : (
+                <Link to="/">
+                  <CartIcon cart={cart} />
+                </Link>
+              )}
             </Button>
-            {loggedIn ? (
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                // aria-controls={menuId}
-                aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
-                color="inherit"
-                textDecoration="none"
-              >
-                <AccountCircle />
-              </IconButton>
-            ) : null}
+            <Button>
+              {loggedIn ? (
+                <Link to="/my_order">
+                  <MyOrdersIcon />
+                </Link>
+              ) : null}
+            </Button>
             {loggedIn ? (
               <Button>
                 <Logout setLoggedIn={setLoggedIn} />

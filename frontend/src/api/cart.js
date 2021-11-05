@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const createCartItem = async (productId, quantity, userId) => {
   console.log(productId, quantity, userId);
   return axios({
@@ -55,9 +56,13 @@ const getCartItemsByUserId = async (token, id) => {
       console.error(error.response.data.error);
     })
     .then((response) => {
-      response.data;
-      console.log(response.data);
-      localStorage.setItem("cart", JSON.stringify(response.data));
+      if(response) {
+        response.data;
+        console.log(response);
+        localStorage.setItem("cart", JSON.stringify(response.data));
+      } 
+      console.log("No Cart Items")
+    
     });
 };
 
@@ -91,9 +96,12 @@ const deleteCartItem = async (cartId) => {
   })
     .catch((error) => console.error(error.response.data.error))
     .then((response) => {
-      response.data;
+      if (response) {
+        console.log(response);
+      }
+      console.log("No Cart Items")
       // find a way to avoid having to use alert
-      return alert("cart item successfully deleted");
+      // return alert("cart item successfully deleted");
     });
 };
 

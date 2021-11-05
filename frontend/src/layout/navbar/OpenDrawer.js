@@ -25,7 +25,7 @@ export function OpenDrawer({ loggedIn, admin }) {
       color: "white",
     },
     list: {
-      backgroundColor: "#3f51b5",
+      backgroundColor: "#82b1ff",
     },
   }));
 

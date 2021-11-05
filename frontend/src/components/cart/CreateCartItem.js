@@ -1,8 +1,16 @@
-import { AddShoppingCartIcon, Button } from "../../MUI";
+import {
+  Button,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "../../MUI";
 import { createCartItem } from "../../api";
+import { useEffect, useState } from "react";
 
-export function CreateCartItem({ product }) {
-  const quantity = 1;
+export function CreateCartItem({ product, setCart }) {
+  const [quantity, setQuantity] = useState(1);
   const userId = JSON.parse(localStorage.getItem("id"));
 
   const addItem = async () => {
@@ -23,6 +31,7 @@ export function CreateCartItem({ product }) {
         const newItems = [...oldItems, item];
         localStorage.setItem("cart", JSON.stringify(newItems));
       }
+      setCart(localStorage.cart);
     };
     const user = async () => {
       await createCartItem(product.id, quantity, userId)
@@ -38,6 +47,18 @@ export function CreateCartItem({ product }) {
     <div>
       <Button variant="contained" onClick={addItem}>
         Add to Cart
+      </Button>
+      <Button>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+        >
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
+            return <MenuItem value={number}>{number}</MenuItem>;
+          })}
+        </Select>
       </Button>
     </div>
   );

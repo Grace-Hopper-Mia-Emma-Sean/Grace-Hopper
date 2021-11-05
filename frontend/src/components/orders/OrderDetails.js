@@ -8,10 +8,15 @@ import { Link } from "react-router-dom";
 export function OrderDetails({
   orderDetailsToEdit,
   setOrderDetailsToEdit,
-  orderDetailsToDelete,
-  setOrderDetailsToDelete,
+  orderToDelete,
+  setOrderToDelete,
+  currentRevenue,
+  setCurrentRevenue
+ 
 }) {
-  const [orderDetails, setOrderDetails] = useState([]);
+
+  const [  orderDetails, setOrderDetails] = useState([])
+  const [ revenue, setRevenue] = useState([])
 
   useEffect(async () => {
     await order_details(localStorage.getItem("token"))
@@ -26,26 +31,24 @@ export function OrderDetails({
   const rows = [...orderDetails];
   console.log(rows);
 
-  const renderEditButton = (item) => {
-    return (
-      <Link to="/edit_order_details">
-        <button
-          onClick={function () {
-            console.log(item.row), setOrderDetailsToEdit(item.row);
-          }}
-        >
-          Edit
-        </button>
-      </Link>
-    );
-  };
+  // const getOrders = async () => { 
+  //     const newArr = [];
+  //     rows.forEach((row)=> {
+  //       newArr.push(row.total)
+  //     })
+  //     setRevenue(newArr);
+  //     console.log(revenue)
+    
+  // }
 
   const renderDeleteButton = (item) => {
     return (
       <Link to="/delete_order_details">
         <button
           onClick={function () {
-            console.log(item.row), setOrderDetailsToDelete(item.row);
+            console.log("1",item.row.id),
+            // setOrderToDelete(item.row)
+            localStorage.setItem("Order To Delete", item.row.id)
           }}
         >
           Delete
@@ -59,53 +62,45 @@ export function OrderDetails({
       field: "id",
       headerName: "Order Detail ID",
       headerAlign: "center",
-      width: 150,
+      width: 200,
       align: "center",
     },
     {
       field: "user_id",
       headerName: "User ID",
       headerAlign: "center",
-      width: 350,
+      width: 200,
     },
     {
       field: "total",
       headerName: "Total",
       headerAlign: "center",
-      width: 300,
+      width: 200,
     },
     {
       field: "payment_id",
       headerName: "Payment ID",
       headerAlign: "center",
-      width: 100,
+      width: 200,
       align: "center",
-    },
-
-    {
-      field: "edit",
-      headerName: "Edit",
-      headerAlign: "center",
-      width: 100,
-      align: "center",
-      renderCell: renderEditButton,
     },
     {
       field: "delete",
       headerName: "Delete",
       headerAlign: "center",
-      width: 100,
+      width: 200,
       align: "center",
       renderCell: renderDeleteButton,
-    },
+    }
   ];
   return (
     <div>
+      {/* {getOrders()} */}
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
-        <Link to="/create_order_details">
+        {/* <Link to="/create_order_details">
           <button>Add Order Details </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

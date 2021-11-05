@@ -1,7 +1,7 @@
 import { getProductDiscounts } from "../../api";
 import React, { useState, useEffect } from "react";
 import {Link} from "react-router-dom"
-import {DataGrid} from "../../MUI"
+import {DataGrid, makeStyles, Button} from "../../MUI"
 
 
 export function Discounts({discountToEdit, setDiscountToEdit}) {
@@ -71,7 +71,18 @@ const columns = [
   }
 ]
 
+const useStyles = makeStyles((theme) => ({
+  body: { backgroundColor: "#457B9D" },
+  buttoncontainer: {
+    display: 'flex',
+    justifyContent: 'space-evenly'
+  },
+  button :{
+    height: '40px'
+  }
+}));
 
+const classes = useStyles()
 
   return (
     <>
@@ -79,14 +90,14 @@ const columns = [
         <div style={{height: 650, width: "100%"}}>
           <DataGrid rows={rows} columns={columns} pageSize={10}>
           </DataGrid>
-
+        </div>
+        <div className={classes.buttoncontainer}>
           <Link to="/creatediscount">
-          <button>Create a New Discount</button>
+            <Button className={classes.button}>Create a New Discount</Button>
           </Link>
           <Link to="/admin/products">
-          <button>Return To Products Table</button>
+            <Button>Return To Products Table</Button>
           </Link>
-         
         </div>
       </div>
     </>

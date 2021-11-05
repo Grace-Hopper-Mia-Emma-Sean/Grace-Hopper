@@ -1,29 +1,11 @@
-import { IconButton, Badge, ShoppingCartIcon, Button } from "../../MUI";
+import { IconButton, Badge, ShoppingCartIcon } from "../../MUI";
 import { useState, useEffect } from "react";
-import { Link } from "react";
-import { getCartItems, getCartItemsByUserId } from "../../api";
-import { useHistory } from "react-router-dom";
+import { getCartItemsByUserId } from "../../api";
 
-export function CartIcon({ loggedIn }) {
-  const [cart, setCart] = useState([]);
-
-  const token = localStorage.token;
-  const id = localStorage.id;
-
-  useEffect(async () => {
-    await getCartItemsByUserId(token, id)
-      .then(() => {
-        const storage = JSON.parse(localStorage.getItem("cart"));
-        storage === "" ? setCart() : setCart(storage);
-      })
-      .catch((error) => console.log(error));
-    // .finally(localStorage.removeItem("cart"));
-  }, [loggedIn]);
-
-  const badgeCount = cart == "" ? 0 : cart.length;
+export function CartIcon() {
+  const badgeCount = JSON.parse(localStorage.cart).filter((x) => x.id).length;
 
   return (
-    // <div to="/cart">
     <div>
       {badgeCount > 0 ? (
         <IconButton

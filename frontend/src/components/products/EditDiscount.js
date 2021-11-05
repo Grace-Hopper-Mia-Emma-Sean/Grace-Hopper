@@ -3,16 +3,39 @@ import React, {useState, useEffect} from "react";
 
 import {editDiscount, deleteDiscount} from '../../api'
 
-import {TextField, makeStyles} from '../../MUI'
+import {TextField, makeStyles, Button} from '../../MUI'
 
 const useStyles = makeStyles((theme) => ({
-    editdiscountform: {
-        align: "center"
+    body: {
+      backgroundColor: "white",
+      height: "90vh",
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+  
     },
-    editItem: {
-        marginBottom: '10'
-    }
-}))
+    title: {
+      backgroundColor: "white",
+      paddingTop: '10px',
+      // paddingBottom: '20px',
+      display: 'flex',
+      justifyContent: "center",
+      alignContentItems: "center"
+    },
+    form: {
+      paddingTop: '10%',
+      
+      height: '90vh',
+      // width: '50%',
+      display: 'flex',
+      flexDirection: 'column',
+      // justifyContent: "center",
+      alignContentItems: "center"
+    },
+    addItem: {
+      marginBottom: "10",
+    },
+  }));
 
 
 export function EditDiscount({discountToEdit}){
@@ -26,39 +49,57 @@ export function EditDiscount({discountToEdit}){
     const id = discountToEdit.id
 
     return (
-        <div className={classes.editdiscountform}>
-            <div className={classes.editItem}>
-                Now Editing: {discountToEdit.name} | ID: {discountToEdit.id}
-                <br/>
-                <br/>
-                Edit Name: <TextField onChange={function(event) {setName(event.target.value), console.log(name)}}/>
+        <>
+            <div className={classes.title}>
+                <h1>Now Editing: {discountToEdit.name} | ID: {discountToEdit.id}</h1>
             </div>
-                <br/>
-            <div className={classes.editItem}>
-                Current Description: {discountToEdit.description}
-                <br/>
-                Edit Description: <TextField onChange={function(event) {setDescription(event.target.value), console.log(description)}} />
+            <div className={classes.body}>
+                <div className={classes.form}>
+                    <div className={classes.editItem}>
+                        Current Name: {discountToEdit.name}
+                        <br/>
+                        <br/>
+                        <TextField 
+                        variant="outlined"
+                        label="Edit Name..."
+                        onChange={function(event) {setName(event.target.value), console.log(name)}}/>
+                    </div>
+                    <br />
+                    <div className={classes.editItem}>
+                        Current Description: {discountToEdit.description}
+                        <br/>
+                        <br/>
+                        <TextField 
+                        variant="outlined"
+                        label="Edit Description..."
+                        onChange={function(event) {setDescription(event.target.value), console.log(description)}} />
+                    </div>
+                    <br />
+                    <div className={classes.editItem}>
+                        Current Percent: {discountToEdit.discount_percent}
+                        <br/>
+                        <br />
+                        <TextField 
+                        variant="outlined"
+                        label="Edit Disc. %..."
+                        onChange={function(event) {setDiscountPercent(event.target.value), console.log(description)}} />
+                    </div>
+                        <br/>
+                        <br/>
+                        <Link to ="/discounts">
+                        <Button onClick={function(){editDiscount(id, name, description, discountPercent)}}>Send</Button>
+                        </Link>
+                        <br />
+                        <Link to ="/discounts">
+                        <Button>Cancel</Button>
+                        </Link>
+                        <br />
+                        <br />
+                        <Link to="/discounts">
+                        <Button onClick={function(){deleteDiscount(id)}}>Delete This Discount</Button>
+                        </Link>
+                </div>
             </div>
-                <br/>
-                <div className={classes.editItem}>
-                Current Percent: {discountToEdit.discount_percent}
-                <br/>
-                Edit Percent: <TextField onChange={function(event) {setDiscountPercent(event.target.value), console.log(description)}} />
-            </div>
-                <br/>
-                <br/>
-                <Link to ="/discounts">
-                <button>Cancel</button>
-                </Link>
-
-                <Link to ="/discounts">
-                <button onClick={function(){editDiscount(id, name, description, discountPercent)}}>Send</button>
-                </Link>
-                <br />
-                <br />
-                <Link to="/discounts">
-                <button onClick={function(){deleteDiscount(id)}}>Delete This Discount</button>
-                </Link>
-        </div>
+        </>
     )
 }
