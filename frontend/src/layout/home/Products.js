@@ -62,9 +62,16 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom: '20px',
     
   },
-  columns: {
-    // backgroundColor: 'red'
-  }
+  image: {
+    width: '128px',
+    height: '128px',
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "128px",
+    maxHeight: "128px",
+  },
 
   // body: { 
   // backgroundColor: "#457B9D",
@@ -154,12 +161,13 @@ export function Products({
                           <Grid container spacing={2}>
                             <Grid item>
                               <Grid item>
-                                <ButtonBase className={classes.image}>
-                                  <img
+                              <ButtonBase className={classes.image}>
+                                  <img className={classes.img}
                                     // key={product.name}
                                     // className={classes.img}
                                     alt="complex"
-                                    src={image}
+                                    src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
+                                    // src={image}
                                   />
                                 </ButtonBase>
                               </Grid>

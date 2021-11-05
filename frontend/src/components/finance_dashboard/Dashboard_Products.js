@@ -25,7 +25,7 @@ import {
 
 const mdTheme = createTheme();
 
-export function Dashboard_Products() {
+export function Dashboard_Products({setProductToEdit}) {
   
   return (
     <ThemeProvider theme={mdTheme}>
@@ -74,7 +74,7 @@ export function Dashboard_Products() {
                     width: '100%'
                   }}
                 >
-                  <ProductsTable />
+                  <ProductsTable setProductToEdit={setProductToEdit}/>
                 </Paper>
               </Grid>
 
