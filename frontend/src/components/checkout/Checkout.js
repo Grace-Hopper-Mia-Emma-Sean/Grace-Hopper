@@ -180,20 +180,18 @@ export function Checkout({
    
   }
 
-  console.log(userId, payment, total)
+  console.log("userId:",userId, "paymentId:", payment, "total:", total)
 
-  const CreateOrder = async (userId, payment, total) => {
-    const resp = await create_order_details(userId, payment, total);
-    console.log(resp)
+  useEffect(() => { 
     console.log(userId, payment, total)
-  };
-    
-
-  // function CreateOrder(userId, randomOrderId, currentTotal) {
-  //   const resp = create_order_details(userId, randomOrderId, currentTotal) 
-  //   console.log(resp)
-  //   console.log(userId,randomOrderId, currentTotal)
-  // }
+    const CreateOrder = async (userId, payment, total) => {
+      const resp = await create_order_details(userId, payment, total);
+      console.log(resp)
+      console.log(userId, payment, total)
+    };
+    CreateOrder()
+  },[userId, payment, total])
+  
 
 
   return (
@@ -217,10 +215,11 @@ export function Checkout({
             ))}
           </Stepper>
           <React.Fragment>
+              
+
             {activeStep === steps.length ? (
-    
+                  
               <React.Fragment>
-                  {CreateOrder(userId, payment, total)}
                   {emptyCart()}
 
                 <Typography variant="h5" gutterBottom>
@@ -231,7 +230,7 @@ export function Checkout({
                   order confirmation, and will send you an update when your
                   order has shipped.
                 </Typography>
-                   
+
               </React.Fragment>
             ) : (
               <React.Fragment>

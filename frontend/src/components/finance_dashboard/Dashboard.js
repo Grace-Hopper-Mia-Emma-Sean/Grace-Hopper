@@ -69,9 +69,9 @@ export function Dashboard({
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
+            backgroundColor:(theme) =>
               theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
+                ? '#e3f2fd'
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
@@ -79,7 +79,11 @@ export function Dashboard({
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
+          <Container 
+          maxWidth="lg" 
+          sx={{ mt: 4, mb: 4 }}
+           >
             <Grid container spacing={3}>
 
               {/* Chart */}
@@ -104,7 +108,7 @@ export function Dashboard({
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 300
                   }}
                 >
                   <Revenue 

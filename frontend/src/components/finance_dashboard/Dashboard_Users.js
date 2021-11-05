@@ -52,7 +52,7 @@ export function Dashboard_Users() {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
+                ? '#e3f2fd'
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',

@@ -102,13 +102,14 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
   ];
 
   const useStyles = makeStyles((theme) => ({
-    body: { backgroundColor: "#457B9D" },
+    body: { backgroundColor: "#cfd8dc" },
     buttoncontainer: {
       display: 'flex',
       justifyContent: 'space-evenly'
+      
     },
     button :{
-      height: '40px'
+      height: '40px',
     }
   }));
   
@@ -116,8 +117,8 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
   return (
     <>  
       <div>
-        <div style={{ height: 650, width: "100%" }}>
-          <DataGrid rows={rows} columns={columns} pageSize={10} />  
+        <div style={{ height: 650, width: "100%"}}>
+          <DataGrid rows={rows} columns={columns} pageSize={10}/>  
         </div>
           <div className={classes.buttoncontainer}>
             <Link to="/CreateProduct">

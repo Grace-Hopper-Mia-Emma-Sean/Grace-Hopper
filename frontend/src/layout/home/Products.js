@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   // },
 
   body: {
-    backgroundColor: "#457B9D",
+    backgroundColor: "#cfd8dc",
     // flexGrow: 7,
     // display: 'inline-block',
     // display: 'table',
@@ -47,7 +47,18 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '30%',
     marginBottom: '20px',
     // marginRight: '30%',
-    // backgroundColor: "#A8DADC",
+    backgroundColor: "#eeeeee",
+    '&:hover':{
+      background: "#90a4ae",
+      position: "relative",
+      top: "-10px",
+      left: "-20px",
+      width: "700px",
+      height: "auto",
+      display: "block",
+    },
+
+    
     // marginBottom: '20px',
     
   },
