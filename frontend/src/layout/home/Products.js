@@ -238,14 +238,15 @@ export function Products({
                         <Paper className={classes.paper}>
                           <Grid container spacing={2}>
                             <Grid item>
-                              <ButtonBase className={classes.image}>
-                                <img
-                                  // key={product.name}
-                                  // className={classes.img}
-                                  alt="complex"
-                                  src={image}
-                                />
-                              </ButtonBase>
+                            <ButtonBase className={classes.image}>
+                                  <img className={classes.img}
+                                    // key={product.name}
+                                    // className={classes.img}
+                                    alt="complex"
+                                    src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
+                                    // src={image}
+                                  />
+                                </ButtonBase>
                             </Grid>
                             <Grid item xs={12} sm container>
                               <Grid
