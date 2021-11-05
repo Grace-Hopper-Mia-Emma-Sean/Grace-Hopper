@@ -187,7 +187,7 @@ const createTables = async () => {
                           CREATE TABLE order_details (
                             id SERIAL PRIMARY KEY,
                             user_id INTEGER NOT NULL,
-                            total DECIMAL(19,2) CHECK (total>0),
+                            total VARCHAR(255) NOT NULL,
                             payment_id INTEGER NOT NULL
                             );
                         `);

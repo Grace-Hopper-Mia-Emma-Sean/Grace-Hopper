@@ -201,6 +201,8 @@ export default function App() {
             setOrderToDelete={setOrderToDelete}
             orderDetails={orderDetails}
             setOrderDetails={setOrderDetails}
+            currentRevenue={currentRevenue}
+            setCurrentRevenue={setCurrentRevenue}
           />
         </Route>
 

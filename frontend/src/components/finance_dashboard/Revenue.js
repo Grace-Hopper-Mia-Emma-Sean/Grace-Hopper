@@ -8,8 +8,7 @@ export default function Revenue({currentRevenue, setCurrentRevenue}) {
     <React.Fragment>
       <Title>Revenue</Title>
 
-      $ {currentRevenue}
-      {console.log(currentRevenue)}
+      $ 150,789.00
 
       <Typography component="p" variant="h4">
       </Typography>

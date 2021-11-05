@@ -180,17 +180,16 @@ export function Checkout({
    
   }
 
-  console.log("userId:",userId, "paymentId:", payment, "total:", total)
+  function CreateOrder (userId, payment, total) {
+      userId = JSON.parse(localStorage.getItem("id"));
+      payment = getRandomInt(100);
+      total = localStorage.getItem("Cart Total")
 
-  useEffect(() => { 
-    console.log(userId, payment, total)
-    const CreateOrder = async (userId, payment, total) => {
-      const resp = await create_order_details(userId, payment, total);
-      console.log(resp)
       console.log(userId, payment, total)
+
+      return create_order_details(userId, payment, total);
     };
-    CreateOrder()
-  },[userId, payment, total])
+
   
 
 
@@ -220,8 +219,10 @@ export function Checkout({
             {activeStep === steps.length ? (
                   
               <React.Fragment>
+                 
+                  {CreateOrder()}
                   {emptyCart()}
-
+                 
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
@@ -230,7 +231,6 @@ export function Checkout({
                   order confirmation, and will send you an update when your
                   order has shipped.
                 </Typography>
-
               </React.Fragment>
             ) : (
               <React.Fragment>

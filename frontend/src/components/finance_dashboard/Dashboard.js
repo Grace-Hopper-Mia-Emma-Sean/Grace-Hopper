@@ -123,7 +123,7 @@ export function Dashboard({
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                Recent Orders
+                All Recent Orders
 
                   <Orders 
                   currentRevenue={currentRevenue}

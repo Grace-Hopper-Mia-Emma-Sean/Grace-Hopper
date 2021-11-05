@@ -10,10 +10,13 @@ export function OrderDetails({
   setOrderDetailsToEdit,
   orderToDelete,
   setOrderToDelete,
+  currentRevenue,
+  setCurrentRevenue
  
 }) {
 
   const [  orderDetails, setOrderDetails] = useState([])
+  const [ revenue, setRevenue] = useState([])
 
   useEffect(async () => {
     await order_details(localStorage.getItem("token"))
@@ -28,7 +31,15 @@ export function OrderDetails({
   const rows = [...orderDetails];
   console.log(rows);
 
- 
+  // const getOrders = async () => { 
+  //     const newArr = [];
+  //     rows.forEach((row)=> {
+  //       newArr.push(row.total)
+  //     })
+  //     setRevenue(newArr);
+  //     console.log(revenue)
+    
+  // }
 
   const renderDeleteButton = (item) => {
     return (
@@ -84,6 +95,7 @@ export function OrderDetails({
   ];
   return (
     <div>
+      {/* {getOrders()} */}
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
         {/* <Link to="/create_order_details">
