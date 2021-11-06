@@ -64,7 +64,7 @@ const create_order_details = async (userId, payment, total) => {
       "Content-Type": "application/json",
     },
   }).catch((error) => {
-    console.error(error.response.data);
+    console.error(error.response);
   }).then((response) => {
     console.log("Order Created",response)
   });

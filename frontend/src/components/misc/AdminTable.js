@@ -25,7 +25,7 @@ theme.typography.h3 = {
 export function AdminTable({ currentRevenue, setCurrentRevenue}){
   return (
     <div>
-
+      
       <Typography variant="h3">
           <Dashboard 
           currentRevenue={currentRevenue}

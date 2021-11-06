@@ -152,8 +152,8 @@ export function Checkout({
   const orderTotal = (localStorage.getItem("Cart Total"))
   const total = parseFloat(orderTotal.replace(/,/, ''))
 
-  const userId = JSON.parse(localStorage.getItem("id"));
-  const payment = getRandomInt(100);
+  var userId = JSON.parse(localStorage.getItem("id"));
+  var payment = getRandomInt(100);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -168,30 +168,29 @@ export function Checkout({
     return Math.floor(Math.random() * max);
   }
 
-  function emptyCart () {
-    const currentCart = JSON.parse(localStorage.getItem("cart"))
-    console.log(currentCart)
-    currentCart.forEach((cart) => {
-      deleteCartItem(cart.id)
-    })
-
-    localStorage.removeItem("Cart Total")
-    localStorage.removeItem("cart")
-   
-  }
+  // function emptyCart () {
+  //   const currentCart = JSON.parse(localStorage.getItem("cart"))
+  //   console.log(currentCart)
+  //   currentCart.forEach((cart) => {
+  //     deleteCartItem(cart.id)
+  //   })
+    // localStorage.removeItem("Cart Total")
+    // localStorage.removeItem("cart")
+  // }
 
   function CreateOrder (userId, payment, total) {
-      userId = JSON.parse(localStorage.getItem("id"));
-      payment = getRandomInt(100);
-      total = localStorage.getItem("Cart Total")
-
+      userId=localStorage.getItem("id")
+      payment=getRandomInt(100);
+      total=localStorage.getItem("Cart Total")
+      
       console.log(userId, payment, total)
-
-      return create_order_details(userId, payment, total);
+      const newCart = [];
+      localStorage.setItem('cart', newCart)
+      return create_order_details(userId, payment, total) 
+      // && emptyCart();
     };
 
   
-
 
   return (
   cartItems && total>0 ? 
@@ -219,10 +218,8 @@ export function Checkout({
             {activeStep === steps.length ? (
                   
               <React.Fragment>
-                 
                   {CreateOrder()}
-                  {emptyCart()}
-                 
+                  
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>

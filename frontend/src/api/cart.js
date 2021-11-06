@@ -51,7 +51,6 @@ const getCartItemsByUserId = async (token, id) => {
     .then((response) => {
       if (response) {
         response.data;
-        console.log(response);
         localStorage.setItem("cart", JSON.stringify(response.data));
       }
       console.log("No Cart Items");

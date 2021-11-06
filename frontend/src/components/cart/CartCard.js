@@ -47,7 +47,8 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   useEffect(async () => {
     !loggedIn
-      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
+      // ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
+      ? setCart(JSON.parse(localStorage.getItem("cart")))
       : await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
@@ -57,7 +58,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
             );
           })
           .catch((error) => console.log(error));
-  }, [cart]);
+  }, []);
 
   // setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id));
 
@@ -65,8 +66,12 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   return currentCart ? (
     <div>
+      {console.log(cart)}
+      {console.log(currentCart)}
+
+
       <div>
-        {cart.map((cart) => {
+        {currentCart.map((cart) => {
           return (
             <div className={classes.root}>
               <Paper className={classes.paper}>
