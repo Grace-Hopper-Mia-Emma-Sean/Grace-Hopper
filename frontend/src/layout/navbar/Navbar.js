@@ -105,7 +105,7 @@ export function Navbar({
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar sx={{ backgroundColor: "#1D3557" }}>
-          <OpenDrawer loggedIn={loggedIn} admin={admin} />
+          {/* <OpenDrawer loggedIn={loggedIn} admin={admin} /> */}
           <Button
             component={Link}
             to="/"
@@ -133,19 +133,21 @@ export function Navbar({
           </Search>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Button
-            id="basic-button"
-            aria-controls="basic-menu"
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            style={{
-              color: "white",
-              font: "Arvo",
-            }}
-            onClick={handleClick}
-          >
-            Shop By Category
-          </Button>
+          <Link to="/">
+            <Button
+              id="basic-button"
+              aria-controls="basic-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              style={{
+                color: "white",
+                font: "Arvo",
+              }}
+              onClick={handleClick}
+            >
+              Shop By Category
+            </Button>
+          </Link>
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -169,17 +171,19 @@ export function Navbar({
               );
             })}
           </Menu>
-          <Button
-            style={{
-              color: "white",
-              font: "Arvo",
-            }}
-            onClick={function () {
-              setSelectProductCategory(false);
-            }}
-          >
-            See All
-          </Button>
+          <Link to="/">
+            <Button
+              style={{
+                color: "white",
+                font: "Arvo",
+              }}
+              onClick={function () {
+                setSelectProductCategory(false);
+              }}
+            >
+              See All
+            </Button>
+          </Link>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {!loggedIn ? (
               <Button

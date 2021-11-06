@@ -33,7 +33,7 @@ import { CreateCartItem } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
   body: {
-    backgroundColor: "#cfd8dc",
+    backgroundColor: "#457B9D",
 
     // flexGrow: 1,
   },
@@ -58,7 +58,7 @@ const ExpandMore = styled((props) => {
   return (
     <div>
       <Typography h6>
-        Description <IconButton {...other}></IconButton>
+        More Info <IconButton {...other}></IconButton>
       </Typography>
     </div>
   );
@@ -88,7 +88,6 @@ export function Products({
         console.log(localStorage.getItem("product"));
         setProducts(JSON.parse(localStorage.getItem("product")));
         setAdmin(JSON.parse(localStorage.getItem("admin")));
-        
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("product"));
@@ -120,8 +119,11 @@ export function Products({
             {productsToDisplay.map((product) => {
               return (
                 <>
-                  <Card sx={{ width: 450, m: 2, p: 1 }}>
-                    <CardHeader title={product.name} subheader={product.sku} />
+                  <Card sx={{ width: 425, m: 2, p: 1 }}>
+                    <CardHeader
+                      title={product.name}
+                      subheader={product.price}
+                    />
                     <CardMedia
                       component="img"
                       className={classes.img}
@@ -141,11 +143,17 @@ export function Products({
                       >
                         <ExpandMoreIcon />
                       </ExpandMore>
-                      <Typography variant="h6">${product.price}</Typography>
                     </CardActions>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                       <CardContent>
-                        <Typography paragraph>{product.description}</Typography>
+                        <Typography paragraph>
+                          <Typography variant="h6">
+                            SKU: {product.sku}
+                          </Typography>
+                          <Typography variant="h6">
+                            "{product.description}"
+                          </Typography>
+                        </Typography>
                       </CardContent>
                     </Collapse>
                   </Card>
@@ -159,10 +167,10 @@ export function Products({
               {newProducts.map((product) => {
                 return (
                   <>
-                    <Card sx={{ width: 425, m: 2, p: 1 }}>
+                    <Card sx={{ width: 450, m: 2, p: 1 }}>
                       <CardHeader
                         title={product.name}
-                        subheader={product.sku}
+                        subheader={product.price}
                       />
                       <CardMedia
                         component="img"
@@ -175,7 +183,6 @@ export function Products({
                       />
                       <CardActions disableSpacing>
                         <CreateCartItem product={product} setCart={setCart} />
-                        <Typography variant="h6">${product.price}</Typography>
                         <ExpandMore
                           expand={expanded}
                           onClick={handleExpandClick}
@@ -188,7 +195,10 @@ export function Products({
                       <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
                           <Typography paragraph>
-                            {product.description}
+                            <Typography variant="h6">${product.sku}</Typography>
+                            <Typography variant="h6">
+                              {product.description}
+                            </Typography>
                           </Typography>
                         </CardContent>
                       </Collapse>

@@ -147,15 +147,6 @@ export function Login({
                   </Link>
                 </Grid>
               </Grid>
-              <Grid container justifyContent="center">
-                <Grid item>
-                  <Link to="/deadlink">
-                    <Typography textDecoration="none" color="#E63946">
-                      Reset your password
-                    </Typography>
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
           {loggedIn ? <Redirect to="/" /> : null}

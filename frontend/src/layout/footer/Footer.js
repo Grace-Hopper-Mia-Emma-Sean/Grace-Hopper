@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    position: "fixed",
+    // position: "fixed",
     left: 0,
     bottom: 0,
     right: 0,

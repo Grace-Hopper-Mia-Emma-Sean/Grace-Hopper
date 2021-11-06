@@ -53,7 +53,7 @@ export function CreateCartItem({ product, setCart }) {
           <Button variant="contained" disabled>
             In Cart
           </Button>
-          <Button>
+          <Button color="#457B9D">
             <Select
               disabled
               labelId="demo-simple-select-label"
@@ -72,7 +72,7 @@ export function CreateCartItem({ product, setCart }) {
           <Button variant="contained" onClick={addItem}>
             Add to Cart
           </Button>
-          <Button>
+          <Button color="#457B9D">
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
