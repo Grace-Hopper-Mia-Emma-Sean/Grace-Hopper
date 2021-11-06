@@ -43,12 +43,11 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   const token = localStorage.token;
   const id = localStorage.getItem("id");
-  const currentCart = localStorage.cart ? JSON.parse(localStorage.cart) : [];
+  const currentCart = JSON.parse(localStorage.cart) 
 
   useEffect(async () => {
     !loggedIn
-      // ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
-      ? setCart(JSON.parse(localStorage.getItem("cart")))
+      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
       : await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
@@ -64,14 +63,14 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   const image = `http://placeimg.com/128/128/tech/1`;
 
-  return currentCart ? (
+  return currentCart.length ? (
+    
     <div>
-      {console.log(cart)}
-      {console.log(currentCart)}
-
-
+      
       <div>
+        
         {currentCart.map((cart) => {
+          
           return (
             <div className={classes.root}>
               <Paper className={classes.paper}>
@@ -98,6 +97,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
             </div>
           );
         })}
+
       </div>
       <CartSum cart={cart} />
       <Box
@@ -112,5 +112,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
     </div>
   ) : (
     <div>Please Add Items to Cart to Proceed</div>
+  
   );
+
 }

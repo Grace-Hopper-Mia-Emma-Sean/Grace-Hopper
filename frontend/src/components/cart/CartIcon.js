@@ -16,7 +16,7 @@ export function CartIcon({ loggedIn }) {
           const storage = JSON.parse(localStorage.getItem("cart"));
           storage === "" ? setCart() : setCart(storage);
         }
-        setCart(0);
+        setCart([storage]);
       })
       .catch((error) => console.log(error));
   }, [loggedIn]);
