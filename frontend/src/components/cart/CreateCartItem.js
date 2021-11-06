@@ -24,8 +24,6 @@ export function CreateCartItem({ product, setCart }) {
       total: quantity * product.price,
     };
     const guest = (item) => {
-      console.log(product.id);
-
       const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
       if (!oldItems.some((obj) => obj.id)) {
         oldItems.push(item);
