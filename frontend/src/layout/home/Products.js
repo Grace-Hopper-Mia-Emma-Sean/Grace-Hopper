@@ -55,7 +55,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
-  return <IconButton {...other} />;
+  return (
+    <div>
+      <Typography h6>
+        Description <IconButton {...other}></IconButton>
+      </Typography>
+    </div>
+  );
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
@@ -69,6 +75,7 @@ export function Products({
   productCategory,
   selectProductCategory,
   setCart,
+  cart,
 }) {
   const classes = useStyles();
   let newProducts = [];
@@ -102,9 +109,7 @@ export function Products({
 
   const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const handleExpandClick = () => setExpanded(!expanded);
 
   return (
     <>
@@ -114,7 +119,7 @@ export function Products({
             {productsToDisplay.map((product) => {
               return (
                 <>
-                  <Card sx={{ width: 425, m: 2, p: 1 }}>
+                  <Card sx={{ width: 450, m: 2, p: 1 }}>
                     <CardHeader title={product.name} subheader={product.sku} />
                     <CardMedia
                       component="img"
@@ -127,7 +132,6 @@ export function Products({
                     />
                     <CardActions disableSpacing>
                       <CreateCartItem product={product} setCart={setCart} />
-                      <Typography variant="h6">${product.price}</Typography>
                       <ExpandMore
                         expand={expanded}
                         onClick={handleExpandClick}
@@ -136,6 +140,7 @@ export function Products({
                       >
                         <ExpandMoreIcon />
                       </ExpandMore>
+                      <Typography variant="h6">${product.price}</Typography>
                     </CardActions>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                       <CardContent>
@@ -149,43 +154,48 @@ export function Products({
           </div>
         ) : (
           <>
-          <div className={classes.card}>
-          {newProducts.map((product) => {
-              return (
-                <>
-                 <Card sx={{ width: 425, m: 2, p: 1 }}>
-                    <CardHeader title={product.name} subheader={product.sku} />
-                    <CardMedia
-                      component="img"
-                      className={classes.img}
-                      width="128px"
-                      height="128px"
-                      src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
-                      alt={product.name}
-                      flex="1"
-                    />
-                    <CardActions disableSpacing>
-                      <CreateCartItem product={product} setCart={setCart} />
-                      <Typography variant="h6">${product.price}</Typography>
-                      <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                      >
-                        <ExpandMoreIcon />
-                      </ExpandMore>
-                    </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                      <CardContent>
-                        <Typography paragraph>{product.description}</Typography>
-                      </CardContent>
-                    </Collapse>
-                  </Card>
-                </>
-              );
-            })}
-          </div>
+            <div className={classes.card}>
+              {newProducts.map((product) => {
+                return (
+                  <>
+                    <Card sx={{ width: 425, m: 2, p: 1 }}>
+                      <CardHeader
+                        title={product.name}
+                        subheader={product.sku}
+                      />
+                      <CardMedia
+                        component="img"
+                        className={classes.img}
+                        width="128px"
+                        height="128px"
+                        src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
+                        alt={product.name}
+                        flex="1"
+                      />
+                      <CardActions disableSpacing>
+                        <CreateCartItem product={product} setCart={setCart} />
+                        <Typography variant="h6">${product.price}</Typography>
+                        <ExpandMore
+                          expand={expanded}
+                          onClick={handleExpandClick}
+                          aria-expanded={expanded}
+                          aria-label="show more"
+                        >
+                          <ExpandMoreIcon />
+                        </ExpandMore>
+                      </CardActions>
+                      <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                          <Typography paragraph>
+                            {product.description}
+                          </Typography>
+                        </CardContent>
+                      </Collapse>
+                    </Card>
+                  </>
+                );
+              })}
+            </div>
           </>
         )}
       </div>
