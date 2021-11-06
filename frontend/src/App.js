@@ -120,6 +120,7 @@ export default function App() {
         selectProductCategory={selectProductCategory}
         setSelectProductCategory={setSelectProductCategory}
         cart={cart}
+        setCart={setCart}
       >
         <OpenDrawer loggedIn={loggedIn} admin={admin} />
       </Navbar>

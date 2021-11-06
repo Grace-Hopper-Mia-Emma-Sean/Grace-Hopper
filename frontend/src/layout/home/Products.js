@@ -14,97 +14,54 @@ import {
   Stack,
 } from "../../MUI";
 
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 import { CreateCartItem } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
-  // body : {
-  //   backgroundColor: "#457B9D"
-  // },
-
   body: {
     backgroundColor: "#cfd8dc",
-    // flexGrow: 7,
-    // display: 'inline-block',
-    // display: 'table',
-    // top: '0',
 
-    // height: '100%',
-    // width: '100%',
-    columns: "2 auto",
+    // flexGrow: 1,
   },
-  root: {
-    // display:'inline-block',
-    // paddingTop: '10%',
+  card: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "1rem",
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: "inline-block",
-    width: "500px",
-    // width: 'max-content',
-    // height: 'relative',
-    marginTop: "20px",
-    marginLeft: "30%",
-    marginBottom: "20px",
-    // marginRight: '30%',
-    backgroundColor: "#eeeeee",
-    "&:hover": {
-      background: "#90a4ae",
-      position: "relative",
-      top: "-10px",
-      left: "-20px",
-      width: "700px",
-      height: "auto",
-      display: "block",
-    },
-
-    // marginBottom: '20px',
-  },
-  image: {
-    width: "128px",
-    height: "128px",
-  },
+  individualCard: {},
   img: {
     margin: "auto",
     display: "block",
-    maxWidth: "128px",
-    maxHeight: "128px",
+    maxWidth: "45%",
+    maxHeight: "45%",
   },
+}));
 
-  // body: {
-  // backgroundColor: "#457B9D",
-  // // columns: '2 auto',
-  // width: '100%',
-  // },
-  // paper: {
-  //   padding: theme.spacing(2),
-  //   margin: "1rem",
-  //   maxWidth: 500,
-  //   backgroundColor: "#A8DADC",
-  //   display:'inline-block',
-  // },
-  // image: {
-  //   width: 128,
-  //   height: 128,
-  // },
-  // img: {
-  //   margin: "auto",
-  //   display: "block",
-  //   maxWidth: "100%",
-  //   maxHeight: "100%",
-  // },
-  // center: {
-
-  //   // width: '100%',
-  //   // justifyContent: 'center'
-  // },
-  // root: {
-  //   // display: 'inline-block'
-  //   marginLeft: 'auto',
-  //   marginRight: 'auto',
-  //   display: 'inline',
-  //   columns: '2 auto'
-
-  // }
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
 }));
 
 export function Products({
@@ -129,11 +86,10 @@ export function Products({
       .finally(localStorage.removeItem("product"));
   }, []);
 
-  if (selectProductCategory) {
+  if (selectProductCategory)
     newProducts = products.filter((product) => {
       return product.category_id == productCategory;
     });
-  }
 
   const productMatches = (product, text) =>
     product.name.toLowerCase().includes(text.toLowerCase());
@@ -141,150 +97,114 @@ export function Products({
   const filteredProducts = products.filter((product) =>
     productMatches(product, searchTerm)
   );
+
   const productsToDisplay = searchTerm.length > 0 ? filteredProducts : products;
 
-  const image = `http://placeimg.com/128/128/tech/1`;
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <>
       <div className={classes.body}>
         {!selectProductCategory ? (
-          <>
+          <div className={classes.card}>
             {productsToDisplay.map((product) => {
               return (
                 <>
-                  <div className={classes.root} key={product.id}>
-                    <Paper className={classes.paper}>
-                      <Grid container spacing={2}>
-                        <Grid item>
-                          <Grid item>
-                            <ButtonBase className={classes.image}>
-                              <img
-                                className={classes.img}
-                                // key={product.name}
-                                // className={classes.img}
-                                alt="complex"
-                                src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
-                                // src={image}
-                              />
-                            </ButtonBase>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12} sm container>
-                          <Grid
-                            item
-                            xs
-                            container
-                            direction="column"
-                            spacing={2}
-                          >
-                            <Grid item xs>
-                              <Typography gutterBottom variant="subtitle1">
-                                {product.name}
-                              </Typography>
-                              <Typography variant="body2" gutterBottom>
-                                {product.description}
-                              </Typography>
-                              <Typography variant="body2" color="textSecondary">
-                                SKU: {product.sku}
-                              </Typography>
-                            </Grid>
-                            <CreateCartItem
-                              product={product}
-                              setCart={setCart}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="subtitle1">
-                              ${product.price}
-                            </Typography>
-                          </Grid>
-                          {admin === true ? (
-                            <Box>
-                              <Grid item>
-                                <Button>
-                                  <EditIcon />
-                                </Button>
-                              </Grid>
-                              <Grid item>
-                                <Button>
-                                  <DeleteForeverIcon />
-                                </Button>
-                              </Grid>
-                            </Box>
-                          ) : null}
-                        </Grid>
-                      </Grid>
-                    </Paper>
-                  </div>
+                  <Card sx={{ width: 425, m: 2, p: 1 }}>
+                    <CardHeader title={product.name} subheader={product.sku} />
+                    <CardMedia
+                      component="img"
+                      className={classes.img}
+                      width="128px"
+                      height="128px"
+                      src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
+                      alt={product.name}
+                      flex="1"
+                    />
+                    <CardActions disableSpacing>
+                      <CreateCartItem product={product} setCart={setCart} />
+                      <Typography variant="h6">${product.price}</Typography>
+                      <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                      >
+                        <ExpandMoreIcon />
+                      </ExpandMore>
+                    </CardActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                      <CardContent>
+                        <Typography paragraph>{product.description}</Typography>
+                      </CardContent>
+                    </Collapse>
+                  </Card>
                 </>
               );
             })}
-          </>
+          </div>
         ) : (
           <>
             {newProducts.map((product) => {
               return (
                 <>
-                  <div className={classes.root} key={product.id}>
-                    <Paper className={classes.paper}>
-                      <Grid container spacing={2}>
-                        <Grid item>
-                          <ButtonBase className={classes.image}>
-                            <img
-                              className={classes.img}
-                              // key={product.name}
-                              // className={classes.img}
-                              alt="complex"
-                              src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
-                              // src={image}
-                            />
-                          </ButtonBase>
-                        </Grid>
-                        <Grid item xs={12} sm container>
-                          <Grid
-                            item
-                            xs
-                            container
-                            direction="column"
-                            spacing={2}
-                          >
-                            <Grid item xs>
-                              <Typography gutterBottom variant="subtitle1">
-                                {product.name}
-                              </Typography>
-                              <Typography variant="body2" gutterBottom>
-                                {product.description}
-                              </Typography>
-                              <Typography variant="body2" color="textSecondary">
-                                SKU: {product.sku}
-                              </Typography>
-                            </Grid>
-                            <CreateCartItem product={product} />
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="subtitle1">
-                              ${product.price}
+                  {/* <div className={classes.root} key={product.id}> */}
+                  <Paper className={classes.paper}>
+                    <Grid container spacing={2}>
+                      <Grid item>
+                        <ButtonBase className={classes.image}>
+                          <img
+                            className={classes.img}
+                            // key={product.name}
+                            // className={classes.img}
+                            alt="complex"
+                            src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
+                            // src={image}
+                          />
+                        </ButtonBase>
+                      </Grid>
+                      <Grid item xs={12} sm container>
+                        <Grid item xs container spacing={2}>
+                          <Grid item xs>
+                            <Typography gutterBottom variant="subtitle1">
+                              {product.name}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom>
+                              {product.description}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                              SKU: {product.sku}
                             </Typography>
                           </Grid>
-                          {admin === true ? (
-                            <Box>
-                              <Grid item>
-                                <Button>
-                                  <EditIcon />
-                                </Button>
-                              </Grid>
-                              <Grid item>
-                                <Button>
-                                  <DeleteForeverIcon />
-                                </Button>
-                              </Grid>
-                            </Box>
-                          ) : null}
+                          <CreateCartItem product={product} setCart={setCart} />
                         </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle1">
+                            ${product.price}
+                          </Typography>
+                        </Grid>
+                        {admin === true ? (
+                          <Box>
+                            <Grid item>
+                              <Button>
+                                <EditIcon />
+                              </Button>
+                            </Grid>
+                            <Grid item>
+                              <Button>
+                                <DeleteForeverIcon />
+                              </Button>
+                            </Grid>
+                          </Box>
+                        ) : null}
                       </Grid>
-                    </Paper>
-                  </div>
+                    </Grid>
+                  </Paper>
+                  {/* </div> */}
                 </>
               );
             })}

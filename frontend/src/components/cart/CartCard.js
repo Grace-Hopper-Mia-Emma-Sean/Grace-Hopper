@@ -43,7 +43,7 @@ export function CartCard({ cart, setCart }) {
 
   const token = localStorage.token;
   const id = localStorage.id;
-  const currentCart = JSON.parse(localStorage.cart);
+  const currentCart = localStorage.cart ? JSON.parse(localStorage.cart) : [];
 
   useEffect(async () => {
     !localStorage.id

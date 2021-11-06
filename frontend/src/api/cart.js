@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const createCartItem = async (productId, quantity, userId) => {
   console.log(productId, quantity, userId);
   return axios({
@@ -15,13 +14,7 @@ const createCartItem = async (productId, quantity, userId) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-  }).catch((error) => {
-    console.error(error.response.data);
-  });
-  // .then((response) => {
-  //   response.data; // find a way to avoid having to use alert
-  //   return alert("cart item successfully added");
-  // });
+  }).catch((error) => console.error(error.response.data));
 };
 
 const getCartItems = async (token) => {
@@ -56,13 +49,12 @@ const getCartItemsByUserId = async (token, id) => {
       console.error(error.response.data.error);
     })
     .then((response) => {
-      if(response) {
+      if (response) {
         response.data;
         console.log(response);
         localStorage.setItem("cart", JSON.stringify(response.data));
-      } 
-      console.log("No Cart Items")
-    
+      }
+      console.log("No Cart Items");
     });
 };
 
@@ -99,7 +91,7 @@ const deleteCartItem = async (cartId) => {
       if (response) {
         console.log(response);
       }
-      console.log("No Cart Items")
+      console.log("No Cart Items");
       // find a way to avoid having to use alert
       // return alert("cart item successfully deleted");
     });

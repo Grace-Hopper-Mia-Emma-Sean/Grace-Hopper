@@ -1,7 +1,7 @@
 import { LogoutIcon, IconButton, Button } from "../../MUI";
 import { Link } from "react-router-dom";
 
-export function Logout({ setLoggedIn }) {
+export function Logout({ setLoggedIn, setCart }) {
   return (
     <Link to="/">
       <IconButton
@@ -22,10 +22,12 @@ export function Logout({ setLoggedIn }) {
             "orderItemId",
             "id",
             "cart",
-            "cart total",
+            "Cart Total",
           ];
           keys.forEach((k) => localStorage.removeItem(k));
           setLoggedIn(false);
+          setCart();
+          window.location.href = "/";
         }}
         style={{
           textDecoration: "none",
