@@ -44,11 +44,11 @@ export function CartCard({ cart, setCart }) {
   const token = localStorage.token;
   const id = localStorage.id;
   const currentCart = localStorage.cart ? JSON.parse(localStorage.cart) : [];
+  const localCart = localStorage.cart;
 
   useEffect(async () => {
-    !localStorage.id
-      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
-      : await getCartItemsByUserId(token, id)
+    localStorage.id
+      ? await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
               JSON.parse(localStorage.getItem("cart")).sort(
@@ -56,14 +56,21 @@ export function CartCard({ cart, setCart }) {
               )
             );
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error))
+      : localCart === null ||
+        localCart === undefined ||
+        localCart.length === 0 ||
+        localCart === ""
+      ? null
+      : setCart(JSON.parse(localCart)).filter((x) => x.id).length;
   }, [cart]);
+
+  // setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id));
 
   const image = `http://placeimg.com/128/128/tech/1`;
 
   return currentCart ? (
     <div>
-      {console.log(cart)}
       <div>
         {cart.map((cart) => {
           return (

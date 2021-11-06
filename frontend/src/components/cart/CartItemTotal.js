@@ -5,8 +5,6 @@ import { getCartItems, getCartItemsByUserId } from "../../api";
 export function CartItemTotal({ cart }) {
   const [total, setTotal] = useState(cart.total);
 
-  console.log(cart);
-
   useEffect(async () => {
     setTotal(cart.total);
   }, [cart]);

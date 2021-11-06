@@ -34,11 +34,9 @@ export function CreateCartItem({ product, setCart }) {
       setCart(localStorage.cart);
     };
     const user = async () => {
-      await createCartItem(product.id, quantity, userId)
-        .then(() => {
-          console.log(product.id, quantity, userId);
-        })
-        .catch((error) => console.log(error));
+      await createCartItem(product.id, quantity, userId).catch((error) =>
+        console.log(error)
+      );
     };
     !userId ? guest(item) : user();
   };

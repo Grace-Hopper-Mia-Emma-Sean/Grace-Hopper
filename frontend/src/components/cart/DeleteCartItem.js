@@ -16,11 +16,7 @@ export function DeleteCartItem({ cart, setCart }) {
     };
     !localStorage.getItem("id")
       ? removeLocalItem()
-      : await deleteCartItem(cart.id)
-          .then(() => {
-            console.log("cart item removed successfully");
-          })
-          .catch((error) => console.log(error));
+      : await deleteCartItem(cart.id).catch((error) => console.log(error));
     setCart(localCart);
   };
 
