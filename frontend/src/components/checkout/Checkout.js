@@ -178,6 +178,7 @@ export function Checkout({
     // localStorage.removeItem("cart")
 
   const userId = localStorage.getItem("id")
+
     if (userId) {
       const currentCart = JSON.parse(localStorage.getItem("cart"))
       console.log(currentCart)
@@ -193,17 +194,17 @@ export function Checkout({
   }
 
 
-  // function CreateOrder (userId, payment, total) {
-  //     userId=localStorage.getItem("id")
-  //     payment=getRandomInt(100);
-  //     total=localStorage.getItem("Cart Total")
+  function CreateOrder () {
+    const userId = localStorage.getItem("id")
+    const paymentId = getRandomInt(100);
+    const totalOf = localStorage.getItem("Cart Total")
 
-  //     console.log(userId, payment, total)
-  //     const newCart = [];
-  //     localStorage.setItem('cart', newCart)
-  //     return create_order_details(userId, payment, total) 
-  //     && emptyCart();
-  //   };
+    if(totalOf) {
+      console.log(userId, paymentId, totalOf)
+      create_order_details(userId, paymentId, totalOf) 
+    }
+     
+  };
 
   return (
   cartItems && total>0 ? 
@@ -231,6 +232,7 @@ export function Checkout({
             {activeStep === steps.length ? (
                   
               <React.Fragment>
+                {CreateOrder()}
                   {emptyCart()}
                   
                 <Typography variant="h5" gutterBottom>

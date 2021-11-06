@@ -4,8 +4,8 @@ import { Redirect } from 'react-router';
 
 export function CreateOrderDetails ({}) {
     const [totalOf, setTotalOf] = useState('');
-    const [userId, setUserId] = useState('');
-    const [paymentId, setPayment] = useState('');
+    const [userId, setUserId] = useState((''));
+    const [paymentId, setPayment] = useState((''));
 
     const BASE_URL = 'https://pure-reaches-94902.herokuapp.com/api'
 
@@ -13,13 +13,14 @@ export function CreateOrderDetails ({}) {
         event.preventDefault();
         
     try {
-        fetch (`${BASE_URL}/order-details`, {
+        await fetch (`${BASE_URL}/order-details`, {
             method: "POST",
-            body: JSON.stringify({
+            body: {
                 user_id: userId,
+                total: totalOf,
                 payment_id: paymentId,
-                total: totalOf
-            })
+               
+            }
         })
         .then(response => response.json())
         .then(result => {
@@ -36,9 +37,9 @@ export function CreateOrderDetails ({}) {
         <div classname="CreateOrderDetails"> 
             <h1> Add New Order </h1>
             <form onSubmit={handleSubmit}> 
-                <input name="userId"  placeholder="User ID" onChange={(event) => setUserId(event.target.value)}/>
+                <input name="userId"  placeholder="User ID" onChange={(event) => setUserId(parseInt(event.target.value))}/>
                 <br></br>
-                <input name="paymentId" placeholder="payment ID" onChange={(event) => setPayment(event.target.value)}/>
+                <input name="paymentId" placeholder="payment ID" onChange={(event) => setPayment(parseInt(event.target.value))}/>
                 <br></br>
                 <input name="totalOf"  placeholder="total" onChange={(event) => setTotalOf(event.target.value)}/>
                 <br></br>
