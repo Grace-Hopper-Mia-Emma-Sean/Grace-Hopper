@@ -24,7 +24,7 @@ export function CreateOrderDetails ({}) {
         })
         .then(response => response.json())
         .then(result => {
-            console.log(userId, paymentId, totalOf)
+            console.log(userId, totalOf, paymentId)
             console.log(result);
             })
         .catch(console.error);
