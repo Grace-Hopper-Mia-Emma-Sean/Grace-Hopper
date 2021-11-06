@@ -115,7 +115,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
     <div>
       <Typography gutterBottom variant="h3" align="center">
         <Button size="large" onClick={goBack}>
-          Nothing is in your cart. Please go back and add items to proceed.
+          Nothing is in your cart. Please click here to go back and add items to proceed.
         </Button>
       </Typography>
     </div>
