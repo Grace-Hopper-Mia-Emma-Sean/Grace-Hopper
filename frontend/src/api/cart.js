@@ -53,7 +53,7 @@ const getCartItemsByUserId = async (token, id) => {
         response.data;
         localStorage.setItem("cart", JSON.stringify(response.data));
       }
-      console.log("No Cart Items");
+      console.log("No Cart Items, becuase No User LoggedIn");
     });
 };
 

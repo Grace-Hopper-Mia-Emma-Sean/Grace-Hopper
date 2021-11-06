@@ -81,6 +81,7 @@ export function Products({
         console.log(localStorage.getItem("product"));
         setProducts(JSON.parse(localStorage.getItem("product")));
         setAdmin(JSON.parse(localStorage.getItem("admin")));
+        
       })
       .catch((error) => console.log(error))
       .finally(localStorage.removeItem("product"));

@@ -5,7 +5,7 @@ import { getProducts } from "../../api/";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function ProductsTable({ productToEdit, setProductToEdit }) {
+export function ProductsTable({ productToEdit, setProductToEdit, cart, setCart }) {
   const [product, setProduct] = useState([]);
 
   useEffect(async () => {
@@ -132,6 +132,7 @@ export function ProductsTable({ productToEdit, setProductToEdit }) {
               <Button>View, Edit, or Add Discounts</Button>
             </Link>
             </div>
+            
       </div>
     </>
     );

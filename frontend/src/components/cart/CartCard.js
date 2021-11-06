@@ -63,7 +63,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   const image = `http://placeimg.com/128/128/tech/1`;
 
-  return currentCart ? (
+  return currentCart.length ? (
     
     <div>
       

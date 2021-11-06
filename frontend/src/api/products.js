@@ -15,6 +15,8 @@ const getProducts = async () => {
       const products = response.data;
 
       localStorage.setItem("product", JSON.stringify(products));
+      localStorage.setItem("cart", JSON.stringify([]))
+      console.log(localStorage.getItem("cart"))
 
       localStorage.setItem(
         "productId",
