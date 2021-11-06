@@ -105,7 +105,7 @@ export function Navbar({
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar sx={{ backgroundColor: "#1D3557" }}>
-          <OpenDrawer loggedIn={loggedIn} admin={admin} />
+          {/* <OpenDrawer loggedIn={loggedIn} admin={admin} /> */}
           <Button
             component={Link}
             to="/"

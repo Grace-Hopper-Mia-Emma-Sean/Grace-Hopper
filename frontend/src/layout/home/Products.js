@@ -33,7 +33,7 @@ import { CreateCartItem } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
   body: {
-    backgroundColor: "#cfd8dc",
+    backgroundColor: "#457B9D",
 
     // flexGrow: 1,
   },

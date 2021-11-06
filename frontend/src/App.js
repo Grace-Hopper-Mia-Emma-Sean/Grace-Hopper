@@ -61,17 +61,17 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: 0,
     width: "100%",
-    height: "5rem",
+    height: "rem",
   },
   body: {
-    paddingTop: "5rem",
+    paddingTop: "3rem",
     paddingBottom: "2.5rem",
   },
   footer: {
     position: "absolute",
     bottom: 0,
     width: "100%",
-    height: "2.5rem",
+    height: "3.5rem",
   },
 }));
 
