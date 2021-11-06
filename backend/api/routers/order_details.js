@@ -16,7 +16,7 @@ orderDetailsRouter.post("/", async (req, res, next) => {
   const { user_id, payment_id, total } = req.body;
   try {
     const createdOrderDetails = await createOrderDetails(req.body);
-    res.send(createdOrderDetails);
+    res.send({createdOrderDetails});
   } catch (error) {
     next(error);
   }
