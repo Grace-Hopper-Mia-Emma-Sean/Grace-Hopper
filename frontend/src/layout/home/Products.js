@@ -149,65 +149,43 @@ export function Products({
           </div>
         ) : (
           <>
-            {newProducts.map((product) => {
+          <div className={classes.card}>
+          {newProducts.map((product) => {
               return (
                 <>
-                  {/* <div className={classes.root} key={product.id}> */}
-                  <Paper className={classes.paper}>
-                    <Grid container spacing={2}>
-                      <Grid item>
-                        <ButtonBase className={classes.image}>
-                          <img
-                            className={classes.img}
-                            // key={product.name}
-                            // className={classes.img}
-                            alt="complex"
-                            src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
-                            // src={image}
-                          />
-                        </ButtonBase>
-                      </Grid>
-                      <Grid item xs={12} sm container>
-                        <Grid item xs container spacing={2}>
-                          <Grid item xs>
-                            <Typography gutterBottom variant="subtitle1">
-                              {product.name}
-                            </Typography>
-                            <Typography variant="body2" gutterBottom>
-                              {product.description}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                              SKU: {product.sku}
-                            </Typography>
-                          </Grid>
-                          <CreateCartItem product={product} setCart={setCart} />
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="subtitle1">
-                            ${product.price}
-                          </Typography>
-                        </Grid>
-                        {admin === true ? (
-                          <Box>
-                            <Grid item>
-                              <Button>
-                                <EditIcon />
-                              </Button>
-                            </Grid>
-                            <Grid item>
-                              <Button>
-                                <DeleteForeverIcon />
-                              </Button>
-                            </Grid>
-                          </Box>
-                        ) : null}
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                  {/* </div> */}
+                 <Card sx={{ width: 425, m: 2, p: 1 }}>
+                    <CardHeader title={product.name} subheader={product.sku} />
+                    <CardMedia
+                      component="img"
+                      className={classes.img}
+                      width="128px"
+                      height="128px"
+                      src={`https://graceshoppermess.s3.amazonaws.com/${product.id}.png`}
+                      alt={product.name}
+                      flex="1"
+                    />
+                    <CardActions disableSpacing>
+                      <CreateCartItem product={product} setCart={setCart} />
+                      <Typography variant="h6">${product.price}</Typography>
+                      <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                      >
+                        <ExpandMoreIcon />
+                      </ExpandMore>
+                    </CardActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                      <CardContent>
+                        <Typography paragraph>{product.description}</Typography>
+                      </CardContent>
+                    </Collapse>
+                  </Card>
                 </>
               );
             })}
+          </div>
           </>
         )}
       </div>

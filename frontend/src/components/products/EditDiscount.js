@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 
 import {editDiscount, deleteDiscount} from '../../api'
 
-import {TextField, makeStyles, Button} from '../../MUI'
+import {TextField, makeStyles, Button, Typography} from '../../MUI'
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -51,7 +51,7 @@ export function EditDiscount({discountToEdit}){
     return (
         <>
             <div className={classes.title}>
-                <h1>Now Editing: {discountToEdit.name} | ID: {discountToEdit.id}</h1>
+            <h1>Now Editing: <Typography color='red' fontSize={'25px'}> {discountToEdit.name} | ID: {discountToEdit.id}</Typography> </h1>
             </div>
             <div className={classes.body}>
                 <div className={classes.form}>

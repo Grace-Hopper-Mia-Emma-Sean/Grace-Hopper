@@ -4,10 +4,10 @@ import * as React from "react";
 import { useState, useEffect } from 'react'
 import { Link, Redirect } from "react-router-dom";
 
-import {editProduct, deleteProduct} from '../../api'
+import {editProduct, deleteProduct, getProductCategories, getProductDiscounts} from '../../api'
 // import { deleteProduct } from "../../api/products";
 
-import { TextField, makeStyles, Button } from "../../MUI";
+import { TextField, makeStyles, Button, Typography, MenuItem } from "../../MUI";
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -51,24 +51,64 @@ export function EditProduct({productToEdit}){
   const [price, setPrice] = useState('')
   const [quantity, setQuantity] = useState('')
   const [sku, setSku] = useState('')
+  const [categories, setCategories] = useState([])
+  const [discounts, setDiscounts] = useState([])
 
   const id = productToEdit.id
+
+  useEffect(()=> {
+    const fetchCategories = async () => {
+      const resp = await getProductCategories()
+      setCategories(resp)
+    }
+    fetchCategories();
+  }, [])
+
+  useEffect(()=> {
+    const fetchDiscounts = async () => {
+      const resp = await getProductDiscounts()
+      setDiscounts(resp)
+    }
+    fetchDiscounts();
+  }, [])
+
+  const handleCatSelect = (event) => {
+    setCategory(event.target.value)
+    console.log(categories)
+  }
+
+  const handleDiscSelect = (event) => {
+    setDiscount(event.target.value)
+    console.log(discounts)
+  }
 
   return (
     <>  
         <div className={classes.title}>
-            <h1>Now Editing: {productToEdit.name} | ID: {productToEdit.id}</h1>
+            <h1>Now Editing: <Typography color='red' fontSize={'25px'}> {productToEdit.name} | ID: {productToEdit.id}</Typography> </h1> 
         </div>
         <div className={classes.body}> 
             <div className={classes.form}>
                 <div className={classes.editItem}>
-                    Current Category: {productToEdit.category_id}
-                    <br />
-                    <br/>
-                    <TextField 
+                        Current Category: {productToEdit.category_id}
+                        <br />
+                        <br/>
+                        <TextField 
                     variant="outlined" 
-                    label="Edit Category"
-                    onChange={function(event) {setCategory(event.target.value), console.log(category)}}/>
+                    label="Enter Category..."
+                    select
+                    onChange={
+                    handleCatSelect
+                    }
+                    helperText="Please Select A Category"
+                    >
+                    {categories.map((category)=>(
+                    <MenuItem key={category.name} value={category.id}>
+                        {category.id} - ({category.name})
+                    </MenuItem>
+                    )
+                    )}
+                    </TextField>
                 </div>
                     <br/>
                 <div className={classes.editItem}>
@@ -82,13 +122,25 @@ export function EditProduct({productToEdit}){
                 </div>
                     <br/>
                 <div className={classes.editItem}>
-                    Current Discount: {productToEdit.discount_id}%
+                    Current Discount: {productToEdit.discount_id}
                     <br/>
                     <br/>
-                    <TextField
-                    variant="outlined"
-                    label="Edit Discount %"
-                    onChange={function(event) {setDiscount(event.target.value), console.log(discount)}}/>
+                        <TextField 
+                    variant="outlined" 
+                    label="Enter Discount..."
+                    select
+                    onChange={
+                    handleDiscSelect
+                    }
+                    helperText="Please Select A Category"
+                    >
+                    {discounts.map((discount)=>(
+                    <MenuItem key={discount.name} value={discount.id}>
+                        {discount.id} - ({discount.name})
+                    </MenuItem>
+                    )
+                    )}
+                    </TextField>
                 </div>
                     <br/>
                 <div className={classes.editItem}>

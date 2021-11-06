@@ -3,9 +3,10 @@ import * as React from "react";
 import {useState, useEffect} from 'react'
 import {Link, Redirect} from "react-router-dom"
 
-import {createCategory} from '../../api'
+import {createCategory, getProductDiscounts, getProductCategories} from '../../api'
 
 import {TextField, makeStyles, Button} from '../../MUI'
+
 
 const useStyles = makeStyles((theme) => ({
     body: {

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 
 import {editCategory, deleteCategory} from '../../api'
 
-import {TextField, makeStyles, Button} from '../../MUI'
+import {TextField, makeStyles, Button, Typography} from '../../MUI'
 
 const useStyles = makeStyles((theme) => ({
     body: {
@@ -50,7 +50,7 @@ export function EditCategory({categoryToEdit}){
     return (
         <>
             <div className={classes.title}>
-            <h1>Now Editing: {categoryToEdit.name} | ID: {categoryToEdit.id} </h1>
+            <h1>Now Editing: <Typography color='red' fontSize={'25px'}> {categoryToEdit.name} | ID: {categoryToEdit.id}</Typography> </h1>
             </div>
             <div className={classes.body}>
                 <div className={classes.form}>

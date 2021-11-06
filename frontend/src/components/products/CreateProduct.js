@@ -3,9 +3,9 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import { createProduct } from "../../api";
+import { createProduct, getProductCategories, getProductDiscounts } from "../../api";
 
-import { TextField, makeStyles, Button } from "../../MUI";
+import { TextField, makeStyles, Button, MenuItem } from "../../MUI";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
+
 export function CreateProduct() {
   const classes = useStyles();
 
@@ -49,6 +53,34 @@ export function CreateProduct() {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [sku, setSku] = useState("");
+  const [categories, setCategories] = useState([])
+  const [discounts, setDiscounts] = useState([])
+
+  useEffect(()=> {
+    const fetchCategories = async () => {
+      const resp = await getProductCategories()
+      setCategories(resp)
+    }
+    fetchCategories();
+  }, [])
+
+  useEffect(()=> {
+    const fetchDiscounts = async () => {
+      const resp = await getProductDiscounts()
+      setDiscounts(resp)
+    }
+    fetchDiscounts();
+  }, [])
+
+  const handleCatSelect = (event) => {
+    setCategory(event.target.value)
+    console.log(categories)
+  }
+
+  const handleDiscSelect = (event) => {
+    setDiscount(event.target.value)
+    console.log(discounts)
+  }
 
   return (
     <>
@@ -60,7 +92,9 @@ export function CreateProduct() {
           <div className={classes.form}>
           
             <div className={classes.addItem}>
-              <TextField variant="outlined" label="Enter Name..."
+              <TextField
+              variant="outlined"
+              label="Enter Name..."
                 onChange={function (event) {
                   setName(event.target.value);
                 }}
@@ -68,11 +102,22 @@ export function CreateProduct() {
             </div>
               <br />
             <div className={classes.addItem}>
-                <TextField variant="outlined" label="Enter Category..."
-                  onChange={function (event) {
-                    setCategory(event.target.value);
-                  }}
-                />
+                <TextField 
+                variant="outlined" 
+                label="Enter Category..."
+                select
+                onChange={
+                  handleCatSelect
+                }
+                helperText="Please Select A Category"
+                >
+                  {categories.map((category)=>(
+                  <MenuItem key={category.name} value={category.id}>
+                    {category.id} - ({category.name})
+                  </MenuItem>
+                )
+                  )}
+                </TextField>
             </div>
               <br />
             <div className={classes.addItem}>
@@ -84,11 +129,22 @@ export function CreateProduct() {
             </div>
               <br />
             <div className={classes.addItem}>
-                <TextField variant="outlined" label="Enter Disc. Category..."
-                  onChange={function (event) {
-                    setDiscount(event.target.value);
-                  }}
-                />
+            <TextField 
+                variant="outlined" 
+                label="Enter Discount..."
+                select
+                onChange={
+                  handleDiscSelect
+                }
+                helperText="Please Select A Category"
+                >
+                  {discounts.map((discount)=>(
+                  <MenuItem key={discount.name} value={discount.id}>
+                    {discount.id} - ({discount.name})
+                  </MenuItem>
+                )
+                  )}
+                </TextField>
             </div>
               <br />
             <div className={classes.addItem}> 
@@ -114,7 +170,6 @@ export function CreateProduct() {
                   }}
                 />
             </div>
-          
             <br />
             <Link to="/admin/products">
             <Button
@@ -137,10 +192,7 @@ export function CreateProduct() {
           <Link to="/admin/products">
             <Button>Return To Products Table</Button>
           </Link>
-          
-          
-        </div>
-          
+        </div>  
       </div>
     </>
   );
