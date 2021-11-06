@@ -14,12 +14,12 @@ export function CartIcon({ loggedIn }) {
       .then(() => {
         if (cart) {
           const storage = JSON.parse(localStorage.getItem("cart"));
-          storage === "" ? setCart() : setCart(storage);
+          storage === "" ? setCart([]) : setCart(storage);
         }
-        setCart([storage]);
+        setCart([]);
       })
       .catch((error) => console.log(error));
-  }, [loggedIn]);
+  }, []);
 
   const badgeCount =
     localCart === null ||
