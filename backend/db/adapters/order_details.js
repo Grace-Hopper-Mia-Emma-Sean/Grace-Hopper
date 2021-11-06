@@ -2,7 +2,7 @@ const { client } = require("../client");
 
 const createOrderDetails = async ({ user_id, total, payment_id }) => {
   try {
-    const {rows} = await client.query(
+    const {rows: [order]} = await client.query(
       `
         INSERT INTO order_details(user_id,total, payment_id)
         VALUES ($1, $2, $3)
@@ -10,7 +10,7 @@ const createOrderDetails = async ({ user_id, total, payment_id }) => {
         `,
       [user_id, total, payment_id]
     );
-    return rows;
+    return order;
   } catch (error) {
     throw error;
   }
