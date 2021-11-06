@@ -38,16 +38,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function CartCard({ cart, setCart }) {
+export function CartCard({ loggedIn, cart, setCart }) {
   const classes = useStyles();
 
   const token = localStorage.token;
-  const id = localStorage.id;
+  const id = localStorage.getItem("id");
   const currentCart = localStorage.cart ? JSON.parse(localStorage.cart) : [];
-  const localCart = localStorage.cart;
+  const localCart = localStorage.getItem("cart");
+  const sortCards = JSON.parse(localStorage.getItem("cart")).sort(
+    (x, y) => x.id - y.id
+  );
 
   useEffect(async () => {
-    localStorage.id
+    loggedIn
       ? await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
@@ -62,8 +65,8 @@ export function CartCard({ cart, setCart }) {
         localCart.length === 0 ||
         localCart === ""
       ? null
-      : setCart(JSON.parse(localCart)).filter((x) => x.id).length;
-  }, [cart]);
+      : setCart(JSON.parse(localCart)).filter((x, y) => x.id - y.id);
+  }, []);
 
   // setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id));
 

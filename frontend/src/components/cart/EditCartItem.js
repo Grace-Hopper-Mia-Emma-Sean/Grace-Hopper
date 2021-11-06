@@ -9,8 +9,6 @@ export function EditCartItem({ cart, setCart }) {
   const [quantity, setQuantity] = useState(cart.quantity);
   const [total, setTotal] = useState(cart.total);
 
-  console.log(quantity);
-
   const item = {
     id: cart.id,
     user_id: null,
@@ -24,7 +22,6 @@ export function EditCartItem({ cart, setCart }) {
 
   const guest = ({ item }) => {
     if (changeItem === undefined) return;
-    console.log(changeItem);
     changeItem.quantity = quantity;
     changeItem.total = changeItem.price * quantity;
     setTotal(this);

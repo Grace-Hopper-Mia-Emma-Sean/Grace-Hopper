@@ -376,7 +376,7 @@ export default function App() {
         <Route exact path="/contact_us" component={ContactUs}></Route>
 
         <Route exact path="/cart">
-          <CartCard cart={cart} setCart={setCart} />
+          <CartCard cart={cart} setCart={setCart} loggedIn={loggedIn} />
         </Route>
 
         <Route exact path="/cart">
