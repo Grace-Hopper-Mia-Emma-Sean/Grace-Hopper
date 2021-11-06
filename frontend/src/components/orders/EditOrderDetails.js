@@ -1,5 +1,3 @@
-import { ClassNames } from "@emotion/react";
-import { InsertEmoticon } from "@material-ui/icons";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
@@ -11,9 +9,12 @@ import { TextField, makeStyles } from "../../MUI";
 const useStyles = makeStyles((theme) => ({
   editOrderDetails: {
     align: "center",
+    marginTop:"40"
   },
   editItem: {
-    marginBottom: "10",
+    marginTop: "50",
+    paddingTop: "20",
+    flexDirection: "column"
   },
 }));
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 //         total: total,
 //       },
 
-export function EditOrderDetails({ orderDetailsToEdit, paymentToEdit }) {
+export function EditOrderDetails({}) {
   const classes = useStyles();
 
 
@@ -53,7 +54,7 @@ export function EditOrderDetails({ orderDetailsToEdit, paymentToEdit }) {
             setPayment(event.target.value);
           }}
         />
-        
+
         <br />
         Edit Total:
         <TextField

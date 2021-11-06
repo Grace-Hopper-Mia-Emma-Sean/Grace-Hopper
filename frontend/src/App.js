@@ -303,10 +303,7 @@ export default function App() {
 
             <Route exact path="/edit_order_details">
               <EditOrderDetails
-                orderDetailsToEdit={orderDetailsToEdit}
-                setOrderDetailsToEdit={setOrderDetailsToEdit}
-                paymentToEdit={paymentToEdit}
-                setPaymentToDelete={setPaymentToDelete}
+               
               />
             </Route>
 
