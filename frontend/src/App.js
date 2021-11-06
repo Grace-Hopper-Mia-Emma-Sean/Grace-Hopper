@@ -125,7 +125,7 @@ export default function App() {
         <OpenDrawer loggedIn={loggedIn} admin={admin} />
       </Navbar>
 
-      <Testing loggedIn={loggedIn} />
+      {/* <Testing loggedIn={loggedIn} /> */}
       <Switch>
         <Route path="/register">
           <Register

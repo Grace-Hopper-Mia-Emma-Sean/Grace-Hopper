@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 export function CreateCartItem({ product, setCart }) {
   const [quantity, setQuantity] = useState(1);
   const userId = JSON.parse(localStorage.getItem("id"));
+  const localCart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const addItem = async () => {
     const item = {
@@ -23,6 +24,8 @@ export function CreateCartItem({ product, setCart }) {
       total: quantity * product.price,
     };
     const guest = (item) => {
+      console.log(product.id);
+
       const oldItems = JSON.parse(localStorage.getItem("cart")) || [];
       if (!oldItems.some((obj) => obj.id)) {
         oldItems.push(item);
@@ -41,23 +44,48 @@ export function CreateCartItem({ product, setCart }) {
     !userId ? guest(item) : user();
   };
 
+  const cartHasItem = localCart.some((prod) => prod.id === product.id);
+
   return (
     <div>
-      <Button variant="contained" onClick={addItem}>
-        Add to Cart
-      </Button>
-      <Button>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-        >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
-            return <MenuItem value={number}>{number}</MenuItem>;
-          })}
-        </Select>
-      </Button>
+      {cartHasItem ? (
+        <div>
+          <Button variant="contained" disabled>
+            In Cart
+          </Button>
+          <Button>
+            <Select
+              disabled
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
+                return <MenuItem value={number}>{number}</MenuItem>;
+              })}
+            </Select>
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <Button variant="contained" onClick={addItem}>
+            Add to Cart
+          </Button>
+          <Button>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => {
+                return <MenuItem value={number}>{number}</MenuItem>;
+              })}
+            </Select>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
