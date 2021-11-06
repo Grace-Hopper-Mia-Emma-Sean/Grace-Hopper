@@ -102,152 +102,158 @@ export function Navbar({
   }, []);
 
   return (
-    <AppBar sx={{ backgroundColor: "#1D3557", height: "5rem" }}>
-      <Toolbar sx={{ backgroundColor: "#1D3557", height: "5rem" }}>
-        <OpenDrawer loggedIn={loggedIn} admin={admin} />
-        <Button
-          component={Link}
-          to="/"
-          underline="hover"
-          style={{
-            textDecoration: "none",
-            color: "#F1FAEE",
-            fontSize: "24px",
-            fontFamily: "Architects Daughter",
-          }}
-        >
-          MESS Electronics
-        </Button>
-        <Search sx={{ flexGrow: 3 }}>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-            onChange={function (event) {
-              setSearchTerm(event.target.value);
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar sx={{ backgroundColor: "#1D3557" }}>
+          <OpenDrawer loggedIn={loggedIn} admin={admin} />
+          <Button
+            component={Link}
+            to="/"
+            underline="hover"
+            style={{
+              textDecoration: "none",
+              color: "#F1FAEE",
+              fontSize: "24px",
+              fontFamily: "Architects Daughter",
             }}
-          />
-        </Search>
+          >
+            MESS Electronics
+          </Button>
+          <Search sx={{ flexGrow: 3 }}>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              onChange={function (event) {
+                setSearchTerm(event.target.value);
+              }}
+            />
+          </Search>
 
-        <Box sx={{ flexGrow: 1 }} />
-        <Button
-          id="basic-button"
-          aria-controls="basic-menu"
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          style={{
-            color: "white",
-            font: "Arvo",
-          }}
-          onClick={handleClick}
-        >
-          Shop By Category
-        </Button>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          {categoryList.map((category) => {
-            return (
-              <MenuItem
-                onClick={function () {
-                  handleClose,
-                    setProductCategory(category.id),
-                    setSelectProductCategory(true);
+          <Box sx={{ flexGrow: 1 }} />
+          <Link to="/">
+            <Button
+              id="basic-button"
+              aria-controls="basic-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              style={{
+                color: "white",
+                font: "Arvo",
+              }}
+              onClick={handleClick}
+            >
+              Shop By Category
+            </Button>
+          </Link>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {categoryList.map((category) => {
+              return (
+                <MenuItem
+                  onClick={function () {
+                    handleClose,
+                      setProductCategory(category.id),
+                      setSelectProductCategory(true);
+                  }}
+                >
+                  {category.name}
+                </MenuItem>
+              );
+            })}
+          </Menu>
+          <Link to="/">
+            <Button
+              style={{
+                color: "white",
+                font: "Arvo",
+              }}
+              onClick={function () {
+                setSelectProductCategory(false);
+              }}
+            >
+              See All
+            </Button>
+          </Link>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {!loggedIn ? (
+              <Button
+                component={Link}
+                to="/login"
+                underline="hover"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  font: "Arvo",
                 }}
               >
-                {category.name}
-              </MenuItem>
-            );
-          })}
-        </Menu>
-        <Button
-          style={{
-            color: "white",
-            font: "Arvo",
-          }}
-          onClick={function () {
-            setSelectProductCategory(false);
-          }}
-        >
-          See All
-        </Button>
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          {!loggedIn ? (
-            <Button
-              component={Link}
-              to="/login"
-              underline="hover"
-              style={{
-                textDecoration: "none",
-                color: "white",
-                font: "Arvo",
-              }}
-            >
-              Login
-            </Button>
-          ) : null}
-          {!loggedIn ? (
-            <Button
-              component={Link}
-              to="/register"
-              underline="hover"
-              style={{
-                textDecoration: "none",
-                color: "white",
-                font: "Arvo",
-              }}
-            >
-              Register
-            </Button>
-          ) : null}
-          {loggedIn && admin === "true" ? (
-            <Button
-              component={Link}
-              to="/admin"
-              underline="hover"
-              style={{
-                textDecoration: "none",
-                color: "white",
-                font: "Arvo",
-              }}
-            >
-              Admin
-            </Button>
-          ) : null}
-
-          <Button>
-            {cart ? (
-              <Link to="/cart">
-                <CartIcon cart={cart} />
-              </Link>
-            ) : (
-              <Link to="/">
-                <CartIcon cart={cart} />
-              </Link>
-            )}
-          </Button>
-          <Button>
-            {loggedIn ? (
-              <Link to="/my_order">
-                <MyOrdersIcon />
-              </Link>
+                Login
+              </Button>
             ) : null}
-          </Button>
-          {loggedIn ? (
+            {!loggedIn ? (
+              <Button
+                component={Link}
+                to="/register"
+                underline="hover"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  font: "Arvo",
+                }}
+              >
+                Register
+              </Button>
+            ) : null}
+            {loggedIn && admin === "true" ? (
+              <Button
+                component={Link}
+                to="/admin"
+                underline="hover"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  font: "Arvo",
+                }}
+              >
+                Admin
+              </Button>
+            ) : null}
+
             <Button>
-              <Logout setLoggedIn={setLoggedIn} />
+              {cart ? (
+                <Link to="/cart">
+                  <CartIcon cart={cart} />
+                </Link>
+              ) : (
+                <Link to="/">
+                  <CartIcon cart={cart} />
+                </Link>
+              )}
             </Button>
-          ) : null}
-        </Box>
-      </Toolbar>
-    </AppBar>
+            <Button>
+              {loggedIn ? (
+                <Link to="/my_order">
+                  <MyOrdersIcon />
+                </Link>
+              ) : null}
+            </Button>
+            {loggedIn ? (
+              <Button>
+                <Logout setLoggedIn={setLoggedIn} />
+              </Button>
+            ) : null}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 }

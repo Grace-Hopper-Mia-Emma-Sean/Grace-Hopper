@@ -17,6 +17,7 @@ export function DeleteCartItem({ cart, setCart }) {
     !localStorage.getItem("id")
       ? removeLocalItem()
       : await deleteCartItem(cart.id).catch((error) => console.log(error));
+      window.location.reload(true)
     setCart([]);
   };
 
