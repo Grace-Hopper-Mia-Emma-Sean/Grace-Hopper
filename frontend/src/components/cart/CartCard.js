@@ -44,14 +44,11 @@ export function CartCard({ loggedIn, cart, setCart }) {
   const token = localStorage.token;
   const id = localStorage.getItem("id");
   const currentCart = localStorage.cart ? JSON.parse(localStorage.cart) : [];
-  const localCart = localStorage.getItem("cart");
-  const sortCards = JSON.parse(localStorage.getItem("cart")).sort(
-    (x, y) => x.id - y.id
-  );
 
   useEffect(async () => {
-    loggedIn
-      ? await getCartItemsByUserId(token, id)
+    !loggedIn
+      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
+      : await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
               JSON.parse(localStorage.getItem("cart")).sort(
@@ -59,13 +56,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
               )
             );
           })
-          .catch((error) => console.log(error))
-      : localCart === null ||
-        localCart === undefined ||
-        localCart.length === 0 ||
-        localCart === ""
-      ? null
-      : setCart(JSON.parse(localCart)).filter((x, y) => x.id - y.id);
+          .catch((error) => console.log(error));
   }, []);
 
   // setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id));
