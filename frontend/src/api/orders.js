@@ -63,10 +63,7 @@ const create_order_details = async (userId, paymentId, totalOf) => {
       user_id: userId,
       payment_id: paymentId,
       total: totalOf,
-    },
-    headers: {
-      "Content-Type": "application/json",
-    },
+    }
   }).catch((error) => {
     console.error(error.response);
   }).then((response) => {
