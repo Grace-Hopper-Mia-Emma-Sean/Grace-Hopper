@@ -15,13 +15,13 @@ export function CreateOrderDetails ({}) {
     try {
         fetch (`${BASE_URL}/order-details`, {
             method: "POST",
-            body:{
+            body: JSON.stringify({
                 user_id: userId,
                 payment_id: paymentId,
                 total: totalOf
-            }
+            })
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
             console.log(userId, paymentId, totalOf)
             console.log(result);
