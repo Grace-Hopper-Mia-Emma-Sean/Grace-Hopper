@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   body: {
     backgroundColor: "#457B9D",
-    height: "90vh",
+    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
