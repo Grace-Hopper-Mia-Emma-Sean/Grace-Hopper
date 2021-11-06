@@ -57,7 +57,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
             );
           })
           .catch((error) => console.log(error));
-  }, []);
+  }, [cart]);
 
   // setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id));
 
