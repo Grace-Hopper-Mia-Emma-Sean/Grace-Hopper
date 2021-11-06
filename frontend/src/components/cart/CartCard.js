@@ -111,7 +111,12 @@ export function CartCard({ loggedIn, cart, setCart }) {
       </Box>
     </div>
   ) : (
-    <div>Please Add Items to Cart to Proceed</div>
+   
+    <div>
+       <Typography gutterBottom variant="h3" align="center">
+       Please Add Items to Cart to Proceed
+      </Typography>
+      </div>
   
   );
 

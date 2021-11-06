@@ -184,6 +184,7 @@ export function Checkout({
       currentCart.forEach((cart) => {
         deleteCartItem(cart.id)
       })
+      localStorage.setItem("Cart Total", JSON.stringify(''))
     } else {
       const cartReset = localStorage.setItem("cart", JSON.stringify([]))
       const cartTotalReset = localStorage.setItem("Cart Total", JSON.stringify(''))

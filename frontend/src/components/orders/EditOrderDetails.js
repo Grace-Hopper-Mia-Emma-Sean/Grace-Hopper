@@ -27,26 +27,35 @@ const useStyles = makeStyles((theme) => ({
 
 export function EditOrderDetails({ orderDetailsToEdit, paymentToEdit }) {
   const classes = useStyles();
-  const userId = localStorage.getItem("id");
-  const paymentId = paymentToEdit.id;
-  const [totalOf, setTotalOf] = useState("");
 
-  const id = orderDetailsToEdit.id;
+
+  const [totalOf, setTotalOf] = useState('');
+  const [userId, setUserId] = useState('');
+  const [paymentId, setPayment] = useState('');
+
+  const id = JSON.parse(localStorage.getItem("Order To Edit"))
+
 
   return (
     <div className={classes.editOrderDetails}>
       <div className={classes.editItem}>
-        Now Order Detail ID: {orderDetailsToEdit.id}
-        <br />
-        <br />
-        {/* Edit Payment ID: <TextField onChange={function(event) {setPaymentId(event.target.value)}}/> */}
-      </div>
+        Edit User Id:
+        <TextField
+          onChange={function (event) {
+            setUserId(event.target.value);
+          }}
+        />
 
-      <div className={classes.editItem}>
-        Now Editting Total: {orderDetailsToEdit.total}
         <br />
+        Edit Payment ID:
+        <TextField
+          onChange={function (event) {
+            setPayment(event.target.value);
+          }}
+        />
+        
         <br />
-        Edit total:{" "}
+        Edit Total:
         <TextField
           onChange={function (event) {
             setTotalOf(event.target.value);
@@ -58,10 +67,11 @@ export function EditOrderDetails({ orderDetailsToEdit, paymentToEdit }) {
         <button>Cancel</button>
       </Link>
 
-      <Link to="/order_details">
+      <Link to="/edit_order_details">
         <button
           onClick={function () {
-            edit_order_details(id, userId, paymentId, totalOf);
+            console.log(id, userId, totalOf, paymentId)
+            edit_order_details(id, userId, totalOf, paymentId);
           }}
         >
           Edit Order Details

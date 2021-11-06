@@ -6,12 +6,12 @@ const createInitialOrderDetails = async () => {
   console.log("Starting to create order details...");
   try {
     const orderDetailsToCreate = [
-      { user_id: 1, total: 123.2, payment_id: 1 },
-      { user_id: 1, total: 69.69, payment_id: 1 },
-      { user_id: 1, total: 98.76, payment_id: 1 },
-      { user_id: 5, total: 50.00, payment_id: 5 },
-      { user_id: 4, total: 33.33, payment_id: 4 },
-      { user_id: 3, total: 87.65, payment_id: 3 },
+      { user_id: 9, total: 123.2, payment_id: 10 },
+      { user_id: 10, total: 69.69, payment_id: 11 },
+      { user_id: 9, total: 98.76, payment_id: 12 },
+      { user_id: 10, total: 50.00, payment_id: 51 },
+      { user_id: 9, total: 33.33, payment_id: 41 },
+      { user_id: 10, total: 87.65, payment_id: 31 },
     ];
     const orderDetails = await Promise.all(
       orderDetailsToCreate.map(createOrderDetails)
