@@ -13,8 +13,8 @@ const {
 const {authenticate, admin} = require('../utils')
 
 orderDetailsRouter.post("/", async (req, res, next) => {
-  const { user_id, total,  payment_id  } = req.body;
   try {
+    const { user_id, total,  payment_id  } = req.body;
     const createdOrderDetails = await createOrderDetails(req.body);
     res.status(200).send(createOrderDetails);
   } catch (error) {
