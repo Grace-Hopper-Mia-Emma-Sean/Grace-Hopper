@@ -40,6 +40,22 @@ export function OrderDetails({
   //     console.log(revenue)
     
   // }
+  const renderEditButton = (item) => {
+    return (
+      <Link to="/edit_order_details">
+        <button
+          onClick={function () {
+            console.log("1",item.row.id),
+            // setOrderToDelete(item.row)
+            localStorage.setItem("Order To Edit", item.row.id)
+          }}
+        >
+          Edit
+        </button>
+      </Link>
+    );
+  };
+
 
   const renderDeleteButton = (item) => {
     return (
@@ -91,6 +107,14 @@ export function OrderDetails({
       width: 200,
       align: "center",
       renderCell: renderDeleteButton,
+    },
+    {
+      field: "edit",
+      headerName: "edit",
+      headerAlign: "center",
+      width: 200,
+      align: "center",
+      renderCell: renderEditButton,
     }
   ];
   return (
@@ -98,9 +122,6 @@ export function OrderDetails({
       {/* {getOrders()} */}
       <div style={{ height: 650, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} />
-        {/* <Link to="/create_order_details">
-          <button>Add Order Details </button>
-        </Link> */}
       </div>
     </div>
   );

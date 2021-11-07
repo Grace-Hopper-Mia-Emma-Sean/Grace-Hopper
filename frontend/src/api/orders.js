@@ -19,20 +19,24 @@ const order_details = async () => {
   });
 };
 
-const edit_order_details = async (id, userId, paymentId, totalOf) => {
+const edit_order_details = async (id, userId, totalOf,paymentId) => {
+  // const id =  JSON.parse(localStorage.getItem("Order To Edit"))
   return axios({
       method: "PATCH",
       url: `/order-details/${id}`,
-      data: {
+      data: JSON.stringify({
         user_id: userId,
-        payment_id: paymentId,
-        total: totalOf
-      },
+        total: totalOf,
+        payment_id: paymentId
+      }),
       headers: {
         "Content-Type": "application/json",
       },
     }).catch((error) => {
-      console.error(error.response.data);
+      console.error(error.response);
+    }).then((response) => {
+      console.log(response)
+
     });
 };
 
@@ -51,18 +55,15 @@ const delete_order_details = async (id) => {
   });
 };
 
-const create_order_details = async (userId, payment, total) => {
+const create_order_details = async (userId, paymentId, totalOf) => {
   return axios({
     method: "POST",
     url: "/order-details",
     data: {
       user_id: userId,
-      payment_id: payment,
-      total: total,
-    },
-    headers: {
-      "Content-Type": "application/json",
-    },
+      payment_id: paymentId,
+      total: totalOf,
+    }
   }).catch((error) => {
     console.error(error.response);
   }).then((response) => {

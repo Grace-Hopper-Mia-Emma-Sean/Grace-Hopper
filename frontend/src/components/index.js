@@ -10,7 +10,6 @@ export { PaymentDetails } from "./payment/PaymentDetails";
 export { UserPayment } from "./payment/UserPayment";
 export { CreateOrderDetails } from "./orders/CreateOrderDetails";
 export { CreateOrderItems } from "./orders/CreateOrderItems";
-// export { CreatePaymentDetails } from "./payment/CreatePaymentDetails";
 export { CreateUserPayment } from "./payment/CreateUserPayment";
 export { DeleteOrderDetails } from "./orders/DeleteOrderDetails";
 export { DeleteOrderItems } from "./orders/DeleteOrderItems";
