@@ -22,7 +22,7 @@ const getAllOrderDetails = async () => {
   try {
     const { rows } = await client.query(`
             SELECT*
-            FROM order_details;
+            FROM order_details_new;
         `);
     return rows;
   } catch (error) {
@@ -37,7 +37,7 @@ const getAllOrderDetailsById = async (id) => {
     } = await client.query(
       `
             SELECT*
-            FROM order_details
+            FROM order_details_new
             WHERE order_details.id=$1;
         `,
       [id]
@@ -61,7 +61,7 @@ async function updateOrderDetails(id, fields = {}) {
       rows: [orders],
     } = await client.query(
       `
-            UPDATE order_details
+            UPDATE order_details_new
             SET ${setString}
             WHERE id=${id}
             RETURNING *;
@@ -80,7 +80,7 @@ async function destroyOrderDetails(id) {
       rows: [deleteOrderDetails],
     } = await client.query(
       `
-            DELETE FROM order_details
+            DELETE FROM order_details_new
             WHERE id=$1
             RETURNING *;
         `,
@@ -98,7 +98,7 @@ const deleteOrderDetailsByUserId = async (id) => {
     const {
       rows: [orderDetails],
     } = await client.query(`
-      DELETE from order_details
+      DELETE from order_details_new
       WHERE user_id=${id}
     `);
   } catch (error) {
