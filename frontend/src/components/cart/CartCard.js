@@ -10,6 +10,8 @@ import {
   Paper,
 } from "../../MUI";
 
+import { useHistory } from "react-router-dom";
+
 import { getCartItemsByUserId } from "../../api";
 import { useEffect, useState } from "react";
 import { EditCartItem, DeleteCartItem, CartSum, CartItemTotal } from "..";
@@ -43,7 +45,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   const token = localStorage.token;
   const id = localStorage.getItem("id");
-  const currentCart = JSON.parse(localStorage.cart) 
+  const currentCart = JSON.parse(localStorage.cart);
 
   useEffect(async () => {
     !loggedIn
@@ -63,14 +65,14 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   const image = `http://placeimg.com/128/128/tech/1`;
 
+  const history = useHistory();
+
+  const goBack = () => history.goBack();
+
   return currentCart.length ? (
-    
     <div>
-      
       <div>
-        
         {currentCart.map((cart) => {
-          
           return (
             <div className={classes.root}>
               <Paper className={classes.paper}>
@@ -97,7 +99,6 @@ export function CartCard({ loggedIn, cart, setCart }) {
             </div>
           );
         })}
-
       </div>
       <CartSum cart={cart} />
       <Box
@@ -111,13 +112,12 @@ export function CartCard({ loggedIn, cart, setCart }) {
       </Box>
     </div>
   ) : (
-   
     <div>
-       <Typography gutterBottom variant="h3" align="center">
-       Please Add Items to Cart to Proceed
+      <Typography gutterBottom variant="h3" align="center">
+        <Button size="large" onClick={goBack}>
+          Nothing is in your cart. Please go back and add items to proceed.
+        </Button>
       </Typography>
-      </div>
-  
+    </div>
   );
-
 }
