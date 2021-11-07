@@ -17,8 +17,17 @@ import { useEffect, useState } from "react";
 import { EditCartItem, DeleteCartItem, CartSum, CartItemTotal } from "..";
 
 const useStyles = makeStyles((theme) => ({
+  body: {
+    backgroundColor: "#457B9D",
+    height: "90vh",
+    marginTop: "-2rem",
+  },
   root: {
     flexGrow: 7,
+    margin: "1rem",
+  },
+  fluff: {
+    padding: "2rem",
   },
   paper: {
     padding: theme.spacing(2),
@@ -70,9 +79,11 @@ export function CartCard({ loggedIn, cart, setCart }) {
   const goBack = () => history.goBack();
 
   return currentCart.length ? (
-    <div>
-      <div>
+    <div className={classes.body}>
+      <div className={classes.fluff}>
         {currentCart.map((cart) => {
+          // <div className={classes.card}>
+
           return (
             <div className={classes.root}>
               <Paper className={classes.paper}>
@@ -83,7 +94,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
                     </ButtonBase>
                   </Grid>
                   <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
+                    <Grid item xs container spacing={2}>
                       <Grid item xs>
                         <Typography gutterBottom variant="subtitle1">
                           {cart.name}
@@ -98,6 +109,8 @@ export function CartCard({ loggedIn, cart, setCart }) {
               </Paper>
             </div>
           );
+
+          // </div>;
         })}
       </div>
       <CartSum cart={cart} />
@@ -112,12 +125,15 @@ export function CartCard({ loggedIn, cart, setCart }) {
       </Box>
     </div>
   ) : (
-    <div>
-      <Typography gutterBottom variant="h3" align="center">
-        <Button size="large" onClick={goBack}>
-          Nothing is in your cart. Please click here to go back and add items to proceed.
-        </Button>
-      </Typography>
+    <div className={classes.body}>
+      <div className={classes.fluff}>
+        <Typography gutterBottom variant="h3" align="center">
+          <Button size="large" onClick={goBack}>
+            Nothing is in your cart. Please click here to go back and add items
+            to proceed.
+          </Button>
+        </Typography>
+      </div>
     </div>
   );
 }

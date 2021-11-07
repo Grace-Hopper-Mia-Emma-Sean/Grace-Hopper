@@ -49,3 +49,4 @@ export { Dashboard_Cart } from "./finance_dashboard/Dashboard_Cart";
 export { ContactUs } from "./contact_us/contact_us";
 export { MyOrder } from "./orders/MyOrders";
 export { MyOrdersIcon } from "./orders/MyOrdersIcon";
+export { DashboardIcons } from "./finance_dashboard/DashboardIcons";
