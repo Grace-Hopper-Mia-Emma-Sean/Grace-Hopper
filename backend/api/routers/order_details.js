@@ -32,7 +32,7 @@ orderDetailsRouter.post("/", async (req, res, next) => {
       total: req.body.total,
       payment_id: req.body.payment_id,
     });
-    res.send(order);
+    res.send({ order: order });
   } catch (error) {
     throw error;
   }
