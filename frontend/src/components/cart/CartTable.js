@@ -56,6 +56,7 @@ export function CartTable() {
       width: 100,
       align: "center",
     },
+    
   ];
   return (
     <div>

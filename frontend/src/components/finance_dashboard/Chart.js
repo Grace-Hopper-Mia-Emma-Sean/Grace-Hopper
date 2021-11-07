@@ -10,14 +10,14 @@ function createData(time, amount) {
 
 const data = [
   createData('March', 0),
-  createData('April', 1000),
-  createData('May', 10000),
-  createData('June', 20000),
-  createData('July', 40000),
-  createData('August', 60000),
-  createData('September', 80000),
-  createData('October', 100000),
-  createData('November', 150000),
+  createData('April', 0),
+  createData('May', 0),
+  createData('June', 0),
+  createData('July', 0),
+  createData('August', 0),
+  createData('September', 0),
+  createData('October', 0),
+  createData('November', 4),
 ];
 
 export default function Chart() {

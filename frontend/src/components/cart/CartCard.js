@@ -51,14 +51,14 @@ const useStyles = makeStyles((theme) => ({
 
 export function CartCard({ loggedIn, cart, setCart }) {
   const classes = useStyles();
-
+  const [sum, setSum] = useState(0);
   const token = localStorage.token;
   const id = localStorage.getItem("id");
   const currentCart = JSON.parse(localStorage.cart);
 
   useEffect(async () => {
     !loggedIn
-      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id))
+      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id)) 
       : await getCartItemsByUserId(token, id)
           .then(() => {
             setCart(
@@ -81,6 +81,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
   return currentCart.length ? (
     <div className={classes.body}>
       <div className={classes.fluff}>
+
         {currentCart.map((cart) => {
           // <div className={classes.card}>
 
@@ -99,7 +100,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
                         <Typography gutterBottom variant="subtitle1">
                           {cart.name}
                         </Typography>
-                        <EditCartItem cart={cart} setCart={setCart} />
+                        <EditCartItem cart={cart} setCart={setCart} sum={sum} setSum={setSum}/>
                         <DeleteCartItem cart={cart} setCart={setCart} />
                       </Grid>
                     </Grid>
@@ -113,7 +114,7 @@ export function CartCard({ loggedIn, cart, setCart }) {
           // </div>;
         })}
       </div>
-      <CartSum cart={cart} />
+      <CartSum cart={cart} sum={sum} setSum={setSum}/>
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >

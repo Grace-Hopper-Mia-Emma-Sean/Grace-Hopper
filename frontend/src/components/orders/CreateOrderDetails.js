@@ -4,8 +4,8 @@ import { Redirect } from 'react-router';
 
 export function CreateOrderDetails ({}) {
     const [totalOf, setTotalOf] = useState('');
-    const [userId, setUserId] = useState((''));
-    const [paymentId, setPayment] = useState((''));
+    const [userId, setUserId] = useState('');
+    const [paymentId, setPayment] = useState('');
 
     const BASE_URL = 'https://pure-reaches-94902.herokuapp.com/api'
 

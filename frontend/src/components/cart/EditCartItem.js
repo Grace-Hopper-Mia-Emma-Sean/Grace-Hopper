@@ -1,8 +1,9 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "../../MUI";
 import { updateCartItem } from "../../api";
 import { useState, useEffect } from "react";
+import { CartSum } from "..";
 
-export function EditCartItem({ cart, setCart }) {
+export function EditCartItem({ cart, setCart, sum, setSum }) {
   const localCart = JSON.parse(localStorage.cart);
   const userId = localStorage.id;
 
@@ -30,10 +31,28 @@ export function EditCartItem({ cart, setCart }) {
 
   useEffect(async () => {
     !userId
-      ? guest({ item })
+      // ? guest({ item })
+      ? cartSum()
       : await updateCartItem(cart.id, quantity, localStorage.id);
     setCart(localCart);
   }, [quantity]);
+
+
+
+  function cartSum () {
+    const localCart = JSON.parse(localStorage.cart);
+    localCart.map((cartNow) => {
+        
+        const num1 = parseInt(cart.price)
+        const select = document.getElementById("demo-simple-select")
+        const num2 = parseInt(select.textContent)
+        const newTotal = num1 * num2;
+
+        return newTotal
+    })
+   
+  }
+  
 
   return (
     <div>
