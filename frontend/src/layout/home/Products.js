@@ -182,7 +182,11 @@ export function Products({
                         flex="1"
                       />
                       <CardActions disableSpacing>
-                        <CreateCartItem product={product} setCart={setCart} />
+                        <CreateCartItem
+                          product={product}
+                          setCart={setCart}
+                          cart={cart}
+                        />
                         <ExpandMore
                           expand={expanded}
                           onClick={handleExpandClick}

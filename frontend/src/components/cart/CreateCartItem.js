@@ -9,7 +9,7 @@ import {
 import { createCartItem } from "../../api";
 import { useEffect, useState } from "react";
 
-export function CreateCartItem({ product, setCart }) {
+export function CreateCartItem({ product, setCart, cart }) {
   const [quantity, setQuantity] = useState(1);
   const userId = JSON.parse(localStorage.getItem("id"));
   const localCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -43,6 +43,8 @@ export function CreateCartItem({ product, setCart }) {
   };
 
   const cartHasItem = localCart.some((prod) => prod.id === product.id);
+
+  // console.log(cart);
 
   return (
     <div>

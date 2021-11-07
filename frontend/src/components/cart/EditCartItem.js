@@ -1,7 +1,6 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "../../MUI";
 import { updateCartItem } from "../../api";
 import { useState, useEffect } from "react";
-import { CartSum } from "..";
 
 export function EditCartItem({ cart, setCart, sum, setSum }) {
   const localCart = JSON.parse(localStorage.cart);
@@ -30,29 +29,33 @@ export function EditCartItem({ cart, setCart, sum, setSum }) {
   };
 
   useEffect(async () => {
-    !userId
-      // ? guest({ item })
-      ? cartSum()
-      : await updateCartItem(cart.id, quantity, localStorage.id);
+    if (!userId) {
+      guest({ item });
+      setSum(
+        localCart
+          .sort((x, y) => x.id - y.id)
+          .reduce((total, array) => {
+            return total + JSON.parse(array.total);
+          }, 0)
+          .toLocaleString("en-US")
+      );
+    } else {
+      await updateCartItem(cart.id, quantity, localStorage.id);
+    }
     setCart(localCart);
   }, [quantity]);
 
-
-
-  function cartSum () {
+  function cartSum() {
     const localCart = JSON.parse(localStorage.cart);
     localCart.map((cartNow) => {
-        
-        const num1 = parseInt(cart.price)
-        const select = document.getElementById("demo-simple-select")
-        const num2 = parseInt(select.textContent)
-        const newTotal = num1 * num2;
+      const num1 = parseInt(cart.price);
+      const select = document.getElementById("demo-simple-select");
+      const num2 = parseInt(select.textContent);
+      const newTotal = num1 * num2;
 
-        return newTotal
-    })
-   
+      return newTotal;
+    });
   }
-  
 
   return (
     <div>
