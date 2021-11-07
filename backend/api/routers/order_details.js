@@ -26,8 +26,11 @@ const { authenticate, admin } = require("../utils");
 // });
 
 orderDetailsRouter.post("/", async (req, res, next) => {
-  const { user_id, total, payment_id } = req.body;
-  const order = await createOrderDetails(req.body);
+  const order = await createOrderDetails({
+    user_id: req.body.user_id,
+    total: req.body.total,
+    payment_id: req.body.payment_id,
+  });
   res.send(order);
 });
 
