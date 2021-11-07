@@ -96,7 +96,7 @@ export default function Review({
     let fixedTotal = discountedTotal.toFixed(2)
     setNewTotal(fixedTotal)
     setDisplayNewTotal(true)
-
+    localStorage.setItem("Cart Total", fixedTotal)
   }
 
   const useStyles = makeStyles((theme) => ({
