@@ -9,17 +9,26 @@ const {
   createOrderDetails,
 } = require("../../db");
 
+const { authenticate, admin } = require("../utils");
 
-const {authenticate, admin} = require('../utils')
+// orderDetailsRouter.post("/", async (req, res, next) => {
+//   try {
+//     // const { user_id, total,  payment_id  } = req.body;
+//     const createdOrderDetails = await createOrderDetails({
+//       user_id: req.body.user_id,
+//       total: req.body.total,
+//       payment_id: req.body.payment_id,
+//     });
+//     res.status(200).send({ createdOrderDetails: createdOrderDetails });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 orderDetailsRouter.post("/", async (req, res, next) => {
-  try {
-    // const { user_id, total,  payment_id  } = req.body;
-    const createdOrderDetails = await createOrderDetails({user_id: req.body.user_id, total: req.body.total, payment_id: req.body.payment_id});
-    res.status(200).send({createdOrderDetails: createdOrderDetails});
-  } catch (error) {
-    next(error);
-  }
+  const { user_id, total, payment_id } = req.body;
+  const order = await createOrderDetails(req.body);
+  res.send(order);
 });
 
 orderDetailsRouter.get("/", async (req, res, next) => {
