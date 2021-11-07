@@ -52,8 +52,9 @@ const getCartItemsByUserId = async (token, id) => {
       if (response) {
         response.data;
         localStorage.setItem("cart", JSON.stringify(response.data));
+      } else {
+        console.log("No Cart Items");
       }
-      console.log("No Cart Items");
     });
 };
 
@@ -76,7 +77,6 @@ const updateCartItem = async (cartItemsId, quantity, userId) => {
 };
 
 const deleteCartItem = async (cartId) => {
-
   return axios({
     method: "DELETE",
     url: `cart-items/${cartId}`,
@@ -88,9 +88,9 @@ const deleteCartItem = async (cartId) => {
   })
     .catch((error) => console.error(error.response.data.error))
     .then((response) => {
-        console.log(response);
-        window.location.reload(true)
-        console.log("Cart Item Deleted");
+      console.log(response);
+      window.location.reload(true);
+      console.log("Cart Item Deleted");
       // find a way to avoid having to use alert
       // return alert("cart item successfully deleted");
     });

@@ -1,6 +1,6 @@
 import { login } from "../../api";
 import { Redirect } from "react-router";
-import { createCartItem } from "../../api";
+import { createCartItem, getCartItemsByUserId } from "../../api";
 
 import {
   Avatar,
@@ -66,10 +66,18 @@ export function Login({
       setLoggedIn(false);
     } finally {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      console.log(cart);
       cart.forEach((item) =>
         createCartItem(item.id, item.quantity, localStorage.getItem("id"))
       );
+      await getCartItemsByUserId(localStorage.token, localStorage.id)
+        .then(() => {
+          if (cart) {
+            const storage = JSON.parse(localStorage.getItem("cart"));
+            storage === "" ? setCart([]) : setCart(storage);
+          }
+        })
+        .catch((error) => console.log(error))
+        .finally(() => (window.location.href = "/"));
     }
   };
 

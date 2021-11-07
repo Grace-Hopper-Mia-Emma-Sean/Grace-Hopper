@@ -6,13 +6,16 @@ import {
   Select,
   MenuItem,
 } from "../../MUI";
-import { createCartItem } from "../../api";
+import { createCartItem, getCartItemsByUserId } from "../../api";
 import { useEffect, useState } from "react";
 
 export function CreateCartItem({ product, setCart, cart }) {
   const [quantity, setQuantity] = useState(1);
+  const [itemCheck, setItemCheck] = useState([]);
   const userId = JSON.parse(localStorage.getItem("id"));
   const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+  const id = localStorage.id;
+  const token = localStorage.token;
 
   const addItem = async () => {
     const item = {
@@ -42,9 +45,7 @@ export function CreateCartItem({ product, setCart, cart }) {
     !userId ? guest(item) : user();
   };
 
-  const cartHasItem = localCart.some((prod) => prod.id === product.id);
-
-  // console.log(cart);
+  const cartHasItem = localCart.some((prod) => prod.name === product.name);
 
   return (
     <div>

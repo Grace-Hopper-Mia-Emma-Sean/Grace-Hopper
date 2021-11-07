@@ -14,7 +14,7 @@ import {
 } from "../../MUI";
 
 import { Redirect } from "react-router";
-import { register } from "../../api";
+import { register, getCartItemsByUserId } from "../../api";
 import { createCartItem } from "../../api";
 import { Link } from "react-router-dom";
 
@@ -77,10 +77,18 @@ export function Register({
         );
     } finally {
       const cart = JSON.parse(localStorage.getItem("cart"));
-      console.log(cart);
       cart.forEach((item) =>
         createCartItem(item.id, item.quantity, localStorage.getItem("id"))
       );
+      await getCartItemsByUserId(localStorage.token, localStorage.id)
+        .then(() => {
+          if (cart) {
+            const storage = JSON.parse(localStorage.getItem("cart"));
+            storage === "" ? setCart([]) : setCart(storage);
+          }
+        })
+        .catch((error) => console.log(error))
+        .finally(() => (window.location.href = "/"));
     }
   };
 
