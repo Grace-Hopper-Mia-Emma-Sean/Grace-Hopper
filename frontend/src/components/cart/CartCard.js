@@ -12,7 +12,7 @@ import {
 
 import { useHistory } from "react-router-dom";
 
-import { getCartItemsByUserId } from "../../api";
+import { getCartItemsByUserId, getProducts } from "../../api";
 import { useEffect, useState } from "react";
 import { EditCartItem, DeleteCartItem, CartSum, CartItemTotal } from "..";
 
@@ -52,9 +52,19 @@ const useStyles = makeStyles((theme) => ({
 export function CartCard({ loggedIn, cart, setCart }) {
   const classes = useStyles();
   const [sum, setSum] = useState(0);
+  const [prods, setProds] = useState([]);
   const token = localStorage.token;
   const id = localStorage.getItem("id");
   const currentCart = JSON.parse(localStorage.cart);
+
+  useEffect(async () => {
+    await getProducts()
+      .then(() => {
+        setProds(JSON.parse(localStorage.getItem("product")));
+      })
+      .catch((error) => console.log(error))
+      .finally(localStorage.removeItem("product"));
+  }, []);
 
   useEffect(async () => {
     !loggedIn
@@ -65,10 +75,6 @@ export function CartCard({ loggedIn, cart, setCart }) {
           })
           .catch((error) => console.log(error));
   }, []);
-
-  // setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id));
-
-  const image = `http://placeimg.com/128/128/tech/1`;
 
   const history = useHistory();
 
@@ -88,7 +94,14 @@ export function CartCard({ loggedIn, cart, setCart }) {
                 <Grid container spacing={2}>
                   <Grid item>
                     <ButtonBase className={classes.image}>
-                      <img className={classes.img} alt="complex" src={image} />
+                      <img
+                        className={classes.img}
+                        alt="complex"
+                        src={`https://graceshoppermess.s3.amazonaws.com/${prods
+                          .filter((item) => item.name === cart.name)
+                          .map((item) => item.id)
+                          .join("")}.png`}
+                      />
                     </ButtonBase>
                   </Grid>
                   <Grid item xs={12} sm container>
