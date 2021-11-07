@@ -26,12 +26,16 @@ const { authenticate, admin } = require("../utils");
 // });
 
 orderDetailsRouter.post("/", async (req, res, next) => {
-  const order = await createOrderDetails({
-    user_id: req.body.user_id,
-    total: req.body.total,
-    payment_id: req.body.payment_id,
-  });
-  res.send(order);
+  try {
+    const order = await createOrderDetails({
+      user_id: req.body.user_id,
+      total: req.body.total,
+      payment_id: req.body.payment_id,
+    });
+    res.send(order);
+  } catch (error) {
+    throw error;
+  }
 });
 
 orderDetailsRouter.get("/", async (req, res, next) => {
