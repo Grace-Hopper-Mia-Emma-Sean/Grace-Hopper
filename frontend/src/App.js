@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     height: "rem",
   },
   body: {
-    paddingTop: "3rem",
+    paddingTop: "7rem",
     paddingBottom: "2.5rem",
   },
   footer: {
