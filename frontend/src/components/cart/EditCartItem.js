@@ -1,5 +1,5 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "../../MUI";
-import { updateCartItem } from "../../api";
+import { getCartItemsByUserId, updateCartItem } from "../../api";
 import { useState, useEffect } from "react";
 
 export function EditCartItem({ cart, setCart, sum, setSum }) {
@@ -31,17 +31,18 @@ export function EditCartItem({ cart, setCart, sum, setSum }) {
   useEffect(async () => {
     if (!userId) {
       guest({ item });
-      setSum(
-        localCart
-          .sort((x, y) => x.id - y.id)
-          .reduce((total, array) => {
-            return total + JSON.parse(array.total);
-          }, 0)
-          .toLocaleString("en-US")
-      );
     } else {
       await updateCartItem(cart.id, quantity, localStorage.id);
+      await getCartItemsByUserId(localStorage.token, localStorage.id);
     }
+    const updatedCart = JSON.parse(localStorage.cart);
+    setSum(
+      updatedCart
+        .reduce((total, array) => {
+          return total + JSON.parse(array.total);
+        }, 0)
+        .toLocaleString("en-US")
+    );
     setCart(localCart);
   }, [quantity]);
 

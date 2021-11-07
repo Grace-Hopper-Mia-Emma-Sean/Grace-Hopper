@@ -73,6 +73,13 @@ const updateCartItem = async (cartItemsId, quantity, userId) => {
     .catch((error) => console.error(error))
     .then((response) => {
       response.data.cartChanges;
+      // })
+      // .then(() => {
+      //   getCartItemsByUserId(localStorage.token, localStorage.id);
+      //   if (response) localStorage.setItem("cart", JSON.stringify(response.data));
+      // })
+      // .catch((error) => {
+      //   console.error(error);
     });
 };
 

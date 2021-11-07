@@ -58,14 +58,10 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   useEffect(async () => {
     !loggedIn
-      ? setCart(JSON.parse(localStorage.cart).sort((x, y) => x.id - y.id)) 
+      ? setCart(JSON.parse(localStorage.cart))
       : await getCartItemsByUserId(token, id)
           .then(() => {
-            setCart(
-              JSON.parse(localStorage.getItem("cart")).sort(
-                (x, y) => x.id - y.id
-              )
-            );
+            setCart(JSON.parse(localStorage.cart));
           })
           .catch((error) => console.log(error));
   }, []);
@@ -78,11 +74,12 @@ export function CartCard({ loggedIn, cart, setCart }) {
 
   const goBack = () => history.goBack();
 
+  const sortedCart = currentCart.sort((x, y) => x.name.localeCompare(y.name));
+
   return currentCart.length ? (
     <div className={classes.body}>
       <div className={classes.fluff}>
-
-        {currentCart.map((cart) => {
+        {sortedCart.map((cart) => {
           // <div className={classes.card}>
 
           return (
@@ -100,7 +97,12 @@ export function CartCard({ loggedIn, cart, setCart }) {
                         <Typography gutterBottom variant="subtitle1">
                           {cart.name}
                         </Typography>
-                        <EditCartItem cart={cart} setCart={setCart} sum={sum} setSum={setSum}/>
+                        <EditCartItem
+                          cart={cart}
+                          setCart={setCart}
+                          sum={sum}
+                          setSum={setSum}
+                        />
                         <DeleteCartItem cart={cart} setCart={setCart} />
                       </Grid>
                     </Grid>
@@ -110,11 +112,10 @@ export function CartCard({ loggedIn, cart, setCart }) {
               </Paper>
             </div>
           );
-
           // </div>;
         })}
       </div>
-      <CartSum cart={cart} sum={sum} setSum={setSum}/>
+      <CartSum cart={cart} sum={sum} setSum={setSum} />
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
