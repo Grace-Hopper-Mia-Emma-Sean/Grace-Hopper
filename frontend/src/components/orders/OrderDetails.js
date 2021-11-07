@@ -40,38 +40,6 @@ export function OrderDetails({
   //     console.log(revenue)
     
   // }
-  const renderEditButton = (item) => {
-    return (
-      <Link to="/edit_order_details">
-        <button
-          onClick={function () {
-            console.log("1",item.row.id),
-            // setOrderToDelete(item.row)
-            localStorage.setItem("Order To Edit", item.row.id)
-          }}
-        >
-          Edit
-        </button>
-      </Link>
-    );
-  };
-
-
-  const renderDeleteButton = (item) => {
-    return (
-      <Link to="/delete_order_details">
-        <button
-          onClick={function () {
-            console.log("1",item.row.id),
-            // setOrderToDelete(item.row)
-            localStorage.setItem("Order To Delete", item.row.id)
-          }}
-        >
-          Delete
-        </button>
-      </Link>
-    );
-  };
 
   const columns = [
     {
@@ -99,22 +67,6 @@ export function OrderDetails({
       headerAlign: "center",
       width: 200,
       align: "center",
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      headerAlign: "center",
-      width: 200,
-      align: "center",
-      renderCell: renderDeleteButton,
-    },
-    {
-      field: "edit",
-      headerName: "edit",
-      headerAlign: "center",
-      width: 200,
-      align: "center",
-      renderCell: renderEditButton,
     }
   ];
   return (

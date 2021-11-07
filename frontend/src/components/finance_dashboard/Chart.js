@@ -17,7 +17,7 @@ const data = [
   createData('August', 0),
   createData('September', 0),
   createData('October', 0),
-  createData('November', 4),
+  createData('November', 70000),
 ];
 
 export default function Chart() {
